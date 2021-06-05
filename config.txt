@@ -1,0 +1,4 @@
+C:\Program Files (x86)\Steam\steamapps\common\Hotline Miami 2\hlm2_data_desktop.wad
+2
+C:\Users\caleb\Documents\My Games\HotlineMiami2\zebra_extra_walk_frames_meta_and_spitesbin.patchwad
+C:\Users\caleb\Documents\My Games\HotlineMiami2\breakme.patchwad

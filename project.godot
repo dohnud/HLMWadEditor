@@ -1,0 +1,100 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "BinParser",
+"class": "BackgroundsBin",
+"language": "GDScript",
+"path": "res://Scripts/BackgroundsBin.gd"
+}, {
+"base": "Control",
+"class": "BinEditor",
+"language": "GDScript",
+"path": "res://Editors/BinEditor.gd"
+}, {
+"base": "Node",
+"class": "BinParser",
+"language": "GDScript",
+"path": "res://Scripts/BinParser.gd"
+}, {
+"base": "Node",
+"class": "Meta",
+"language": "GDScript",
+"path": "res://Scripts/Meta.gd"
+}, {
+"base": "BinParser",
+"class": "ObjectsBin",
+"language": "GDScript",
+"path": "res://Scripts/ObjectsBin.gd"
+}, {
+"base": "BinParser",
+"class": "RoomsBin",
+"language": "GDScript",
+"path": "res://Scripts/RoomsBin.gd"
+}, {
+"base": "Reference",
+"class": "SpritePacker",
+"language": "GDScript",
+"path": "res://Scripts/SpritePacker.gd"
+}, {
+"base": "BinParser",
+"class": "SpritesBin",
+"language": "GDScript",
+"path": "res://Scripts/SpritesBin.gd"
+}, {
+"base": "File",
+"class": "Wad",
+"language": "GDScript",
+"path": "res://Scripts/Wad.gd"
+} ]
+_global_script_class_icons={
+"BackgroundsBin": "",
+"BinEditor": "",
+"BinParser": "",
+"Meta": "",
+"ObjectsBin": "",
+"RoomsBin": "",
+"SpritePacker": "",
+"SpritesBin": "",
+"Wad": ""
+}
+
+[application]
+
+config/name="HLMWadEditor"
+run/main_scene="res://App.tscn"
+config/icon="res://icon1.png"
+
+[display]
+
+window/size/width=1280
+window/size/height=768
+window/vsync/use_vsync=false
+
+[input]
+
+ui_lmb={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
+ ]
+}
+ui_delete={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777224,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":true,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777220,"unicode":0,"echo":false,"script":null)
+ ]
+}
+
+[rendering]
+
+quality/driver/driver_name="GLES2"
+vram_compression/import_etc=true
+vram_compression/import_etc2=false
+environment/default_environment="res://default_env.tres"

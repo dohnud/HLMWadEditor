@@ -1,0 +1,44 @@
+extends BinEditor
+
+#onready var app = get_tree().get_nodes_in_group('App')[0]
+onready var object_tree = $TabContainer2/Advanced/ObjectTree
+
+var objects = null
+var object = {}
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	file = 'GL/hlm2_objects.bin'
+	tree = object_tree
+	pass # Replace with function body.
+
+
+func set_object(object_name):
+	set_bin_asset(object_name)
+#	object_tree.reset()
+	objects = bin #app.base_wad.objectbin
+	object = selected_struct #objects.object_data[object_name]
+#	object_tree.create_dict(object)
+	return objects
+
+
+func parse_new_value(key, value, new_text_value):
+	if key == 'sprite_index' or key == 'mask_sprite':
+		var sprite_index = value
+		if new_text_value in app.base_wad.spritebin.sprite_data.keys():
+			sprite_index = app.base_wad.spritebin.sprite_data[new_text_value]['id']
+		return [sprite_index, app.base_wad.spritebin.sprites[sprite_index]['name']]
+	if key == 'parent':
+		var object_index = value
+		if bin.data.has(new_text_value):
+			object_index = bin.data[new_text_value]['id']
+		return [object_index, bin.names[object_index]]
+	return [value, new_text_value]
+
+func _on_ObjectTree_item_edited(deleted=0):
+	_on_Tree_item_edited(deleted)
+	return
+
+
+func change_order(_room, new_next, new_previous):
+	objects.object

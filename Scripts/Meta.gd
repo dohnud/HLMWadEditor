@@ -1,0 +1,289 @@
+extends Node
+
+class_name Meta
+
+#- .meta file identifier - 16 byte byte array
+#- game (hm1 or hm2) -      4 byte integer
+#- unused - 4 byte integer
+#- repeat until end of file:
+#  - sprite name len (L) - 1 byte integer
+#  - sprite name -         L byte(s) string
+#  - image count (N) -     4 byte integer
+#  - repeat N times:
+#	- width -  4 byte integer
+#	- height - 4 byte integer
+#	- x -      4 byte integer
+#	- y -      4 byte integer
+#	- uv -     4 4 byte floats (16 bytes total) (unused)
+
+var sprites = SpriteFrames.new()
+var texture_page = null
+signal resolve_progress
+var is_gmeta = false
+var center_norms = {}
+
+var sprite_names_ordered = []
+var texture_dimensions = Vector2.ZERO
+
+func parse(file_pointer, size, _texture_page=null) -> SpriteFrames:
+	texture_page = _texture_page
+	var f = file_pointer
+	var start = f.get_position()
+	# skip id, gameid, unusedid
+	f.seek(start + 0x10 + 0x04 + 0x04)
+	
+	while f.get_position() < start + size:
+		# parse sprite name
+		var sprite_name_l = f.get_8()
+		var sprite_name = f.get_buffer(sprite_name_l).get_string_from_ascii()
+		sprites.add_animation(sprite_name)
+		sprite_names_ordered.append(sprite_name)
+		
+		# parse sprite frame
+		var image_count = f.get_32()
+		for i in range(image_count):
+			f.get_32() #4 bytes of padding for some reason
+			var img = AtlasTexture.new()
+			var w = f.get_32()
+			var h = f.get_32()
+			var x = f.get_32()
+			var y = f.get_32()
+			img.region = Rect2(x,y,w,h);
+#			img.position = Vector2(x,y)
+#			img.meta_position = Vector2(x,y)
+			img.atlas = texture_page
+			# skip uv coords
+			f.get_32()
+			f.get_32()
+#			f.get_32()
+#			f.get_32()
+			var c =  Vector2(f.get_float(), f.get_float())
+			if !center_norms.has(sprite_name):
+				center_norms[sprite_name] = c
+			sprites.add_frame(sprite_name, img)
+			sprites.set_animation_speed(sprite_name, 60)
+	f.seek(start + size)
+	sprites.remove_animation("default")
+	return sprites
+
+func write(file_pointer) -> int:
+	var f = file_pointer
+	var start = f.get_position()
+	f.store_8(15)
+	f.store_buffer(PoolByteArray('AGTEXTUREPACKER'.to_ascii()))
+	f.store_32(0x02) # gameid 1 = hm1 2 = hm2
+	f.store_32(0x01) # unused for hm2
+	
+	for spr_name in sprite_names_ordered:
+		if !sprites.has_animation(spr_name):
+			continue
+		f.store_8(len(spr_name))
+		f.store_buffer(spr_name.to_ascii())
+		var image_count = sprites.get_frame_count(spr_name)
+		f.store_32(image_count)
+		for i in range(image_count):
+			f.store_buffer(PoolByteArray('dump'.to_ascii()))
+			#f.store_32(0)
+			# all frames are atlastextures
+			var frame = sprites.get_frame(spr_name, i)
+			f.store_32(frame.region.size.x)
+			f.store_32(frame.region.size.y)
+			f.store_32(frame.region.position.x)
+			f.store_32(frame.region.position.y)
+			if texture_dimensions == Vector2.ZERO:
+				f.store_32(0)
+				f.store_32(0)
+				f.store_32(0)
+				f.store_32(0)
+			else:
+				if is_gmeta:
+					f.store_float(0)
+					f.store_float(0)
+					f.store_float(center_norms[spr_name].x)
+					f.store_float(center_norms[spr_name].y)
+				else:
+					var w  = frame.region.size.x
+					var h  = frame.region.size.y
+					f.store_float(frame.region.position.x / texture_dimensions.x)
+					f.store_float(frame.region.position.y / texture_dimensions.y)
+					f.store_float((frame.region.position.x+w) / texture_dimensions.x)
+					f.store_float((frame.region.position.y+h) / texture_dimensions.y)
+		
+	for spr_name in sprites.get_animation_names():
+		if spr_name in sprite_names_ordered:
+			continue
+		f.store_8(len(spr_name))
+		f.store_buffer(spr_name.to_ascii())
+		var image_count = sprites.get_frame_count(spr_name)
+		f.store_32(image_count)
+		for i in range(image_count):
+			f.store_buffer(PoolByteArray('dump'.to_ascii()))
+			# all frames are atlastextures
+			var frame = sprites.get_frame(spr_name, i)
+			f.store_32(frame.region.size.x)
+			f.store_32(frame.region.size.y)
+			f.store_32(frame.region.position.x)
+			f.store_32(frame.region.position.y)
+			if texture_dimensions == Vector2.ZERO:
+				f.store_32(0)
+				f.store_32(0)
+				f.store_32(0)
+				f.store_32(0)
+			else:
+				if is_gmeta:
+					f.store_float(0)
+					f.store_float(0)
+					f.store_float(center_norms[spr_name].x)
+					f.store_float(center_norms[spr_name].y)
+				else:
+					var w  = frame.region.size.x
+					var h  = frame.region.size.y
+					f.store_float(frame.region.position.x / texture_dimensions.x)
+					f.store_float(frame.region.position.y / texture_dimensions.y)
+					f.store_float((frame.region.position.x+w) / texture_dimensions.x)
+					f.store_float((frame.region.position.y+h) / texture_dimensions.y)
+	return f.get_position() - start
+#
+#func writeg(file_pointer):
+#	var f = file_pointer
+#	var start = f.get_position()
+#	f.store_8(15)
+#	f.store_buffer(PoolByteArray('AGTEXTUREPACKER'.to_ascii()))
+#	f.store_32(0x02) # gameid 1 = hm1 2 = hm2
+#	f.store_32(0x01) # unused for hm2
+#
+#	for spr_name in sprite_names_ordered:
+#		if !sprites.has_animation(spr_name):
+#			continue
+#		f.store_8(len(spr_name))
+#		f.store_buffer(spr_name.to_ascii())
+#		var image_count = sprites.get_frame_count(spr_name)
+#		f.store_32(image_count)
+#		for i in range(image_count):
+#			f.store_buffer(PoolByteArray('dump'.to_ascii()))
+#			#f.store_32(0)
+#			# all frames are atlastextures
+#			var frame = sprites.get_frame(spr_name, i)
+#			f.store_32(frame.region.size.x)
+#			f.store_32(frame.region.size.y)
+#			f.store_32(frame.region.position.x)
+#			f.store_32(frame.region.position.y)
+#			if spritebin_ref == null:
+#				f.store_float(0)
+#				f.store_float(0)
+#				f.store_float(0)
+#				f.store_float(0)
+#			else:
+#				var w  = frame.region.size.x
+#				var h  = frame.region.size.y
+##				f.store_float(frame.region.position.x / texture_dimensions.x)
+##				f.store_float(frame.region.position.y / texture_dimensions.y)
+#				f.store_float(0)
+#				f.store_float(0)
+#				if is_gmeta:
+#					f.store_float(center_norms[spr_name].x)
+#					f.store_float(center_norms[spr_name].y)
+#				else:
+#					f.store_float(clamp(spritebin_ref[spr_name]['center'].x / w,0,1))
+#					f.store_float(clamp(spritebin_ref[spr_name]['center'].y / h,0,1))
+#
+#	for spr_name in sprites.get_animation_names():
+#		if spr_name in sprite_names_ordered:
+#			continue
+#		f.store_8(len(spr_name))
+#		f.store_buffer(spr_name.to_ascii())
+#		var image_count = sprites.get_frame_count(spr_name)
+#		f.store_32(image_count)
+#		for i in range(image_count):
+#			f.store_buffer(PoolByteArray('dump'.to_ascii()))
+#			# all frames are atlastextures
+#			var frame = sprites.get_frame(spr_name, i)
+#			f.store_32(frame.region.size.x)
+#			f.store_32(frame.region.size.y)
+#			f.store_32(frame.region.position.x)
+#			f.store_32(frame.region.position.y)
+#			if spritebin_ref == null:
+#				f.store_float(0)
+#				f.store_float(0)
+#				f.store_float(0)
+#				f.store_float(0)
+#			else:
+#				var w  = frame.region.size.x
+#				var h  = frame.region.size.y
+##				f.store_float(frame.region.position.x / texture_dimensions.x)
+##				f.store_float(frame.region.position.y / texture_dimensions.y)
+#				f.store_float(0)
+#				f.store_float(0)
+#				if is_gmeta:
+#					f.store_float(center_norms[spr_name].x)
+#					f.store_float(center_norms[spr_name].y)
+#	return f.get_position() - start
+
+func convert_to_gmeta(spritebin_ref):
+	is_gmeta = true
+	for sprite in sprites.get_animation_names():
+		var frame = sprites.get_frame(sprite, 0)
+		var w  = frame.region.size.x
+		var h  = frame.region.size.y
+		center_norms[sprite] = Vector2(clamp(spritebin_ref.sprite_data[sprite]['center'].x / w,0,1), clamp(spritebin_ref.sprite_data[sprite]['center'].y / h,0,1))
+
+#func resolve(animatedsprite:SpriteFrames, spritesheet:Texture):
+func resolve(userdata):
+	if userdata == null: return null
+	var animatedsprite:SpriteFrames = userdata[0]
+	var spritesheet:Texture = userdata[1]
+	var image_width = spritesheet.get_width()
+	var image_height = 1
+	var dest_image :Image = Image.new()
+	var masq_image :Image = Image.new()
+	var new_spritesheet = ImageTexture.new()
+	dest_image.create(image_width, image_height, false, Image.FORMAT_RGBA8)
+	dest_image.lock()
+	masq_image.create(image_width, image_height, false, Image.FORMAT_RGBA8)
+	masq_image.lock()
+	var dest_size = Vector2(image_width, 1)
+	
+	var p = 0
+	for sprite_name in animatedsprite.get_animation_names():
+		for frame_index in range(animatedsprite.get_frame_count(sprite_name)):
+			var frame :AtlasTexture= animatedsprite.get_frame(sprite_name, frame_index)
+			var idx = frame.region.size.x+1
+			var idy = frame.region.size.y+1
+			assert(idx <= image_width)
+			
+			var found = false
+			for ty in range(2048):
+				if ty + idy > dest_image.get_height():
+					masq_image.unlock()
+					dest_image.unlock()
+					dest_image.crop(image_width, ty + idy)
+					masq_image.crop(image_width, ty + idy)
+					dest_image.lock()
+					masq_image.lock()
+				for tx in range(image_width - idx):
+					var valid = !(masq_image.get_pixel(tx,ty).r8 ||
+						masq_image.get_pixel(tx, ty + idy-1).r8 ||
+						masq_image.get_pixel(tx + idx-1, ty).r8 ||
+						masq_image.get_pixel(tx + idx-1, ty + idy-1).r8)
+					if valid:
+						for ity in range(idy):
+							for itx in range(idx):
+								valid = !masq_image.get_pixel(tx + itx, ty + ity).r8
+								if !valid: break
+							if !valid: break
+					if valid:
+						dest_image.blit_rect(frame.atlas.get_data(), frame.region, Vector2(tx,ty))
+						for ity in range(idy):
+							for itx in range(idx):
+								masq_image.set_pixel(tx + itx, ty + ity, Color(1,0,0,1))
+#						print('moving ', sprite_name, frame_index, ': ', frame.region.position, ' -> ', Vector2(tx,ty))
+						frame.region = Rect2(int(tx),int(ty), int(idx-1),int(idy-1))
+#						frame.atlas = new_spritesheet
+						found = true
+					if found: break
+				if found: break
+		p += 1
+		emit_signal('resolve_progress', float(p)/float(len(animatedsprite.get_animation_names())))
+	dest_image.save_png('temp_sheet.png')
+	texture_page.set_data(dest_image)
+	texture_dimensions = dest_image.get_size()

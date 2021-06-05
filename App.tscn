@@ -1,0 +1,1589 @@
+[gd_scene load_steps=74 format=2]
+
+[ext_resource path="res://theme.tres" type="Theme" id=1]
+[ext_resource path="res://insetshadow.tres" type="StyleBox" id=2]
+[ext_resource path="res://tick.png" type="Texture" id=3]
+[ext_resource path="res://popshadow.tres" type="StyleBox" id=4]
+[ext_resource path="res://grid.png" type="Texture" id=5]
+[ext_resource path="res://playicon.png" type="Texture" id=6]
+[ext_resource path="res://icon1.png" type="Texture" id=7]
+[ext_resource path="res://framebacktrackicon.png" type="Texture" id=8]
+[ext_resource path="res://TimelineSlider.gd" type="Script" id=9]
+[ext_resource path="res://frameadvanceicon.png" type="Texture" id=10]
+[ext_resource path="res://MenuBar.gd" type="Script" id=11]
+[ext_resource path="res://App.gd" type="Script" id=12]
+[ext_resource path="res://AssetTree.gd" type="Script" id=13]
+[ext_resource path="res://MetaEditor.gd" type="Script" id=14]
+[ext_resource path="res://defaultboldfont.tres" type="DynamicFont" id=15]
+[ext_resource path="res://PausePlayButton.gd" type="Script" id=16]
+[ext_resource path="res://pauseicon.png" type="Texture" id=17]
+[ext_resource path="res://Editors/SpriteTextureRect.gd" type="Script" id=18]
+[ext_resource path="res://xicon.tres" type="Texture" id=19]
+[ext_resource path="res://Editors/RoomTree.gd" type="Script" id=20]
+[ext_resource path="res://Editors/RoomEditor.gd" type="Script" id=21]
+[ext_resource path="res://ExtractResourceDialog.gd" type="Script" id=22]
+[ext_resource path="res://segoeui.ttf" type="DynamicFontData" id=23]
+[ext_resource path="res://Editors/SpriteEditor.gd" type="Script" id=24]
+[ext_resource path="res://Editors/SpriteTree.gd" type="Script" id=25]
+[ext_resource path="res://Editors/ObjectEditor.gd" type="Script" id=26]
+[ext_resource path="res://Editors/ObjectTree.gd" type="Script" id=27]
+[ext_resource path="res://searchicon.tres" type="Texture" id=28]
+[ext_resource path="res://SearchBar.gd" type="Script" id=29]
+[ext_resource path="res://Editors/BackgroundEditor.gd" type="Script" id=30]
+[ext_resource path="res://slightinsetshadow.tres" type="StyleBox" id=31]
+[ext_resource path="res://pivoticon1.tres" type="Texture" id=32]
+[ext_resource path="res://ExportSpriteStripDialog.gd" type="Script" id=33]
+[ext_resource path="res://ImportSpriteStripPreview.gd" type="Script" id=34]
+[ext_resource path="res://ImportSpriteStripSliceDialog.gd" type="Script" id=35]
+[ext_resource path="res://ImportantPopups.gd" type="Script" id=36]
+[ext_resource path="res://RoomDrawer.gd" type="Script" id=37]
+[ext_resource path="res://SpriteTexturePageWindow.gd" type="Script" id=38]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.101961, 0.121569, 0.160784, 1 )
+shadow_color = Color( 0, 0, 0, 0.352941 )
+shadow_size = 5
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.0745098, 0.0823529, 0.101961, 0.709804 )
+border_width_left = 1
+border_width_right = 1
+border_color = Color( 0.101961, 0.121569, 0.160784, 1 )
+border_blend = true
+
+[sub_resource type="StyleBoxEmpty" id=3]
+content_margin_left = 4.0
+content_margin_right = 4.0
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxFlat" id=4]
+content_margin_left = 4.0
+content_margin_right = 4.0
+bg_color = Color( 0.12549, 0.152941, 0.211765, 1 )
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color( 0.0854, 0.10542, 0.14, 1 )
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_size = -37
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=5]
+
+[sub_resource type="StyleBoxFlat" id=6]
+content_margin_left = 4.0
+content_margin_right = 4.0
+bg_color = Color( 0.126, 0.1526, 0.21, 1 )
+border_width_left = 2
+border_width_top = 5
+border_width_right = 2
+border_width_bottom = 5
+border_color = Color( 0.0854, 0.10542, 0.14, 1 )
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_size = -37
+anti_aliasing = false
+
+[sub_resource type="Image" id=36]
+data = {
+"data": PoolByteArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 180, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 222, 222, 222, 70, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 223, 223, 223, 0, 223, 223, 223, 180, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 0, 0, 0, 0, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ),
+"format": "RGBA8",
+"height": 16,
+"mipmaps": false,
+"width": 16
+}
+
+[sub_resource type="ImageTexture" id=8]
+storage = 1
+lossy_quality = 0.98
+image = SubResource( 36 )
+size = Vector2( 16, 16 )
+
+[sub_resource type="StyleBoxEmpty" id=9]
+
+[sub_resource type="StyleBoxEmpty" id=10]
+
+[sub_resource type="StyleBoxFlat" id=11]
+content_margin_left = 5.0
+content_margin_right = 4.0
+content_margin_top = 6.0
+content_margin_bottom = 4.0
+bg_color = Color( 0.176471, 0.207843, 0.278431, 1 )
+border_width_left = 2
+border_width_top = 3
+border_width_right = 2
+border_color = Color( 0.0901961, 0.113725, 0.14902, 1 )
+border_blend = true
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+shadow_size = -37
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=12]
+content_margin_left = 3.0
+bg_color = Color( 0.176471, 0.207843, 0.278431, 1 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.0901961, 0.113725, 0.14902, 1 )
+border_blend = true
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_size = -37
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=13]
+content_margin_left = 4.0
+content_margin_right = 4.0
+content_margin_top = 3.0
+content_margin_bottom = 3.0
+bg_color = Color( 0.1827, 0.21489, 0.29, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_color = Color( 0.321569, 0.341176, 0.380392, 1 )
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+expand_margin_bottom = 1.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=14]
+bg_color = Color( 0.1827, 0.21489, 0.29, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.878431, 0.878431, 0.878431, 0.258824 )
+corner_radius_top_right = 3
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color( 0, 0, 0, 0.133333 )
+shadow_size = 5
+shadow_offset = Vector2( 2, 2 )
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id=15]
+
+[sub_resource type="StyleBoxEmpty" id=16]
+
+[sub_resource type="DynamicFont" id=17]
+size = 14
+outline_size = 1
+extra_spacing_top = -3
+font_data = ExtResource( 23 )
+
+[sub_resource type="StyleBoxFlat" id=18]
+content_margin_left = 3.0
+content_margin_right = 3.0
+content_margin_top = 3.0
+content_margin_bottom = 3.0
+bg_color = Color( 0.235294, 0.278431, 0.368627, 0.443137 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.878431, 0.878431, 0.878431, 0.258824 )
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_color = Color( 0, 0, 0, 0.133333 )
+shadow_size = 5
+shadow_offset = Vector2( 2, 2 )
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=19]
+content_margin_left = 3.0
+content_margin_right = 3.0
+content_margin_top = 3.0
+content_margin_bottom = 3.0
+bg_color = Color( 0.1827, 0.21489, 0.29, 1 )
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color( 0.878431, 0.878431, 0.878431, 0.258824 )
+shadow_color = Color( 0, 0, 0, 0.133333 )
+shadow_size = 5
+shadow_offset = Vector2( 2, 2 )
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id=20]
+content_margin_left = 4.0
+content_margin_right = 4.0
+
+[sub_resource type="StyleBoxEmpty" id=21]
+
+[sub_resource type="StyleBoxEmpty" id=22]
+
+[sub_resource type="StyleBoxEmpty" id=23]
+
+[sub_resource type="StyleBoxEmpty" id=24]
+
+[sub_resource type="StyleBoxFlat" id=25]
+content_margin_left = 5.0
+content_margin_right = 4.0
+bg_color = Color( 0.1488, 0.17616, 0.24, 1 )
+border_width_left = 2
+border_width_top = 5
+border_width_right = 2
+border_width_bottom = 5
+border_color = Color( 0.0682, 0.08074, 0.11, 1 )
+border_blend = true
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_size = -37
+anti_aliasing = false
+
+[sub_resource type="ImageTexture" id=26]
+
+[sub_resource type="StyleBoxFlat" id=27]
+content_margin_top = 70.0
+bg_color = Color( 1, 1, 1, 1 )
+draw_center = false
+border_width_top = 20
+border_color = Color( 0, 0, 0, 0.309804 )
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id=28]
+bg_color = Color( 0.6, 0.6, 0.6, 0.376471 )
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id=29]
+content_margin_left = 3.0
+content_margin_right = 3.0
+content_margin_top = 3.0
+content_margin_bottom = 3.0
+bg_color = Color( 1, 1, 1, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.878431, 0.878431, 0.878431, 0.678431 )
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_color = Color( 0, 0, 0, 0.133333 )
+shadow_size = 5
+shadow_offset = Vector2( 2, 2 )
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id=30]
+
+[sub_resource type="StyleBoxEmpty" id=31]
+
+[sub_resource type="StyleBoxEmpty" id=32]
+
+[sub_resource type="StyleBoxEmpty" id=33]
+
+[sub_resource type="StyleBoxEmpty" id=34]
+
+[sub_resource type="StyleBoxEmpty" id=35]
+
+[node name="App" type="Control" groups=[
+"App",
+]]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+asset_tree = NodePath("Main/PanelContainer/HBoxContainer/VBoxContainer/AssetTree")
+asset_tree_container = NodePath("Main/PanelContainer/HBoxContainer/VBoxContainer")
+meta_editor_node = NodePath("Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor")
+room_editor_node = NodePath("Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor")
+sprite_editor_node = NodePath("Main/PanelContainer/HBoxContainer/TabContainer/Sprite/SpriteEditor")
+background_editor_node = NodePath("Main/PanelContainer/HBoxContainer/TabContainer/Backgrounds/BackgroundEditor")
+object_editor_node = NodePath("Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor")
+editor_tabs = NodePath("Main/PanelContainer/HBoxContainer/TabContainer")
+
+[node name="Events" type="Control" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WindowFill" type="Panel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Main" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="TopMenu" type="PanelContainer" parent="Main"]
+margin_right = 1280.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+custom_styles/panel = SubResource( 1 )
+
+[node name="MenuItems" type="HBoxContainer" parent="Main/TopMenu" groups=[
+"MenuBar",
+]]
+margin_right = 1280.0
+margin_bottom = 25.0
+custom_constants/separation = 0
+script = ExtResource( 11 )
+
+[node name="Control" type="Control" parent="Main/TopMenu/MenuItems"]
+margin_right = 3.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 3, 0 )
+
+[node name="Divider1" type="Panel" parent="Main/TopMenu/MenuItems"]
+margin_left = 3.0
+margin_right = 6.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 3, 15 )
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 2 )
+
+[node name="FileButton" type="MenuButton" parent="Main/TopMenu/MenuItems"]
+margin_left = 6.0
+margin_right = 56.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 50, 0 )
+text = "File"
+switch_on_hover = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Divider2" type="Panel" parent="Main/TopMenu/MenuItems"]
+margin_left = 56.0
+margin_right = 59.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 3, 15 )
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 2 )
+
+[node name="ResourceButton" type="MenuButton" parent="Main/TopMenu/MenuItems"]
+margin_left = 59.0
+margin_right = 126.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 50, 0 )
+text = "Resource"
+switch_on_hover = true
+
+[node name="Divider3" type="Panel" parent="Main/TopMenu/MenuItems"]
+margin_left = 126.0
+margin_right = 129.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 3, 15 )
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 2 )
+
+[node name="ViewButton" type="MenuButton" parent="Main/TopMenu/MenuItems"]
+margin_left = 129.0
+margin_right = 179.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 50, 0 )
+text = "View"
+switch_on_hover = true
+
+[node name="Divider4" type="Panel" parent="Main/TopMenu/MenuItems"]
+margin_left = 179.0
+margin_right = 182.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 3, 15 )
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 2 )
+
+[node name="PanelContainer" type="PanelContainer" parent="Main"]
+margin_top = 25.0
+margin_right = 1280.0
+margin_bottom = 768.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 3 )
+
+[node name="HBoxContainer" type="HSplitContainer" parent="Main/PanelContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 1276.0
+margin_bottom = 739.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+split_offset = 160
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer"]
+margin_right = 216.0
+margin_bottom = 735.0
+
+[node name="SearchBar" type="LineEdit" parent="Main/PanelContainer/HBoxContainer/VBoxContainer"]
+margin_right = 216.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+custom_icons/clear = ExtResource( 19 )
+custom_styles/focus = ExtResource( 4 )
+custom_styles/normal = SubResource( 4 )
+custom_colors/clear_button_color = Color( 1, 1, 1, 0.584314 )
+clear_button_enabled = true
+right_icon = ExtResource( 28 )
+placeholder_text = "Seach assets"
+script = ExtResource( 29 )
+
+[node name="AssetTree" type="Tree" parent="Main/PanelContainer/HBoxContainer/VBoxContainer"]
+margin_top = 29.0
+margin_right = 216.0
+margin_bottom = 735.0
+size_flags_vertical = 3
+custom_styles/custom_button = SubResource( 5 )
+custom_styles/bg_focus = SubResource( 6 )
+custom_styles/bg = SubResource( 6 )
+hide_root = true
+script = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+folder_icon = SubResource( 8 )
+folder_mod = Color( 1, 0.906667, 0.84, 1 )
+subfolder_mod = Color( 0.909804, 0.94902, 1, 1 )
+bold_font = ExtResource( 15 )
+
+[node name="TabContainer" type="TabContainer" parent="Main/PanelContainer/HBoxContainer"]
+margin_left = 224.0
+margin_right = 1272.0
+margin_bottom = 735.0
+custom_styles/panel = SubResource( 9 )
+tabs_visible = false
+
+[node name="Panel" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = ExtResource( 2 )
+
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "click on an asset from the list on the left"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Meta" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = ExtResource( 2 )
+
+[node name="MetaEditor" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta" groups=[
+"MetaApp",
+]]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -8.0
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor"]
+margin_right = 1032.0
+margin_bottom = 25.0
+
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HBoxContainer"]
+margin_right = 622.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 15 )
+text = "Player_Zebra.meta"
+clip_text = true
+
+[node name="RecalculateSheetButton" type="Button" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HBoxContainer"]
+margin_left = 626.0
+margin_right = 776.0
+margin_bottom = 25.0
+custom_styles/hover = ExtResource( 4 )
+custom_styles/pressed = ExtResource( 2 )
+custom_styles/focus = ExtResource( 4 )
+custom_styles/normal = ExtResource( 4 )
+text = "Recalculate Sprite Sheet"
+
+[node name="ExportSpriteStripButton" type="Button" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HBoxContainer"]
+margin_left = 780.0
+margin_right = 911.0
+margin_bottom = 25.0
+custom_styles/hover = ExtResource( 4 )
+custom_styles/pressed = ExtResource( 2 )
+custom_styles/focus = ExtResource( 4 )
+custom_styles/normal = ExtResource( 4 )
+text = "Export to sprite strip"
+
+[node name="importSpriteStripButton" type="Button" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HBoxContainer"]
+margin_left = 915.0
+margin_right = 1032.0
+margin_bottom = 25.0
+custom_styles/hover = ExtResource( 4 )
+custom_styles/pressed = ExtResource( 2 )
+custom_styles/focus = ExtResource( 4 )
+custom_styles/normal = ExtResource( 4 )
+text = "Import sprite strip"
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor"]
+margin_top = 29.0
+margin_right = 1032.0
+margin_bottom = 719.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+split_offset = 83
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer"]
+margin_right = 146.0
+margin_bottom = 690.0
+custom_constants/separation = 0
+
+[node name="Panel" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/VBoxContainer"]
+margin_right = 146.0
+margin_bottom = 54.0
+custom_styles/panel = ExtResource( 4 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/VBoxContainer/Panel"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 143.0
+margin_bottom = 51.0
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/VBoxContainer/Panel/HBoxContainer"]
+margin_top = 11.0
+margin_right = 92.0
+margin_bottom = 36.0
+size_flags_horizontal = 3
+text = "sprite sheet:"
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TexturePageRect" type="TextureRect" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/VBoxContainer/Panel/HBoxContainer"]
+margin_left = 92.0
+margin_right = 140.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 48, 48 )
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/VBoxContainer/Panel"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 143.0
+margin_bottom = 51.0
+mouse_default_cursor_shape = 2
+custom_styles/hover = SubResource( 10 )
+custom_styles/pressed = SubResource( 10 )
+custom_styles/focus = SubResource( 10 )
+custom_styles/disabled = SubResource( 10 )
+custom_styles/normal = SubResource( 10 )
+
+[node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/VBoxContainer"]
+margin_top = 54.0
+margin_right = 146.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 0, 6 )
+
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/VBoxContainer"]
+margin_top = 60.0
+margin_right = 146.0
+margin_bottom = 87.0
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = ExtResource( 15 )
+text = "Sprites"
+clip_text = true
+
+[node name="SpriteList" type="ItemList" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/VBoxContainer"]
+margin_top = 87.0
+margin_right = 146.0
+margin_bottom = 690.0
+size_flags_vertical = 3
+custom_styles/bg_focus = SubResource( 12 )
+custom_styles/bg = SubResource( 12 )
+custom_constants/vseparation = 0
+items = [ "sprZebraLegs", null, false, "sprZebraWalkUnarmed", null, false, "sprZebraWalkM16", null, false ]
+
+[node name="TabContainer" type="TabContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer"]
+margin_left = 154.0
+margin_right = 1032.0
+margin_bottom = 690.0
+custom_styles/tab_fg = SubResource( 13 )
+custom_styles/tab_bg = ExtResource( 31 )
+custom_styles/panel = SubResource( 14 )
+tab_align = 0
+
+[node name="Preview" type="Tabs" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 28.0
+margin_right = -1.0
+margin_bottom = -1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 15 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="PanelContainer" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer"]
+margin_right = 876.0
+margin_bottom = 560.0
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 16 )
+
+[node name="BG" type="TextureRect" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer"]
+self_modulate = Color( 0.560784, 0.568627, 0.588235, 1 )
+margin_right = 876.0
+margin_bottom = 560.0
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 5 )
+stretch_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 4
+custom_constants/margin_top = 4
+custom_constants/margin_left = 4
+custom_constants/margin_bottom = 4
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="SpriteTextureRect" type="TextureRect" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 872.0
+margin_bottom = 556.0
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 6
+script = ExtResource( 18 )
+origin_icon = ExtResource( 32 )
+icon_modulate = Color( 1, 1, 1, 1 )
+color = Color( 0.705882, 0.705882, 0.705882, 0.74902 )
+
+[node name="Gizmos" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos"]
+margin_right = 47.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 47, 0 )
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 17 )
+custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
+text = "Frame:"
+clip_text = true
+
+[node name="FrameNumber" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos"]
+margin_left = 47.0
+margin_right = 55.0
+margin_bottom = 25.0
+size_flags_vertical = 0
+custom_fonts/font = SubResource( 17 )
+custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
+
+[node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos"]
+margin_left = 55.0
+margin_right = 632.0
+margin_bottom = 552.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="Panel" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos"]
+margin_left = 632.0
+margin_right = 868.0
+margin_bottom = 31.0
+size_flags_vertical = 0
+custom_styles/panel = SubResource( 18 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/Panel"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 233.0
+margin_bottom = 28.0
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/Panel/HBoxContainer"]
+margin_right = 60.0
+margin_bottom = 25.0
+text = "origin:  x"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="XOriginInput" type="SpinBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/Panel/HBoxContainer"]
+margin_left = 60.0
+margin_right = 136.0
+margin_bottom = 25.0
+
+[node name="Label2" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/Panel/HBoxContainer"]
+margin_left = 136.0
+margin_right = 154.0
+margin_bottom = 25.0
+text = "y:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="YOriginInput" type="SpinBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/Panel/HBoxContainer"]
+margin_left = 154.0
+margin_right = 230.0
+margin_bottom = 25.0
+
+[node name="TimelineControls" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer"]
+margin_top = 560.0
+margin_right = 876.0
+margin_bottom = 591.0
+custom_styles/panel = SubResource( 19 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 873.0
+margin_bottom = 28.0
+
+[node name="Left" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer"]
+margin_right = 287.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left"]
+margin_right = 26.0
+margin_bottom = 25.0
+text = "fps"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FpsSpinBox" type="SpinBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left"]
+margin_left = 30.0
+margin_right = 106.0
+margin_bottom = 25.0
+max_value = 60.0
+value = 15.0
+
+[node name="Middle" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer"]
+margin_left = 291.0
+margin_right = 578.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="FrameBackTrackButton" type="Button" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle"]
+margin_left = 103.0
+margin_right = 127.0
+margin_bottom = 25.0
+custom_styles/hover = SubResource( 20 )
+custom_styles/pressed = SubResource( 20 )
+custom_styles/focus = SubResource( 20 )
+custom_styles/disabled = SubResource( 20 )
+custom_styles/normal = SubResource( 20 )
+icon = ExtResource( 8 )
+
+[node name="PausePlayButton" type="Button" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle"]
+margin_left = 131.0
+margin_right = 155.0
+margin_bottom = 25.0
+custom_styles/hover = SubResource( 20 )
+custom_styles/pressed = SubResource( 20 )
+custom_styles/focus = SubResource( 20 )
+custom_styles/disabled = SubResource( 20 )
+custom_styles/normal = SubResource( 20 )
+toggle_mode = true
+icon = ExtResource( 6 )
+script = ExtResource( 16 )
+pause = ExtResource( 6 )
+play = ExtResource( 17 )
+
+[node name="FrameAdvanceButton" type="Button" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle"]
+margin_left = 159.0
+margin_right = 183.0
+margin_bottom = 25.0
+custom_styles/hover = SubResource( 20 )
+custom_styles/pressed = SubResource( 20 )
+custom_styles/focus = SubResource( 20 )
+custom_styles/disabled = SubResource( 20 )
+custom_styles/normal = SubResource( 20 )
+icon = ExtResource( 10 )
+
+[node name="Right" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer"]
+margin_left = 582.0
+margin_right = 870.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="Button" type="CheckBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Right"]
+margin_left = 241.0
+margin_right = 288.0
+margin_bottom = 25.0
+custom_styles/hover = SubResource( 21 )
+custom_styles/pressed = SubResource( 22 )
+custom_styles/focus = SubResource( 23 )
+custom_styles/normal = SubResource( 24 )
+text = "loop"
+align = 1
+
+[node name="Timeline" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer"]
+margin_top = 591.0
+margin_right = 876.0
+margin_bottom = 661.0
+rect_min_size = Vector2( 0, 70 )
+rect_clip_content = true
+custom_styles/panel = SubResource( 25 )
+
+[node name="TimelineSlider" type="HSlider" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_icons/tick = ExtResource( 3 )
+custom_icons/grabber_highlight = SubResource( 26 )
+custom_icons/grabber = SubResource( 26 )
+custom_styles/slider = SubResource( 27 )
+custom_styles/grabber_area_highlight = SubResource( 28 )
+custom_styles/grabber_area = SubResource( 28 )
+max_value = 1.0
+step = 0.0
+tick_count = 25
+ticks_on_borders = true
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TimelineBar" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline/TimelineSlider"]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -2.5
+margin_right = 2.5
+mouse_filter = 2
+custom_styles/panel = SubResource( 29 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline/TimelineSlider"]
+
+[node name="Context" type="Tabs" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 28.0
+margin_right = -1.0
+margin_bottom = -1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 15 )
+
+[node name="Advanced" type="Tabs" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 28.0
+margin_right = -1.0
+margin_bottom = -1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 15 )
+
+[node name="Room" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = ExtResource( 2 )
+
+[node name="RoomEditor" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Room"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -8.0
+script = ExtResource( 21 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor"]
+margin_right = 1032.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 15 )
+text = "Player_Zebra.meta"
+clip_text = true
+
+[node name="TabContainer2" type="TabContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor"]
+margin_top = 29.0
+margin_right = 1032.0
+margin_bottom = 719.0
+size_flags_vertical = 3
+custom_styles/tab_fg = SubResource( 13 )
+custom_styles/tab_bg = ExtResource( 31 )
+custom_styles/panel = SubResource( 14 )
+tab_align = 0
+
+[node name="Room View" type="Tabs" parent="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor/TabContainer2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 28.0
+margin_right = -1.0
+margin_bottom = -1.0
+
+[node name="TextureRect" type="TextureRect" parent="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor/TabContainer2/Room View"]
+self_modulate = Color( 0.560784, 0.568627, 0.588235, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_clip_content = true
+texture = ExtResource( 5 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor/TabContainer2/Room View/TextureRect"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 37 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Advanced" type="Tabs" parent="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor/TabContainer2"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 28.0
+margin_right = -1.0
+margin_bottom = -1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 15 )
+
+[node name="RoomTree" type="Tree" parent="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor/TabContainer2/Advanced"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/bg_focus = SubResource( 30 )
+custom_styles/bg = SubResource( 31 )
+columns = 2
+hide_root = true
+script = ExtResource( 20 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+folder_mod = Color( 1, 1, 1, 1 )
+subfolder_mod = Color( 1, 1, 1, 1 )
+
+[node name="Sprite" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = ExtResource( 2 )
+
+[node name="SpriteEditor" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sprite"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -8.0
+script = ExtResource( 24 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sprite/SpriteEditor"]
+margin_right = 1032.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 15 )
+text = "Player_Zebra.meta"
+clip_text = true
+
+[node name="TabContainer2" type="TabContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sprite/SpriteEditor"]
+margin_top = 29.0
+margin_right = 1032.0
+margin_bottom = 719.0
+size_flags_vertical = 3
+custom_styles/tab_fg = SubResource( 13 )
+custom_styles/tab_bg = ExtResource( 31 )
+custom_styles/panel = SubResource( 14 )
+tab_align = 0
+
+[node name="Advanced" type="Tabs" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sprite/SpriteEditor/TabContainer2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 28.0
+margin_right = -1.0
+margin_bottom = -1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 15 )
+
+[node name="SpriteTree" type="Tree" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sprite/SpriteEditor/TabContainer2/Advanced"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/bg_focus = SubResource( 32 )
+custom_styles/bg = SubResource( 33 )
+columns = 2
+hide_root = true
+script = ExtResource( 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Backgrounds" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = ExtResource( 2 )
+
+[node name="BackgroundEditor" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Backgrounds"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -8.0
+script = ExtResource( 30 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Backgrounds/BackgroundEditor"]
+margin_right = 1032.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 15 )
+text = "Player_Zebra.meta"
+clip_text = true
+
+[node name="TabContainer2" type="TabContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Backgrounds/BackgroundEditor"]
+margin_top = 29.0
+margin_right = 1032.0
+margin_bottom = 719.0
+size_flags_vertical = 3
+custom_styles/tab_fg = SubResource( 13 )
+custom_styles/tab_bg = ExtResource( 31 )
+custom_styles/panel = SubResource( 14 )
+tab_align = 0
+
+[node name="Advanced" type="Tabs" parent="Main/PanelContainer/HBoxContainer/TabContainer/Backgrounds/BackgroundEditor/TabContainer2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 28.0
+margin_right = -1.0
+margin_bottom = -1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 15 )
+
+[node name="BackgroundTree" type="Tree" parent="Main/PanelContainer/HBoxContainer/TabContainer/Backgrounds/BackgroundEditor/TabContainer2/Advanced"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/bg_focus = SubResource( 32 )
+custom_styles/bg = SubResource( 33 )
+columns = 2
+hide_root = true
+script = ExtResource( 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Object" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = ExtResource( 2 )
+
+[node name="ObjectEditor" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Object" groups=[
+"ObjectEditor",
+]]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -8.0
+script = ExtResource( 26 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor"]
+margin_right = 1032.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 15 )
+text = "Player_Zebra.meta"
+clip_text = true
+
+[node name="TabContainer2" type="TabContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor"]
+margin_top = 29.0
+margin_right = 1032.0
+margin_bottom = 719.0
+size_flags_vertical = 3
+custom_styles/tab_fg = SubResource( 13 )
+custom_styles/tab_bg = ExtResource( 31 )
+custom_styles/panel = SubResource( 14 )
+tab_align = 0
+
+[node name="Advanced" type="Tabs" parent="Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor/TabContainer2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 28.0
+margin_right = -1.0
+margin_bottom = -1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 15 )
+
+[node name="ObjectTree" type="Tree" parent="Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor/TabContainer2/Advanced"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/bg_focus = SubResource( 34 )
+custom_styles/bg = SubResource( 35 )
+columns = 2
+hide_root = true
+script = ExtResource( 27 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OpenWadDialog" type="FileDialog" parent="."]
+margin_left = 411.0
+margin_top = 178.0
+margin_right = 990.0
+margin_bottom = 612.0
+window_title = "Open a File"
+resizable = true
+mode = 0
+access = 2
+filters = PoolStringArray( "*.wad", "*.patchwad" )
+current_dir = "/Users/caleb/Godot/Projects/HLMWadEditor"
+current_path = "/Users/caleb/Godot/Projects/HLMWadEditor/"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OpenPatchDialog" type="FileDialog" parent="."]
+margin_left = 411.0
+margin_top = 178.0
+margin_right = 990.0
+margin_bottom = 612.0
+window_title = "Open a File"
+resizable = true
+mode = 0
+access = 2
+filters = PoolStringArray( "*.patchwad", "*.wad" )
+current_dir = "/Users/caleb/Godot/Projects/HLMWadEditor"
+current_path = "/Users/caleb/Godot/Projects/HLMWadEditor/"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SavePatchDialog" type="FileDialog" parent="."]
+margin_left = 411.0
+margin_top = 178.0
+margin_right = 990.0
+margin_bottom = 612.0
+resizable = true
+access = 2
+filters = PoolStringArray( "*.patchwad" )
+current_dir = "/Users/caleb/Godot/Projects/HLMWadEditor"
+current_path = "/Users/caleb/Godot/Projects/HLMWadEditor/"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpriteTexturePageWindow" type="WindowDialog" parent="."]
+visible = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 280.054
+margin_top = 134.757
+margin_right = -282.946
+margin_bottom = -178.243
+rect_min_size = Vector2( 300, 80 )
+window_title = "Sprite Sheet Preview"
+resizable = true
+script = ExtResource( 38 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SpriteTexturePageWindow"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel2" type="TextureRect" parent="SpriteTexturePageWindow/VBoxContainer"]
+self_modulate = Color( 0.560784, 0.568627, 0.588235, 1 )
+margin_right = 709.0
+margin_bottom = 420.0
+rect_clip_content = true
+size_flags_vertical = 3
+texture = ExtResource( 5 )
+stretch_mode = 2
+
+[node name="ImportSpriteStripPreview" type="TextureRect" parent="SpriteTexturePageWindow/VBoxContainer/Panel2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="SpriteTexturePageWindow/VBoxContainer"]
+margin_top = 424.0
+margin_right = 709.0
+margin_bottom = 447.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SpriteTexturePageWindow/VBoxContainer/HBoxContainer2"]
+margin_right = 680.0
+margin_bottom = 23.0
+size_flags_horizontal = 3
+
+[node name="exportbutton" type="Button" parent="SpriteTexturePageWindow/VBoxContainer/HBoxContainer2/HBoxContainer"]
+margin_right = 120.0
+margin_bottom = 23.0
+custom_styles/normal = ExtResource( 4 )
+text = "export sprite sheet"
+
+[node name="importbutton" type="Button" parent="SpriteTexturePageWindow/VBoxContainer/HBoxContainer2/HBoxContainer"]
+margin_left = 124.0
+margin_right = 246.0
+margin_bottom = 23.0
+custom_styles/normal = ExtResource( 4 )
+text = "import sprite sheet"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="SpriteTexturePageWindow/VBoxContainer/HBoxContainer2"]
+margin_left = 684.0
+margin_right = 709.0
+margin_bottom = 23.0
+
+[node name="okbutton" type="Button" parent="SpriteTexturePageWindow/VBoxContainer/HBoxContainer2/HBoxContainer2"]
+margin_right = 25.0
+margin_bottom = 23.0
+custom_styles/normal = ExtResource( 4 )
+text = "OK"
+
+[node name="ImportantPopups" type="ColorRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0352941, 0.0196078, 0.0509804, 0.317647 )
+script = ExtResource( 36 )
+
+[node name="ExtractResourceDialog" type="FileDialog" parent="ImportantPopups"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 188.0
+margin_top = 122.0
+margin_right = -225.0
+margin_bottom = -120.0
+popup_exclusive = true
+window_title = "Extract Resource to a File"
+resizable = true
+mode_overrides_title = false
+access = 2
+current_dir = "/Users/caleb/Godot/Projects/HLMWadEditor"
+current_path = "/Users/caleb/Godot/Projects/HLMWadEditor/"
+script = ExtResource( 22 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="AddResourceDialog" type="FileDialog" parent="ImportantPopups"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 188.0
+margin_top = 122.0
+margin_right = -225.0
+margin_bottom = -120.0
+popup_exclusive = true
+window_title = "Add a Resource to Patchwad"
+resizable = true
+mode_overrides_title = false
+mode = 0
+access = 2
+filters = PoolStringArray( "*.meta", "*.gmeta" )
+current_dir = "/Users/caleb/Godot/Projects/HLMWadEditor"
+current_path = "/Users/caleb/Godot/Projects/HLMWadEditor/"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ExportSpriteStripDialog" type="FileDialog" parent="ImportantPopups"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 238.0
+margin_top = 136.0
+margin_right = -225.0
+margin_bottom = -114.0
+popup_exclusive = true
+window_title = "Export Sprite Strip"
+resizable = true
+mode_overrides_title = false
+access = 2
+filters = PoolStringArray( "*.png" )
+current_dir = "/Users/caleb/Godot/Projects/HLMWadEditor"
+current_path = "/Users/caleb/Godot/Projects/HLMWadEditor/"
+script = ExtResource( 33 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ImportSpriteStripDialog" type="FileDialog" parent="ImportantPopups"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 245.0
+margin_top = 138.0
+margin_right = -269.0
+margin_bottom = -132.0
+popup_exclusive = true
+window_title = "Open a File"
+resizable = true
+mode_overrides_title = false
+mode = 0
+access = 2
+filters = PoolStringArray( "*.png" )
+current_dir = "/Users/caleb/Godot/Projects/HLMWadEditor"
+current_path = "/Users/caleb/Godot/Projects/HLMWadEditor/"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ImportSpriteStripSliceDialog" type="WindowDialog" parent="ImportantPopups"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 313.44
+margin_top = 135.321
+margin_right = -309.56
+margin_bottom = -178.679
+popup_exclusive = true
+window_title = "Import Sprite Strip"
+resizable = true
+script = ExtResource( 35 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="TextureRect" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer"]
+self_modulate = Color( 0.560784, 0.568627, 0.588235, 1 )
+margin_right = 649.0
+margin_bottom = 411.0
+rect_clip_content = true
+size_flags_vertical = 3
+texture = ExtResource( 5 )
+stretch_mode = 2
+
+[node name="ImportSpriteStripPreview" type="TextureRect" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 6
+script = ExtResource( 34 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer"]
+margin_top = 415.0
+margin_right = 649.0
+margin_bottom = 446.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer"]
+margin_right = 213.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer"]
+margin_left = 217.0
+margin_right = 431.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2"]
+margin_left = 20.0
+margin_right = 194.0
+margin_bottom = 31.0
+custom_styles/panel = ExtResource( 4 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 171.0
+margin_bottom = 28.0
+
+[node name="Label" type="Label" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer"]
+margin_right = 88.0
+margin_bottom = 25.0
+text = "Frame Count"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpinBox" type="SpinBox" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer"]
+margin_left = 92.0
+margin_right = 168.0
+margin_bottom = 25.0
+min_value = 1.0
+max_value = 255.0
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer"]
+margin_left = 435.0
+margin_right = 649.0
+margin_bottom = 31.0
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="Button" type="Button" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer3"]
+margin_left = 159.0
+margin_right = 214.0
+margin_bottom = 31.0
+rect_min_size = Vector2( 55, 0 )
+custom_styles/normal = ExtResource( 4 )
+text = "Import"
+
+[connection signal="text_changed" from="Main/PanelContainer/HBoxContainer/VBoxContainer/SearchBar" to="Main/PanelContainer/HBoxContainer/VBoxContainer/SearchBar" method="_on_SearchBar_text_changed"]
+[connection signal="text_entered" from="Main/PanelContainer/HBoxContainer/VBoxContainer/SearchBar" to="." method="_on_SearchBar_text_entered"]
+[connection signal="item_selected" from="Main/PanelContainer/HBoxContainer/VBoxContainer/AssetTree" to="Main/PanelContainer/HBoxContainer/VBoxContainer/AssetTree" method="_on_Tree_item_selected"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HBoxContainer/RecalculateSheetButton" to="." method="_on_RecalculateSheetButton_pressed"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HBoxContainer/ExportSpriteStripButton" to="." method="_on_ExportSpriteStripButton_pressed"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HBoxContainer/importSpriteStripButton" to="." method="_on_importSpriteStripButton_pressed"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/VBoxContainer/Panel/Button" to="SpriteTexturePageWindow" method="_on_Button_pressed"]
+[connection signal="item_selected" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/VBoxContainer/SpriteList" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_SpriteList_item_selected"]
+[connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_SpriteTextureRect_gui_input"]
+[connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/Panel/HBoxContainer/XOriginInput" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_XOriginInput_value_changed"]
+[connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/Panel/HBoxContainer/YOriginInput" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_YOriginInput_value_changed"]
+[connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/FpsSpinBox" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FpsSpinBox_value_changed"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FrameBackTrackButton_pressed"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_FrameBackTrackButton_pressed"]
+[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_PausePlayButton_toggled"]
+[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_PausePlayButton_toggled"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FrameAdvanceButton_pressed"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_FrameAdvanceButton_pressed"]
+[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Right/Button" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_Button_toggled"]
+[connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline/TimelineSlider" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline/TimelineSlider" method="_on_TimelineSlider_gui_input"]
+[connection signal="tween_all_completed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline/TimelineSlider/Tween" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_Tween_tween_all_completed"]
+[connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor/TabContainer2/Advanced/RoomTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor/TabContainer2/Advanced/RoomTree" method="_on_RoomTree_gui_input"]
+[connection signal="item_edited" from="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor/TabContainer2/Advanced/RoomTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor" method="_on_RoomTree_item_edited"]
+[connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Sprite/SpriteEditor/TabContainer2/Advanced/SpriteTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Sprite/SpriteEditor/TabContainer2/Advanced/SpriteTree" method="_on_SpriteTree_gui_input"]
+[connection signal="item_edited" from="Main/PanelContainer/HBoxContainer/TabContainer/Sprite/SpriteEditor/TabContainer2/Advanced/SpriteTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Sprite/SpriteEditor" method="_on_SpriteTree_item_edited"]
+[connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Backgrounds/BackgroundEditor/TabContainer2/Advanced/BackgroundTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Backgrounds/BackgroundEditor/TabContainer2/Advanced/BackgroundTree" method="_on_SpriteTree_gui_input"]
+[connection signal="item_edited" from="Main/PanelContainer/HBoxContainer/TabContainer/Backgrounds/BackgroundEditor/TabContainer2/Advanced/BackgroundTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Backgrounds/BackgroundEditor" method="_on_BackgroundTree_item_edited"]
+[connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor/TabContainer2/Advanced/ObjectTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor/TabContainer2/Advanced/ObjectTree" method="_on_ObjectTree_gui_input"]
+[connection signal="item_edited" from="Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor/TabContainer2/Advanced/ObjectTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor" method="_on_ObjectTree_item_edited"]
+[connection signal="file_selected" from="ImportantPopups/ExtractResourceDialog" to="ImportantPopups/ExtractResourceDialog" method="_on_ExtractResourceDialog_file_selected"]
+[connection signal="popup_hide" from="ImportantPopups/ExtractResourceDialog" to="ImportantPopups" method="_on_ExtractResourceDialog_popup_hide"]
+[connection signal="file_selected" from="ImportantPopups/AddResourceDialog" to="." method="_on_AddResourceDialog_file_selected"]
+[connection signal="popup_hide" from="ImportantPopups/AddResourceDialog" to="ImportantPopups" method="_on_ExtractResourceDialog_popup_hide"]
+[connection signal="file_selected" from="ImportantPopups/ExportSpriteStripDialog" to="ImportantPopups/ExportSpriteStripDialog" method="_on_ExportSpriteStripDialog_file_selected"]
+[connection signal="popup_hide" from="ImportantPopups/ExportSpriteStripDialog" to="ImportantPopups" method="_on_ExportSpriteStripDialog_popup_hide"]
+[connection signal="file_selected" from="ImportantPopups/ImportSpriteStripDialog" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_ImportSpriteStripDialog_file_selected"]
+[connection signal="popup_hide" from="ImportantPopups/ImportSpriteStripSliceDialog" to="ImportantPopups" method="_on_ImportSpriteStripSliceDialog_popup_hide"]
+[connection signal="gui_input" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/Panel/ImportSpriteStripPreview" to="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/Panel/ImportSpriteStripPreview" method="_on_SpriteTextureRect_gui_input"]
+[connection signal="value_changed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/SpinBox" to="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/Panel/ImportSpriteStripPreview" method="_on_SpinBox_value_changed"]
+[connection signal="value_changed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/SpinBox" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_SpinBox_value_changed"]
+[connection signal="pressed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer3/Button" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_Button_pressed"]
