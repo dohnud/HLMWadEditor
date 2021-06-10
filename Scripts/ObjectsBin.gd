@@ -2,6 +2,7 @@ extends BinParser
 
 class_name ObjectsBin
 
+const file_path = 'GL/hlm2_objects.bin'
 const obj = {
 #			'nameindex' : object_name_indicies[id],
 	'id' : '32',

@@ -76,7 +76,11 @@ func create_path(path:String, bold=false, current_dir=directory_dict):
 		return create_path(path.substr(slice+1), bold, current_dir['contents'][folder])
 	else:
 		var text = path
-		var treeitem :TreeItem = create_item(current_dir['parent'])
+		var treeitem : TreeItem = null
+		if current_dir['contents'].has(path):
+			treeitem = current_dir['contents'][path]
+		else:
+			treeitem = create_item(current_dir['parent'])
 		if bold:
 			treeitem.set_cell_mode(0,TreeItem.CELL_MODE_CUSTOM)
 #			treeitem.set_text(0, text)
@@ -86,6 +90,7 @@ func create_path(path:String, bold=false, current_dir=directory_dict):
 		else:
 			treeitem.set_text(0, text)
 		treeitem.set_editable(0, false)
+		current_dir['contents'][path] = treeitem
 		return treeitem
 
 func bold_treeitem_draw(treeitem:TreeItem, rect:Rect2):

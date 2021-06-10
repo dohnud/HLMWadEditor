@@ -18,7 +18,8 @@ func _ready():
 
 func set_room(room_name):
 	room_tree.reset()
-	rooms = app.base_wad.roombin
+#	rooms = app.base_wad.roombin
+	rooms = app.base_wad.get_bin(RoomsBin.file_path)
 	room = rooms.room_data[room_name]
 	room_tree.create_dict(room)
 	$"TabContainer2/Room View/TextureRect/Control".room = room

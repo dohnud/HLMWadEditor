@@ -70,7 +70,10 @@ func parse_type(f, type):
 	elif type == '16':
 		return f.get_16()
 	if type == '32':
-		return f.get_32()
+		var v = f.get_32()
+		if v == 1447:
+			var stop = true
+		return v
 	if type == '64':
 		return f.get_64()
 	elif type == 's32':

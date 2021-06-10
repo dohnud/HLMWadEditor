@@ -2,6 +2,7 @@ extends BinParser
 
 class_name SpritesBin
 
+const file_path = 'GL/hlm2_sprites.bin'
 var sprite_data = {}
 var sprites = {}
 var sprite_indicies = []

@@ -9,12 +9,20 @@ var content_offset = -1
 var content_size
 
 var sprite_data = {}
-var spritebin = null
+var spritebin = null setget , spritebin_g
+func spritebin_g():
+	return get_bin(SpritesBin.file_path)
 var object_data = {}
-var objectbin = null
+var objectbin = null setget , objectbin_g
+func objectbin_g():
+	return get_bin(ObjectsBin.file_path)
 var max_object_index = -1
-var roombin = null
-var backgroundbin = null
+var roombin = null setget , roombin_g
+func roombin_g():
+	return get_bin(RoomsBin.file_path)
+var backgroundbin = null setget , bgbin_g
+func bgbin_g():
+	return get_bin(BackgroundsBin.file_path)
 
 var loaded_sheets = {}
 var loaded_atlases = {}
@@ -163,6 +171,9 @@ func sprite_sheet(asset, lazy=0):
 		asset = lazy_find(asset)
 	if asset in loaded_sheets.keys():
 		return loaded_sheets[asset]
+	for p in patchwad_list:
+		if p.exists(asset):
+			return p.sprite_sheet(asset)
 	var img = Image.new()
 	img.load_png_from_buffer(get(asset))
 	var tex = ImageTexture.new()
@@ -313,6 +324,9 @@ func parse_meta(asset, lazy=0):
 		asset = lazy_find(asset)
 	if asset in loaded_metas.keys():
 		return loaded_metas[asset]
+	for p in patchwad_list:
+		if p.exists(asset):
+			return p.parse_meta(asset)
 	var tex = sprite_sheet(asset.replace(".meta", ".png"), lazy)
 
 	var meta = Meta.new()
@@ -325,7 +339,7 @@ func parse_sprite_data():
 	var asset = 'GL/hlm2_sprites.bin'
 	for p in patchwad_list:
 		if p.exists(asset):
-			return p.parse_rooms(asset)
+			return p.parse_sprite_data(asset)
 	var size = goto(asset)
 	var r = SpritesBin.new()
 	r.parse(self)
@@ -465,7 +479,7 @@ func parse_backgrounds():
 	var asset = 'GL/hlm2_backgrounds.bin'
 	for p in patchwad_list:
 		if p.exists(asset):
-			return p.parse_rooms(asset)
+			return p.parse_backgrounds(asset)
 	var size = goto(asset)
 	var b = BackgroundsBin.new()
 	b.parse(self)
@@ -476,6 +490,17 @@ func parse_backgrounds():
 func get_bin(asset):
 	if loaded_bins.has(asset):
 		return loaded_bins[asset]
+	for p in patchwad_list:
+		if p.exists(asset):
+			return p.get_bin(asset)
+	if asset == SpritesBin.file_path:
+		return parse_sprite_data()
+	elif asset == ObjectsBin.file_path:
+		return parse_objects()
+	elif asset == RoomsBin.file_path:
+		return parse_rooms()
+	elif asset == BackgroundsBin.file_path:
+		return parse_backgrounds()
 	return null
 
 func write_objects():

@@ -56,15 +56,14 @@ func _on_Tree_item_edited(deleted=0):
 			if int(value[0]) and int(value[1]):
 				v = Vector2(int(value[0]), int(value[1]))
 				vs = str(v)
-		elif d[last_k] is int and int(value): # ex: depth
-			v = int(value)
-			vs = value
 #		elif d[last_k] is int: # value is String implied
 		else:
-			print(value)
 			var l = parse_new_value(last_k, d[last_k], value)
 			v = l[0]
 			vs = l[1]
+		if d[last_k] is int and (vs == '0' or can_be_int_fuck_you_godot(vs)): # ex: depth
+			print(vs,' ',int(vs))
+			v = int(vs)
 		if v != d[last_k]:
 			d[last_k] = v
 			app.base_wad.changed_files[file] = bin
@@ -77,5 +76,12 @@ func _on_Tree_item_edited(deleted=0):
 	elif deleted == 2:
 		pass
 
+func can_be_int_fuck_you_godot(string:String):
+	string = string.replace(' ', '')
+	if string == '0': return 0
+	for c in string:
+		if c > ord('A')-1 or c < ord('Z')-1:
+			return 0
+	return int(string)
 #func change_order(_room, new_next, new_previous):
 #	sprites.sprite

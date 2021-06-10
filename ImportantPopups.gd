@@ -26,3 +26,6 @@ func _on_ExportSpriteStripDialog_popup_hide():
 
 func _on_ImportSpriteStripSliceDialog_popup_hide():
 	hide()
+
+func _on_OpenPatchDialog_popup_hide():
+	hide()

@@ -9,7 +9,7 @@ export(NodePath) var background_editor_node
 export(NodePath) var object_editor_node
 export(NodePath) var editor_tabs
 
-var base_wad = null
+var base_wad :Wad = null
 var base_wad_path = ''
 var recent_patches = []
 
@@ -51,20 +51,21 @@ func open_wad(file_path):
 		var o :ObjectsBin= wad.parse_objects()
 		var r :RoomsBin = wad.parse_rooms()
 		var b :BackgroundsBin = wad.parse_backgrounds()
-		var files = wad.new_files.keys()
-		files += wad.file_locations.keys()
-		for file in files:
-			if "Atlas" in file and (".meta" in file or ".gmeta" in file):
-				asset_tree.create_path(file)
-		for sprite_name in s.sprite_data.keys():
-			asset_tree.create_path('Sprites/' + sprite_name)
-		for background_name in b.background_data.keys():
-			asset_tree.create_path('Backgrounds/' + background_name)
-		for object_name in o.object_data.keys():
-			asset_tree.create_path('Objects/' + object_name)
-		for room_name in r.room_data.keys():
-			asset_tree.create_path('Rooms/' + room_name)
 		base_wad = wad
+		_on_SearchBar_text_entered('')
+#		var files = wad.new_files.keys()
+#		files += wad.file_locations.keys()
+#		for file in files:
+#			if "Atlas" in file and (".meta" in file or ".gmeta" in file):
+#				asset_tree.create_path(file)
+#		for sprite_name in s.sprite_data.keys():
+#			asset_tree.create_path('Sprites/' + sprite_name)
+#		for background_name in b.background_data.keys():
+#			asset_tree.create_path('Backgrounds/' + background_name)
+#		for object_name in o.object_data.keys():
+#			asset_tree.create_path('Objects/' + object_name)
+#		for room_name in r.room_data.keys():
+#			asset_tree.create_path('Rooms/' + room_name)
 
 func open_asset(asset_path):
 	selected_asset_list_path = asset_path
@@ -97,29 +98,72 @@ func open_asset(asset_path):
 func open_file_dialog(name, filter, oncomplete):
 	pass
 
+func open_patchwad(file_path):
+	var pwad = Wad.new()
+	if !pwad.open(file_path, File.READ_WRITE):
+		pwad.parse_header()
+		base_wad.patchwad_list = []
+		base_wad.patch(pwad)
+		OS.set_window_title('HLMWadEditor - ' + file_path)
 
 func _on_SearchBar_text_entered(new_text):
 	asset_tree.reset()
 	if new_text == '':
-		var s :SpritesBin= base_wad.spritebin
-		var o :ObjectsBin= base_wad.objectbin
-		var r :RoomsBin = base_wad.roombin
-		var b :BackgroundsBin = base_wad.backgroundbin
+		var s :SpritesBin = null
+		var sn = false
+		var o :ObjectsBin = null
+		var on = false
+		var r :RoomsBin = null
+		var rn = false
+		var b :BackgroundsBin = null
+		var bn = false
+		s = base_wad.spritebin
+		o = base_wad.objectbin
+		r = base_wad.roombin
+		b = base_wad.backgroundbin
 		for file in base_wad.new_files.keys():
 			if "Atlas" == file.substr(0,len('Atlas')) and (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
 				asset_tree.create_path(file, 1)
+			if file == SpritesBin.file_path:
+				s = base_wad.new_files[file]
+				sn = true
+			if file == ObjectsBin.file_path:
+				o = base_wad.new_files[file]
+				on = true
+			if file == RoomsBin.file_path:
+				r = base_wad.new_files[file]
+				rn = true
+			if file == BackgroundsBin.file_path:
+				b = base_wad.new_files[file]
+				bn = true
 		if show_base_wad:
 			for file in base_wad.file_locations.keys():
 				if "Atlas" == file.substr(0,len('Atlas')) and (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
 					asset_tree.create_path(file)
+		for p in base_wad.patchwad_list:
+			for file in p.file_locations.keys():
+				if "Atlas" == file.substr(0,len('Atlas')) and (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
+					asset_tree.create_path(file, 1)
+				if file == SpritesBin.file_path:
+					sn = true
+				if file == ObjectsBin.file_path:
+					on = true
+				if file == RoomsBin.file_path:
+					rn = true
+				if file == BackgroundsBin.file_path:
+					bn = true
+		if s and (show_base_wad or sn):
 			for sprite_name in s.sprite_data.keys():
-				asset_tree.create_path('Sprites/' + sprite_name)
+				asset_tree.create_path('Sprites/' + sprite_name, sn)
+		if b and (show_base_wad or bn):
 			for background_name in b.background_data.keys():
-				asset_tree.create_path('Backgrounds/' + background_name)
+				asset_tree.create_path('Backgrounds/' + background_name, bn)
+		if o and (show_base_wad or on):
 			for object_name in o.object_data.keys():
-				asset_tree.create_path('Objects/' + object_name)
+				asset_tree.create_path('Objects/' + object_name, on)
+		if r and (show_base_wad or rn):
 			for room_name in r.room_data.keys():
-				asset_tree.create_path('Rooms/' + room_name)
+				asset_tree.create_path('Rooms/' + room_name, rn)
 		return
 #		op
 	else:
@@ -185,4 +229,9 @@ func _on_importSpriteStripButton_pressed():
 
 func _on_AddResourceDialog_file_selected(path):
 	base_wad.add_file(path)
+	_on_SearchBar_text_entered('')
+
+
+func _on_OpenPatchDialog_file_selected(path):
+	open_patchwad(path)
 	_on_SearchBar_text_entered('')

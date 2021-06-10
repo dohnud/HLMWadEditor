@@ -20,7 +20,8 @@ func _ready():
 
 func set_sprite(sprite_name):
 	sprite_tree.reset()
-	sprites = app.base_wad.spritebin
+#	sprites = app.base_wad.spritebin
+	sprites = app.base_wad.get_bin(SpritesBin.file_path)
 	bin = sprites
 	sprite = sprites.sprite_data[sprite_name]
 	sprite_tree.create_dict(sprite)

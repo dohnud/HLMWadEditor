@@ -10,13 +10,14 @@ onready var frame_number_node = $HSplitContainer/TabContainer/Preview/VBoxContai
 onready var origin_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/Panel
 onready var xorigin_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/Panel/HBoxContainer/XOriginInput
 onready var yorigin_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/Panel/HBoxContainer/YOriginInput
-onready var fps_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/FpsSpinBox
+#onready var fps_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/FpsSpinBox
+onready var fps_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer/HBoxContainer/FpsSpinBox
 onready var timeline = $HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline/TimelineSlider
 onready var pause_button_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton
 
 
 var meta : Meta = Meta.new()
-var current_sprite = 'default'
+var current_sprite = ''
 var mode = 0
 
 var thread = null
@@ -103,20 +104,20 @@ func _on_Button_toggled(button_pressed):
 	timeline.tween.repeat = button_pressed
 
 func _on_XOriginInput_value_changed(value):
-	if meta.is_gmeta:
-		value = int(value * xorigin_node.max_value)
-		meta.center_norms[current_sprite].x = value
-	else:
-		app.base_wad.sprite_data[current_sprite]['center'].x = value
-	app.base_wad.changed_files['GL/hlm2_sprites.bin'] = app.base_wad.spritebin
+#	if meta.is_gmeta:
+#		#value = int(value * xorigin_node.max_value)
+#		meta.center_norms[current_sprite].x = value
+#	else:
+#		app.base_wad.sprite_data[current_sprite]['center'].x = value
+#	app.base_wad.changed_files['GL/hlm2_sprites.bin'] = app.base_wad.spritebin
 	frametexturerect.origin_pos.x = value
 	frametexturerect.update()
 func _on_YOriginInput_value_changed(value):
-	if meta.is_gmeta:
-		value = int(value * yorigin_node.max_value)
-		meta.center_norms[current_sprite].y = value
-	else:
-		app.base_wad.sprite_data[current_sprite]['center'].y = value
+#	if meta.is_gmeta:
+#		#value = int(value * yorigin_node.max_value)
+#		meta.center_norms[current_sprite].y = value
+#	else:
+#		app.base_wad.sprite_data[current_sprite]['center'].y = value
 	frametexturerect.origin_pos.y = value
 	frametexturerect.update()
 

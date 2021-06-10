@@ -2,6 +2,7 @@ extends BinParser
 
 class_name BackgroundsBin
 
+const file_path = 'GL/hlm2_backgrounds.bin'
 var background_data = {}
 var background_indicies = []
 var background_names = {}

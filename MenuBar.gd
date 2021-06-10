@@ -23,7 +23,7 @@ var operations = {
 	],
 	"ViewButton" : [
 		["Toggle Asset List", [KEY_CONTROL, KEY_H], 'toggleassetlist'],
-		["Show New Files Only", [], 'togglenewfileslist'],
+		["Show Modified Files", ['TOGGLE'], 'togglenewfileslist'],
 	],
 #	"MetaButton" : [
 #		["Toggle Bounding Box", [], 'togglemetaboundingbox'],
@@ -40,18 +40,25 @@ func _ready():
 		for item in operations[op]:
 			if len(item) == 0:
 				p.add_separator('')
-			elif len(item[1]) == 1:
-				var s = item[0]
-				var np = item[1][0]
-				np.set_name(s)
-				np.connect('id_pressed', self, item[2])
-				for recent in get_tree().get_nodes_in_group('App')[0].recent_patches:
-					np.add_item('.../' + recent.get_file())
-				p.add_child(np)
-				p.add_submenu_item(item[0], s)
+			elif len(item[1]) > 0:
+				if item[1][0] is PopupMenu:
+					var s = item[0]
+					var np = item[1][0]
+					np.set_name(s)
+					np.connect('id_pressed', self, item[2])
+					for recent in get_tree().get_nodes_in_group('App')[0].recent_patches:
+						np.add_item('.../' + recent.get_file())
+					p.add_child(np)
+					p.add_submenu_item(item[0], s)
+				elif item[1][0] is String and item[1][0] == 'TOGGLE':
+					p.add_item(item[0], i)
+					p.set_item_as_checkable(i, false)
+				else:
+					p.add_item(item[0], i)
+					p.set_item_shortcut(i, set_shortcut(item[1]))
 			else:
 				p.add_item(item[0], i)
-				p.set_item_shortcut(i, set_shortcut(item[1]))
+				
 			i += 1
 
 # Function that makes a shortcut
@@ -78,7 +85,9 @@ func openrecentpatch(id):
 	print(id)
 
 func openpatch():
-	pass
+	var w :FileDialog= app.get_node("ImportantPopups/OpenPatchDialog")
+	app.get_node("ImportantPopups").show()
+	w.popup()
 	
 func savepatch():
 	pass
