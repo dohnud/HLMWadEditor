@@ -63,22 +63,29 @@ func parse_header():
 		#file_list.append(file_name)
 		
 	# parse directories (unused but maybe useful later?)
+	var debug = File.new()
+	debug.open('debug.txt', File.WRITE)
 	var come_back = get_position()
 	var _num_dirs = get_32()
 	for _i in range(_num_dirs):
 		var _dir_name_l = get_32()
-		var _dir_name = get_buffer(_dir_name_l)#.get_string_from_ascii()
+		var _dir_name = get_buffer(_dir_name_l).get_string_from_ascii()
+		debug.store_string('+'+_dir_name+'\n')
 		var _num_entries = get_32()
 		for _j in range(_num_entries):
 			var _entry_name_l = get_32()
-			var _entry_name = get_buffer(_entry_name_l)
+			var _entry_name = get_buffer(_entry_name_l).get_string_from_ascii()
+			debug.store_string(' '+_entry_name+' ')
 			var _entry_type = get_8()
+			debug.store_string(str(_entry_type)+'\n')
 	var _dir_end = get_position()
 	seek(come_back)
 	obselete_directory = get_buffer(_dir_end - come_back)
 	
 	# raw file data starts here
 	content_offset = get_position()
+	
+	patchwad_list = [get_script().new()]
 
 func write_wad(file_pointer):
 	var f = file_pointer
@@ -136,9 +143,11 @@ func add_file(file_path):
 	return null
 #func write_patch(file_pointer):
 #
+func add_file_data(file_path, file_data):
+	new_files[file_path] = file_data
 
 func exists(asset_name):
-	return asset_name in file_locations.keys()
+	return file_locations.has(asset_name)
 
 func lazy_find(asset_name):
 	for k in file_locations.keys():
@@ -157,6 +166,17 @@ func goto(asset):
 func get(asset):
 	return get_buffer(goto(asset))
 
+func open_asset(asset_path):
+	if '.meta' in asset_path:
+		return parse_meta(asset_path)
+	if '.gmeta' in asset_path:
+		return parse_meta(asset_path)
+	if '.png' in asset_path:
+		return sprite_sheet(asset_path)
+	if '.bin' in asset_path:
+		return get_bin(asset_path)
+	return null
+
 func apply_patchwad(f):
 	var patchwad = get_script().new()
 	patchwad.open(f, File.READ)
@@ -165,15 +185,17 @@ func apply_patchwad(f):
 
 func patch(wad):
 	patchwad_list.append(wad)
+	for f in wad.file_locations.keys():
+		changed_files[f] = open_asset(f)
 
 func sprite_sheet(asset, lazy=0):
 	if lazy:
 		asset = lazy_find(asset)
-	if asset in loaded_sheets.keys():
-		return loaded_sheets[asset]
 	for p in patchwad_list:
 		if p.exists(asset):
 			return p.sprite_sheet(asset)
+	if asset in loaded_sheets.keys():
+		return loaded_sheets[asset]
 	var img = Image.new()
 	img.load_png_from_buffer(get(asset))
 	var tex = ImageTexture.new()
@@ -322,12 +344,21 @@ func byte_array_to_int(bytes):
 func parse_meta(asset, lazy=0):
 	if lazy:
 		asset = lazy_find(asset)
-	if asset in loaded_metas.keys():
-		return loaded_metas[asset]
 	for p in patchwad_list:
 		if p.exists(asset):
 			return p.parse_meta(asset)
-	var tex = sprite_sheet(asset.replace(".meta", ".png"), lazy)
+	var tex = null
+	if ".meta" in asset:
+		tex = sprite_sheet(asset.replace(".meta", ".png"))
+	elif '.gmeta' in asset:
+		tex = sprite_sheet(asset.replace(".gmeta", ".png"))		
+	if asset in loaded_metas.keys():
+		loaded_metas[asset].texture_page.set_data(tex.get_data())
+#		var s :SpriteFrames= loaded_metas[asset].sprites
+#		for a in s.animations:
+#			for f in a['frames']:
+#				f.atlas = tex
+		return loaded_metas[asset]
 
 	var meta = Meta.new()
 	var size = goto(asset)
@@ -340,6 +371,7 @@ func parse_sprite_data():
 	for p in patchwad_list:
 		if p.exists(asset):
 			return p.parse_sprite_data(asset)
+	if !exists(asset):return null
 	var size = goto(asset)
 	var r = SpritesBin.new()
 	r.parse(self)
@@ -468,6 +500,7 @@ func parse_rooms():
 	for p in patchwad_list:
 		if p.exists(asset):
 			return p.parse_rooms(asset)
+	if !exists(asset):return null
 	var size = goto(asset)
 	var o = RoomsBin.new()
 	o.parse(self)
@@ -488,11 +521,12 @@ func parse_backgrounds():
 	return b
 
 func get_bin(asset):
-	if loaded_bins.has(asset):
-		return loaded_bins[asset]
 	for p in patchwad_list:
 		if p.exists(asset):
 			return p.get_bin(asset)
+	if loaded_bins.has(asset):
+		return loaded_bins[asset]
+	if !exists(asset):return null
 	if asset == SpritesBin.file_path:
 		return parse_sprite_data()
 	elif asset == ObjectsBin.file_path:
@@ -503,36 +537,13 @@ func get_bin(asset):
 		return parse_backgrounds()
 	return null
 
-func write_objects():
-	var file_start = get_position()
-	var num_objects = max_object_index+1
-	var actual_num_objects = len(object_data.keys())
-	store_32(num_objects)
-	# write silly header
-	for i in range(num_objects):
-		if i < actual_num_objects:
-			store_32(i)
-		else:
-			store_32(0xFFffFFff)
-	# write objects :D
-	for k in object_data.keys():
-		store_32(object_data[k]['id'])
-		store_32(object_data[k]['sprite'])# : get_s32(),
-		store_32(object_data[k]['depth'])# : get_s32(),
-		store_32(object_data[k]['parent'])# : get_s32(),
-		store_32(object_data[k]['masksprite'])# : get_s32(),
-		store_32(object_data[k]['solid'])# : get_32(),
-		store_32(object_data[k]['visible'])# : get_32(),
-		store_32(object_data[k]['persistent'])# : get_32(),
-		store_64(object_data[k]['priority'])# : get_64(),
-		store_32(object_data[k]['sprite name pos'])# : get_32()
-	var object_name_list_start = get_position()
-	store_32(0)
-	var object_name_list_size = actual_num_objects
-	for k in object_data.keys():
-		store_buffer(PoolByteArray(k.to_ascii()))
-		object_name_list_size += len(k)
-	seek(object_name_list_start)
-	store_32(object_name_list_size)
-	
-	var file_end = get_position()
+func parse_orginal_meta(asset, lazy=0):
+	if lazy:
+		asset = lazy_find(asset)
+	var tex = sprite_sheet(asset.replace(".meta", ".png"))
+
+	var meta = Meta.new()
+	var size = goto(asset)
+	meta.parse(self, size, tex)
+	loaded_metas[asset] = meta
+	return meta

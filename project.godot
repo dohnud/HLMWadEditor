@@ -70,13 +70,22 @@ _global_script_class_icons={
 
 config/name="HLMWadEditor"
 run/main_scene="res://App.tscn"
+boot_splash/image="res://icon1.png"
+boot_splash/use_filter=false
+boot_splash/bg_color=Color( 0.066, 0.0792, 0.11, 1 )
 config/icon="res://icon1.png"
 
 [display]
 
 window/size/width=1280
 window/size/height=768
+window/dpi/allow_hidpi=true
 window/vsync/use_vsync=false
+window/energy_saving/keep_screen_on=false
+
+[gui]
+
+theme/use_hidpi=true
 
 [input]
 
@@ -91,10 +100,24 @@ ui_delete={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":true,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777220,"unicode":0,"echo":false,"script":null)
  ]
 }
+ui_spacebar={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"unicode":0,"echo":false,"script":null)
+ ]
+}
+
+[logging]
+
+file_logging/log_path="user://.logs/godot.log"
 
 [rendering]
 
 quality/driver/driver_name="GLES2"
+quality/intended_usage/framebuffer_allocation=0
+threads/thread_model=2
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
+quality/reflections/texture_array_reflections=false
+quality/depth_prepass/enable=false
+quality/depth/hdr=false
 environment/default_environment="res://default_env.tres"

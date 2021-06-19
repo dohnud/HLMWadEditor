@@ -4,3 +4,8 @@
 *.gmeta
 *.patchwad
 *.wad
+config.txt
+*.txt
+.DS_Store
+mods/
+.import/

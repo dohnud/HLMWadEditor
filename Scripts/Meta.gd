@@ -19,6 +19,7 @@ class_name Meta
 var sprites = SpriteFrames.new()
 var texture_page = null
 signal resolve_progress
+var needs_recalc = false
 var is_gmeta = false
 var center_norms = {}
 
@@ -235,12 +236,24 @@ func resolve(userdata):
 	var image_width = spritesheet.get_width()
 	var image_height = 1
 	var dest_image :Image = Image.new()
-	var masq_image :Image = Image.new()
-	var new_spritesheet = ImageTexture.new()
+	if !needs_recalc:
+		dest_image.create(image_width, spritesheet.get_height(), false, Image.FORMAT_RGBA8)
+		for a in animatedsprite.get_animation_names():
+			for i in animatedsprite.get_frame_count(a):
+				var f = animatedsprite.get_frame(a,i)
+				dest_image.blit_rect(f.atlas.get_data(), f.region, f.region.position)
+		dest_image.save_png('temp_sheet.png')
+		texture_page.set_data(dest_image)
+		return
 	dest_image.create(image_width, image_height, false, Image.FORMAT_RGBA8)
 	dest_image.lock()
+	var masq_image :Image = Image.new()
 	masq_image.create(image_width, image_height, false, Image.FORMAT_RGBA8)
 	masq_image.lock()
+	var new_spritesheet = ImageTexture.new()
+	var masq_square = Image.new()
+	masq_square.create(1,1,false,Image.FORMAT_RGBA8)
+	masq_square.fill(Color(1,0,0,1))
 	var dest_size = Vector2(image_width, 1)
 	
 	var p = 0
@@ -273,9 +286,15 @@ func resolve(userdata):
 							if !valid: break
 					if valid:
 						dest_image.blit_rect(frame.atlas.get_data(), frame.region, Vector2(tx,ty))
-						for ity in range(idy):
-							for itx in range(idx):
-								masq_image.set_pixel(tx + itx, ty + ity, Color(1,0,0,1))
+						masq_square.unlock()
+#						masq_square.resize(frame.region.size.x, frame.region.size.y, Image.INTERPOLATE_NEAREST)
+						masq_square.crop(frame.region.size.x,frame.region.size.y)
+						masq_square.fill(Color(1,0,0,1))
+						masq_square.lock()
+						masq_image.blit_rect(masq_square, Rect2(Vector2.ZERO,frame.region.size), Vector2(tx,ty))
+#						for ity in range(idy):
+#							for itx in range(idx):
+#								masq_image.set_pixel(tx + itx, ty + ity, Color(1,0,0,1))
 #						print('moving ', sprite_name, frame_index, ': ', frame.region.position, ' -> ', Vector2(tx,ty))
 						frame.region = Rect2(int(tx),int(ty), int(idx-1),int(idy-1))
 #						frame.atlas = new_spritesheet

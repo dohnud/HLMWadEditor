@@ -24,6 +24,7 @@ onready var metaeditor = get_tree().get_nodes_in_group('MetaApp')[0]
 
 func _draw():
 	if !texture:return
+	if !$Gizmos.visible:return
 	var sprite_w = texture.get_width()
 	var window_w = rect_size.x
 	var sprite_h = texture.get_height()
@@ -46,14 +47,25 @@ func _draw():
 	var dy = sprite_h / (sy)
 	draw_rect(Rect2(x,y,dx,dy), color, false, 1)
 	origin_draw_pos = Vector2(x,y) + (origin_pos/Vector2(texture.get_width(),texture.get_height())) * Vector2(dx, dy) - origin_icon.get_size()/2
+	if metaeditor.meta.is_gmeta:
+		var nv = Vector2(origin_pos.x / texture.get_width(), origin_pos.y / texture.get_height())
+		if metaeditor.meta.center_norms[metaeditor.current_sprite] != nv:
+			metaeditor.meta.center_norms[metaeditor.current_sprite] = nv
+			metaeditor.app.base_wad.changed_files[metaeditor.app.selected_asset_name] = metaeditor.meta
+	else:
+		if metaeditor.app.base_wad.sprite_data[metaeditor.current_sprite]['center'] != origin_pos:
+			metaeditor.app.base_wad.sprite_data[metaeditor.current_sprite]['center'] = origin_pos
+			metaeditor.app.base_wad.changed_files['GL/hlm2_sprites.bin'] = metaeditor.app.base_wad.spritebin
 	draw_texture(origin_icon, origin_draw_pos+Vector2.ONE, Color(0,0,0,0.3))
 	draw_texture(origin_icon, origin_draw_pos, icon_modulate)
 	
 var moving = false
 
-func _on_SpriteTextureRect_gui_input(event):
-	var e : InputEvent = event
+func _on_SpriteTextureRect_gui_input(e:InputEvent):
+	if !$Gizmos.visible:return
+#	var e : InputEvent = event
 	if e.is_action_pressed("ui_lmb"):
+		grab_focus()
 		if get_local_mouse_position().distance_squared_to(origin_draw_pos + origin_icon.get_size()/2) < 500:
 			moving = true
 	if e.is_action_released('ui_lmb'):
@@ -88,4 +100,15 @@ func _on_SpriteTextureRect_gui_input(event):
 			metaeditor.xorigin_node.value = origin_pos.x
 			metaeditor.yorigin_node.value = origin_pos.y
 			
+
+func _on_XOriginInput_value_changed(value):
+	origin_pos.x = value
+	update()
+
+func _on_YOriginInput_value_changed(value):
+	origin_pos.y = value
+	update()
+
+func _on_SpriteTextureRect_mouse_exited():
+	moving = false
 

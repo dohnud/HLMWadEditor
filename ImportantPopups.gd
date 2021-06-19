@@ -29,3 +29,11 @@ func _on_ImportSpriteStripSliceDialog_popup_hide():
 
 func _on_OpenPatchDialog_popup_hide():
 	hide()
+
+
+func _on_ImportSpriteStripDialog_popup_hide():
+	hide()
+
+
+func _on_SavePatchDialog_popup_hide():
+	hide()

@@ -23,19 +23,37 @@ var operations = {
 	],
 	"ViewButton" : [
 		["Toggle Asset List", [KEY_CONTROL, KEY_H], 'toggleassetlist'],
-		["Show Modified Files", ['TOGGLE'], 'togglenewfileslist'],
+		["Expand Asset List", ['TOGGLE'], 'expandassetlist'],
+		["Show Only Modified Files", ['TOGGLE'], 'togglenewfileslist'],
 	],
-#	"MetaButton" : [
-#		["Toggle Bounding Box", [], 'togglemetaboundingbox'],
-#		["Toggle Origin Gizmo", [], 'togglemetaorigingizmo'],
-#	]
+	"1MetaButton" : [
+		["Import Sprite Strip", [], 'import_sprite_strip'],
+		["Export Sprite Strip", [], 'export_sprite_strip'],
+		["Export All Sprites", [], 'export_sprite_strips'],
+		[],
+		["Toggle Gizmos", [], 'togglemetagizmos'],
+		[],
+		["Convert to GMeta", [], 'convertmeta'],
+	],
+	"1SpriteSheetButton" : [
+		["Import Sprite Sheet", [], 'importspritesheet'],
+		["Export Sprite Sheet", [], 'exportspritesheet'],
+		[],
+		["Recalculate Sprite Sheet", [], 'recalcspritesheet'],
+	]
 }
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for op in operations.keys():
 		var i = 0
-		var p :PopupMenu= get_node(op).get_popup()
+		var p = null
+		if op[0] >= '0' and op[0] <= '9':
+			p = get_node(op.substr(1))
+			p.visible = false
+		else:
+			p = get_node(op)
+		p = p.get_popup()
 		p.connect('id_pressed', self, "doop", [op])
 		for item in operations[op]:
 			if len(item) == 0:
@@ -52,7 +70,7 @@ func _ready():
 					p.add_submenu_item(item[0], s)
 				elif item[1][0] is String and item[1][0] == 'TOGGLE':
 					p.add_item(item[0], i)
-					p.set_item_as_checkable(i, false)
+					p.set_item_as_checkable(i, true)
 				else:
 					p.add_item(item[0], i)
 					p.set_item_shortcut(i, set_shortcut(item[1]))
@@ -77,6 +95,7 @@ func set_shortcut(keys):
 	return shortcut
 
 func doop(id, op):
+	if (op[0] >= '0' and op[0] <= '9' and !get_node(op.substr(1)).visible): return
 	call(operations[op][id][2])
 	print(id)
 
@@ -88,15 +107,20 @@ func openpatch():
 	var w :FileDialog= app.get_node("ImportantPopups/OpenPatchDialog")
 	app.get_node("ImportantPopups").show()
 	w.popup()
-	
+
 func savepatch():
-	pass
+	var w :FileDialog= app.get_node("ImportantPopups/SavePatchDialog")
+	app.get_node("ImportantPopups").show()
+	w.popup()
 	
 func savepatchas():
 	pass
+
+func importpatch():
+	pass
 	
 func openwad():
-	pass
+	app.get_node("OpenWadDialog").popup()
 	
 func extract():
 	var w :FileDialog= app.get_node("ImportantPopups/ExtractResourceDialog")
@@ -125,7 +149,50 @@ func merge():
 
 func toggleassetlist():
 	app.asset_tree_container.visible = !app.asset_tree_container.visible
+func expandassetlist(t:TreeItem=null):
+	if t == null:
+		t = app.asset_tree.root
+	t.collapsed = false
+	var tc = t.get_children()
+	while tc != null:
+		expandassetlist(tc)
+		tc = tc.get_next()
 
 func togglenewfileslist():
 	app.show_base_wad = !app.show_base_wad
 	app._on_SearchBar_text_entered('')
+
+func togglemetagizmos():
+	app.meta_editor_node.gizmos_node.visible = !app.meta_editor_node.gizmos_node.visible
+	app.meta_editor_node.frametexturerect.update()
+
+func convertmeta():
+	var nm = app.meta_editor_node.meta
+	nm.convert_to_gmeta(app.base_wad.spritebin)
+	var nfn = app.selected_asset_name.replace('.meta','.gmeta')
+#	app.base_wad.changed_files[nfn] = nm
+	app.base_wad.new_files[nfn] = nm
+#	for p in app.base_wad.patchwad_list:
+	app.base_wad.loaded_metas[nfn] = nm
+	app.meta_editor_node.meta = app.base_wad.parse_orginal_meta(app.selected_asset_name)
+#	app._on_SearchBar_text_entered('')
+	app.asset_tree.create_path(nfn,1).select(0)
+
+func export_sprite_strip():
+	app._on_ExportSpriteStripButton_pressed()
+func export_sprite_strips():
+	app.export_sprite_strips()
+func import_sprite_strip():
+	app._on_importSpriteStripButton_pressed()
+func recalcspritesheet():
+	app._on_RecalculateSheetButton_pressed()
+
+#func exportspritesheet():
+#
+
+func _on_TabContainer_tab_changed(tab):
+	for op in operations.keys():
+		if op[0] >= '0' and op[0] <= '9':
+			get_node(op.substr(1)).visible = false
+		if op[0] == str(tab):
+			get_node(op.substr(1)).visible = true
