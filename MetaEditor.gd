@@ -64,7 +64,7 @@ func _on_SpriteList_item_selected(index):
 	frametexturerect.texture = f
 	tex_dimensions_node.text = str(f.get_width()) + ' x ' + str(f.get_height())
 	mode = 0
-	if !app.base_wad.sprite_data.has(sprite_name):
+	if !meta.is_gmeta and !app.base_wad.sprite_data.has(sprite_name):
 		mode = 1
 	timeline.tween.playback_speed = (fps_node.value) / meta.sprites.get_frame_count(current_sprite)
 	#timeline.tween.stop_all()

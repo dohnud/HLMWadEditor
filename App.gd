@@ -52,7 +52,8 @@ func _ready():
 
 func open_wad(file_path):
 	var wad = Wad.new()
-	if !wad.open(file_path, File.READ_WRITE):
+#	file_path = file_path
+	if !wad.opens(file_path, File.READ):
 		wad.parse_header()
 		var s :SpritesBin= wad.parse_sprite_data()
 		var o :ObjectsBin= wad.parse_objects()
@@ -109,7 +110,7 @@ func open_file_dialog(name, filter, oncomplete):
 
 func open_patchwad(file_path):
 	var pwad = Wad.new()
-	if !pwad.open(file_path, File.READ_WRITE):
+	if !pwad.opens(file_path, File.READ_WRITE):
 		pwad.parse_header()
 		base_wad.patchwad_list = []
 		base_wad.patch(pwad)
@@ -244,6 +245,7 @@ func export_sprite_strips():
 #func change_sprite_attr(sprite_name, attr, new_value):
 #	pass
 
+var import_sprite_mode = 0
 func _on_importSpriteStripButton_pressed():
 	var w :FileDialog= get_node("ImportantPopups/ImportSpriteStripDialog")
 	var nw :WindowDialog= get_node("ImportantPopups/ImportSpriteStripSliceDialog")
@@ -333,6 +335,7 @@ func _on_SavePatchDialog_file_selected(path):
 		f.store_64(o)
 		f.seek(c+s)
 	 
+
 
 var fuckyoudirs = {}
 func print_dir(d, i=''):

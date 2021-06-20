@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=2]
+[gd_scene load_steps=78 format=2]
 
 [ext_resource path="res://theme.tres" type="Theme" id=1]
 [ext_resource path="res://insetshadow.tres" type="StyleBox" id=2]
@@ -38,6 +38,8 @@
 [ext_resource path="res://ImportantPopups.gd" type="Script" id=36]
 [ext_resource path="res://RoomDrawer.gd" type="Script" id=37]
 [ext_resource path="res://SpriteTexturePageWindow.gd" type="Script" id=38]
+[ext_resource path="res://SaveGIFDialog2.gd" type="Script" id=39]
+[ext_resource path="res://GmetaWarningDialog.gd" type="Script" id=40]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.12549, 0.152941, 0.211765, 1 )
@@ -94,7 +96,7 @@ corner_radius_bottom_left = 4
 shadow_size = -37
 anti_aliasing = false
 
-[sub_resource type="Image" id=39]
+[sub_resource type="Image" id=38]
 data = {
 "data": PoolByteArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 180, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 222, 222, 222, 70, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 223, 223, 223, 0, 223, 223, 223, 180, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 0, 0, 0, 0, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ),
 "format": "RGBA8",
@@ -106,7 +108,7 @@ data = {
 [sub_resource type="ImageTexture" id=8]
 storage = 1
 lossy_quality = 0.98
-image = SubResource( 39 )
+image = SubResource( 38 )
 size = Vector2( 16, 16 )
 
 [sub_resource type="StyleBoxEmpty" id=9]
@@ -177,7 +179,7 @@ anti_aliasing = false
 
 [sub_resource type="StyleBoxEmpty" id=16]
 
-[sub_resource type="StyleBoxFlat" id=18]
+[sub_resource type="StyleBoxFlat" id=17]
 content_margin_left = 3.0
 content_margin_right = 3.0
 content_margin_top = 3.0
@@ -197,7 +199,7 @@ shadow_size = 5
 shadow_offset = Vector2( 2, 2 )
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id=19]
+[sub_resource type="StyleBoxFlat" id=18]
 content_margin_left = 3.0
 content_margin_right = 3.0
 content_margin_top = 3.0
@@ -211,7 +213,7 @@ shadow_size = 5
 shadow_offset = Vector2( 2, 2 )
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id=20]
+[sub_resource type="StyleBoxFlat" id=19]
 bg_color = Color( 0, 0, 0, 0 )
 corner_radius_top_left = 2
 corner_radius_top_right = 2
@@ -219,15 +221,17 @@ corner_radius_bottom_right = 2
 corner_radius_bottom_left = 2
 anti_aliasing = false
 
-[sub_resource type="StyleBoxEmpty" id=21]
+[sub_resource type="StyleBoxEmpty" id=20]
 content_margin_left = 4.0
 content_margin_right = 4.0
 
-[sub_resource type="InputEventAction" id=22]
+[sub_resource type="InputEventAction" id=21]
 action = "ui_spacebar"
 
-[sub_resource type="ShortCut" id=23]
-shortcut = SubResource( 22 )
+[sub_resource type="ShortCut" id=22]
+shortcut = SubResource( 21 )
+
+[sub_resource type="StyleBoxEmpty" id=23]
 
 [sub_resource type="StyleBoxEmpty" id=24]
 
@@ -235,9 +239,7 @@ shortcut = SubResource( 22 )
 
 [sub_resource type="StyleBoxEmpty" id=26]
 
-[sub_resource type="StyleBoxEmpty" id=27]
-
-[sub_resource type="StyleBoxFlat" id=28]
+[sub_resource type="StyleBoxFlat" id=27]
 content_margin_left = 5.0
 content_margin_right = 4.0
 bg_color = Color( 0.1488, 0.17616, 0.24, 1 )
@@ -252,21 +254,21 @@ corner_radius_bottom_left = 4
 shadow_size = -37
 anti_aliasing = false
 
-[sub_resource type="ImageTexture" id=29]
+[sub_resource type="ImageTexture" id=28]
 
-[sub_resource type="StyleBoxFlat" id=30]
+[sub_resource type="StyleBoxFlat" id=29]
 content_margin_top = 70.0
 bg_color = Color( 1, 1, 1, 1 )
 draw_center = false
 border_color = Color( 0.45, 0.4, 1, 0.0509804 )
 border_blend = true
 
-[sub_resource type="StyleBoxFlat" id=31]
+[sub_resource type="StyleBoxFlat" id=30]
 bg_color = Color( 0.6, 0.6, 0.6, 0.376471 )
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxFlat" id=32]
+[sub_resource type="StyleBoxFlat" id=31]
 content_margin_left = 3.0
 content_margin_right = 3.0
 content_margin_top = 3.0
@@ -286,6 +288,8 @@ shadow_size = 5
 shadow_offset = Vector2( 2, 2 )
 anti_aliasing = false
 
+[sub_resource type="StyleBoxEmpty" id=32]
+
 [sub_resource type="StyleBoxEmpty" id=33]
 
 [sub_resource type="StyleBoxEmpty" id=34]
@@ -295,8 +299,6 @@ anti_aliasing = false
 [sub_resource type="StyleBoxEmpty" id=36]
 
 [sub_resource type="StyleBoxEmpty" id=37]
-
-[sub_resource type="StyleBoxEmpty" id=38]
 
 [node name="App" type="Control" groups=[
 "App",
@@ -466,6 +468,9 @@ margin_bottom = 25.0
 rect_min_size = Vector2( 4, 15 )
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Panel" type="Panel" parent="Main/TopMenu/MenuItems"]
 margin_left = 291.0
@@ -548,6 +553,7 @@ __meta__ = {
 }
 
 [node name="Meta" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = ExtResource( 2 )
@@ -774,6 +780,7 @@ icon_modulate = Color( 1, 1, 1, 1 )
 color = Color( 0.705882, 0.705882, 0.705882, 0.74902 )
 
 [node name="Gizmos" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -852,7 +859,7 @@ margin_left = 488.0
 margin_right = 820.0
 margin_bottom = 31.0
 size_flags_vertical = 0
-custom_styles/panel = SubResource( 18 )
+custom_styles/panel = SubResource( 17 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -905,7 +912,7 @@ focus_previous = NodePath("../XOriginInput")
 margin_top = 558.0
 margin_right = 828.0
 margin_bottom = 589.0
-custom_styles/panel = SubResource( 19 )
+custom_styles/panel = SubResource( 18 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls"]
 margin_left = 3.0
@@ -921,7 +928,7 @@ size_flags_horizontal = 3
 [node name="PanelContainer" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left"]
 margin_right = 150.0
 margin_bottom = 25.0
-custom_styles/panel = SubResource( 20 )
+custom_styles/panel = SubResource( 19 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer"]
 margin_right = 150.0
@@ -954,24 +961,24 @@ alignment = 1
 margin_left = 95.0
 margin_right = 119.0
 margin_bottom = 25.0
-custom_styles/hover = SubResource( 21 )
-custom_styles/pressed = SubResource( 21 )
-custom_styles/focus = SubResource( 21 )
-custom_styles/disabled = SubResource( 21 )
-custom_styles/normal = SubResource( 21 )
+custom_styles/hover = SubResource( 20 )
+custom_styles/pressed = SubResource( 20 )
+custom_styles/focus = SubResource( 20 )
+custom_styles/disabled = SubResource( 20 )
+custom_styles/normal = SubResource( 20 )
 icon = ExtResource( 8 )
 
 [node name="PausePlayButton" type="Button" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle"]
 margin_left = 123.0
 margin_right = 147.0
 margin_bottom = 25.0
-custom_styles/hover = SubResource( 21 )
-custom_styles/pressed = SubResource( 21 )
-custom_styles/focus = SubResource( 21 )
-custom_styles/disabled = SubResource( 21 )
-custom_styles/normal = SubResource( 21 )
+custom_styles/hover = SubResource( 20 )
+custom_styles/pressed = SubResource( 20 )
+custom_styles/focus = SubResource( 20 )
+custom_styles/disabled = SubResource( 20 )
+custom_styles/normal = SubResource( 20 )
 toggle_mode = true
-shortcut = SubResource( 23 )
+shortcut = SubResource( 22 )
 icon = ExtResource( 6 )
 script = ExtResource( 16 )
 pause = ExtResource( 6 )
@@ -981,11 +988,11 @@ play = ExtResource( 17 )
 margin_left = 151.0
 margin_right = 175.0
 margin_bottom = 25.0
-custom_styles/hover = SubResource( 21 )
-custom_styles/pressed = SubResource( 21 )
-custom_styles/focus = SubResource( 21 )
-custom_styles/disabled = SubResource( 21 )
-custom_styles/normal = SubResource( 21 )
+custom_styles/hover = SubResource( 20 )
+custom_styles/pressed = SubResource( 20 )
+custom_styles/focus = SubResource( 20 )
+custom_styles/disabled = SubResource( 20 )
+custom_styles/normal = SubResource( 20 )
 icon = ExtResource( 10 )
 
 [node name="Right" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer"]
@@ -1000,10 +1007,10 @@ margin_left = 225.0
 margin_right = 272.0
 margin_bottom = 25.0
 focus_mode = 0
-custom_styles/hover = SubResource( 24 )
-custom_styles/pressed = SubResource( 25 )
-custom_styles/focus = SubResource( 26 )
-custom_styles/normal = SubResource( 27 )
+custom_styles/hover = SubResource( 23 )
+custom_styles/pressed = SubResource( 24 )
+custom_styles/focus = SubResource( 25 )
+custom_styles/normal = SubResource( 26 )
 text = "loop"
 align = 1
 
@@ -1013,18 +1020,18 @@ margin_right = 828.0
 margin_bottom = 659.0
 rect_min_size = Vector2( 0, 70 )
 rect_clip_content = true
-custom_styles/panel = SubResource( 28 )
+custom_styles/panel = SubResource( 27 )
 
 [node name="TimelineSlider" type="HSlider" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 focus_mode = 0
 custom_icons/tick = ExtResource( 3 )
-custom_icons/grabber_highlight = SubResource( 29 )
-custom_icons/grabber = SubResource( 29 )
-custom_styles/slider = SubResource( 30 )
-custom_styles/grabber_area_highlight = SubResource( 31 )
-custom_styles/grabber_area = SubResource( 31 )
+custom_icons/grabber_highlight = SubResource( 28 )
+custom_icons/grabber = SubResource( 28 )
+custom_styles/slider = SubResource( 29 )
+custom_styles/grabber_area_highlight = SubResource( 30 )
+custom_styles/grabber_area = SubResource( 30 )
 max_value = 1.0
 step = 0.0
 tick_count = 25
@@ -1041,7 +1048,7 @@ anchor_bottom = 1.0
 margin_left = -2.5
 margin_right = 2.5
 mouse_filter = 2
-custom_styles/panel = SubResource( 32 )
+custom_styles/panel = SubResource( 31 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1154,8 +1161,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/bg_focus = SubResource( 33 )
-custom_styles/bg = SubResource( 34 )
+custom_styles/bg_focus = SubResource( 32 )
+custom_styles/bg = SubResource( 33 )
 columns = 2
 hide_root = true
 script = ExtResource( 20 )
@@ -1218,8 +1225,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/bg_focus = SubResource( 35 )
-custom_styles/bg = SubResource( 36 )
+custom_styles/bg_focus = SubResource( 34 )
+custom_styles/bg = SubResource( 35 )
 columns = 2
 hide_root = true
 script = ExtResource( 25 )
@@ -1282,8 +1289,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/bg_focus = SubResource( 35 )
-custom_styles/bg = SubResource( 36 )
+custom_styles/bg_focus = SubResource( 34 )
+custom_styles/bg = SubResource( 35 )
 columns = 2
 hide_root = true
 script = ExtResource( 25 )
@@ -1348,8 +1355,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/bg_focus = SubResource( 37 )
-custom_styles/bg = SubResource( 38 )
+custom_styles/bg_focus = SubResource( 36 )
+custom_styles/bg = SubResource( 37 )
 columns = 2
 hide_root = true
 script = ExtResource( 27 )
@@ -1409,7 +1416,7 @@ __meta__ = {
 [node name="Panel2" type="TextureRect" parent="SpriteTexturePageWindow/VBoxContainer"]
 self_modulate = Color( 0.560784, 0.568627, 0.588235, 1 )
 margin_right = 709.0
-margin_bottom = 420.0
+margin_bottom = 418.0
 rect_clip_content = true
 size_flags_vertical = 3
 texture = ExtResource( 5 )
@@ -1428,37 +1435,121 @@ __meta__ = {
 }
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="SpriteTexturePageWindow/VBoxContainer"]
-margin_top = 424.0
+margin_top = 422.0
 margin_right = 709.0
 margin_bottom = 447.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SpriteTexturePageWindow/VBoxContainer/HBoxContainer2"]
-margin_right = 680.0
-margin_bottom = 23.0
+margin_right = 674.0
+margin_bottom = 25.0
 size_flags_horizontal = 3
 
 [node name="exportbutton" type="Button" parent="SpriteTexturePageWindow/VBoxContainer/HBoxContainer2/HBoxContainer"]
-margin_right = 120.0
-margin_bottom = 23.0
-custom_styles/normal = ExtResource( 4 )
+margin_right = 126.0
+margin_bottom = 25.0
 text = "export sprite sheet"
 
 [node name="importbutton" type="Button" parent="SpriteTexturePageWindow/VBoxContainer/HBoxContainer2/HBoxContainer"]
-margin_left = 124.0
-margin_right = 246.0
-margin_bottom = 23.0
-custom_styles/normal = ExtResource( 4 )
+margin_left = 130.0
+margin_right = 258.0
+margin_bottom = 25.0
 text = "import sprite sheet"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="SpriteTexturePageWindow/VBoxContainer/HBoxContainer2"]
-margin_left = 684.0
+margin_left = 678.0
 margin_right = 709.0
-margin_bottom = 23.0
+margin_bottom = 25.0
 
 [node name="okbutton" type="Button" parent="SpriteTexturePageWindow/VBoxContainer/HBoxContainer2/HBoxContainer2"]
-margin_right = 25.0
-margin_bottom = 23.0
-custom_styles/normal = ExtResource( 4 )
+margin_right = 31.0
+margin_bottom = 25.0
+text = "OK"
+
+[node name="NotImplementedYetDialog" type="WindowDialog" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 557.0
+margin_top = 315.0
+margin_right = -423.0
+margin_bottom = -373.0
+rect_min_size = Vector2( 300, 80 )
+window_title = "N/A"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="NotImplementedYetDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Not yet implemented sorry :P"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="GmetaWarningDialog" type="WindowDialog" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 557.0
+margin_top = 315.0
+margin_right = -423.0
+margin_bottom = -176.0
+rect_min_size = Vector2( 300, 200 )
+window_title = "Warning!"
+resizable = true
+script = ExtResource( 40 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GmetaWarningDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="GmetaWarningDialog/VBoxContainer"]
+margin_right = 300.0
+margin_bottom = 65.0
+text = "This operation will convert the current .meta file into a .gmeta file, and will not function as intended with Hotline Miami."
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="GmetaWarningDialog/VBoxContainer"]
+margin_top = 223.0
+margin_right = 300.0
+margin_bottom = 248.0
+size_flags_vertical = 10
+text = "Is this okay?"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GmetaWarningDialog/VBoxContainer"]
+margin_top = 252.0
+margin_right = 300.0
+margin_bottom = 277.0
+alignment = 1
+
+[node name="CancelButton" type="Button" parent="GmetaWarningDialog/VBoxContainer/HBoxContainer"]
+margin_left = 106.0
+margin_right = 158.0
+margin_bottom = 25.0
+text = "Cancel"
+
+[node name="OkButton" type="Button" parent="GmetaWarningDialog/VBoxContainer/HBoxContainer"]
+margin_left = 162.0
+margin_right = 193.0
+margin_bottom = 25.0
 text = "OK"
 
 [node name="ImportantPopups" type="ColorRect" parent="."]
@@ -1467,6 +1558,141 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0.0352941, 0.0196078, 0.0509804, 0.317647 )
 script = ExtResource( 36 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="SaveGIFDialog2" type="WindowDialog" parent="ImportantPopups"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 446.0
+margin_top = 271.0
+margin_right = -369.0
+margin_bottom = -319.0
+rect_min_size = Vector2( 424, 153 )
+popup_exclusive = true
+window_title = "GIF Properties"
+resizable = true
+script = ExtResource( 39 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ImportantPopups/SaveGIFDialog2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -6.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control2" type="Control" parent="ImportantPopups/SaveGIFDialog2/VBoxContainer"]
+margin_right = 465.0
+margin_bottom = 40.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ImportantPopups/SaveGIFDialog2/VBoxContainer"]
+margin_top = 44.0
+margin_right = 465.0
+margin_bottom = 69.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ImportantPopups/SaveGIFDialog2/VBoxContainer/HBoxContainer"]
+margin_left = 112.0
+margin_right = 224.0
+margin_bottom = 25.0
+text = "GIF playback FPS"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="SpinBox" parent="ImportantPopups/SaveGIFDialog2/VBoxContainer/HBoxContainer"]
+margin_left = 228.0
+margin_right = 352.0
+margin_bottom = 25.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 60.0
+value = 15.0
+align = 1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="ImportantPopups/SaveGIFDialog2/VBoxContainer"]
+margin_top = 73.0
+margin_right = 465.0
+margin_bottom = 98.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ImportantPopups/SaveGIFDialog2/VBoxContainer/HBoxContainer2"]
+margin_left = 105.0
+margin_right = 232.0
+margin_bottom = 25.0
+text = "Output image scale"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="SpinBox" parent="ImportantPopups/SaveGIFDialog2/VBoxContainer/HBoxContainer2"]
+margin_left = 236.0
+margin_right = 360.0
+margin_bottom = 25.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 5.0
+value = 2.0
+align = 1
+
+[node name="Control" type="Control" parent="ImportantPopups/SaveGIFDialog2/VBoxContainer"]
+margin_top = 102.0
+margin_right = 465.0
+margin_bottom = 143.0
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="ImportantPopups/SaveGIFDialog2/VBoxContainer"]
+margin_left = 217.0
+margin_top = 147.0
+margin_right = 248.0
+margin_bottom = 172.0
+size_flags_horizontal = 4
+text = "OK"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SaveGIFDialog" type="FileDialog" parent="ImportantPopups"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 188.0
+margin_top = 122.0
+margin_right = -225.0
+margin_bottom = -120.0
+rect_min_size = Vector2( 400, 140 )
+popup_exclusive = true
+window_title = "Save .GIF file"
+resizable = true
+mode_overrides_title = false
+access = 2
+filters = PoolStringArray( "*.gif" )
+current_dir = "/Users/caleb/Documents/Godot/HLMWadEditor"
+current_path = "/Users/caleb/Documents/Godot/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -1555,6 +1781,7 @@ __meta__ = {
 }
 
 [node name="ImportSpriteStripSliceDialog" type="WindowDialog" parent="ImportantPopups"]
+visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 313.44
@@ -1608,27 +1835,51 @@ margin_right = 649.0
 margin_bottom = 446.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer"]
-margin_right = 213.0
+margin_right = 209.0
 margin_bottom = 31.0
 size_flags_horizontal = 3
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer"]
-margin_left = 217.0
-margin_right = 431.0
+margin_left = 213.0
+margin_right = 435.0
 margin_bottom = 31.0
 size_flags_horizontal = 3
 alignment = 1
 
+[node name="PanelContainer2" type="PanelContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2"]
+visible = false
+margin_right = 201.0
+margin_bottom = 31.0
+custom_styles/panel = ExtResource( 4 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer2"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 198.0
+margin_bottom = 28.0
+
+[node name="Label" type="Label" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer"]
+margin_right = 83.0
+margin_bottom = 25.0
+text = "Sprite Name"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpinBox" type="LineEdit" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer"]
+margin_left = 87.0
+margin_right = 195.0
+margin_bottom = 25.0
+
 [node name="PanelContainer" type="PanelContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2"]
-margin_left = 20.0
-margin_right = 194.0
+margin_right = 222.0
 margin_bottom = 31.0
 custom_styles/panel = ExtResource( 4 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer"]
 margin_left = 3.0
 margin_top = 3.0
-margin_right = 171.0
+margin_right = 219.0
 margin_bottom = 28.0
 
 [node name="Label" type="Label" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer"]
@@ -1641,7 +1892,7 @@ __meta__ = {
 
 [node name="SpinBox" type="SpinBox" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer"]
 margin_left = 92.0
-margin_right = 168.0
+margin_right = 216.0
 margin_bottom = 25.0
 min_value = 1.0
 max_value = 255.0
@@ -1651,15 +1902,15 @@ __meta__ = {
 }
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer"]
-margin_left = 435.0
+margin_left = 439.0
 margin_right = 649.0
 margin_bottom = 31.0
 size_flags_horizontal = 3
 alignment = 2
 
 [node name="Button" type="Button" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer3"]
-margin_left = 159.0
-margin_right = 214.0
+margin_left = 155.0
+margin_right = 210.0
 margin_bottom = 31.0
 rect_min_size = Vector2( 55, 0 )
 custom_styles/normal = ExtResource( 4 )
@@ -1735,6 +1986,12 @@ __meta__ = {
 [connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor/TabContainer2/Advanced/ObjectTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor/TabContainer2/Advanced/ObjectTree" method="_on_ObjectTree_gui_input"]
 [connection signal="item_edited" from="Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor/TabContainer2/Advanced/ObjectTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor" method="_on_ObjectTree_item_edited"]
 [connection signal="file_selected" from="OpenWadDialog" to="." method="_on_OpenWadDialog_file_selected"]
+[connection signal="pressed" from="SpriteTexturePageWindow/VBoxContainer/HBoxContainer2/HBoxContainer2/okbutton" to="SpriteTexturePageWindow" method="_on_okbutton_pressed"]
+[connection signal="popup_hide" from="GmetaWarningDialog" to="GmetaWarningDialog" method="_on_GmetaWarningDialog_popup_hide"]
+[connection signal="pressed" from="GmetaWarningDialog/VBoxContainer/HBoxContainer/CancelButton" to="GmetaWarningDialog" method="_on_CancelButton_pressed"]
+[connection signal="pressed" from="GmetaWarningDialog/VBoxContainer/HBoxContainer/OkButton" to="GmetaWarningDialog" method="_on_OkButton_pressed"]
+[connection signal="pressed" from="ImportantPopups/SaveGIFDialog2/VBoxContainer/Button" to="ImportantPopups/SaveGIFDialog2" method="_on_Button_pressed"]
+[connection signal="file_selected" from="ImportantPopups/SaveGIFDialog" to="ImportantPopups/SaveGIFDialog2" method="_on_SaveGIFDialog_file_selected"]
 [connection signal="file_selected" from="ImportantPopups/ExtractResourceDialog" to="ImportantPopups/ExtractResourceDialog" method="_on_ExtractResourceDialog_file_selected"]
 [connection signal="popup_hide" from="ImportantPopups/ExtractResourceDialog" to="ImportantPopups" method="_on_ExtractResourceDialog_popup_hide"]
 [connection signal="file_selected" from="ImportantPopups/AddResourceDialog" to="." method="_on_AddResourceDialog_file_selected"]
@@ -1744,6 +2001,7 @@ __meta__ = {
 [connection signal="popup_hide" from="ImportantPopups/ExportSpriteStripDialog" to="ImportantPopups" method="_on_ExportSpriteStripDialog_popup_hide"]
 [connection signal="file_selected" from="ImportantPopups/ImportSpriteStripDialog" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_ImportSpriteStripDialog_file_selected"]
 [connection signal="popup_hide" from="ImportantPopups/ImportSpriteStripDialog" to="ImportantPopups" method="_on_ImportSpriteStripDialog_popup_hide"]
+[connection signal="about_to_show" from="ImportantPopups/ImportSpriteStripSliceDialog" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_ImportSpriteStripSliceDialog_about_to_show"]
 [connection signal="popup_hide" from="ImportantPopups/ImportSpriteStripSliceDialog" to="ImportantPopups" method="_on_ImportSpriteStripSliceDialog_popup_hide"]
 [connection signal="value_changed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/SpinBox" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_SpinBox_value_changed"]
 [connection signal="value_changed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/SpinBox" to="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/Panel/ImportSpriteStripPreview" method="_on_SpinBox_value_changed"]

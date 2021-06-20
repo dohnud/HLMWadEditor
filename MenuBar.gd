@@ -27,13 +27,15 @@ var operations = {
 		["Show Only Modified Files", ['TOGGLE'], 'togglenewfileslist'],
 	],
 	"1MetaButton" : [
-		["Import Sprite Strip", [], 'import_sprite_strip'],
-		["Export Sprite Strip", [], 'export_sprite_strip'],
+		["Import Sprite Strip", [KEY_SHIFT, KEY_I], 'import_sprite_strip'],
+		["Export Sprite Strip", [KEY_SHIFT, KEY_E], 'export_sprite_strip'],
+		["Export Sprite to GIF", [], 'export_sprite_gif'],
 		["Export All Sprites", [], 'export_sprite_strips'],
 		[],
-		["Toggle Gizmos", [], 'togglemetagizmos'],
+		["Toggle Gizmos", [KEY_SHIFT, KEY_G], 'togglemetagizmos'],
 		[],
 		["Convert to GMeta", [], 'convertmeta'],
+		["Add New Sprite", [], 'addspritegmeta'],
 	],
 	"1SpriteSheetButton" : [
 		["Import Sprite Sheet", [], 'importspritesheet'],
@@ -96,8 +98,10 @@ func set_shortcut(keys):
 
 func doop(id, op):
 	if (op[0] >= '0' and op[0] <= '9' and !get_node(op.substr(1)).visible): return
-	call(operations[op][id][2])
-	print(id)
+	if has_method(operations[op][id][2]):
+		call(operations[op][id][2])
+	else:
+		app.get_node('NotImplementedYetDialog').popup()
 
 func openrecentpatch(id):
 #	get_tree().get_nodes_in_group('App')[0].recent_patches
@@ -177,12 +181,41 @@ func convertmeta():
 	app.meta_editor_node.meta = app.base_wad.parse_orginal_meta(app.selected_asset_name)
 #	app._on_SearchBar_text_entered('')
 	app.asset_tree.create_path(nfn,1).select(0)
+	if is_adding:
+		is_adding = false
+		addspritegmeta()
+
+
+var is_adding = false
+func resetdumbshit():
+	is_adding = false
+func addspritegmeta():
+	var meta :Meta= app.meta_editor_node.meta
+	if !meta.is_gmeta:
+		app.get_node("GmetaWarningDialog").popup()
+		app.get_node("GmetaWarningDialog").meta = meta
+		app.get_node("GmetaWarningDialog").next_method_tuple = [self, 'convertmeta']
+		app.get_node("GmetaWarningDialog").cancel_method_tuple = [self, 'resetdumbshit']
+		is_adding = true
+	else:
+		app.import_sprite_mode = 1
+		app._on_importSpriteStripButton_pressed()
+
+func export_sprite_gif():
+	var w :FileDialog= app.get_node("ImportantPopups/SaveGIFDialog")
+	var nw = app.get_node("ImportantPopups/SaveGIFDialog2")
+	app.get_node("ImportantPopups").show()
+	var meta = app.meta_editor_node.meta
+	nw.meta = meta
+	nw.sprite = app.meta_editor_node.current_sprite
+	w.popup()
 
 func export_sprite_strip():
 	app._on_ExportSpriteStripButton_pressed()
 func export_sprite_strips():
 	app.export_sprite_strips()
 func import_sprite_strip():
+	app.import_sprite_mode = 0
 	app._on_importSpriteStripButton_pressed()
 func recalcspritesheet():
 	app._on_RecalculateSheetButton_pressed()
@@ -191,8 +224,12 @@ func recalcspritesheet():
 #
 
 func _on_TabContainer_tab_changed(tab):
+	var i = 2
 	for op in operations.keys():
 		if op[0] >= '0' and op[0] <= '9':
 			get_node(op.substr(1)).visible = false
+			get_node('Divider'+str(i)).visible = false
 		if op[0] == str(tab):
 			get_node(op.substr(1)).visible = true
+			get_node('Divider'+str(i)).visible = true
+		i += 1

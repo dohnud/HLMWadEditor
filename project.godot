@@ -24,6 +24,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/BinParser.gd"
 }, {
+"base": "File",
+"class": "Logger",
+"language": "GDScript",
+"path": "res://Scripts/LogSingleton.gd"
+}, {
 "base": "Node",
 "class": "Meta",
 "language": "GDScript",
@@ -58,6 +63,7 @@ _global_script_class_icons={
 "BackgroundsBin": "",
 "BinEditor": "",
 "BinParser": "",
+"Logger": "",
 "Meta": "",
 "ObjectsBin": "",
 "RoomsBin": "",
@@ -74,6 +80,10 @@ boot_splash/image="res://icon1.png"
 boot_splash/use_filter=false
 boot_splash/bg_color=Color( 0.066, 0.0792, 0.11, 1 )
 config/icon="res://icon1.png"
+
+[autoload]
+
+Log="*res://Scripts/LogSingleton.gd"
 
 [display]
 

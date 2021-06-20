@@ -3,6 +3,7 @@ extends File
 class_name Wad
 
 #var file_list = []
+var file_path = ''
 var file_locations = {}
 var patchwad_list = []
 var content_offset = -1
@@ -44,8 +45,13 @@ var obselete_directory = PoolByteArray()
 
 var audio_print=false
 
+func opens(f,m):
+	file_path = f
+	return open(f,m)
+
 func parse_header():
 #	seek(0x10)
+	seek(0)
 	identifier = get_buffer(0x10)
 	
 	# parse file locations
@@ -63,54 +69,28 @@ func parse_header():
 		#file_list.append(file_name)
 		
 	# parse directories (unused but maybe useful later?)
-	var debug = File.new()
-	debug.open('debug.txt', File.WRITE)
-	var come_back = get_position()
+#	var debug = File.new()
+#	debug.open('debug.txt', File.WRITE)
 	var _num_dirs = get_32()
 	for _i in range(_num_dirs):
 		var _dir_name_l = get_32()
 		var _dir_name = get_buffer(_dir_name_l).get_string_from_ascii()
-		debug.store_string('+'+_dir_name+'\n')
+#		debug.store_string('+'+_dir_name+'\n')
 		var _num_entries = get_32()
 		for _j in range(_num_entries):
 			var _entry_name_l = get_32()
 			var _entry_name = get_buffer(_entry_name_l).get_string_from_ascii()
-			debug.store_string(' '+_entry_name+' ')
+#			debug.store_string(' '+_entry_name+' ')
 			var _entry_type = get_8()
-			debug.store_string(str(_entry_type)+'\n')
-	var _dir_end = get_position()
-	seek(come_back)
-	obselete_directory = get_buffer(_dir_end - come_back)
+#			debug.store_string(str(_entry_type)+'\n')
+	
 	
 	# raw file data starts here
 	content_offset = get_position()
 	
 	patchwad_list = [get_script().new()]
+	close()
 
-func write_wad(file_pointer):
-	var f = file_pointer
-	# skip wad identifier for now
-	f.store_buffer(identifier)
-	
-	# parse file locations
-	var num_files = len(file_locations.keys())
-	f.store_32(num_files)
-	var current_offset = 0
-	for k in file_locations.keys():
-		# metadata
-		f.store_32(len(k))
-		f.store_buffer(PoolByteArray(k.to_ascii()))
-		f.store_64(file_locations[k][1]) # len
-		f.store_64(current_offset) # offset
-		current_offset += file_locations[k][1]
-	
-	# fix so it recalculates directory dsoesnt matter but is nice
-	f.store_buffer(obselete_directory)
-	
-	for k in file_locations.keys():
-		if changed_files.has(k):
-			k.save(f)
-		f.store_buffer(get(k))
 	
 
 func add_file(file_path):
@@ -156,6 +136,7 @@ func lazy_find(asset_name):
 	return asset_name
 
 func goto(asset):
+	if !is_open(): open(file_path, READ)
 	for p in patchwad_list:
 		if p.exists(asset):
 			return p.get(asset)
@@ -164,7 +145,9 @@ func goto(asset):
 	return dim[1]
 
 func get(asset):
-	return get_buffer(goto(asset))
+	var r = get_buffer(goto(asset))
+	close()
+	return r
 
 func open_asset(asset_path):
 	if '.meta' in asset_path:
@@ -196,11 +179,13 @@ func sprite_sheet(asset, lazy=0):
 			return p.sprite_sheet(asset)
 	if asset in loaded_sheets.keys():
 		return loaded_sheets[asset]
+	if !is_open(): open(file_path, READ)
 	var img = Image.new()
 	img.load_png_from_buffer(get(asset))
 	var tex = ImageTexture.new()
 	tex.create_from_image(img, 0)
 	loaded_sheets[asset] = tex
+	close()
 	return tex
 
 func audio_stream(asset, lazy=0 ,repeat=false):
@@ -527,17 +512,21 @@ func get_bin(asset):
 	if loaded_bins.has(asset):
 		return loaded_bins[asset]
 	if !exists(asset):return null
+	if !is_open(): open(file_path, READ)
+	var r = null
 	if asset == SpritesBin.file_path:
-		return parse_sprite_data()
+		r = parse_sprite_data()
 	elif asset == ObjectsBin.file_path:
-		return parse_objects()
+		r = parse_objects()
 	elif asset == RoomsBin.file_path:
-		return parse_rooms()
+		r = parse_rooms()
 	elif asset == BackgroundsBin.file_path:
-		return parse_backgrounds()
-	return null
+		r = parse_backgrounds()
+	close()
+	return r
 
 func parse_orginal_meta(asset, lazy=0):
+	if !is_open(): open(file_path, READ)
 	if lazy:
 		asset = lazy_find(asset)
 	var tex = sprite_sheet(asset.replace(".meta", ".png"))

@@ -32,9 +32,13 @@ func _on_Button_pressed():
 	var w = texture.get_width()
 	var h = texture.get_height()
 	var d = w / (frame_count)
-	if Vector2(d,h) != meta.sprites.get_frame(sprite,0).region.size or meta.sprites.get_frame_count(sprite) < frame_count:
+	if app.import_sprite_mode == 1:
+		sprite = $VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/SpinBox.text.strip_edges()
 		meta.needs_recalc = true
-	meta.sprites.remove_animation(sprite)
+	else:
+		meta.sprites.remove_animation(sprite)
+		if Vector2(d,h) != meta.sprites.get_frame(sprite,0).region.size or meta.sprites.get_frame_count(sprite) < frame_count:
+			meta.needs_recalc = true
 	meta.sprites.add_animation(sprite)
 	for i in range(frame_count):
 		var f = AtlasTexture.new()
@@ -42,14 +46,25 @@ func _on_Button_pressed():
 		f.atlas = texture
 		meta.sprites.add_frame(sprite, f)
 	app.meta_editor_node.frametexturerect.update()
-	if 'Backgrounds/' != sprite.substr(0,len('Backgrounds/')):
-		app.base_wad.spritebin.sprite_data[sprite]['size'] = Vector2(d, h)
-		app.base_wad.spritebin.sprite_data[sprite]['frame_count'] = frame_count
-		app.base_wad.changed_files[SpritesBin.file_path] = app.base_wad.spritebin
+	if !meta.is_gmeta:
+		if 'Backgrounds/' != sprite.substr(0,len('Backgrounds/')):
+			app.base_wad.spritebin.sprite_data[sprite]['size'] = Vector2(d, h)
+			app.base_wad.spritebin.sprite_data[sprite]['frame_count'] = frame_count
+			app.base_wad.changed_files[SpritesBin.file_path] = app.base_wad.spritebin
+		else:
+			var tilesheet = sprite.substr(len('Backgrounds/'))
+			app.base_wad.backgroundbin.background_data[tilesheet]['size'] = Vector2(w,h)
+			app.base_wad.changed_files[BackgroundsBin.file_path] = app.base_wad.backgroundbin		
+	#		app.base_wad.backgroundbin.background_data[tilesheet]['tile_size'] = Vector2(w/frame_count, w/frame_count)
 	else:
-		var tilesheet = sprite.substr(len('Backgrounds/'))
-		app.base_wad.backgroundbin.background_data[tilesheet]['size'] = Vector2(w,h)
-		app.base_wad.changed_files[BackgroundsBin.file_path] = app.base_wad.backgroundbin		
-#		app.base_wad.backgroundbin.background_data[tilesheet]['tile_size'] = Vector2(w/frame_count, w/frame_count)
+		meta.center_norms[sprite] = Vector2(d/2,h/2)
+		app.meta_editor_node.spritelist_node.add_item(sprite)
+		app.meta_editor_node.spritelist_node.select(app.meta_editor_node.spritelist_node.get_item_count()-1)
 	hide()
 	get_parent().hide()
+
+
+func _on_ImportSpriteStripSliceDialog_about_to_show():
+	$VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer2.visible = false
+	if app.import_sprite_mode == 1:
+		$VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer2.visible = true

@@ -17,3 +17,6 @@ func _ready():
 func _on_Button_pressed():
 	$VBoxContainer/Panel2/ImportSpriteStripPreview.texture = app.selected_asset_data.texture_page
 	popup()
+
+func _on_okbutton_pressed():
+	hide()

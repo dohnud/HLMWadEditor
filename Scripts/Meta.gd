@@ -16,6 +16,35 @@ class_name Meta
 #	- y -      4 byte integer
 #	- uv -     4 4 byte floats (16 bytes total) (unused)
 
+
+# load gif exporter module
+const GIFExporter = preload("res://gdgifexporter/exporter.gd")
+# load quantization module that you want to use
+const MedianCutQuantization = preload("res://gdgifexporter/quantization/median_cut.gd")
+
+
+func export_sprite_to_gif(file_path, sprite_name, speed=1, scale=1):
+	# remember to use this image format when exporting
+	var tf = sprites.get_frame(sprite_name,0)
+	# initialize exporter object with width and height of gif canvas
+	var exporter = GIFExporter.new(tf.region.size.x * scale, tf.region.size.y * scale)
+	
+	for i in sprites.get_frame_count(sprite_name):
+		var f = sprites.get_frame(sprite_name, i)
+		# write image using median cut quantization method and with one second animation delay
+		var timg = f.atlas.get_data().get_rect(f.region)
+		timg.resize(tf.region.size.x * scale, tf.region.size.y * scale, 0)
+		exporter.add_frame(timg, speed, MedianCutQuantization)
+
+	# when you have exported all frames of animation you, then you can save data into file
+	var file: File = File.new()
+	# open new file with write privlige
+	file.open(file_path, File.WRITE)
+	# save data stream into file
+	file.store_buffer(exporter.export_file_data())
+	# close the file
+	file.close()
+
 var sprites = SpriteFrames.new()
 var texture_page = null
 signal resolve_progress
