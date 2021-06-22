@@ -29,7 +29,6 @@ func _on_ExportSpriteStripDialog_file_selected(path):
 			img.crop((i+1) * f.region.size.x, f.region.size.y)
 			img.blit_rect(f.atlas.get_data(), f.region, Vector2(i * f.region.size.x,0))
 		var e = img.save_png(path)
-		img.free()
 		get_parent().hide()
 
 

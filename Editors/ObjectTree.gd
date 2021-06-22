@@ -75,7 +75,7 @@ func create_dict(dict, path=''):
 					s = app.base_wad.spritebin.sprites[dict[k]]['name']
 			if dict[k] == -1:
 				s = 'Null'
-			if k == 'parent' and dict[k]>=0:
+			if (k == 'parent' or k == 'id') and dict[k]>=0:
 				s = editor.bin.names[dict[k]]
 			create_path(path+'/'+k).set_text(1, s)
 

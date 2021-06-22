@@ -45,10 +45,21 @@ func add_object(object_name, sprite, depth, parent, masksprite, solid, visible, 
 
 # name:object_data dependancy created!
 func get_object(object_name):
+	if changed.has(object_name):
+		return changed[object_name]
 	return object_data[object_name]
 #	var i = object_names.values().find(object_name)
 #	if i != -1:
 #		return objects[i]
+
+func change_object_prop(object_name, key, value):
+	if changed.has(object_name):
+		changed[object_name][key] = value
+	else:
+		changed[object_name] = {key : value}
+
+func get_objects():
+	return object_data.keys()
 
 func parse(f):
 	var t_pos = f.get_position()
@@ -63,7 +74,13 @@ func parse(f):
 	names = object_names
 	file_size = f.get_position() - t_pos
 
+
 func write(f):
 	write_simple_list(f, name_indicies)
-	write_struct_list(f, obj, object_data.values())
+	var t = {}
+	for k in object_data.keys():
+		t[k] = object_data[k]
+		if changed.has(k):
+			t[k] = changed[k]
+	write_struct_list(f, obj, t.values())
 	write_string_list(f, object_names.values())

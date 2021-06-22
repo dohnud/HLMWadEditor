@@ -25,6 +25,7 @@ var operations = {
 		["Toggle Asset List", [KEY_CONTROL, KEY_H], 'toggleassetlist'],
 		["Expand Asset List", ['TOGGLE'], 'expandassetlist'],
 		["Show Only Modified Files", ['TOGGLE'], 'togglenewfileslist'],
+		["Toggle Advanced Mode", ['TOGGLE'], 'toggleadvancedmode'],
 	],
 	"1MetaButton" : [
 		["Import Sprite Strip", [KEY_SHIFT, KEY_I], 'import_sprite_strip'],
@@ -33,9 +34,8 @@ var operations = {
 		["Export All Sprites", [], 'export_sprite_strips'],
 		[],
 		["Toggle Gizmos", [KEY_SHIFT, KEY_G], 'togglemetagizmos'],
-		[],
-		["Convert to GMeta", [], 'convertmeta'],
-		["Add New Sprite", [], 'addspritegmeta'],
+#		[],
+#		["Add New Sprite", [], 'addspritegmeta'],
 	],
 	"1SpriteSheetButton" : [
 		["Import Sprite Sheet", [], 'importspritesheet'],
@@ -90,7 +90,10 @@ func set_shortcut(keys):
 	var inputeventkey = InputEventKey.new()
 	# Sets the scanned key and uses control as the preceding command
 	inputeventkey.set_scancode(keys[len(keys)-1])
-	inputeventkey.control = KEY_CONTROL in keys
+	if OS.get_name() == 'OSX':
+		inputeventkey.command = KEY_CONTROL in keys
+	else:
+		inputeventkey.control = KEY_CONTROL in keys
 	inputeventkey.shift = KEY_SHIFT in keys
 	# Makes the final shortcut and returns it
 	shortcut.set_shortcut(inputeventkey)
@@ -166,6 +169,10 @@ func togglenewfileslist():
 	app.show_base_wad = !app.show_base_wad
 	app._on_SearchBar_text_entered('')
 
+func toggleadvancedmode():
+	app.show_advanced = !app.show_advanced
+	app._on_SearchBar_text_entered('')
+
 func togglemetagizmos():
 	app.meta_editor_node.gizmos_node.visible = !app.meta_editor_node.gizmos_node.visible
 	app.meta_editor_node.frametexturerect.update()
@@ -181,25 +188,6 @@ func convertmeta():
 	app.meta_editor_node.meta = app.base_wad.parse_orginal_meta(app.selected_asset_name)
 #	app._on_SearchBar_text_entered('')
 	app.asset_tree.create_path(nfn,1).select(0)
-	if is_adding:
-		is_adding = false
-		addspritegmeta()
-
-
-var is_adding = false
-func resetdumbshit():
-	is_adding = false
-func addspritegmeta():
-	var meta :Meta= app.meta_editor_node.meta
-	if !meta.is_gmeta:
-		app.get_node("GmetaWarningDialog").popup()
-		app.get_node("GmetaWarningDialog").meta = meta
-		app.get_node("GmetaWarningDialog").next_method_tuple = [self, 'convertmeta']
-		app.get_node("GmetaWarningDialog").cancel_method_tuple = [self, 'resetdumbshit']
-		is_adding = true
-	else:
-		app.import_sprite_mode = 1
-		app._on_importSpriteStripButton_pressed()
 
 func export_sprite_gif():
 	var w :FileDialog= app.get_node("ImportantPopups/SaveGIFDialog")
@@ -215,7 +203,6 @@ func export_sprite_strip():
 func export_sprite_strips():
 	app.export_sprite_strips()
 func import_sprite_strip():
-	app.import_sprite_mode = 0
 	app._on_importSpriteStripButton_pressed()
 func recalcspritesheet():
 	app._on_RecalculateSheetButton_pressed()

@@ -21,6 +21,7 @@ var selected_asset_data = null
 var thread = null
 
 var show_base_wad = true
+var show_advanced = false
 
 # Called when the node enters the scene tree for the first time.
 func _init():
@@ -127,10 +128,11 @@ func _on_SearchBar_text_entered(new_text=''):
 		var rn = false
 		var b :BackgroundsBin = null
 		var bn = false
-		s = base_wad.spritebin
-		o = base_wad.objectbin
-		r = base_wad.roombin
-		b = base_wad.backgroundbin
+		if show_advanced:
+			s = base_wad.spritebin
+			o = base_wad.objectbin
+			r = base_wad.roombin
+			b = base_wad.backgroundbin
 		if show_base_wad:
 			for file in base_wad.file_locations.keys():
 				if "Atlas" == file.substr(0,len('Atlas')) and (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
@@ -245,7 +247,6 @@ func export_sprite_strips():
 #func change_sprite_attr(sprite_name, attr, new_value):
 #	pass
 
-var import_sprite_mode = 0
 func _on_importSpriteStripButton_pressed():
 	var w :FileDialog= get_node("ImportantPopups/ImportSpriteStripDialog")
 	var nw :WindowDialog= get_node("ImportantPopups/ImportSpriteStripSliceDialog")

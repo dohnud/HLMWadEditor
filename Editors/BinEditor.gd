@@ -6,8 +6,10 @@ onready var app = get_tree().get_nodes_in_group('App')[0]
 onready var tree = null#$TabContainer2/Advanced/Tree
 
 var file = 'GL/hlm2_sprites.bin'
-var bin = null
+var bin :BinParser= null
 var selected_struct = null
+var selected_struct_id = null
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -22,7 +24,8 @@ func set_bin_asset(asset):
 	if tree:
 		tree.reset()
 		bin = app.base_wad.get_bin(file)
-		selected_struct = bin.data[asset]
+		selected_struct_id = asset
+		selected_struct = bin.get(asset)
 		tree.create_dict(selected_struct)
 		return selected_struct
 	return null
@@ -42,7 +45,8 @@ func _on_Tree_item_edited(deleted=0):
 		ti = ti.get_parent()
 	p.pop_front()
 	var last_k = p.pop_back()
-	var d = selected_struct
+	var d = bin.data[selected_struct_id]
+	var changed_d = bin.get(selected_struct_id).duplicate(true)
 	for k in p:
 		d = d[k]
 	if deleted == 0:
@@ -65,7 +69,9 @@ func _on_Tree_item_edited(deleted=0):
 			print(vs,' ',int(vs))
 			v = int(vs)
 		if v != d[last_k]:
-			d[last_k] = v
+#			d[last_k] = v
+			changed_d[last_k] = v
+			bin.changed[selected_struct_id] = changed_d
 			app.base_wad.changed_files[file] = bin
 		tree.get_selected().set_text(1, vs)
 	elif deleted == 1:
@@ -80,7 +86,7 @@ func can_be_int_fuck_you_godot(string:String):
 	string = string.replace(' ', '')
 	if string == '0': return 0
 	for c in string:
-		if c > ord('A')-1 or c < ord('Z')-1:
+		if ord(c) > ord('A')-1 and ord(c) < ord('z')+1:
 			return 0
 	return int(string)
 #func change_order(_room, new_next, new_previous):

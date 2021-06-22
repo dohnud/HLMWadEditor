@@ -28,6 +28,7 @@ func set_room(room_name):
 
 
 func _on_RoomTree_item_edited(deleted=0):
+	$"TabContainer2/Room View/TextureRect/Control".rect_position = Vector2(10,10)
 	var ti :TreeItem= room_tree.get_selected()
 	var p = []
 	while ti != null:

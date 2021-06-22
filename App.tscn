@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=2]
+[gd_scene load_steps=77 format=2]
 
 [ext_resource path="res://theme.tres" type="Theme" id=1]
 [ext_resource path="res://insetshadow.tres" type="StyleBox" id=2]
@@ -39,7 +39,6 @@
 [ext_resource path="res://RoomDrawer.gd" type="Script" id=37]
 [ext_resource path="res://SpriteTexturePageWindow.gd" type="Script" id=38]
 [ext_resource path="res://SaveGIFDialog2.gd" type="Script" id=39]
-[ext_resource path="res://GmetaWarningDialog.gd" type="Script" id=40]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.12549, 0.152941, 0.211765, 1 )
@@ -1082,7 +1081,6 @@ size_flags_vertical = 3
 custom_styles/panel = SubResource( 15 )
 
 [node name="Room" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = ExtResource( 2 )
@@ -1100,7 +1098,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor"]
-margin_right = 1032.0
+margin_right = 984.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 15 )
@@ -1109,8 +1107,8 @@ clip_text = true
 
 [node name="TabContainer2" type="TabContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor"]
 margin_top = 29.0
-margin_right = 1032.0
-margin_bottom = 719.0
+margin_right = 984.0
+margin_bottom = 717.0
 size_flags_vertical = 3
 custom_styles/tab_fg = SubResource( 13 )
 custom_styles/tab_bg = ExtResource( 31 )
@@ -1363,9 +1361,6 @@ script = ExtResource( 27 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-folder_icon = null
-folder_mod = Color( 0, 0, 0, 1 )
-subfolder_mod = Color( 0, 0, 0, 1 )
 
 [node name="OpenWadDialog" type="FileDialog" parent="."]
 anchor_right = 1.0
@@ -1487,70 +1482,6 @@ valign = 1
 __meta__ = {
 "_edit_use_anchors_": true
 }
-
-[node name="GmetaWarningDialog" type="WindowDialog" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 557.0
-margin_top = 315.0
-margin_right = -423.0
-margin_bottom = -176.0
-rect_min_size = Vector2( 300, 200 )
-window_title = "Warning!"
-resizable = true
-script = ExtResource( 40 )
-__meta__ = {
-"_edit_use_anchors_": true
-}
-
-[node name="VBoxContainer" type="VBoxContainer" parent="GmetaWarningDialog"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": true
-}
-
-[node name="Label" type="Label" parent="GmetaWarningDialog/VBoxContainer"]
-margin_right = 300.0
-margin_bottom = 65.0
-text = "This operation will convert the current .meta file into a .gmeta file, and will not function as intended with Hotline Miami."
-align = 1
-valign = 1
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label2" type="Label" parent="GmetaWarningDialog/VBoxContainer"]
-margin_top = 223.0
-margin_right = 300.0
-margin_bottom = 248.0
-size_flags_vertical = 10
-text = "Is this okay?"
-align = 1
-valign = 1
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="HBoxContainer" type="HBoxContainer" parent="GmetaWarningDialog/VBoxContainer"]
-margin_top = 252.0
-margin_right = 300.0
-margin_bottom = 277.0
-alignment = 1
-
-[node name="CancelButton" type="Button" parent="GmetaWarningDialog/VBoxContainer/HBoxContainer"]
-margin_left = 106.0
-margin_right = 158.0
-margin_bottom = 25.0
-text = "Cancel"
-
-[node name="OkButton" type="Button" parent="GmetaWarningDialog/VBoxContainer/HBoxContainer"]
-margin_left = 162.0
-margin_right = 193.0
-margin_bottom = 25.0
-text = "OK"
 
 [node name="ImportantPopups" type="ColorRect" parent="."]
 visible = false
@@ -1781,7 +1712,6 @@ __meta__ = {
 }
 
 [node name="ImportSpriteStripSliceDialog" type="WindowDialog" parent="ImportantPopups"]
-visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 313.44
@@ -1845,31 +1775,6 @@ margin_right = 435.0
 margin_bottom = 31.0
 size_flags_horizontal = 3
 alignment = 1
-
-[node name="PanelContainer2" type="PanelContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2"]
-visible = false
-margin_right = 201.0
-margin_bottom = 31.0
-custom_styles/panel = ExtResource( 4 )
-
-[node name="HBoxContainer" type="HBoxContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer2"]
-margin_left = 3.0
-margin_top = 3.0
-margin_right = 198.0
-margin_bottom = 28.0
-
-[node name="Label" type="Label" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer"]
-margin_right = 83.0
-margin_bottom = 25.0
-text = "Sprite Name"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="SpinBox" type="LineEdit" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer"]
-margin_left = 87.0
-margin_right = 195.0
-margin_bottom = 25.0
 
 [node name="PanelContainer" type="PanelContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2"]
 margin_right = 222.0
@@ -1977,6 +1882,7 @@ __meta__ = {
 [connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Right/Button" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_Button_toggled"]
 [connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline/TimelineSlider" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline/TimelineSlider" method="_on_TimelineSlider_gui_input"]
 [connection signal="tween_all_completed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline/TimelineSlider/Tween" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_Tween_tween_all_completed"]
+[connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor/TabContainer2/Room View/TextureRect" to="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor/TabContainer2/Room View/TextureRect/Control" method="_on_TextureRect_gui_input"]
 [connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor/TabContainer2/Advanced/RoomTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor/TabContainer2/Advanced/RoomTree" method="_on_RoomTree_gui_input"]
 [connection signal="item_edited" from="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor/TabContainer2/Advanced/RoomTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor" method="_on_RoomTree_item_edited"]
 [connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Sprite/SpriteEditor/TabContainer2/Advanced/SpriteTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Sprite/SpriteEditor/TabContainer2/Advanced/SpriteTree" method="_on_SpriteTree_gui_input"]
@@ -1987,9 +1893,6 @@ __meta__ = {
 [connection signal="item_edited" from="Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor/TabContainer2/Advanced/ObjectTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor" method="_on_ObjectTree_item_edited"]
 [connection signal="file_selected" from="OpenWadDialog" to="." method="_on_OpenWadDialog_file_selected"]
 [connection signal="pressed" from="SpriteTexturePageWindow/VBoxContainer/HBoxContainer2/HBoxContainer2/okbutton" to="SpriteTexturePageWindow" method="_on_okbutton_pressed"]
-[connection signal="popup_hide" from="GmetaWarningDialog" to="GmetaWarningDialog" method="_on_GmetaWarningDialog_popup_hide"]
-[connection signal="pressed" from="GmetaWarningDialog/VBoxContainer/HBoxContainer/CancelButton" to="GmetaWarningDialog" method="_on_CancelButton_pressed"]
-[connection signal="pressed" from="GmetaWarningDialog/VBoxContainer/HBoxContainer/OkButton" to="GmetaWarningDialog" method="_on_OkButton_pressed"]
 [connection signal="pressed" from="ImportantPopups/SaveGIFDialog2/VBoxContainer/Button" to="ImportantPopups/SaveGIFDialog2" method="_on_Button_pressed"]
 [connection signal="file_selected" from="ImportantPopups/SaveGIFDialog" to="ImportantPopups/SaveGIFDialog2" method="_on_SaveGIFDialog_file_selected"]
 [connection signal="file_selected" from="ImportantPopups/ExtractResourceDialog" to="ImportantPopups/ExtractResourceDialog" method="_on_ExtractResourceDialog_file_selected"]

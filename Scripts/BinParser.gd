@@ -4,7 +4,14 @@ class_name BinParser
 
 var data = {}
 var names = {}
+var changed = {}
 var size = 0
+
+# OTHER
+func get(asset_id) -> Dictionary:
+	if changed.has(asset_id):
+		return changed[asset_id]
+	return data[asset_id]
 
 # READ
 func parse_simple_list(f, type='32',n=0):
