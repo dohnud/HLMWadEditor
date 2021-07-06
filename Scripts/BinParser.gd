@@ -14,9 +14,10 @@ func get(asset_id) -> Dictionary:
 	return data[asset_id]
 
 # READ
-func parse_simple_list(f, type='32',n=0):
-	if !n:
+func parse_simple_list(f, type='32',n=-1):
+	if n == -1:
 		n = parse_type(f, type)
+		if n == null: return []
 	var index_list = []
 	for i in range(n):
 		index_list.append(parse_type(f, type))
@@ -59,7 +60,9 @@ func get_s32(f):
 
 func parse_type(f, type):
 	if type is Array:
-		if type[0] is String:
+		if len(type) == 0:
+			return []
+		elif type[0] is String:
 			if len(type) > 1:
 				if type[1] is Array:
 					return parse_simple_list(f, type[0], type[1][0])
@@ -74,6 +77,8 @@ func parse_type(f, type):
 		return f.get_buffer(type[0])
 	if type is Dictionary:
 		return parse_struct(f, type)
+	elif type == '8':
+		return f.get_8()
 	elif type == '16':
 		return f.get_16()
 	if type == '32':
@@ -89,7 +94,7 @@ func parse_type(f, type):
 		return Vector2(f.get_32(), f.get_32())
 	elif type == 'i16vec2':
 		return Vector2(f.get_16(), f.get_16())
-	return -1
+	return null
 
 func parse_struct(f, struct):
 	var n = {}
@@ -105,21 +110,28 @@ func parse_struct_list(f, struct, ntype='32', n=0):
 		l.append(parse_struct(f, struct))
 	return l
 
-func parse_struct_map(f, struct, key_str, ntype='32', n=0):
+func parse_struct_map(f, struct, key_str, ntype='32', n=false, keep_dups=false):
 	if !n:
 		n = parse_type(f, ntype)
 	var l = {}
 	for i in range(n):
 		var v = parse_struct(f, struct)
-		l[v[key_str]] = v
+		if keep_dups and l.has(v[key_str]):
+			if l[v[key_str]] is Array:
+				l[v[key_str]].append(v)
+			else:
+				l[v[key_str]] = [l[v[key_str]], v]
+		else:
+			l[v[key_str]] = v
 	return l
 
 
 # WRITE
-func write_simple_list(f, list, ntype='32', n=0):
+func write_simple_list(f, list, ntype='32', n=0, write_n=true):
 	if !n:
 		n = len(list)
-	write_type(f, ntype, n)
+	if write_n:
+		write_type(f, ntype, n)
 	for i in range(n):
 		write_type(f, ntype, list[i])
 
@@ -131,8 +143,10 @@ func write_string_list(f, list):
 		f.store_buffer(PoolByteArray(i.to_ascii()))
 		f.store_8(0)
 		size += len(i)
+	var e = f.get_position()
 	f.seek(start)
 	f.store_32(size)
+	f.seek(e)
 
 func write_type(f, type, value):
 	if type is Array:
@@ -141,7 +155,7 @@ func write_type(f, type, value):
 				if type[1] is Array:
 					return write_simple_list(f, value, type[0], type[1][0])
 				return write_struct_list(f, type[1], value, type[0])
-			return write_simple_list(f, type[0])
+			return write_simple_list(f, value, type[0])
 		# type[0] is a number, static array size
 		if type[0] is int:
 			if len(type) > 1:
@@ -151,6 +165,8 @@ func write_type(f, type, value):
 		return f.store_buffer(value)
 	elif type is Dictionary:
 		write_struct(f, type, value)
+	elif type == '8':
+		f.store_8(value)
 	elif type == '16':
 		f.store_16(value)
 	elif type == '32' or type == 's32':

@@ -16,6 +16,11 @@ func _ready():
 
 func _on_ExtractResourceDialog_file_selected(path):
 	var r = app.selected_asset_data
+	if r is Texture:
+		r.get_data().save_png(path)
+		get_parent().hide()
+		app.selected_asset_data = app.meta_editor_node.meta
+		return
 	var f = File.new()
 	f.open(path, File.WRITE)
 	if '.gmeta' in path:

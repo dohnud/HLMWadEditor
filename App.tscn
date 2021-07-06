@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=2]
+[gd_scene load_steps=81 format=2]
 
 [ext_resource path="res://theme.tres" type="Theme" id=1]
 [ext_resource path="res://insetshadow.tres" type="StyleBox" id=2]
@@ -39,6 +39,10 @@
 [ext_resource path="res://RoomDrawer.gd" type="Script" id=37]
 [ext_resource path="res://SpriteTexturePageWindow.gd" type="Script" id=38]
 [ext_resource path="res://SaveGIFDialog2.gd" type="Script" id=39]
+[ext_resource path="res://Editors/AtlasEditor.gd" type="Script" id=40]
+[ext_resource path="res://Editors/SoundEditor.gd" type="Script" id=41]
+[ext_resource path="res://Editors/AtlasTree.gd" type="Script" id=42]
+[ext_resource path="res://CompilingNotif.tscn" type="PackedScene" id=43]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.12549, 0.152941, 0.211765, 1 )
@@ -319,16 +323,11 @@ room_editor_node = NodePath("Main/PanelContainer/HBoxContainer/TabContainer/Room
 sprite_editor_node = NodePath("Main/PanelContainer/HBoxContainer/TabContainer/Sprite/SpriteEditor")
 background_editor_node = NodePath("Main/PanelContainer/HBoxContainer/TabContainer/Backgrounds/BackgroundEditor")
 object_editor_node = NodePath("Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor")
+sound_editor_node = NodePath("Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor")
+atlas_editor_node = NodePath("Main/PanelContainer/HBoxContainer/TabContainer/Atlas/AtlasEditor")
 editor_tabs = NodePath("Main/PanelContainer/HBoxContainer/TabContainer")
+compilenotif = ExtResource( 43 )
 tomakebiggerfont = ExtResource( 23 )
-
-[node name="Events" type="Control" parent="."]
-visible = false
-margin_right = 40.0
-margin_bottom = 40.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="WindowFill" type="Panel" parent="."]
 anchor_right = 1.0
@@ -853,9 +852,16 @@ margin_bottom = 550.0
 mouse_filter = 2
 size_flags_horizontal = 3
 
-[node name="Panel" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos"]
 margin_left = 488.0
 margin_right = 820.0
+margin_bottom = 550.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2"]
+margin_right = 332.0
 margin_bottom = 31.0
 size_flags_vertical = 0
 custom_styles/panel = SubResource( 17 )
@@ -863,7 +869,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/Panel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel"]
 margin_left = 3.0
 margin_top = 3.0
 margin_right = 329.0
@@ -875,7 +881,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/Panel/HBoxContainer"]
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer"]
 margin_right = 60.0
 margin_bottom = 25.0
 text = "origin:  x"
@@ -883,7 +889,7 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="XOriginInput" type="SpinBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/Panel/HBoxContainer"]
+[node name="XOriginInput" type="SpinBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer"]
 margin_left = 60.0
 margin_right = 184.0
 margin_bottom = 25.0
@@ -891,7 +897,7 @@ focus_next = NodePath("../YOriginInput")
 focus_previous = NodePath("../../../../../../../../../../../VBoxContainer/SpriteList")
 rounded = true
 
-[node name="Label2" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/Panel/HBoxContainer"]
+[node name="Label2" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer"]
 margin_left = 184.0
 margin_right = 202.0
 margin_bottom = 25.0
@@ -900,12 +906,72 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="YOriginInput" type="SpinBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/Panel/HBoxContainer"]
+[node name="YOriginInput" type="SpinBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer"]
 margin_left = 202.0
 margin_right = 326.0
 margin_bottom = 25.0
 focus_next = NodePath("../../../../../../../../../../../VBoxContainer/SpriteList")
 focus_previous = NodePath("../XOriginInput")
+
+[node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2"]
+margin_top = 35.0
+margin_right = 332.0
+margin_bottom = 521.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2"]
+margin_top = 525.0
+margin_right = 332.0
+margin_bottom = 550.0
+
+[node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
+margin_right = 139.0
+margin_bottom = 25.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
+margin_left = 143.0
+margin_right = 188.0
+margin_bottom = 25.0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 23 )
+custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
+text = "Offset:"
+
+[node name="OffsetLabel" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
+margin_left = 192.0
+margin_right = 332.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 23 )
+custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
+
+[node name="Label2" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
+margin_left = 217.0
+margin_right = 247.0
+margin_bottom = 25.0
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 23 )
+custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
+text = "UV:"
+
+[node name="UVLabel" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
+margin_left = 240.0
+margin_right = 332.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+custom_fonts/font = ExtResource( 23 )
+custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
 
 [node name="TimelineControls" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer"]
 margin_top = 558.0
@@ -1081,6 +1147,7 @@ size_flags_vertical = 3
 custom_styles/panel = SubResource( 15 )
 
 [node name="Room" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = ExtResource( 2 )
@@ -1128,6 +1195,7 @@ self_modulate = Color( 0.560784, 0.568627, 0.588235, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_clip_content = true
+mouse_filter = 0
 texture = ExtResource( 5 )
 stretch_mode = 2
 __meta__ = {
@@ -1167,7 +1235,6 @@ script = ExtResource( 20 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-folder_icon = null
 folder_mod = Color( 1, 1, 1, 1 )
 subfolder_mod = Color( 1, 1, 1, 1 )
 
@@ -1231,9 +1298,6 @@ script = ExtResource( 25 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-folder_icon = null
-folder_mod = Color( 0, 0, 0, 1 )
-subfolder_mod = Color( 0, 0, 0, 1 )
 
 [node name="Backgrounds" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
 visible = false
@@ -1295,9 +1359,6 @@ script = ExtResource( 25 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-folder_icon = null
-folder_mod = Color( 0, 0, 0, 1 )
-subfolder_mod = Color( 0, 0, 0, 1 )
 
 [node name="Object" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
 visible = false
@@ -1362,6 +1423,132 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Atlas" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = ExtResource( 2 )
+
+[node name="AtlasEditor" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Atlas" groups=[
+"AtlasEditor",
+]]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -8.0
+script = ExtResource( 40 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Atlas/AtlasEditor"]
+margin_right = 1032.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 15 )
+text = "Player_Zebra.meta"
+clip_text = true
+
+[node name="TabContainer2" type="TabContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Atlas/AtlasEditor"]
+margin_top = 29.0
+margin_right = 1032.0
+margin_bottom = 719.0
+size_flags_vertical = 3
+custom_styles/tab_fg = SubResource( 13 )
+custom_styles/tab_bg = ExtResource( 31 )
+custom_styles/panel = SubResource( 14 )
+tab_align = 0
+
+[node name="Advanced" type="Tabs" parent="Main/PanelContainer/HBoxContainer/TabContainer/Atlas/AtlasEditor/TabContainer2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 28.0
+margin_right = -1.0
+margin_bottom = -1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 15 )
+
+[node name="AtlasTree" type="Tree" parent="Main/PanelContainer/HBoxContainer/TabContainer/Atlas/AtlasEditor/TabContainer2/Advanced"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/bg_focus = SubResource( 36 )
+custom_styles/bg = SubResource( 37 )
+columns = 2
+hide_root = true
+script = ExtResource( 42 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sound" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = ExtResource( 2 )
+
+[node name="SoundEditor" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound" groups=[
+"SoundEditor",
+]]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 8.0
+margin_right = -8.0
+margin_bottom = -8.0
+script = ExtResource( 41 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor"]
+margin_right = 1032.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+custom_fonts/font = ExtResource( 15 )
+text = "Player_Zebra.meta"
+clip_text = true
+
+[node name="TabContainer2" type="TabContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor"]
+margin_top = 29.0
+margin_right = 1032.0
+margin_bottom = 719.0
+size_flags_vertical = 3
+custom_styles/tab_fg = SubResource( 13 )
+custom_styles/tab_bg = ExtResource( 31 )
+custom_styles/panel = SubResource( 14 )
+tab_align = 0
+
+[node name="Advanced" type="Tabs" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/TabContainer2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 28.0
+margin_right = -1.0
+margin_bottom = -1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 15 )
+
+[node name="SoundTree" type="Tree" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/TabContainer2/Advanced"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/bg_focus = SubResource( 36 )
+custom_styles/bg = SubResource( 37 )
+columns = 2
+hide_root = true
+script = ExtResource( 27 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="OpenWadDialog" type="FileDialog" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1376,8 +1563,8 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.wad", "*.patchwad" )
-current_dir = "/Users/caleb/Documents/Godot/HLMWadEditor"
-current_path = "/Users/caleb/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/Godot/Projects/HLMWadEditor"
+current_path = "/Users/caleb/Godot/Projects/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -1476,11 +1663,96 @@ __meta__ = {
 [node name="Label" type="Label" parent="NotImplementedYetDialog"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-text = "Not yet implemented sorry :P"
+text = "Not implemented yet oops"
 align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": true
+}
+
+[node name="WaitForThreadsDialog" type="WindowDialog" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 557.0
+margin_top = 315.0
+margin_right = -423.0
+margin_bottom = -373.0
+rect_min_size = Vector2( 300, 150 )
+window_title = "Warning!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="WaitForThreadsDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_bottom = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="WaitForThreadsDialog/MarginContainer"]
+margin_right = 300.0
+margin_bottom = 146.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="WaitForThreadsDialog/MarginContainer/VBoxContainer"]
+margin_right = 300.0
+margin_bottom = 117.0
+size_flags_vertical = 3
+text = "Not all spirte sheets are done compiling! 
+
+Do you want to save the file after all operations are completed?"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="WaitForThreadsDialog/MarginContainer/VBoxContainer"]
+margin_top = 121.0
+margin_right = 300.0
+margin_bottom = 146.0
+alignment = 1
+
+[node name="WaitThreadsOk" type="Button" parent="WaitForThreadsDialog/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 116.0
+margin_right = 149.0
+margin_bottom = 25.0
+text = "Yes"
+
+[node name="WaitThreadsNo" type="Button" parent="WaitForThreadsDialog/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 153.0
+margin_right = 183.0
+margin_bottom = 25.0
+text = "No"
+
+[node name="WaitForThreadsDone" type="WindowDialog" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 557.0
+margin_top = 315.0
+margin_right = -423.0
+margin_bottom = -373.0
+rect_min_size = Vector2( 300, 15 )
+window_title = "Done!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="WaitForThreadsDone"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_vertical = 3
+text = "Patchwad saved!"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
 }
 
 [node name="ImportantPopups" type="ColorRect" parent="."]
@@ -1622,8 +1894,8 @@ resizable = true
 mode_overrides_title = false
 access = 2
 filters = PoolStringArray( "*.gif" )
-current_dir = "/Users/caleb/Documents/Godot/HLMWadEditor"
-current_path = "/Users/caleb/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/Godot/Projects/HLMWadEditor"
+current_path = "/Users/caleb/Godot/Projects/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -1641,8 +1913,8 @@ window_title = "Extract Resource to a File"
 resizable = true
 mode_overrides_title = false
 access = 2
-current_dir = "/Users/caleb/Documents/Godot/HLMWadEditor"
-current_path = "/Users/caleb/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/Godot/Projects/HLMWadEditor"
+current_path = "/Users/caleb/Godot/Projects/HLMWadEditor/"
 script = ExtResource( 22 )
 __meta__ = {
 "_edit_use_anchors_": true
@@ -1663,8 +1935,29 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.meta", "*.gmeta" )
-current_dir = "/Users/caleb/Documents/Godot/HLMWadEditor"
-current_path = "/Users/caleb/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/Godot/Projects/HLMWadEditor"
+current_path = "/Users/caleb/Godot/Projects/HLMWadEditor/"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ImportSheetDialog" type="FileDialog" parent="ImportantPopups"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 188.0
+margin_top = 122.0
+margin_right = -225.0
+margin_bottom = -120.0
+rect_min_size = Vector2( 400, 140 )
+popup_exclusive = true
+window_title = "Import a Sprite Sheet"
+resizable = true
+mode_overrides_title = false
+mode = 0
+access = 2
+filters = PoolStringArray( "*.png" )
+current_dir = "/Users/caleb/Godot/Projects/HLMWadEditor"
+current_path = "/Users/caleb/Godot/Projects/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -1683,8 +1976,8 @@ resizable = true
 mode_overrides_title = false
 access = 2
 filters = PoolStringArray( "*.png" )
-current_dir = "/Users/caleb/Documents/Godot/HLMWadEditor"
-current_path = "/Users/caleb/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/Godot/Projects/HLMWadEditor"
+current_path = "/Users/caleb/Godot/Projects/HLMWadEditor/"
 script = ExtResource( 33 )
 __meta__ = {
 "_edit_use_anchors_": true
@@ -1705,8 +1998,8 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.png" )
-current_dir = "/Users/caleb/Documents/Godot/HLMWadEditor"
-current_path = "/Users/caleb/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/Godot/Projects/HLMWadEditor"
+current_path = "/Users/caleb/Godot/Projects/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -1836,8 +2129,8 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.patchwad", "*.wad" )
-current_dir = "/Users/caleb/Documents/Godot/HLMWadEditor"
-current_path = "/Users/caleb/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/Godot/Projects/HLMWadEditor"
+current_path = "/Users/caleb/Godot/Projects/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -1854,11 +2147,25 @@ popup_exclusive = true
 resizable = true
 access = 2
 filters = PoolStringArray( "*.patchwad" )
-current_dir = "/Users/caleb/Documents/Godot/HLMWadEditor"
-current_path = "/Users/caleb/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/Godot/Projects/HLMWadEditor"
+current_path = "/Users/caleb/Godot/Projects/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
+
+[node name="NotifList" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1040.0
+margin_top = 12.0
+margin_right = -9.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CompilingNotif" parent="NotifList" instance=ExtResource( 43 )]
+visible = false
 [connection signal="text_changed" from="Main/PanelContainer/HBoxContainer/VBoxContainer/SearchBar" to="Main/PanelContainer/HBoxContainer/VBoxContainer/SearchBar" method="_on_SearchBar_text_changed"]
 [connection signal="text_entered" from="Main/PanelContainer/HBoxContainer/VBoxContainer/SearchBar" to="." method="_on_SearchBar_text_entered"]
 [connection signal="item_selected" from="Main/PanelContainer/HBoxContainer/VBoxContainer/AssetTree" to="Main/PanelContainer/HBoxContainer/VBoxContainer/AssetTree" method="_on_Tree_item_selected"]
@@ -1870,15 +2177,15 @@ __meta__ = {
 [connection signal="item_selected" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/VBoxContainer/SpriteList" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_SpriteList_item_selected"]
 [connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_SpriteTextureRect_gui_input"]
 [connection signal="mouse_exited" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_SpriteTextureRect_mouse_exited"]
-[connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/Panel/HBoxContainer/XOriginInput" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_XOriginInput_value_changed"]
-[connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/Panel/HBoxContainer/YOriginInput" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_YOriginInput_value_changed"]
+[connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer/XOriginInput" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_XOriginInput_value_changed"]
+[connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer/YOriginInput" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_YOriginInput_value_changed"]
 [connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer/HBoxContainer/FpsSpinBox" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FpsSpinBox_value_changed"]
-[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FrameBackTrackButton_pressed"]
 [connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_FrameBackTrackButton_pressed"]
-[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_PausePlayButton_toggled"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FrameBackTrackButton_pressed"]
 [connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_PausePlayButton_toggled"]
-[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FrameAdvanceButton_pressed"]
+[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_PausePlayButton_toggled"]
 [connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_FrameAdvanceButton_pressed"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FrameAdvanceButton_pressed"]
 [connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Right/Button" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_Button_toggled"]
 [connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline/TimelineSlider" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline/TimelineSlider" method="_on_TimelineSlider_gui_input"]
 [connection signal="tween_all_completed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline/TimelineSlider/Tween" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_Tween_tween_all_completed"]
@@ -1891,14 +2198,22 @@ __meta__ = {
 [connection signal="item_edited" from="Main/PanelContainer/HBoxContainer/TabContainer/Backgrounds/BackgroundEditor/TabContainer2/Advanced/BackgroundTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Backgrounds/BackgroundEditor" method="_on_BackgroundTree_item_edited"]
 [connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor/TabContainer2/Advanced/ObjectTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor/TabContainer2/Advanced/ObjectTree" method="_on_ObjectTree_gui_input"]
 [connection signal="item_edited" from="Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor/TabContainer2/Advanced/ObjectTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor" method="_on_ObjectTree_item_edited"]
+[connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Atlas/AtlasEditor/TabContainer2/Advanced/AtlasTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Atlas/AtlasEditor/TabContainer2/Advanced/AtlasTree" method="_on_ObjectTree_gui_input"]
+[connection signal="item_edited" from="Main/PanelContainer/HBoxContainer/TabContainer/Atlas/AtlasEditor/TabContainer2/Advanced/AtlasTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Atlas/AtlasEditor" method="_on_AtlasTree_item_edited"]
+[connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/TabContainer2/Advanced/SoundTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/TabContainer2/Advanced/SoundTree" method="_on_ObjectTree_gui_input"]
+[connection signal="item_edited" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/TabContainer2/Advanced/SoundTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor" method="_on_SoundTree_item_edited"]
 [connection signal="file_selected" from="OpenWadDialog" to="." method="_on_OpenWadDialog_file_selected"]
 [connection signal="pressed" from="SpriteTexturePageWindow/VBoxContainer/HBoxContainer2/HBoxContainer2/okbutton" to="SpriteTexturePageWindow" method="_on_okbutton_pressed"]
+[connection signal="pressed" from="WaitForThreadsDialog/MarginContainer/VBoxContainer/HBoxContainer/WaitThreadsOk" to="." method="_on_WaitThreadsOk_pressed"]
+[connection signal="pressed" from="WaitForThreadsDialog/MarginContainer/VBoxContainer/HBoxContainer/WaitThreadsNo" to="." method="_on_WaitThreadsNo_pressed"]
 [connection signal="pressed" from="ImportantPopups/SaveGIFDialog2/VBoxContainer/Button" to="ImportantPopups/SaveGIFDialog2" method="_on_Button_pressed"]
 [connection signal="file_selected" from="ImportantPopups/SaveGIFDialog" to="ImportantPopups/SaveGIFDialog2" method="_on_SaveGIFDialog_file_selected"]
 [connection signal="file_selected" from="ImportantPopups/ExtractResourceDialog" to="ImportantPopups/ExtractResourceDialog" method="_on_ExtractResourceDialog_file_selected"]
 [connection signal="popup_hide" from="ImportantPopups/ExtractResourceDialog" to="ImportantPopups" method="_on_ExtractResourceDialog_popup_hide"]
 [connection signal="file_selected" from="ImportantPopups/AddResourceDialog" to="." method="_on_AddResourceDialog_file_selected"]
 [connection signal="popup_hide" from="ImportantPopups/AddResourceDialog" to="ImportantPopups" method="_on_ExtractResourceDialog_popup_hide"]
+[connection signal="file_selected" from="ImportantPopups/ImportSheetDialog" to="." method="_on_ImportSheetDialog_file_selected"]
+[connection signal="popup_hide" from="ImportantPopups/ImportSheetDialog" to="ImportantPopups" method="_on_ExtractResourceDialog_popup_hide"]
 [connection signal="dir_selected" from="ImportantPopups/ExportSpriteStripDialog" to="ImportantPopups/ExportSpriteStripDialog" method="_on_ExportSpriteStripDialog_dir_selected"]
 [connection signal="file_selected" from="ImportantPopups/ExportSpriteStripDialog" to="ImportantPopups/ExportSpriteStripDialog" method="_on_ExportSpriteStripDialog_file_selected"]
 [connection signal="popup_hide" from="ImportantPopups/ExportSpriteStripDialog" to="ImportantPopups" method="_on_ExportSpriteStripDialog_popup_hide"]
@@ -1906,8 +2221,8 @@ __meta__ = {
 [connection signal="popup_hide" from="ImportantPopups/ImportSpriteStripDialog" to="ImportantPopups" method="_on_ImportSpriteStripDialog_popup_hide"]
 [connection signal="about_to_show" from="ImportantPopups/ImportSpriteStripSliceDialog" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_ImportSpriteStripSliceDialog_about_to_show"]
 [connection signal="popup_hide" from="ImportantPopups/ImportSpriteStripSliceDialog" to="ImportantPopups" method="_on_ImportSpriteStripSliceDialog_popup_hide"]
-[connection signal="value_changed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/SpinBox" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_SpinBox_value_changed"]
 [connection signal="value_changed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/SpinBox" to="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/Panel/ImportSpriteStripPreview" method="_on_SpinBox_value_changed"]
+[connection signal="value_changed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/SpinBox" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_SpinBox_value_changed"]
 [connection signal="pressed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer3/Button" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_Button_pressed"]
 [connection signal="file_selected" from="ImportantPopups/OpenPatchDialog" to="." method="_on_OpenPatchDialog_file_selected"]
 [connection signal="popup_hide" from="ImportantPopups/OpenPatchDialog" to="ImportantPopups" method="_on_OpenPatchDialog_popup_hide"]

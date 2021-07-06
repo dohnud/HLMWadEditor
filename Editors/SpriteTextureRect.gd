@@ -52,9 +52,9 @@ func _draw():
 		if metaeditor.meta.center_norms[metaeditor.current_sprite] != nv:
 			metaeditor.meta.center_norms[metaeditor.current_sprite] = nv
 			metaeditor.app.base_wad.changed_files[metaeditor.app.selected_asset_name] = metaeditor.meta
-	else:
-		if metaeditor.app.base_wad.sprite_data[metaeditor.current_sprite]['center'] != origin_pos:
-			metaeditor.app.base_wad.sprite_data[metaeditor.current_sprite]['center'] = origin_pos
+	elif metaeditor.app.base_wad.spritebin.sprite_data.has(metaeditor.current_sprite):
+		if metaeditor.app.base_wad.spritebin.sprite_data[metaeditor.current_sprite]['center'] != origin_pos:
+			metaeditor.app.base_wad.spritebin.sprite_data[metaeditor.current_sprite]['center'] = origin_pos
 			metaeditor.app.base_wad.changed_files['GL/hlm2_sprites.bin'] = metaeditor.app.base_wad.spritebin
 	draw_texture(origin_icon, origin_draw_pos+Vector2.ONE, Color(0,0,0,0.3))
 	draw_texture(origin_icon, origin_draw_pos, icon_modulate)

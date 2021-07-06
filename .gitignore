@@ -8,4 +8,5 @@ config.txt
 *.txt
 .DS_Store
 mods/
+exported/
 .import/

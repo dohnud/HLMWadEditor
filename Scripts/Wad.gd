@@ -139,12 +139,16 @@ func goto(asset):
 	if !is_open(): open(file_path, READ)
 	for p in patchwad_list:
 		if p.exists(asset):
-			return p.get(asset)
+			return p.goto(asset)
 	var dim = file_locations[asset]
 	seek(content_offset + dim[0])
 	return dim[1]
 
 func get(asset):
+	if new_files.has(asset):
+		return new_files[asset]
+	if changed_files.has(asset):
+		return changed_files[asset]
 	var r = get_buffer(goto(asset))
 	close()
 	return r
@@ -169,7 +173,7 @@ func apply_patchwad(f):
 func patch(wad):
 	patchwad_list.append(wad)
 	for f in wad.file_locations.keys():
-		changed_files[f] = open_asset(f)
+		changed_files[f] = wad.open_asset(f)
 
 func sprite_sheet(asset, lazy=0):
 	if lazy:
@@ -336,13 +340,14 @@ func parse_meta(asset, lazy=0):
 	if ".meta" in asset:
 		tex = sprite_sheet(asset.replace(".meta", ".png"))
 	elif '.gmeta' in asset:
-		tex = sprite_sheet(asset.replace(".gmeta", ".png"))		
+		tex = sprite_sheet(asset.replace(".gmeta", ".png"))
+#	if new_files.has(asset):
+#		return new_files[asset]
+#	if changed_files.has(asset):
+#		return changed_files[asset]
 	if asset in loaded_metas.keys():
-		loaded_metas[asset].texture_page.set_data(tex.get_data())
-#		var s :SpriteFrames= loaded_metas[asset].sprites
-#		for a in s.animations:
-#			for f in a['frames']:
-#				f.atlas = tex
+#		loaded_metas[asset].texture_page.set_size_override(tex.get_size())
+#		loaded_metas[asset].texture_page.set_data(tex.get_data())
 		return loaded_metas[asset]
 
 	var meta = Meta.new()
@@ -505,6 +510,39 @@ func parse_backgrounds():
 	loaded_bins[asset] = b
 	return b
 
+func parse_atlases():
+	var asset = 'GL/hlm2_atlases.bin'
+	for p in patchwad_list:
+		if p.exists(asset):
+			return p.parse_backgrounds(asset)
+	var size = goto(asset)
+	var b = AtlasesBin.new()
+	b.parse(self)
+	loaded_bins[asset] = b
+	return b
+
+func parse_sounds():
+	var asset = 'GL/hlm2_sounds.bin'
+	for p in patchwad_list:
+		if p.exists(asset):
+			return p.parse_sounds(asset)
+	var size = goto(asset)
+	var b = SoundsBin.new()
+	b.parse(self)
+	loaded_bins[asset] = b
+	return b
+
+func parse_col_masks():
+	var asset = CollisionMasksBin.file_path
+	for p in patchwad_list:
+		if p.exists(asset):
+			return p.parse_col_masks(asset)
+	var size = goto(asset)
+	var b = CollisionMasksBin.new()
+	b.parse(self)
+	loaded_bins[asset] = b
+	return b
+
 func get_bin(asset):
 	for p in patchwad_list:
 		if p.exists(asset):
@@ -522,7 +560,14 @@ func get_bin(asset):
 		r = parse_rooms()
 	elif asset == BackgroundsBin.file_path:
 		r = parse_backgrounds()
+	elif asset == AtlasesBin.file_path:
+		r = parse_atlases()
+	elif asset == SoundsBin.file_path:
+		r = parse_sounds()
+	elif asset == CollisionMasksBin.file_path:
+		r = parse_col_masks()
 	close()
+	loaded_bins[asset] = r
 	return r
 
 func parse_orginal_meta(asset, lazy=0):

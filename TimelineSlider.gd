@@ -28,7 +28,11 @@ func update_pos(v:float=0):
 	if editor.frametexturerect:
 		var c = editor.meta.sprites.get_frame_count(editor.current_sprite)
 		var i = clamp(value * c, 0, max(0,c-1))
-		editor.frametexturerect.texture = editor.meta.sprites.get_frame(editor.current_sprite, i)
+		var f = editor.meta.sprites.get_frame(editor.current_sprite, i)
+		editor.frametexturerect.texture = f
+		editor.frame_tex_offset_node.text = str(f.region.position.x) + ' x ' + str(f.region.position.y)
+		if f is MetaTexture:
+			editor.frame_tex_uv_node.text = str(f.uv.position.x) + ' x ' + str(f.uv.position.y)
 		editor.frame_number_node.text = str(int(i))
 		#editor.animatedsprite_node.frame = (value-1/editor.meta.sprites.get_frame_count(editor.current_sprite)) * editor.meta.sprites.get_frame_count(editor.current_sprite)
 

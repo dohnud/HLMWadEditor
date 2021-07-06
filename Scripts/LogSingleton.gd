@@ -1,24 +1,53 @@
-extends File
+extends Node
 
 class_name Logger
 
+var f = File.new()
+
 func _init():
-	open('log.txt', WRITE)
+	f.open('log.txt', File.WRITE)
 
 
 func log(string, sep='\n'):
-	store_string(string + sep)
+	f.store_string(string + sep)
 
-func log_array(array, sep='\n'):
+func log_array(array, sep='\n', prefix=''):
 	var i = 0
-	store_string('--- array ---')
+	f.store_string(prefix+'--- array['+str(len(array))+'] ---\n')
 	for a in array:
-		store_string(str(i) +': ' + str(a) + sep)
+		var p = prefix+str(i) + ': '
+		if i > 0:
+			var l = len(p)
+			p = ''
+			for j in range(l):
+				p += ' '
+#		if a is Array or a is PoolByteArray:
+#			log_array(a, '\n', p)
+		if a is Dictionary:
+			log_dict(a, '\n', p)
+		else:
+			f.store_string(p + str(a) + sep)
 		i += 1
-	store_string('-------------')
+	f.store_string(prefix+'-------------\n')
 
-func log_dict(dict, sep='\n'):
-	store_string('---- dict ----')
+func log_dict(dict, sep='\n', prefix=''):
+	f.store_string(prefix+'---- dict['+str(len(dict))+'] ----\n')
+	var i = 0
 	for a in dict.keys():
-		store_string(str(a) +': ' + str(dict[a]) + sep)
-	store_string('--------------')
+		var p = prefix+str(a) + ': '
+		if i > 0:
+			var l = len(p)
+			p = ''
+			for j in range(l):
+				p += ' '
+		if dict[a] is Array or dict[a] is PoolByteArray:
+			log_array(dict[a], ', ', prefix)
+		if dict[a] is Dictionary:
+			log_dict(dict[a], '\n', prefix)
+		else:
+			f.store_string(prefix + str(dict[a]) + sep)
+		i+=1
+	f.store_string('--------------\n')
+
+func _exit_tree():
+	f.close()

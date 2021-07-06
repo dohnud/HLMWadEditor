@@ -79,7 +79,12 @@ func create_dict(dict, path=''):
 				s = editor.bin.names[dict[k]]
 			create_path(path+'/'+k).set_text(1, s)
 
-
+func create_struct(struct, path=''):
+	if struct is Dictionary:
+		create_dict(struct, path)
+	elif struct is Array or struct is PoolByteArray:
+		create_array(struct, path)
+	create_path(path)
 
 func _on_ObjectTree_gui_input(event):
 	if event.is_action_released("ui_delete"):

@@ -72,6 +72,8 @@ func parse(file_pointer):
 		var r = rooms[room_id]
 		var s = room_names[r['name_pos']]
 		room_data[s] = r
+	data = room_data
+	names = room_names.values()
 	file_size = f.get_position() - file_start
 
 func write(file_pointer):

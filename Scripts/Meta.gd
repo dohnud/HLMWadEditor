@@ -46,9 +46,13 @@ func export_sprite_to_gif(file_path, sprite_name, speed=1, scale=1):
 	file.close()
 
 var sprites = SpriteFrames.new()
-var texture_page = null
+var texture_page :ImageTexture= null
+
 signal resolve_progress
+signal resolve_complete
 var needs_recalc = false
+var terminate_resolve = false
+
 var is_gmeta = false
 var center_norms = {}
 
@@ -73,7 +77,7 @@ func parse(file_pointer, size, _texture_page=null) -> SpriteFrames:
 		var image_count = f.get_32()
 		for i in range(image_count):
 			f.get_32() #4 bytes of padding for some reason
-			var img = AtlasTexture.new()
+			var img = MetaTexture.new()
 			var w = f.get_32()
 			var h = f.get_32()
 			var x = f.get_32()
@@ -83,11 +87,11 @@ func parse(file_pointer, size, _texture_page=null) -> SpriteFrames:
 #			img.meta_position = Vector2(x,y)
 			img.atlas = texture_page
 			# skip uv coords
-			f.get_32()
-			f.get_32()
+			var p = Vector2(f.get_float(), f.get_float())
 #			f.get_32()
 #			f.get_32()
 			var c =  Vector2(f.get_float(), f.get_float())
+			img.uv = Rect2(p, c-p)
 			if !center_norms.has(sprite_name):
 				center_norms[sprite_name] = c
 			sprites.add_frame(sprite_name, img)
@@ -97,6 +101,8 @@ func parse(file_pointer, size, _texture_page=null) -> SpriteFrames:
 	return sprites
 
 func write(file_pointer) -> int:
+	texture_dimensions = texture_page.get_size()
+	print(texture_dimensions)
 	var f = file_pointer
 	var start = f.get_position()
 	f.store_8(15)
@@ -120,24 +126,24 @@ func write(file_pointer) -> int:
 			f.store_32(frame.region.size.y)
 			f.store_32(frame.region.position.x)
 			f.store_32(frame.region.position.y)
-			if texture_dimensions == Vector2.ZERO:
-				f.store_32(0)
-				f.store_32(0)
-				f.store_32(0)
-				f.store_32(0)
+#			if texture_dimensions == Vector2.ZERO:
+#				f.store_32(0)
+#				f.store_32(0)
+#				f.store_32(0)
+#				f.store_32(0)
+#			else:
+			if is_gmeta:
+				f.store_float(0)
+				f.store_float(0)
+				f.store_float(center_norms[spr_name].x)
+				f.store_float(center_norms[spr_name].y)
 			else:
-				if is_gmeta:
-					f.store_float(0)
-					f.store_float(0)
-					f.store_float(center_norms[spr_name].x)
-					f.store_float(center_norms[spr_name].y)
-				else:
-					var w  = frame.region.size.x
-					var h  = frame.region.size.y
-					f.store_float(frame.region.position.x / texture_dimensions.x)
-					f.store_float(frame.region.position.y / texture_dimensions.y)
-					f.store_float((frame.region.position.x+w) / texture_dimensions.x)
-					f.store_float((frame.region.position.y+h) / texture_dimensions.y)
+				var w  = frame.region.size.x
+				var h  = frame.region.size.y
+				f.store_float(frame.region.position.x / texture_dimensions.x)
+				f.store_float(frame.region.position.y / texture_dimensions.y)
+				f.store_float((frame.region.position.x+w) / texture_dimensions.x)
+				f.store_float((frame.region.position.y+h) / texture_dimensions.y)
 		
 	for spr_name in sprites.get_animation_names():
 		if spr_name in sprite_names_ordered:
@@ -154,24 +160,24 @@ func write(file_pointer) -> int:
 			f.store_32(frame.region.size.y)
 			f.store_32(frame.region.position.x)
 			f.store_32(frame.region.position.y)
-			if texture_dimensions == Vector2.ZERO:
-				f.store_32(0)
-				f.store_32(0)
-				f.store_32(0)
-				f.store_32(0)
+#			if texture_dimensions == Vector2.ZERO:
+#				f.store_32(0)
+#				f.store_32(0)
+#				f.store_32(0)
+#				f.store_32(0)
+#			else:
+			if is_gmeta:
+				f.store_float(0)
+				f.store_float(0)
+				f.store_float(center_norms[spr_name].x)
+				f.store_float(center_norms[spr_name].y)
 			else:
-				if is_gmeta:
-					f.store_float(0)
-					f.store_float(0)
-					f.store_float(center_norms[spr_name].x)
-					f.store_float(center_norms[spr_name].y)
-				else:
-					var w  = frame.region.size.x
-					var h  = frame.region.size.y
-					f.store_float(frame.region.position.x / texture_dimensions.x)
-					f.store_float(frame.region.position.y / texture_dimensions.y)
-					f.store_float((frame.region.position.x+w) / texture_dimensions.x)
-					f.store_float((frame.region.position.y+h) / texture_dimensions.y)
+				var w  = frame.region.size.x
+				var h  = frame.region.size.y
+				f.store_float(frame.region.position.x / texture_dimensions.x)
+				f.store_float(frame.region.position.y / texture_dimensions.y)
+				f.store_float((frame.region.position.x+w) / texture_dimensions.x)
+				f.store_float((frame.region.position.y+h) / texture_dimensions.y)
 	return f.get_position() - start
 #
 #func writeg(file_pointer):
@@ -265,73 +271,112 @@ func resolve(userdata):
 	var image_width = spritesheet.get_width()
 	var image_height = 1
 	var dest_image :Image = Image.new()
-	if !needs_recalc:
-		dest_image.create(image_width, spritesheet.get_height(), false, Image.FORMAT_RGBA8)
-		for a in animatedsprite.get_animation_names():
-			for i in animatedsprite.get_frame_count(a):
-				var f = animatedsprite.get_frame(a,i)
-				dest_image.blit_rect(f.atlas.get_data(), f.region, f.region.position)
-		dest_image.save_png('temp_sheet.png')
-		texture_page.set_data(dest_image)
-		return
-	dest_image.create(image_width, image_height, false, Image.FORMAT_RGBA8)
-	dest_image.lock()
-	var masq_image :Image = Image.new()
-	masq_image.create(image_width, image_height, false, Image.FORMAT_RGBA8)
-	masq_image.lock()
-	var new_spritesheet = ImageTexture.new()
-	var masq_square = Image.new()
-	masq_square.create(1,1,false,Image.FORMAT_RGBA8)
-	masq_square.fill(Color(1,0,0,1))
-	var dest_size = Vector2(image_width, 1)
 	
 	var p = 0
-	for sprite_name in animatedsprite.get_animation_names():
-		for frame_index in range(animatedsprite.get_frame_count(sprite_name)):
-			var frame :AtlasTexture= animatedsprite.get_frame(sprite_name, frame_index)
-			var idx = frame.region.size.x+1
-			var idy = frame.region.size.y+1
-			assert(idx <= image_width)
-			
-			var found = false
-			for ty in range(2048):
-				if ty + idy > dest_image.get_height():
-					masq_image.unlock()
-					dest_image.unlock()
-					dest_image.crop(image_width, ty + idy)
-					masq_image.crop(image_width, ty + idy)
-					dest_image.lock()
-					masq_image.lock()
-				for tx in range(image_width - idx):
-					var valid = !(masq_image.get_pixel(tx,ty).r8 ||
-						masq_image.get_pixel(tx, ty + idy-1).r8 ||
-						masq_image.get_pixel(tx + idx-1, ty).r8 ||
-						masq_image.get_pixel(tx + idx-1, ty + idy-1).r8)
-					if valid:
-						for ity in range(idy):
-							for itx in range(idx):
-								valid = !masq_image.get_pixel(tx + itx, ty + ity).r8
+	var a = animatedsprite.get_animation_names()
+	var l_as = len(a)
+	
+	if !needs_recalc:
+#		dest_image.create(image_width, spritesheet.get_height(), false, Image.FORMAT_RGBA8)
+#		for s in animatedsprite.get_animation_names():
+#			for i in animatedsprite.get_frame_count(s):
+#				var f :AtlasTexture= animatedsprite.get_frame(s,i)
+#				dest_image.blit_rect(f.atlas.get_data(), f.region, f.region.position)
+		return
+		emit_signal('resolve_progress', 1)
+		emit_signal('resolve_complete', self)
+	else:
+		var rs = []
+		dest_image.create(image_width, image_height, false, Image.FORMAT_RGBA8)
+		dest_image.lock()
+		var masq_image :Image = Image.new()
+		masq_image.create(image_width, image_height, false, Image.FORMAT_RGBA8)
+		masq_image.lock()
+		var new_spritesheet = ImageTexture.new()
+		var masq_square = Image.new()
+		masq_square.create(1,1,false,Image.FORMAT_RGBA8)
+		masq_square.fill(Color(1,0,0,1))
+		var dest_size = Vector2(image_width, 1)
+		
+		var new_sprites:SpriteFrames=SpriteFrames.new()
+		new_sprites.remove_animation("default")
+		for sprite_name in a:
+			new_sprites.add_animation(sprite_name)
+			var f_count = animatedsprite.get_frame_count(sprite_name)
+			var p1 = 0
+			for frame_index in range(f_count):
+				p1 = float(frame_index) / float(f_count)
+				var frame :MetaTexture= animatedsprite.get_frame(sprite_name, frame_index)
+				var idx = frame.region.size.x
+				var idy = frame.region.size.y
+				assert(idx <= image_width)
+				
+				var found = false
+				for ty in range(2048):
+					if ty + idy > dest_image.get_height():
+						masq_image.unlock()
+						dest_image.unlock()
+						dest_image.crop(image_width, ty + idy)
+						print(sprite_name,' ', frame_index,': ',image_width,' x ', ty + idy)
+						masq_image.crop(image_width, ty + idy)
+						dest_image.lock()
+						masq_image.lock()
+					for tx in range(image_width - idx):
+						var valid = !(masq_image.get_pixel(tx,ty).r8 ||
+							masq_image.get_pixel(tx, ty + idy-1).r8 ||
+							masq_image.get_pixel(tx + idx-1, ty).r8 ||
+							masq_image.get_pixel(tx + idx-1, ty + idy-1).r8)
+						if valid:
+							for ity in range(idy):
+								for itx in range(idx):
+									valid = !masq_image.get_pixel(tx + itx, ty + ity).r8
+									if !valid: break
 								if !valid: break
-							if !valid: break
-					if valid:
-						dest_image.blit_rect(frame.atlas.get_data(), frame.region, Vector2(tx,ty))
-						masq_square.unlock()
-#						masq_square.resize(frame.region.size.x, frame.region.size.y, Image.INTERPOLATE_NEAREST)
-						masq_square.crop(frame.region.size.x,frame.region.size.y)
-						masq_square.fill(Color(1,0,0,1))
-						masq_square.lock()
-						masq_image.blit_rect(masq_square, Rect2(Vector2.ZERO,frame.region.size), Vector2(tx,ty))
-#						for ity in range(idy):
-#							for itx in range(idx):
-#								masq_image.set_pixel(tx + itx, ty + ity, Color(1,0,0,1))
-#						print('moving ', sprite_name, frame_index, ': ', frame.region.position, ' -> ', Vector2(tx,ty))
-						frame.region = Rect2(int(tx),int(ty), int(idx-1),int(idy-1))
-#						frame.atlas = new_spritesheet
-						found = true
+						if valid:
+							dest_image.blit_rect(frame.atlas.get_data(), frame.region, Vector2(tx,ty))
+							masq_square.unlock()
+	#						masq_square.resize(frame.region.size.x, frame.region.size.y, Image.INTERPOLATE_NEAREST)
+							masq_square.crop(frame.region.size.x,frame.region.size.y)
+							masq_square.fill(Color(1,0,0,1))
+							masq_square.lock()
+							masq_image.blit_rect(masq_square, Rect2(Vector2.ZERO,frame.region.size), Vector2(tx,ty))
+	#						for ity in range(idy):
+	#							for itx in range(idx):
+	#								masq_image.set_pixel(tx + itx, ty + ity, Color(1,0,0,1))
+	#						print('moving ', sprite_name, frame_index, ': ', frame.region.position, ' -> ', Vector2(tx,ty))
+#							rs.append(Rect2(int(tx),int(ty), int(idx),int(idy)))
+
+							var new_frame:MetaTexture = MetaTexture.new()
+							new_frame.uv = frame.uv
+							new_frame.region = Rect2(int(tx),int(ty), int(idx),int(idy))
+							new_frame.atlas = texture_page
+							new_sprites.add_frame(sprite_name, new_frame)
+							found = true
+						if found: break
 					if found: break
-				if found: break
-		p += 1
-		emit_signal('resolve_progress', float(p)/float(len(animatedsprite.get_animation_names())))
+				if terminate_resolve:
+					emit_signal('resolve_complete', self)
+					return null
+				emit_signal('resolve_progress', float(p + p1)/float(l_as))#float(p)/float(len(animatedsprite.get_animation_names())))
+			p += 1
+#		var i = 0
+#		for sprite_name in a:
+#			new_sprites.add_animation(sprite_name)
+#			var f_count = animatedsprite.get_frame_count(sprite_name)
+#			for frame_index in range(f_count):
+#				var f :AtlasTexture = AtlasTexture.new()
+#				f.atlas = texture_page
+#				f.region = rs[i]
+#				new_sprites.add_frame(sprite_name, f)
+#				i += 1
+		sprites = new_sprites
 	dest_image.save_png('temp_sheet.png')
-	texture_page.set_data(dest_image)
-	texture_dimensions = dest_image.get_size()
+#	texture_dimensions = dest_image.get_size()
+#	dest_image.crop(texture_dimensions)
+#	texture_page.set_size_override(texture_dimensions)
+#	texture_page.set_data(dest_image)
+	texture_page.create_from_image(dest_image, 0)
+	texture_dimensions = texture_page.get_size()
+	print(texture_dimensions)
+	emit_signal('resolve_progress', 1)
+	emit_signal('resolve_complete', self)

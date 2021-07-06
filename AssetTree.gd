@@ -19,7 +19,7 @@ var bolds = {}
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	set_hide_root(true)
+	reset()
 #	create_path("Awesome/Poggerschamp/dumbledore/a")
 #	create_path("Awesome/Poggerschamp/dumbledore/n")
 #	create_path("Awesome/Poggerschamp/dingodng/n")
@@ -51,6 +51,7 @@ func _ready():
 func reset():
 	clear()
 	root = create_item()
+	root.set_text(0,'/')
 	directory_dict = {'contents':{},'parent':root}
 	bolds = {}
 	set_hide_root(true)
@@ -78,6 +79,9 @@ func create_path(path:String, bold=false, current_dir=directory_dict):
 		var text = path
 		var treeitem : TreeItem = null
 		if current_dir['contents'].has(path):
+			if !current_dir['contents'][path] is TreeItem:
+				print(path)
+				return null
 			treeitem = current_dir['contents'][path]
 		else:
 			treeitem = create_item(current_dir['parent'])
@@ -98,6 +102,7 @@ func bold_treeitem_draw(treeitem:TreeItem, rect:Rect2):
 #	draw_string(bold_font,rect.position+Vector2(0,rect.size.y), treeitem.get_text(0))
 
 func set_bold(treeitem):
+	if treeitem == null: return
 	bolds[treeitem] = treeitem.get_text(0)
 	treeitem.set_cell_mode(0, TreeItem.CELL_MODE_CUSTOM)
 	treeitem.set_custom_draw(0, self, "bold_treeitem_draw")
@@ -108,7 +113,8 @@ func _on_Tree_item_selected():
 #	var asset = '/' + treeitem.get_text(0)
 #	treeitem = treeitem.get_parent()
 	var asset = ''
-	while treeitem.get_text(0) != '' or bolds.has(treeitem):
+	while treeitem and (treeitem.get_text(0) != '' or bolds.has(treeitem)):
+		if treeitem == root: break
 		if bolds.has(treeitem):
 			asset = '/' + bolds[treeitem] + asset
 		else:
@@ -116,3 +122,4 @@ func _on_Tree_item_selected():
 		treeitem = treeitem.get_parent()
 	asset = asset.substr(1)
 	app.open_asset(asset)
+	app.selected_asset_treeitem = treeitem

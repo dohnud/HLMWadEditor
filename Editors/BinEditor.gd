@@ -26,7 +26,7 @@ func set_bin_asset(asset):
 		bin = app.base_wad.get_bin(file)
 		selected_struct_id = asset
 		selected_struct = bin.get(asset)
-		tree.create_dict(selected_struct)
+		tree.create_struct(selected_struct)
 		return selected_struct
 	return null
 
@@ -49,9 +49,10 @@ func _on_Tree_item_edited(deleted=0):
 	var changed_d = bin.get(selected_struct_id).duplicate(true)
 	for k in p:
 		d = d[k]
+		changed_d = changed_d[k]
 	if deleted == 0:
 		var value = tree.get_selected().get_text(1)
-		var v = null
+		var v = d[last_k]
 		var vs = null
 		if d[last_k] is Vector2:
 			value.replace('(','')
@@ -85,8 +86,14 @@ func _on_Tree_item_edited(deleted=0):
 func can_be_int_fuck_you_godot(string:String):
 	string = string.replace(' ', '')
 	if string == '0': return 0
+	if '+' in string:
+		var l = string.split('+')
+		var s = 0
+		for i in l:
+			s += can_be_int_fuck_you_godot(i)
+		return s
 	for c in string:
-		if ord(c) > ord('A')-1 and ord(c) < ord('z')+1:
+		if ord(c) > ord('A')-1 and ord(c) < ord('z')+1 or c == '/':
 			return 0
 	return int(string)
 #func change_order(_room, new_next, new_previous):

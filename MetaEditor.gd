@@ -8,10 +8,12 @@ onready var spritelist_node = $HSplitContainer/VBoxContainer/SpriteList
 onready var frametexturerect = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect
 onready var frame_number_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer/HBoxContainer2/FrameNumber2
 onready var tex_dimensions_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer/HBoxContainer/FrameNumber
+onready var frame_tex_offset_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3/OffsetLabel
+onready var frame_tex_uv_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3/UVLabel
 onready var gizmos_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos
-onready var origin_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/Panel
-onready var xorigin_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/Panel/HBoxContainer/XOriginInput
-onready var yorigin_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/Panel/HBoxContainer/YOriginInput
+onready var origin_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel
+onready var xorigin_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer/XOriginInput
+onready var yorigin_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer/YOriginInput
 #onready var fps_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/FpsSpinBox
 onready var fps_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer/HBoxContainer/FpsSpinBox
 onready var timeline = $HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline/TimelineSlider
@@ -59,12 +61,16 @@ func set_asset(asset_path):
 
 func _on_SpriteList_item_selected(index):
 	var sprite_name = meta.sprites.get_animation_names()[index]
+	if sprite_name == 'default': return
 	current_sprite = sprite_name
-	var f :AtlasTexture= meta.sprites.get_frame(current_sprite, 0)
+	var f :MetaTexture= meta.sprites.get_frame(current_sprite, 0)
 	frametexturerect.texture = f
 	tex_dimensions_node.text = str(f.get_width()) + ' x ' + str(f.get_height())
+	frame_tex_offset_node.text = str(f.region.position.x) + ' x ' + str(f.region.position.y)
+	if f is MetaTexture:
+		frame_tex_uv_node.text = str(f.uv.position.x) + ' x ' + str(f.uv.position.y)
 	mode = 0
-	if !meta.is_gmeta and !app.base_wad.sprite_data.has(sprite_name):
+	if !meta.is_gmeta and !app.base_wad.spritebin.sprite_data.has(sprite_name):
 		mode = 1
 	timeline.tween.playback_speed = (fps_node.value) / meta.sprites.get_frame_count(current_sprite)
 	#timeline.tween.stop_all()
@@ -78,9 +84,9 @@ func _on_SpriteList_item_selected(index):
 			yorigin_node.value = meta.center_norms[current_sprite].y * yorigin_node.max_value
 			frametexturerect.origin_pos = meta.center_norms[current_sprite] * Vector2(xorigin_node.max_value, yorigin_node.max_value)
 		else:
-			xorigin_node.value = app.base_wad.sprite_data[current_sprite]['center'].x
-			yorigin_node.value = app.base_wad.sprite_data[current_sprite]['center'].y
-			frametexturerect.origin_pos = app.base_wad.sprite_data[current_sprite]['center']
+			xorigin_node.value = app.base_wad.spritebin.sprite_data[current_sprite]['center'].x
+			yorigin_node.value = app.base_wad.spritebin.sprite_data[current_sprite]['center'].y
+			frametexturerect.origin_pos = app.base_wad.spritebin.sprite_data[current_sprite]['center']
 	else:
 		origin_node.visible = false
 		frametexturerect.origin_pos = Vector2(-9999,-9999)

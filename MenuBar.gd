@@ -52,6 +52,8 @@ func _ready():
 		var p = null
 		if op[0] >= '0' and op[0] <= '9':
 			p = get_node(op.substr(1))
+			var g = p.get_index()
+			get_child(g+1).visible = false
 			p.visible = false
 		else:
 			p = get_node(op)
@@ -139,6 +141,9 @@ func extract():
 	elif app.selected_asset_data is Meta:
 		w.add_filter('*.meta')
 		w.add_filter('*.gmeta')
+		if w.filename=='':w.filename = '.meta'
+	elif app.selected_asset_data is Texture:
+		w.add_filter('*.png')
 
 func add():
 	var w :FileDialog= app.get_node("ImportantPopups/AddResourceDialog")
@@ -193,7 +198,7 @@ func export_sprite_gif():
 	var w :FileDialog= app.get_node("ImportantPopups/SaveGIFDialog")
 	var nw = app.get_node("ImportantPopups/SaveGIFDialog2")
 	app.get_node("ImportantPopups").show()
-	var meta = app.meta_editor_node.meta
+	var meta :Meta= app.meta_editor_node.meta
 	nw.meta = meta
 	nw.sprite = app.meta_editor_node.current_sprite
 	w.popup()
@@ -207,8 +212,13 @@ func import_sprite_strip():
 func recalcspritesheet():
 	app._on_RecalculateSheetButton_pressed()
 
-#func exportspritesheet():
-#
+func exportspritesheet():
+	app.selected_asset_data = app.selected_asset_data.texture_page
+	extract()
+func importspritesheet():
+	var w :FileDialog= app.get_node("ImportantPopups/ImportSheetDialog")
+	app.get_node("ImportantPopups").show()
+	w.popup()
 
 func _on_TabContainer_tab_changed(tab):
 	var i = 2
