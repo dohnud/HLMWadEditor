@@ -1,0 +1,4 @@
+site_name: HLMWadEditor Documentation
+site_url: https://example.com/
+theme: windmill
+extra_css: [extra.css]
