@@ -55,8 +55,8 @@ func _on_Tree_item_edited(deleted=0):
 		var v = d[last_k]
 		var vs = null
 		if d[last_k] is Vector2:
-			value.replace('(','')
-			value.replace(')','')
+			value = value.replace('(','')
+			value = value.replace(')','')
 			value = value.split(',')
 			if int(value[0]) and int(value[1]):
 				v = Vector2(int(value[0]), int(value[1]))

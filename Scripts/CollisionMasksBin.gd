@@ -51,18 +51,24 @@ func resize(mask_id, width, height, frame_count=-1):
 	return mask
 
 
-func compute_new_mask(mask_id, image_index, img:Image):
-#	var i = img.get_rect(Rect2(0,0,img.get_width(),img.get_height()))
-	
-#	img.convert(Image.FORMAT_L8)
+func compute_new_mask(mask_id, image_index, img:Image) -> Array:
+	# returns the new alpha rect
 	img.lock()
 	var mask = resize(mask_id, img.get_width(), img.get_height())
 	var f = mask.data[image_index]
+	var x_bounds = Vector2(img.get_width(), 0)
+	var y_bounds = Vector2(img.get_height(),0)
 	for y in range(len(f)):
 		for x in range(len(f[y])):
 			f[y][x] = 0
 			if x < mask.width and y < mask.height:
 				f[y][x] = 0xFF * int(0<img.get_pixel(x,y).a)
+				if f[y][x]:
+					if x < x_bounds.x: x_bounds.x = x
+					if x > x_bounds.y: x_bounds.y = x
+					if y < y_bounds.x: y_bounds.x = y
+					if y > y_bounds.y: y_bounds.y = y
+	return [x_bounds, y_bounds]
 #	mask_data[mask_id].data[image_index] = i.convert(Image.FORMAT_L8)
 
 func byte_array_to_int(bytes):
@@ -99,10 +105,10 @@ func parse(file_pointer):
 				fdata.append(row)
 #				fdata += row
 			mask.data.append(fdata)
-#			if mask.id == 2388:
+#			if mask.id >= 2387 and mask.id <= 2390:
 #				var img = Image.new()
 #				img.create_from_data(mask.x * 8, mask.height, false, Image.FORMAT_L8, fdata)
-#				img.save_png('exported/collision_masks/png/0sprMagnum.png')
+#				print('saved success yesyes??', mask.id, img.save_png('exported/collision_masks/png/0'+str(mask.id)+'.png'))
 #		mask.data.append(parse_simple_list(f, '32', int(data_len/4)))
 #		if data_len % 4:
 #			mask.data.append(parse_simple_list(f, '8', data_len % 4))

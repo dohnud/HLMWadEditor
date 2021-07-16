@@ -33,7 +33,7 @@ func _on_SpriteTree_item_edited(deleted=0):
 	var p = []
 	while ti != null:
 		var s = ti.get_text(0)
-		if can_be_int_fuck_you_godot(s) or s == '0':
+		if can_be_int_fuck_you_godot(s) != -1:
 			s = can_be_int_fuck_you_godot(s)
 		p.push_front(s)
 		ti = ti.get_parent()
@@ -46,14 +46,17 @@ func _on_SpriteTree_item_edited(deleted=0):
 		var value = sprite_tree.get_selected().get_text(1)
 		var v = d[last_k]
 		if d[last_k] is Vector2:
-			value.replace('(','')
-			value.replace(')','')
+			value = value.replace('(','')
+			value = value.replace(')','')
 			value = value.split(',')
-			if can_be_int_fuck_you_godot(value[0]) and can_be_int_fuck_you_godot(value[1]):
+			print(value)
+			if can_be_int_fuck_you_godot(value[0]) != -1 and can_be_int_fuck_you_godot(value[1]) != -1:
 				v = Vector2(can_be_int_fuck_you_godot(value[0]), can_be_int_fuck_you_godot(value[1]))
-		elif d[last_k] is int and can_be_int_fuck_you_godot(value):
+			print(v)
+		elif d[last_k] is int and can_be_int_fuck_you_godot(value) != -1:
 			v = can_be_int_fuck_you_godot(value)
 		if v != d[last_k]:
+			print(v)
 			d[last_k] = v
 			app.base_wad.changed_files[file] = bin
 		sprite_tree.get_selected().set_text(1, str(d[last_k]))
@@ -72,9 +75,11 @@ func can_be_int_fuck_you_godot(string:String):
 		var l = string.split('+')
 		var s = 0
 		for i in l:
-			s += can_be_int_fuck_you_godot(i)
+			var p = can_be_int_fuck_you_godot(i)
+			if p != -1:
+				s += p
 		return s
 	for c in string:
 		if ord(c) > ord('A')-1 and ord(c) < ord('z')+1 or c == '/':
-			return 0
+			return -1
 	return int(string)

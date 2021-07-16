@@ -40,8 +40,8 @@ func _on_Button_pressed():
 	var w = texture.get_width()
 	var h = texture.get_height()
 	var d = w / (frame_count)
+	var nb = 'Backgrounds/' != sprite.substr(0,len('Backgrounds/'))
 	if Vector2(d,h) != meta.sprites.get_frame(sprite,0).region.size or meta.sprites.get_frame_count(sprite) < frame_count:
-		var nb = 'Backgrounds/' != sprite.substr(0,len('Backgrounds/'))
 		meta.needs_recalc = true
 		meta.sprites.remove_animation(sprite)
 		meta.sprites.add_animation(sprite)
@@ -52,7 +52,9 @@ func _on_Button_pressed():
 			f.atlas = texture
 			meta.sprites.add_frame(sprite, f)
 			if nb:
-				app.base_wad.get_bin(CollisionMasksBin.file_path).compute_new_mask(app.base_wad.spritebin.sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D
+				var b_list = app.base_wad.get_bin(CollisionMasksBin.file_path).compute_new_mask(app.base_wad.spritebin.sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D
+				app.base_wad.spritebin.sprite_data[sprite]['mask_x_bounds'] = b_list[0]
+				app.base_wad.spritebin.sprite_data[sprite]['mask_y_bounds'] = b_list[1]
 		app.base_wad.changed_files[CollisionMasksBin.file_path] = app.base_wad.get_bin(CollisionMasksBin.file_path)
 		app.meta_editor_node.frametexturerect.update()
 		if nb:
@@ -81,9 +83,19 @@ func _on_Button_pressed():
 					f.atlas = texture
 					var of :MetaTexture= meta.sprites.get_frame(s,i)
 					img.blit_rect(f.atlas.get_data(), f.region, of.region.position)
-					app.base_wad.get_bin(CollisionMasksBin.file_path).compute_new_mask(app.base_wad.spritebin.sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D
-					app.base_wad.changed_files[CollisionMasksBin.file_path] = app.base_wad.get_bin(CollisionMasksBin.file_path)
+					if nb:
+						if  app.base_wad.get_bin(CollisionMasksBin.file_path).mask_data.has(app.base_wad.spritebin.sprite_data[sprite]['id']):
+							var b_list = app.base_wad.get_bin(CollisionMasksBin.file_path).compute_new_mask(app.base_wad.spritebin.sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D
+							app.base_wad.spritebin.sprite_data[sprite]['mask_x_bounds'] = b_list[0]
+							app.base_wad.spritebin.sprite_data[sprite]['mask_y_bounds'] = b_list[1]
+							app.base_wad.changed_files[CollisionMasksBin.file_path] = app.base_wad.get_bin(CollisionMasksBin.file_path)
+							app.base_wad.changed_files[SpritesBin.file_path] = app.base_wad.spritebin
+					else:
+						var tilesheet = sprite.substr(len('Backgrounds/'))
+						app.base_wad.backgroundbin.background_data[tilesheet]['size'] = Vector2(w,h)
+						app.base_wad.changed_files[BackgroundsBin.file_path] = app.base_wad.backgroundbin
 				meta.texture_page.set_data(img)
+	app.base_wad.changed_files[app.selected_asset_name.replace('.meta','.png')] = meta.texture_page
 	hide()
 	get_parent().hide()
 

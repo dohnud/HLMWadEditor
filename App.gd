@@ -27,16 +27,21 @@ var thread = null
 var show_base_wad = true
 var show_advanced = false
 
+
+var f_prefixes = ['Sprites/', 'Objects/', 'Rooms/', 'Backgrounds/', 'Sounds/', 'Metadata/']
+var advanced_stuff_filter = {
+	SpritesBin.file_path:0,
+	ObjectsBin.file_path:0,
+	RoomsBin.file_path:0,
+	BackgroundsBin.file_path:0,
+	SoundsBin.file_path:0,
+	AtlasesBin.file_path:0
+}
+
 # Called when the node enters the scene tree for the first time.
 func _init():
-	var config = File.new()
-	config.open('config.txt', File.READ)
-	base_wad_path = config.get_line()
-	
-	var num = min(int(config.get_line()), 6)
-	for i in range(num):
-		recent_patches.append(config.get_line())
-	config.close()
+	base_wad_path = Config.settings.base_wad_path
+	recent_patches = Config.settings.recent_patches
 
 func _ready():
 	
@@ -67,7 +72,7 @@ func open_wad(file_path):
 			var o :ObjectsBin= wad.parse_objects()
 			var r :RoomsBin = wad.parse_rooms()
 			var b :BackgroundsBin = wad.parse_backgrounds()
-		wad.get_bin(CollisionMasksBin.file_path)
+#		wad.get_ bin(CollisionMasksBin.file_path)
 		base_wad = wad
 		_on_SearchBar_text_entered('')
 #		var files = wad.new_files.keys()
@@ -137,25 +142,6 @@ func open_patchwad(file_path):
 func _on_SearchBar_text_entered(new_text=''):
 	asset_tree.reset()
 	if new_text == '':
-		var s :SpritesBin = null
-		var sn = false
-		var o :ObjectsBin = null
-		var on = false
-		var r :RoomsBin = null
-		var rn = false
-		var b :BackgroundsBin = null
-		var bn = false
-		var ss :SoundsBin = null
-		var ssn = false
-		var a :AtlasesBin = null
-		var an = false
-		if show_advanced:
-			s = base_wad.spritebin
-			o = base_wad.objectbin
-			r = base_wad.roombin
-			b = base_wad.backgroundbin
-			ss = base_wad.get_bin(SoundsBin.file_path)
-			a = base_wad.get_bin(AtlasesBin.file_path)
 		if show_base_wad:
 			for file in base_wad.file_locations.keys():
 				if "Atlas" == file.substr(0,len('Atlas')) and (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
@@ -163,18 +149,6 @@ func _on_SearchBar_text_entered(new_text=''):
 		for file in base_wad.new_files.keys() + base_wad.changed_files.keys():
 			if "Atlas" == file.substr(0,len('Atlas')) and (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
 				asset_tree.create_path(file, 1)
-			if file == SpritesBin.file_path:
-				sn = true
-			if file == ObjectsBin.file_path:
-				on = true
-			if file == RoomsBin.file_path:
-				rn = true
-			if file == BackgroundsBin.file_path:
-				bn = true
-			if file == SoundsBin.file_path:
-				ssn = true
-			if file == AtlasesBin.file_path:
-				an = true
 		for p in base_wad.patchwad_list:
 			for file in p.file_locations.keys():
 				if "Atlas" == file.substr(0,len('Atlas'))\
@@ -184,36 +158,17 @@ func _on_SearchBar_text_entered(new_text=''):
 				if "Atlas" == file.substr(0,len('Atlas'))\
 				and ".png" == file.substr(len(file)-len('.png')):
 					asset_tree.create_path(file.replace('.png','.meta'), 1)
-				if file == SpritesBin.file_path:
-					sn = true
-				if file == ObjectsBin.file_path:
-					on = true
-				if file == RoomsBin.file_path:
-					rn = true
-				if file == BackgroundsBin.file_path:
-					bn = true
-				if file == SoundsBin.file_path:
-					ssn = true
-				if file == AtlasesBin.file_path:
-					an = true
-		if s and (show_base_wad or sn):
-			for sprite_name in s.sprite_data.keys():
-				asset_tree.create_path('Sprites/' + sprite_name, sn)
-		if b and (show_base_wad or bn):
-			for background_name in b.background_data.keys():
-				asset_tree.create_path('Backgrounds/' + background_name, bn)
-		if o and (show_base_wad or on):
-			for object_name in o.object_data.keys():
-				asset_tree.create_path('Objects/' + object_name, on)
-		if r and (show_base_wad or rn):
-			for room_name in r.room_data.keys():
-				asset_tree.create_path('Rooms/' + room_name, rn)
-		if ss and (show_base_wad or rn):
-			for sound_name in base_wad.get_bin(SoundsBin.file_path).sound_data.keys():
-				asset_tree.create_path('Sounds/' + sound_name, ssn)
-		if a and (show_base_wad or rn):
-			for meta_name in base_wad.get_bin(AtlasesBin.file_path).atlas_data.keys():
-				asset_tree.create_path('Metadata/' + meta_name, an)
+#				if advanced_stuff_filter.has(file):
+#					advanced_stuff_filter[file] = true
+		var i = 0
+		for f in advanced_stuff_filter.keys():
+			if advanced_stuff_filter[f] and show_base_wad:
+				var b = base_wad.get_bin(f)
+				if b:
+					var bb = base_wad.changed_files.has(f) or base_wad.new_files.has(f)
+					for n in b.data.keys():
+						asset_tree.create_path(f_prefixes[i] + n, bb)
+			i += 1
 		return
 #		op
 	else:
@@ -226,24 +181,15 @@ func _on_SearchBar_text_entered(new_text=''):
 				if "Atlas" == file.substr(0,len('Atlas')) and (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
 					if new_text in file:
 						asset_tree.create_path(file)
-			for room_name in base_wad.roombin.room_data.keys():
-				if new_text in room_name:
-					asset_tree.create_path('Rooms/' + room_name)
-			for sprite_name in base_wad.spritebin.sprite_data.keys():
-				if new_text in sprite_name:
-					asset_tree.create_path('Sprites/' + sprite_name)
-			for object_name in base_wad.objectbin.object_data.keys():
-				if new_text in object_name:
-					asset_tree.create_path('Objects/' + object_name)
-			for background_name in base_wad.backgroundbin.background_data.keys():
-				if new_text in background_name:
-					asset_tree.create_path('Backgrounds/' + background_name)
-			for sound_name in base_wad.get_bin(SoundsBin.file_path).sound_data.keys():
-				if new_text in sound_name:
-					asset_tree.create_path('Sounds/' + sound_name)
-			for meta_name in base_wad.get_bin(AtlasesBin.file_path).atlas_data.keys():
-				if new_text in meta_name:
-					asset_tree.create_path('Metadata/' + meta_name)
+			var i = 0
+			for f in advanced_stuff_filter.keys():
+				if advanced_stuff_filter[f]:
+					var b = base_wad.get_bin(f)
+					if b:
+						var bb = base_wad.changed_files.has(f) or base_wad.new_files.has(f)
+						for n in b.data.keys():
+							if new_text in n:
+								asset_tree.create_path(f_prefixes[i] + n, bb)
 
 var threads = {}
 func _on_RecalculateSheetButton_pressed():
@@ -303,10 +249,15 @@ func _on_ExportSpriteStripButton_pressed():
 	w.sprite = meta_editor_node.current_sprite
 	w.export_mode = 0
 	w.mode = FileDialog.MODE_SAVE_FILE
-	w.window_title = 'Export Sprite Strip to PNG'
-	w.filters = ['*.png']
 	get_node("ImportantPopups").show()
 	w.popup()
+	w.deselect_items()
+	w.window_title = 'Export Sprite Strip to PNG'
+	w.filters = ['*.png']
+	w.current_file = ''
+	w.get_line_edit().text = ''
+	w.get_line_edit().text = meta_editor_node.current_sprite+'.png'
+	w.current_file = meta_editor_node.current_sprite+'.png'
 func export_sprite_strips():
 	var w :FileDialog= get_node("ImportantPopups/ExportSpriteStripDialog")
 	var meta = meta_editor_node.meta
@@ -340,17 +291,21 @@ func _on_AddResourceDialog_file_selected(path):
 func _on_OpenPatchDialog_file_selected(path):
 	open_patchwad(path)
 	_on_SearchBar_text_entered('')
+	if path in Config.settings.recent_patches:
+		return
+	Config.settings.recent_patches.append(path)
+	if len(Config.settings.recent_patches) > 6:
+		Config.settings.recent_patches.pop_front()
+	recent_patches = Config.settings.recent_patches
+	Config.save()
 
 
 func _on_OpenWadDialog_file_selected(path):
 	open_wad(path)
 	var config = File.new()
-	config.open('config.txt', File.WRITE)
-	config.store_string(path+'\n')
-	
-	config.store_string(str(len(recent_patches)) + '\n')
-	for p in recent_patches:
-		config.store_string(p + '\n')
+	Config.settings.base_wad_path = path
+	base_wad_path = Config.settings.base_wad_path
+	Config.save()
 
 
 var wait_for_threads_to_resolve = false
