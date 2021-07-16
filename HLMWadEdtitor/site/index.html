@@ -11,7 +11,7 @@
     <link rel="canonical" href="https://example.com/">
     <link rel="shortcut icon" href="./img/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-    <title>My Docs</title>
+    <title>HLMWadEditor Documentation</title>
     <link href="./css/bootstrap-3.3.7.min.css" rel="stylesheet">
     <link href="./css/font-awesome-4.7.0.css" rel="stylesheet">
     <link href="./css/base.css" rel="stylesheet">
@@ -35,9 +35,11 @@
       var is_top_frame = (window === window.parent);
         
         var pageToc = [
-          {title: "Welcome to MkDocs", url: "#_top", children: [
-              {title: "Commands", url: "#commands" },
-              {title: "Project layout", url: "#project-layout" },
+          {title: "Welcome to the HLMWadEditor", url: "#_top", children: [
+              {title: "About", url: "#about" },
+              {title: "The Explorer", url: "#the-explorer" },
+              {title: "The Editor", url: "#the-editor" },
+              {title: "Quick Links", url: "#quick-links" },
           ]},
         ];
 
@@ -83,7 +85,7 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
     <a href="" class="wm-top-brand wm-top-link wm-vcenter">
       
       <div class="wm-top-title">
-        My Docs<br>
+        HLMWadEditor Documentation<br>
         
       </div>
     </a>
@@ -95,8 +97,17 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
 <nav class="wm-toc-pane">
   
   <ul class="wm-toctree">
-        <li class="wm-toc-li wm-toc-lev1 "><a href="" class="wm-article-link wm-toc-text">Welcome to MkDocs</a>
+        <li class="wm-toc-li wm-toc-lev1 "><a href="" class="wm-article-link wm-toc-text">Welcome</a>
 </li>
+        <li class="wm-toc-li wm-toc-lev1 wm-toc-opener"><span class="wm-toc-text">Tutorials</span>
+</li>
+<li class="wm-toc-li-nested collapse">
+  <ul class="wm-toctree">
+      <li class="wm-toc-li wm-toc-lev2 "><a href="Tutorials/tutorial0/" class="wm-article-link wm-toc-text">0. Your First Mod</a>
+</li>
+  </ul>
+</li>
+
   </ul>
 </nav>
 
@@ -109,26 +120,63 @@ if (is_top_frame) { $('body').addClass('wm-top-page'); }
   <a name="_top"></a>
     
 
-    
-
-    <h1 id="welcome-to-mkdocs">Welcome to MkDocs</h1>
-<p>For full documentation visit <a href="https://www.mkdocs.org">mkdocs.org</a>.</p>
-<h2 id="commands">Commands</h2>
+    <h1 id="welcome-to-the-hlmwadeditor"><strong>Welcome to the HLMWadEditor</strong></h1>
+<p>The complete guide to the Hotline Miami Modding</p>
+<h3 id="about">About</h3>
+<p>In 2016, shortly after the level editor was released, the Hotline Miami modding community was given the <a href="https://github.com/muster128/HLMWadExplorer/releases/tag/1.2">HLMWadExplorer</a>. A tool that lets the user replace the games textures and sounds with their own. This opened the door for custom level creators and modders to make whatever they wanted. We could finally put John Wick in Hotline Miami. The Explorer used in combination with custom campaigns, and some creative problem avoiding, you could create your own game.</p>
+<p>There was just one small catch. You couldn't resize textures or sprites. If you wanted to reskin the magnum revolver sprite, with a measily sprite size of 10 by 15 pixels, to be a huge ass-railing railgun that would definitely be bigger that 10x15, you simply could not. The Explorer could only let you replace assets, not deeply modify them. And for a long time, modding was essentially just replacing texture pages.</p>
+<p>We knew the gatekeepers were a couple of binary files that contained sprite metadata. But more roadblocks were in the way. These binary files were encoded in a custom format only known to the developers and only readable by the game. We tried to get in contact with the developers but they informed us that they didn't have the details "readily available" and reported me to U.S. officials, thanks jonatan I'm now serving 54 years for "Thick Skin" and several accounts of manslaughter. So we were left with nothing but a hex editor to crack the files. In mid 2021 the file format was finally cracked by yours truly and now the floodgates were unlocked. And with the release of the Editor, the floodgates are open.</p>
+<h2 id="the-explorer">The Explorer</h2>
+<blockquote>
+<p>Shoutouts to muster128 for the patched <a href="https://github.com/muster128/HLMWadExplorer/releases/tag/1.2">Explorer</a> that kickstarted the Editor project</p>
+</blockquote>
+<p>As stated in the about section, this program allowed us to view and replace the games internal files laying the defining and laying the foundation for the way Hotline Miami 2 mods are made.
+<em>permenantly stuck in light mode.</em></p>
+<h2 id="the-editor">The Editor</h2>
+<blockquote>
+<p>For <a href="https://github.com/DohKnot/HLMWadEditor/releases">Editor Downloads</a> the Github's releases page has up to date versions.</p>
+</blockquote>
+<p>The Editor is like if the Explorer did cocaine and got dark mode. It borrows a lot of concepts and design from the Explorer, so modders of old can take advantage of the familiarity, but does so much more. It allows you achieve what was previously thought impossible.
+<em>there is no light mode.</em></p>
+<hr />
+<h2 id="quick-links"><em>Quick Links</em></h2>
 <ul>
-<li><code>mkdocs new [dir-name]</code> - Create a new project.</li>
-<li><code>mkdocs serve</code> - Start the live-reloading docs server.</li>
+<li><code>Tutorials</code> - A step by step guide to Hotline Miami Modding<ol>
+<li><a href="Tutorials/tutorial0/"><code>Your First Mod</code></a></li>
+</ol>
+</li>
+<li><a href="UserInterface.md"><code>User Interface</code></a> - An index defining the programs UI elements.</li>
 <li><code>mkdocs build</code> - Build the documentation site.</li>
 <li><code>mkdocs -h</code> - Print help message and exit.</li>
 </ul>
-<h2 id="project-layout">Project layout</h2>
-<pre><code>mkdocs.yml    # The configuration file.
-docs/
-    index.md  # The documentation homepage.
-    ...       # Other markdown pages, images and other files.
-</code></pre>
+<hr />
+<blockquote>
+<p>Any fuck ups? Or weird language? Contact me:</p>
+<p>discord: dump#7296</p>
+<p>twitter: <a href="https://www.twitter.com/DohKnot">@DohKnot</a>,</p>
+</blockquote>
 
   <br>
     
+
+    
+    
+      
+    
+
+  <div class="row wm-article-nav-buttons" role="navigation" aria-label="navigation">
+    
+    <div class="wm-article-nav pull-right">
+      <a href="Tutorials/tutorial0/" class="btn btn-xs btn-default pull-right">
+        Next
+        <i class="fa fa-chevron-right" aria-hidden="true"></i>
+      </a>
+      <a href="Tutorials/tutorial0/" class="btn btn-xs btn-link">
+        0. Your First Mod
+      </a>
+    </div>
+    
+  </div>
 
     <br>
 </div>
@@ -141,5 +189,5 @@ docs/
 </html>
 <!--
 MkDocs version : 1.2.1
-Build Date UTC : 2021-07-12 14:56:28.618951+00:00
+Build Date UTC : 2021-07-16 04:03:37.068383+00:00
 -->

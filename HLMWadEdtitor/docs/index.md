@@ -1,26 +1,48 @@
-# Welcome to the HLMWadEditor
-*The complete guide to the HLMWadEditor*
+# **Welcome to the HLMWadEditor**
+The complete guide to the Hotline Miami Modding
+
+### About
+
+In 2016, shortly after the level editor was released, the Hotline Miami modding community was given the [HLMWadExplorer](https://github.com/muster128/HLMWadExplorer/releases/tag/1.2). A tool that lets the user replace the games textures and sounds with their own. This opened the door for custom level creators and modders to make whatever they wanted. We could finally put John Wick in Hotline Miami. The Explorer used in combination with custom campaigns, and some creative problem avoiding, you could create your own game.
+
+There was just one small catch. You couldn't resize textures or sprites. If you wanted to reskin the magnum revolver sprite, with a measily sprite size of 10 by 15 pixels, to be a huge ass-railing railgun that would definitely be bigger that 10x15, you simply could not. The Explorer could only let you replace assets, not deeply modify them. And for a long time, modding was essentially just replacing texture pages.
+
+We knew the gatekeepers were a couple of binary files that contained sprite metadata. But more roadblocks were in the way. These binary files were encoded in a custom format only known to the developers and only readable by the game. We tried to get in contact with the developers but they informed us that they didn't have the details "readily available" and reported me to U.S. officials, thanks jonatan I'm now serving 54 years for "Thick Skin" and several accounts of manslaughter. So we were left with nothing but a hex editor to crack the files. In mid 2021 the file format was finally cracked by yours truly and now the floodgates were unlocked. And with the release of the Editor, the floodgates are open.
 
 
 
-## Quick Links
+## The Explorer
 
-* [`Tutorials`](TutorialsList.md) - A list of tutorials that show how to achieve some basic effects.
+> Shoutouts to muster128 for the patched [Explorer](https://github.com/muster128/HLMWadExplorer/releases/tag/1.2) that kickstarted the Editor project
+
+As stated in the about section, this program allowed us to view and replace the games internal files laying the defining and laying the foundation for the way Hotline Miami 2 mods are made.
+*permenantly stuck in light mode.*
+
+
+
+## The Editor
+
+> For [Editor Downloads](https://github.com/DohKnot/HLMWadEditor/releases) the Github's releases page has up to date versions.
+
+The Editor is like if the Explorer did cocaine and got dark mode. It borrows a lot of concepts and design from the Explorer, so modders of old can take advantage of the familiarity, but does so much more. It allows you achieve what was previously thought impossible.
+*there is no light mode.*
+
+
+
+---
+
+## *Quick Links*
+
+- `Tutorials` - A step by step guide to Hotline Miami Modding
+    0. [`Your First Mod`](./Tutorials/tutorial0.md)
 * [`User Interface`](UserInterface.md) - An index defining the programs UI elements.
 * `mkdocs build` - Build the documentation site.
 * `mkdocs -h` - Print help message and exit.
 
+---
 
-### About
+> Any fuck ups? Or weird language? Contact me:
 
-In 2016, shortly after the level editor was released, the Hotline Miami modding community was given the [HLMWadExplorer](https://github.com/muster128/HLMWadExplorer/releases/tag/1.2).
+> discord: dump#7296
 
-A tool that lets the user replace the games textures and sounds with their own. This opened the door for custom level creators and modders to make whatever they wanted. We could finally put John Wick in Hotline Miami. The HLMWadExplorer used in combination with custom campaigns, and some creative problem avoiding, you could create your own game.
-
-Though there was one small catch. We couldn't resize textures or sprites. If you wanted to reskin the magnum revolver sprite, with a measily sprite size of 10 by 15 pixels, to be a huge ass-railing railgun that would definitely be bigger that 10x15, you couldn't. The HLMWadExplorer could only let you replace assets, but not deeply modify them. And for a long time, modding was essentially just replacing texture pages.
-
-We knew the gatekeepers were a couple of binary files that contained sprite metadata. But said files were encoded in a custom format made by the developers and only readable by the game. We tried to reach out, but to no response. And so we were left with nothing but a hex editor to crack the files format. In mid 2021 the file format was finally cracked by yours truly and now the floodgates were unlocked. And with the release of the HLMWadEditor, the floodgates are open.
-
-## Introduction
-The HLMWadEditor tries to mimmick the layout of the [HLMWadExplorer](https://github.com/muster128/HLMWadExplorer/releases/tag/1.2) but with an awesome user interface that will make your laptop fans cream.
-Go to the section on the [User Interface](UserInterface.md) to get a breakdown of what each button, window, and panel does.
+> twitter: [@DohKnot](https://www.twitter.com/DohKnot),

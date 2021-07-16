@@ -1,4 +1,16 @@
 site_name: HLMWadEditor Documentation
 site_url: https://example.com/
+markdown_extensions:
+  - admonition
 theme: windmill
+extra:
+  article_nav_top: false
+
+
 extra_css: [extra.css]
+
+
+nav:
+  - Welcome: index.md
+  - Tutorials:
+    - 0. Your First Mod: 'Tutorials/tutorial0.md'
