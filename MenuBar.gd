@@ -12,6 +12,8 @@ var operations = {
 		["Import from Patch", [KEY_CONTROL, KEY_I], 'importpatch'],
 		[],
 		["Switch Base Wad", [KEY_CONTROL, KEY_SHIFT, KEY_O], 'openwad'],
+		[],
+		["Quit", [KEY_CONTROL, KEY_Q], 'quit'],
 	],
 	"ResourceButton" : [
 		["Extract", [KEY_CONTROL, KEY_E], 'extract'],
@@ -23,9 +25,9 @@ var operations = {
 	],
 	"ViewButton" : [
 		["Toggle Asset List", [KEY_CONTROL, KEY_H], 'toggleassetlist'],
-		["Expand Asset List", ['TOGGLE'], 'expandassetlist'],
+		["Expand Asset List", [], 'expandassetlist'],
 		["Show Only Modified Files", ['TOGGLE'], 'togglenewfileslist'],
-		["Toggle Advanced Mode", ['TOGGLE'], 'toggleadvancedmode'],
+		["Advanced", [PopupMenu.new()], 'toggleadvanced'],
 	],
 	"1MetaButton" : [
 		["Import Sprite Strip", [KEY_SHIFT, KEY_I], 'import_sprite_strip'],
@@ -38,10 +40,10 @@ var operations = {
 #		["Add New Sprite", [], 'addspritegmeta'],
 	],
 	"1SpriteSheetButton" : [
-		["Import Sprite Sheet", [], 'importspritesheet'],
-		["Export Sprite Sheet", [], 'exportspritesheet'],
+		["Import Texture Page", [], 'importspritesheet'],
+		["Export Texture Page", [], 'exportspritesheet'],
 		[],
-		["Recalculate Sprite Sheet", [], 'recalcspritesheet'],
+		["Recalculate Texture Page", [], 'recalcspritesheet'],
 	]
 }
 
@@ -58,7 +60,7 @@ func _ready():
 		else:
 			p = get_node(op)
 		p = p.get_popup()
-		p.connect('id_pressed', self, "doop", [op])
+		p.connect('id_pressed', self, "doop", [op, p])
 		for item in operations[op]:
 			if len(item) == 0:
 				p.add_separator('')
@@ -67,9 +69,13 @@ func _ready():
 					var s = item[0]
 					var np = item[1][0]
 					np.set_name(s)
-					np.connect('id_pressed', self, item[2])
-					for recent in get_tree().get_nodes_in_group('App')[0].recent_patches:
-						np.add_item('.../' + recent.get_file())
+					np.connect('id_pressed', self, item[2], [np])
+					if s == 'Advanced':
+						for f in get_tree().get_nodes_in_group('App')[0].f_prefixes:
+							np.add_check_item('Show ' + f.substr(0,len(f)-1))
+					else:
+						for recent in get_tree().get_nodes_in_group('App')[0].recent_patches:
+							np.add_item('.../' + recent.get_file())
 					p.add_child(np)
 					p.add_submenu_item(item[0], s)
 				elif item[1][0] is String and item[1][0] == 'TOGGLE':
@@ -101,16 +107,21 @@ func set_shortcut(keys):
 	shortcut.set_shortcut(inputeventkey)
 	return shortcut
 
-func doop(id, op):
+func doop(id, op, p:PopupMenu):
 	if (op[0] >= '0' and op[0] <= '9' and !get_node(op.substr(1)).visible): return
 	if has_method(operations[op][id][2]):
 		call(operations[op][id][2])
 	else:
 		app.get_node('NotImplementedYetDialog').popup()
+	if len(operations[op][id][1]) and operations[op][id][1][0] == 'TOGGLE':
+		p.set_item_checked(id, !p.is_item_checked(id))
 
-func openrecentpatch(id):
-#	get_tree().get_nodes_in_group('App')[0].recent_patches
-	print(id)
+func quit():
+	get_tree().quit()
+
+func openrecentpatch(id, popup):
+	var a = get_tree().get_nodes_in_group('App')[0]
+	a._on_OpenPatchDialog_file_selected(a.recent_patches[id])
 
 func openpatch():
 	var w :FileDialog= app.get_node("ImportantPopups/OpenPatchDialog")
@@ -174,8 +185,9 @@ func togglenewfileslist():
 	app.show_base_wad = !app.show_base_wad
 	app._on_SearchBar_text_entered('')
 
-func toggleadvancedmode():
-	app.show_advanced = !app.show_advanced
+func toggleadvanced(id, popup:PopupMenu):
+	app.advanced_stuff_filter[app.advanced_stuff_filter.keys()[id]] = !app.advanced_stuff_filter[app.advanced_stuff_filter.keys()[id]]
+	popup.set_item_checked(id, app.advanced_stuff_filter[app.advanced_stuff_filter.keys()[id]])
 	app._on_SearchBar_text_entered('')
 
 func togglemetagizmos():

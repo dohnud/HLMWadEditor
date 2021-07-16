@@ -12,8 +12,8 @@ var spr = {
 	'id' : '32',
 	'size' : 'ivec2',
 	'center' : 'ivec2',
-	'alpha_lower_x' : 'ivec2',
-	'alpha_upper_y' : 'ivec2',
+	'mask_x_bounds' : 'ivec2',
+	'mask_y_bounds' : 'ivec2',
 	'frame_count' : '32',
 	'flags': [0x10],
 	'name_pos' : '32',
@@ -29,6 +29,8 @@ func parse(file_pointer):
 		var s = sprite_names[sprite['name_pos']]
 		sprite['name'] = s
 		sprite_data[s] = sprite
+	data = sprite_data
+	names = sprite_names.values()
 #	sprite_data['default'] = {
 #		'id' : -1,
 #		'dimesions' : [1,1],

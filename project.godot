@@ -59,6 +59,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/RoomsBin.gd"
 }, {
+"base": "Node",
+"class": "Settings",
+"language": "GDScript",
+"path": "res://Scripts/SettingsSingleton.gd"
+}, {
 "base": "BinParser",
 "class": "SoundsBin",
 "language": "GDScript",
@@ -85,6 +90,7 @@ _global_script_class_icons={
 "MetaTexture": "",
 "ObjectsBin": "",
 "RoomsBin": "",
+"Settings": "",
 "SoundsBin": "",
 "SpritesBin": "",
 "Wad": ""
@@ -102,11 +108,12 @@ config/icon="res://icon1.png"
 [autoload]
 
 Log="*res://Scripts/LogSingleton.gd"
+Config="*res://Scripts/SettingsSingleton.gd"
 
 [display]
 
-window/size/width=1280
-window/size/height=768
+window/size/width=1920
+window/size/height=1080
 window/dpi/allow_hidpi=true
 window/vsync/use_vsync=false
 window/energy_saving/keep_screen_on=false

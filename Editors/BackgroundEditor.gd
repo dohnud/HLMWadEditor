@@ -41,8 +41,8 @@ func _on_BackgroundTree_item_edited(deleted=0):
 	if deleted == 0:
 		var value = background_tree.get_selected().get_text(1)
 		if d[last_k] is Vector2:
-			value.replace('(','')
-			value.replace(')','')
+			value = value.replace('(','')
+			value = value.replace(')','')
 			value = value.split(',')
 			if int(value[0]) and int(value[1]):
 				d[last_k] = Vector2(int(value[0]), int(value[1]))

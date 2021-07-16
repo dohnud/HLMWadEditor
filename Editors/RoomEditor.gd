@@ -46,8 +46,8 @@ func _on_RoomTree_item_edited(deleted=0):
 		var value = room_tree.get_selected().get_text(1)
 		var v = d[last_k]
 		if d[last_k] is Vector2:
-			value.replace('(','')
-			value.replace(')','')
+			value = value.replace('(','')
+			value = value.replace(')','')
 			value = value.split(',')
 			if can_be_int_fuck_you_godot(value[0]) and can_be_int_fuck_you_godot(value[1]):
 				v = Vector2(can_be_int_fuck_you_godot(value[0]), can_be_int_fuck_you_godot(value[1]))
