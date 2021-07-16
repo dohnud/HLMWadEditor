@@ -16,6 +16,7 @@ html {
   --toc-border: var(--border-color);
   --top-bg: #202736;
   /* font-family: segoeui; */
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 body {

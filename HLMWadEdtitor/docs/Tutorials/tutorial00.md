@@ -20,7 +20,7 @@ Shoutouts to muster128 for the patched version that kickstarted the Editor proje
 This section goes over the types of game files we are free to manipulate.
 
 ### Game Resources
-When you view the base wad file archive's (the `hlm2_data_desktop.wad` file located in the games installed directory) contents you will see a few different kinds of data a few key ones are:
+When you view the base wad file archive's *(the `hlm2_data_desktop.wad` file located in the games installed directory)* contents you will see a few different kinds of data a few key ones are:
 
 * The **Atlases/** folder has all of the games sprite graphics. In here are `.png` texture pages with a `.meta` sprite atlas file of the same name. The `.meta` files are just a big cookie cutter for the sprites on the texture page.
 
@@ -37,13 +37,22 @@ Hotline Miami modding begins with the base `hlm2_data_desktop.wad`. This `.wad` 
 
 
 ### Mods
-All Hotline Miami mods are saved as `.patchwad` files. Fun fact, Patchwads are literally just a WAD Archives with the word "patch" thrown in the file extension. The key difference is that instead of storing all of the games assets it only contains the modified duplicates of the originals, a patch. 
+All Hotline Miami mods are saved as `.patchwad` files. Fun fact, Patchwads are literally just a WAD Archives with the word "patch" thrown in the file extension. The key difference is, instead of storing all of the games resources it only contains the modified duplicates of the originals, a patch wad. There are also two categories witch all mods fall under
 
+*   ### *Global mods*
+    Global mods let you change pretty much anything about the game. They are applied on the initial loading screen before the game boots to the logo screens and menu letting you modify any and all game resources before the game actually starts.
 
-Most mods need to be loaded at game launch and will need to be placed and located in your users `Documents/My Games/HotlineMiami2/Mods` folder.
+    > Global mods will be placed and located in your users `Documents/My Games/HotlineMiami2/Mods` folder.
 
+<!-- breaker to fix the broken -->
 
-If you've downloaded a level from the Steam Workshop you might be able to find a patchwad in a special little folder called `mods` in said levels workshop content folder.
+*   ### *Level mods*
+    Level mods are a bit more restricted in their scope but the most stable kind of mod. Level mods only let you do one thing: change texture pages. Its incredibly bare bones especially when you consider the fact that for some reason you can't change the weapons in a level mod. This degree of restriction is probably placed because mods can be packaged with custom levels and put on the workshop.
+
+    > Level mods will be in a `mods/` folder in your levels directory. If its not there create one!
+
+    > If you've downloaded a level from the Steam Workshop you might be able to find a patchwad in a special little folder called `mods` in said levels workshop content folder.
+
 
 
 ---
@@ -60,6 +69,6 @@ The Editor is like if the Explorer did cocaine and got dark mode. It borrows a l
 
 
 ### Initial Setup
-Like the Explorer, the Editor nees a base wad to reference. Just like the Explorer, its under `File/Switch base wad` and locate your base wad.
+After you download and launch the Editor for the first time. Like the Explorer, the Editor nees a base wad to reference. Just like the Explorer, its under `File/Switch base wad` and locate your base wad.
 
 ### 
