@@ -1,5 +1,4 @@
 # **Your first Hotline Miami mod**
-
 This tutorial teaches the core concepts of Hotline Miami modding and how to setup the Editor.
 
 ---
@@ -29,8 +28,10 @@ When you view the base wad file archive's (the `hlm2_data_desktop.wad` file loca
 
 * The **Sounds/** folder has every sound in the game. Sounds must be in a `.wav` format.
 
-!!! Music
-    For level music, switch to the `hlm2_music_desktop.wad` file located  next to the base wad.
+!!! note "Wheres the music?"
+    For music, switch to the `hlm2_music_desktop.wad` file located  next to the base wad.
+
+
 
 Hotline Miami modding begins with the base `hlm2_data_desktop.wad`. This `.wad` file is an uncompressed file archive storing all of Hotline Miami's resources. It holds every texture, shader, sound, font, sprite, tile, level, object, and dialogue line in the game! This is the file that the [Explorer](https://github.com/muster128/HLMWadExplorer/releases/tag/1.2) and Editor should reference when making modifications.
 
@@ -52,13 +53,13 @@ If you've downloaded a level from the Steam Workshop you might be able to find a
 
 > For [Downloads](https://github.com/DohKnot/HLMWadEditor/releases) the Github's releases page has up to date versions.
 
-The Editor is like if the Explorer did cocaine and got dark mode. It borrows a lot of concepts and design from the Exlporer, so modders of old can take advantage of the familiarity, but does so much more. It allows you achieve what was previously thought impossible.
+The Editor is like if the Explorer did cocaine and got dark mode. It borrows a lot of concepts and design from the Exlporer, so modders of old can take advantage of the familiarity and do so much more.
 
-!!! note "Mod Compatability"
-    Mods made with the HLMWadEditor will not be compatable with any other mod and will cause many unintended side effects
+<!-- !!! note "Mod Compatability"
+    Mods made with the HLMWadEditor will not be compatable with any other mod and will cause many unintended side effects -->
 
 
 ### Initial Setup
-Like the Explorer, the Editor nees a base wad to reference. To do so is the same as the Editor, `File/Switch base wad` and locate your base wad.
+Like the Explorer, the Editor nees a base wad to reference. Just like the Explorer, its under `File/Switch base wad` and locate your base wad.
 
-###
+### 

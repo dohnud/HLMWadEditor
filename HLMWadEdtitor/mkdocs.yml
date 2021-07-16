@@ -5,6 +5,7 @@ markdown_extensions:
 theme: windmill
 extra:
   article_nav_top: false
+  article_nav_bottom: false
 
 
 extra_css: [extra.css]
@@ -12,5 +13,8 @@ extra_css: [extra.css]
 
 nav:
   - Welcome: index.md
+  - Your First Mod:
+    - 0. Introduction: 'Tutorials/tutorial00.md'
+    - 1. The .meta Tool: 'Tutorials/tutorial01.md'
   - Tutorials:
-    - 0. Your First Mod: 'Tutorials/tutorial0.md'
+      - Gooo: 'Tutorials/tutorial0.md'

@@ -24,7 +24,7 @@ As stated in the about section, this program allowed us to view and replace the 
 
 > For [Editor Downloads](https://github.com/DohKnot/HLMWadEditor/releases) the Github's releases page has up to date versions.
 
-The Editor is like if the Explorer did cocaine and got dark mode. It borrows a lot of concepts and design from the Explorer, so modders of old can take advantage of the familiarity, but does so much more. It allows you achieve what was previously thought impossible.
+The Editor is like if the Explorer did cocaine and got dark mode. It borrows a lot of concepts and design from the Explorer, so modders of old can take advantage of the familiarity and do much more. Allowing us to achieve what was previously thought impossible.
 *there is no light mode.*
 
 
@@ -33,8 +33,10 @@ The Editor is like if the Explorer did cocaine and got dark mode. It borrows a l
 
 ## *Quick Links*
 
-- `Tutorials` - A step by step guide to Hotline Miami Modding
-    0. [`Your First Mod`](./Tutorials/tutorial0.md)
+- `Your First Mod` - An amazing place to get started
+    0. [`Introduction`](/Tutorials/tutorial00/)
+    1. [`The .meta Tool`](/Tutorials/tutorial01.md)
+- `Tutorials` - More tutorials delving into other common effects
 * [`User Interface`](UserInterface.md) - An index defining the programs UI elements.
 * `mkdocs build` - Build the documentation site.
 * `mkdocs -h` - Print help message and exit.
