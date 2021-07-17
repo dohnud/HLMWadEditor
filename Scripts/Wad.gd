@@ -356,6 +356,30 @@ func parse_meta(asset, lazy=0):
 	loaded_metas[asset] = meta
 	return meta
 
+func parse_fnt(asset, lazy=0):
+	if lazy:
+		asset = lazy_find(asset)
+	for p in patchwad_list:
+		if p.exists(asset):
+			return p.parse_fnt(asset)
+	var tex = null
+	if ".fnt" in asset:
+		tex = sprite_sheet(asset.replace(".fnt", "_0.png"))
+#	if new_files.has(asset):
+#		return new_files[asset]
+#	if changed_files.has(asset):
+#		return changed_files[asset]
+	if asset in loaded_metas.keys():
+#		loaded_metas[asset].texture_page.set_size_override(tex.get_size())
+#		loaded_metas[asset].texture_page.set_data(tex.get_data())
+		return loaded_metas[asset]
+
+	var meta = WadFont.new()
+	var size = goto(asset)
+	meta.parse(self, size, tex)
+	loaded_metas[asset] = meta
+	return meta
+
 func parse_sprite_data():
 	var asset = 'GL/hlm2_sprites.bin'
 	for p in patchwad_list:

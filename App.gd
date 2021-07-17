@@ -103,6 +103,12 @@ func open_asset(asset_path):
 		selected_asset_data = meta_editor_node.set_asset(asset_path)
 		meta_editor_node.spritelist_node.grab_focus()
 		selected_asset_data.is_gmeta = true
+	if '.fnt' in asset_path:
+#		editor_tabs.current_tab = 1
+#		selected_asset_name = asset_path
+#		selected_asset_data = meta_editor_node.set_asset(asset_path)
+#		meta_editor_node.spritelist_node.grab_focus()
+		base_wad.parse_fnt(asset_path)
 	if 'Rooms/' == asset_path.substr(0,len('Rooms/')):
 		editor_tabs.current_tab = 2
 		selected_asset_name = asset_path.substr(len('Rooms/'))
@@ -144,22 +150,29 @@ func _on_SearchBar_text_entered(new_text=''):
 	if new_text == '':
 		if show_base_wad:
 			for file in base_wad.file_locations.keys():
-				if "Atlas" == file.substr(0,len('Atlas')) and (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
+				if "Atlases/" == file.substr(0,len('Atlases/')) and (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
+					asset_tree.create_path(file)
+				if "Fonts/" == file.substr(0,len('Fonts/')) and (".fnt" == file.substr(len(file)-len('.fnt'))):
 					asset_tree.create_path(file)
 		for file in base_wad.new_files.keys() + base_wad.changed_files.keys():
-			if "Atlas" == file.substr(0,len('Atlas')) and (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
+			if "Atlases/" == file.substr(0,len('Atlases/')) and (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
+				asset_tree.create_path(file, 1)
+			if "Fonts/" == file.substr(0,len('Fonts/')) and (".fnt" == file.substr(len(file)-len('.fnt'))):
 				asset_tree.create_path(file, 1)
 		for p in base_wad.patchwad_list:
 			for file in p.file_locations.keys():
-				if "Atlas" == file.substr(0,len('Atlas'))\
-				and (".meta" == file.substr(len(file)-len('.meta'))\
-				or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
-					asset_tree.create_path(file, 1)
-				if "Atlas" == file.substr(0,len('Atlas'))\
-				and ".png" == file.substr(len(file)-len('.png')):
-					asset_tree.create_path(file.replace('.png','.meta'), 1)
-#				if advanced_stuff_filter.has(file):
-#					advanced_stuff_filter[file] = true
+				# if .meta is different or if texture page is different, mark as bold
+				if "Atlases/" == file.substr(0,len('Atlases/')):
+					if (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
+						asset_tree.create_path(file, 1)
+					if ".png" == file.substr(len(file)-len('.png')):
+						asset_tree.create_path(file.replace('.png','.meta'), 1)
+				# again for Fonts
+				if "Fonts/" == file.substr(0,len('Fonts/')):
+					if (".fnt" == file.substr(len(file)-len('.fnt'))):
+						asset_tree.create_path(file, 1)
+					elif ".png" == file.substr(len(file)-len('.png')):
+						asset_tree.create_path(file.replace('.png','.fnt'), 1)
 		var i = 0
 		for f in advanced_stuff_filter.keys():
 			if advanced_stuff_filter[f] and show_base_wad:
@@ -172,15 +185,37 @@ func _on_SearchBar_text_entered(new_text=''):
 		return
 #		op
 	else:
-		for file in base_wad.new_files.keys():
-			if "Atlas" == file.substr(0,len('Atlas')) and (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
-				if new_text in file:
-					asset_tree.create_path(file, 1)
+		for file in base_wad.new_files.keys() + base_wad.changed_files.keys():
+			if "Atlases/" == file.substr(0,len('Atlases/')):
+				if (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
+					if new_text in file:
+						asset_tree.create_path(file, 1)
+				if ".png" == file.substr(len(file)-len('.png')):
+					if new_text in file:
+						asset_tree.create_path(file.replace('.png','.meta'), 1)
+			if "Fonts/" == file.substr(0,len('Fonts/')):
+				if (".fnt" == file.substr(len(file)-len('.fnt'))):
+					if new_text in file:
+						asset_tree.create_path(file, 1)
+				elif ".png" == file.substr(len(file)-len('.png')):
+					if new_text in file:
+						asset_tree.create_path(file.replace('.png','.fnt'), 1)
 		if show_base_wad:
 			for file in base_wad.file_locations.keys():
-				if "Atlas" == file.substr(0,len('Atlas')) and (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
-					if new_text in file:
-						asset_tree.create_path(file)
+				if "Atlases/" == file.substr(0,len('Atlases/')):
+					if (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
+						if new_text in file:
+							asset_tree.create_path(file, 1)
+					if ".png" == file.substr(len(file)-len('.png')):
+						if new_text in file:
+							asset_tree.create_path(file.replace('.png','.meta'), 1)
+				if "Fonts/" == file.substr(0,len('Fonts/')):
+					if (".fnt" == file.substr(len(file)-len('.fnt'))):
+						if new_text in file:
+							asset_tree.create_path(file, 1)
+					elif ".png" == file.substr(len(file)-len('.png')):
+						if new_text in file:
+							asset_tree.create_path(file.replace('.png','.fnt'), 1)
 			var i = 0
 			for f in advanced_stuff_filter.keys():
 				if advanced_stuff_filter[f]:

@@ -113,7 +113,7 @@ func doop(id, op, p:PopupMenu):
 		call(operations[op][id][2])
 	else:
 		app.get_node('NotImplementedYetDialog').popup()
-	if len(operations[op][id][1]) and operations[op][id][1][0] == 'TOGGLE':
+	if len(operations[op][id][1]) == 1 and operations[op][id][1][0] == 'TOGGLE':
 		p.set_item_checked(id, !p.is_item_checked(id))
 
 func quit():
