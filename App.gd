@@ -9,6 +9,7 @@ export(NodePath) var background_editor_node
 export(NodePath) var object_editor_node
 export(NodePath) var sound_editor_node
 export(NodePath) var atlas_editor_node
+export(NodePath) var font_editor_node
 export(NodePath) var editor_tabs
 export(PackedScene) var compilenotif
 
@@ -28,13 +29,13 @@ var show_base_wad = true
 var show_advanced = false
 
 
-var f_prefixes = ['Sprites/', 'Objects/', 'Rooms/', 'Backgrounds/', 'Sounds/', 'Metadata/']
+var f_prefixes = ['Sprites/', 'Objects/', 'Rooms/', 'Backgrounds/', 'Metadata/']
 var advanced_stuff_filter = {
 	SpritesBin.file_path:0,
 	ObjectsBin.file_path:0,
 	RoomsBin.file_path:0,
 	BackgroundsBin.file_path:0,
-	SoundsBin.file_path:0,
+#	SoundsBin.file_path:0,
 	AtlasesBin.file_path:0
 }
 
@@ -58,6 +59,7 @@ func _ready():
 	object_editor_node = get_node(object_editor_node)
 	sound_editor_node = get_node(sound_editor_node)
 	atlas_editor_node = get_node(atlas_editor_node)
+	font_editor_node = get_node(font_editor_node)
 	editor_tabs = get_node(editor_tabs)
 	
 	open_wad(base_wad_path)
@@ -91,45 +93,54 @@ func open_wad(file_path):
 
 func open_asset(asset_path):
 	selected_asset_list_path = asset_path
-	print(asset_path)
-	if '.meta' in asset_path:
+#	print(asset_path)
+	if asset_path.ends_with('.meta'):
 		editor_tabs.current_tab = 1
 		selected_asset_name = asset_path
 		selected_asset_data = meta_editor_node.set_asset(asset_path)
 		meta_editor_node.spritelist_node.grab_focus()
-	if '.gmeta' in asset_path:
+	if asset_path.ends_with('.gmeta'):
 		editor_tabs.current_tab = 1
 		selected_asset_name = asset_path
 		selected_asset_data = meta_editor_node.set_asset(asset_path)
 		meta_editor_node.spritelist_node.grab_focus()
 		selected_asset_data.is_gmeta = true
-	if '.fnt' in asset_path:
-#		editor_tabs.current_tab = 1
-#		selected_asset_name = asset_path
-#		selected_asset_data = meta_editor_node.set_asset(asset_path)
+	if asset_path.ends_with('.fnt'):
+		editor_tabs.current_tab = 8
+		selected_asset_name = asset_path
+		selected_asset_data = font_editor_node.set_asset(asset_path)
 #		meta_editor_node.spritelist_node.grab_focus()
 		base_wad.parse_fnt(asset_path)
-	if 'Rooms/' == asset_path.substr(0,len('Rooms/')):
+#	if 'Rooms/' == asset_path.substr(0,len('Rooms/')):
+	if asset_path.begins_with('Rooms/'):
 		editor_tabs.current_tab = 2
 		selected_asset_name = asset_path.substr(len('Rooms/'))
 		selected_asset_data = room_editor_node.set_room(selected_asset_name)
-	if 'Sprites/' == asset_path.substr(0,len('Sprites/')):
+#	if 'Sprites/' == asset_path.substr(0,len('Sprites/')):
+	if asset_path.begins_with('Sprites/'):
 		editor_tabs.current_tab = 3
 		selected_asset_name = asset_path.substr(len('Sprites/'))
 		selected_asset_data = sprite_editor_node.set_sprite(selected_asset_name)
-	if 'Objects/' == asset_path.substr(0,len('Objects/')):
+#	if 'Objects/' == asset_path.substr(0,len('Objects/')):
+	if asset_path.begins_with('Objects/'):
 		editor_tabs.current_tab = 5
 		selected_asset_name = asset_path.substr(len('Objects/'))
 		selected_asset_data = object_editor_node.set_object(selected_asset_name)
-	if 'Backgrounds/' == asset_path.substr(0,len('Backgrounds/')):
+#	if 'Backgrounds/' == asset_path.substr(0,len('Backgrounds/')):
+	if asset_path.begins_with('Backgrounds/'):
 		editor_tabs.current_tab = 4
 		selected_asset_name = asset_path.substr(len('Backgrounds/'))
 		selected_asset_data = background_editor_node.set_background(selected_asset_name)
-	if 'Sounds/' == asset_path.substr(0,len('Sounds/')):
+#	if 'Sounds/' == asset_path.substr(0,len('Sounds/')):
+	if asset_path.begins_with('Sounds/'):
 		editor_tabs.current_tab = 7
-		selected_asset_name = asset_path.substr(len('Sounds/'))
+		selected_asset_name = asset_path
 		selected_asset_data = sound_editor_node.set_sound(selected_asset_name)
-	if 'Metadata/' == asset_path.substr(0,len('Metadata/')):
+	if asset_path.begins_with('Music/'):
+		editor_tabs.current_tab = 7
+		selected_asset_name = asset_path
+		selected_asset_data = sound_editor_node.set_sound(selected_asset_name)
+	if asset_path.begins_with('Metadata/'):
 		editor_tabs.current_tab = 6
 		selected_asset_name = asset_path.substr(len('Metadata/'))
 		selected_asset_data = atlas_editor_node.set_atlas(selected_asset_name)
@@ -141,8 +152,10 @@ func open_patchwad(file_path):
 	var pwad = Wad.new()
 	if !pwad.opens(file_path, File.READ_WRITE):
 		pwad.parse_header()
+		base_wad.reset()
 		base_wad.patchwad_list = []
 		base_wad.patch(pwad)
+		open_asset(selected_asset_list_path)
 		OS.set_window_title('HLMWadEditor - ' + file_path)
 
 func _on_SearchBar_text_entered(new_text=''):
@@ -150,29 +163,39 @@ func _on_SearchBar_text_entered(new_text=''):
 	if new_text == '':
 		if show_base_wad:
 			for file in base_wad.file_locations.keys():
-				if "Atlases/" == file.substr(0,len('Atlases/')) and (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
+				if file.begins_with('Atlases/') and (file.ends_with('.meta') or file.ends_with('.gmeta')):
 					asset_tree.create_path(file)
-				if "Fonts/" == file.substr(0,len('Fonts/')) and (".fnt" == file.substr(len(file)-len('.fnt'))):
+				if file.begins_with('Fonts/') and file.ends_with('.fnt'):
 					asset_tree.create_path(file)
-		for file in base_wad.new_files.keys() + base_wad.changed_files.keys():
-			if "Atlases/" == file.substr(0,len('Atlases/')) and (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
-				asset_tree.create_path(file, 1)
-			if "Fonts/" == file.substr(0,len('Fonts/')) and (".fnt" == file.substr(len(file)-len('.fnt'))):
-				asset_tree.create_path(file, 1)
+#				if "Sounds/" == file.substr(0,len('Sounds/')):
+				if file.begins_with('Sounds/'):
+#					if (".wav" == file.substr(len(file)-len('.wav'))):
+					asset_tree.create_path(file)
+#				if "Music/" == file.substr(0,len('Music/')):
+				if file.begins_with('Music/'):
+#					if (".wav" == file.substr(len(file)-len('.wav'))):
+					asset_tree.create_path(file)
 		for p in base_wad.patchwad_list:
-			for file in p.file_locations.keys():
+			for file in p.file_locations.keys() + base_wad.new_files.keys() + base_wad.changed_files.keys():
 				# if .meta is different or if texture page is different, mark as bold
-				if "Atlases/" == file.substr(0,len('Atlases/')):
-					if (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
+				if file.begins_with('Atlases/'):
+					if file.ends_with('.meta') or file.ends_with('.gmeta'):
 						asset_tree.create_path(file, 1)
-					if ".png" == file.substr(len(file)-len('.png')):
+					if file.ends_with('.png'):
 						asset_tree.create_path(file.replace('.png','.meta'), 1)
 				# again for Fonts
-				if "Fonts/" == file.substr(0,len('Fonts/')):
-					if (".fnt" == file.substr(len(file)-len('.fnt'))):
+				if file.ends_with('Fonts/'):
+					if file.ends_with('.fnt'):
 						asset_tree.create_path(file, 1)
-					elif ".png" == file.substr(len(file)-len('.png')):
-						asset_tree.create_path(file.replace('.png','.fnt'), 1)
+					elif file.end_with("_0.png"):
+						asset_tree.create_path(file.replace('_0.png','.fnt'), 1)
+				# Sounds!
+				if file.begins_with('Sounds/'):
+#					if (".wav" == file.substr(len(file)-len('.wav'))):
+					asset_tree.create_path(file, 1)
+				if file.begins_with("Music/"):
+#					if (".wav" == file.substr(len(file)-len('.wav'))):
+					asset_tree.create_path(file, 1)
 		var i = 0
 		for f in advanced_stuff_filter.keys():
 			if advanced_stuff_filter[f] and show_base_wad:
@@ -185,52 +208,70 @@ func _on_SearchBar_text_entered(new_text=''):
 		return
 #		op
 	else:
-		for file in base_wad.new_files.keys() + base_wad.changed_files.keys():
-			if "Atlases/" == file.substr(0,len('Atlases/')):
-				if (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
-					if new_text in file:
-						asset_tree.create_path(file, 1)
-				if ".png" == file.substr(len(file)-len('.png')):
-					if new_text in file:
-						asset_tree.create_path(file.replace('.png','.meta'), 1)
-			if "Fonts/" == file.substr(0,len('Fonts/')):
-				if (".fnt" == file.substr(len(file)-len('.fnt'))):
-					if new_text in file:
-						asset_tree.create_path(file, 1)
-				elif ".png" == file.substr(len(file)-len('.png')):
-					if new_text in file:
-						asset_tree.create_path(file.replace('.png','.fnt'), 1)
 		if show_base_wad:
 			for file in base_wad.file_locations.keys():
 				if "Atlases/" == file.substr(0,len('Atlases/')):
 					if (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
 						if new_text in file:
-							asset_tree.create_path(file, 1)
+							asset_tree.create_path(file)
 					if ".png" == file.substr(len(file)-len('.png')):
 						if new_text in file:
-							asset_tree.create_path(file.replace('.png','.meta'), 1)
+							asset_tree.create_path(file.replace('.png','.meta'))
 				if "Fonts/" == file.substr(0,len('Fonts/')):
 					if (".fnt" == file.substr(len(file)-len('.fnt'))):
 						if new_text in file:
-							asset_tree.create_path(file, 1)
-					elif ".png" == file.substr(len(file)-len('.png')):
+							asset_tree.create_path(file)
+					elif "_0.png" == file.substr(len(file)-len('_0.png')):
 						if new_text in file:
-							asset_tree.create_path(file.replace('.png','.fnt'), 1)
-			var i = 0
-			for f in advanced_stuff_filter.keys():
-				if advanced_stuff_filter[f]:
-					var b = base_wad.get_bin(f)
-					if b:
-						var bb = base_wad.changed_files.has(f) or base_wad.new_files.has(f)
-						for n in b.data.keys():
-							if new_text in n:
-								asset_tree.create_path(f_prefixes[i] + n, bb)
-
+							asset_tree.create_path(file.replace('_0.png','.fnt'))
+				if file.begins_with('Sounds/'):
+#					if (".wav" == file.substr(len(file)-len('.wav'))):
+					if new_text in file:
+						asset_tree.create_path(file)
+				if file.begins_with("Music/"):
+#					if (".wav" == file.substr(len(file)-len('.wav'))):
+					if new_text in file:
+						asset_tree.create_path(file)
+		for p in base_wad.patchwad_list:
+			for file in p.file_locations.keys() + base_wad.new_files.keys() + base_wad.changed_files.keys():
+#			for file in base_wad.new_files.keys() + base_wad.changed_files.keys():
+				if file.begins_with('Atlases/'):
+					if file.ends_with('.meta') or file.ends_with('.gmeta'):
+						if new_text in file:
+							asset_tree.create_path(file, 1)
+					if file.ends_with('.png'):
+						if new_text in file:
+							asset_tree.create_path(file.replace('.png','.meta'), 1)
+				if file.ends_with('Fonts/'):
+					if file.ends_with('.fnt'):
+						if new_text in file:
+							asset_tree.create_path(file, 1)
+					elif file.end_with("_0.png"):
+						if new_text in file:
+							asset_tree.create_path(file.replace('_0.png','.fnt'), 1)
+				if file.begins_with('Sounds/'):
+	#				if (".wav" == file.substr(len(file)-len('.wav'))):
+					if new_text in file:
+						asset_tree.create_path(file, 1)
+				if file.begins_with("Music/"):
+	#				if (".wav" == file.substr(len(file)-len('.wav'))):
+					if new_text in file:
+						asset_tree.create_path(file, 1)
+		var i = 0
+		for f in advanced_stuff_filter.keys():
+			if advanced_stuff_filter[f]:
+				var b = base_wad.get_bin(f)
+				if b:
+					var bb = base_wad.changed_files.has(f) or base_wad.new_files.has(f)
+					for n in b.data.keys():
+						if new_text in n:
+							asset_tree.create_path(f_prefixes[i] + n, bb)
+		
 var threads = {}
 func _on_RecalculateSheetButton_pressed():
-	var meta :Meta= meta_editor_node.meta
-	base_wad.changed_files[selected_asset_name] = meta
-	base_wad.changed_files[selected_asset_name.replace('.meta','.png')] = meta.texture_page
+	var meta = selected_asset_data
+	if meta is WadFont:
+		meta = meta.meta
 	asset_tree.set_bold(selected_asset_treeitem)
 #	if thread and thread.is_active():
 	if threads.has(selected_asset_name) and threads[selected_asset_name][0].is_active():
@@ -253,13 +294,21 @@ func _on_RecalculateSheetButton_pressed():
 	$NotifList.add_child(nnotif)
 
 func _on_CancelResolve(asset_name=''):
+	if !threads.has(asset_name):
+		print('no thread working on: ', asset_name,'!')
+		return
 	if threads[asset_name][0].is_active():
 		threads[asset_name][1].terminate_resolve = true
 		threads[asset_name][0].wait_to_finish()
 		threads.erase(asset_name)
 
-func resolve_complete(a):
-	threads.erase(a)
+func resolve_complete(asset):
+	base_wad.changed_files[asset] = threads[asset][2]
+	if threads[asset][2] is WadFont:
+		base_wad.changed_files[asset.replace('.'+asset.get_extension(),'_0.png')] = threads[asset][2].texture_page
+	else:
+		base_wad.changed_files[asset.replace('.'+asset.get_extension(),'.png')] = threads[asset][2].texture_page
+	threads.erase(asset)
 	if wait_for_threads_to_resolve and len(threads) == 0:
 		_on_SavePatchDialog_file_selected(wait_for_threads_to_resolve_path)
 		$WaitForThreadsDone.popup()
@@ -293,6 +342,7 @@ func _on_ExportSpriteStripButton_pressed():
 	w.get_line_edit().text = ''
 	w.get_line_edit().text = meta_editor_node.current_sprite+'.png'
 	w.current_file = meta_editor_node.current_sprite+'.png'
+
 func export_sprite_strips():
 	var w :FileDialog= get_node("ImportantPopups/ExportSpriteStripDialog")
 	var meta = meta_editor_node.meta
@@ -437,10 +487,9 @@ func _on_ImportSheetDialog_file_selected(path):
 	texture.create_from_image(image, 0)
 	selected_asset_data.texture_page.set_size_override(texture.get_size())
 	selected_asset_data.texture_page.set_data(texture.get_data())
-	base_wad.changed_files[selected_asset_name.replace('.meta','.png')] = selected_asset_data.texture_page
-
-
-
-
+	if selected_asset_data is WadFont:
+		base_wad.changed_files[selected_asset_name.replace('.'+selected_asset_name.get_extension(),'_0.png')] = selected_asset_data.texture_page
+	else:
+		base_wad.changed_files[selected_asset_name.replace('.'+selected_asset_name.get_extension(),'.png')] = selected_asset_data.texture_page
 
 

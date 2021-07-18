@@ -19,6 +19,7 @@ func _ready():
 
 func set_room(room_name):
 	set_bin_asset(room_name)
+	$Label.text = room_name
 #	object_tree.reset()
 	rooms = bin #app.base_wad.objectbin
 	room = selected_struct #objects.object_data[object_name]

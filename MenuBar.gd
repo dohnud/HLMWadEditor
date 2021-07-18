@@ -25,8 +25,10 @@ var operations = {
 	],
 	"ViewButton" : [
 		["Toggle Asset List", [KEY_CONTROL, KEY_H], 'toggleassetlist'],
-		["Expand Asset List", [], 'expandassetlist'],
+		[],
 		["Show Only Modified Files", ['TOGGLE'], 'togglenewfileslist'],
+		["Expand Asset List", [], 'expandassetlist'],
+		[],
 		["Advanced", [PopupMenu.new()], 'toggleadvanced'],
 	],
 	"1MetaButton" : [
@@ -36,15 +38,25 @@ var operations = {
 		["Export All Sprites", [], 'export_sprite_strips'],
 		[],
 		["Toggle Gizmos", [KEY_SHIFT, KEY_G], 'togglemetagizmos'],
-#		[],
-#		["Add New Sprite", [], 'addspritegmeta'],
+		[],
+		["Extras", [PopupMenu.new(),[
+			["Convert to GMeta", [], 'convertmeta'],
+			["Add Sprite", [], 'convertmeta'],
+		]], ''],
 	],
-	"1SpriteSheetButton" : [
+	"18SpriteSheetButton" : [
 		["Import Texture Page", [], 'importspritesheet'],
 		["Export Texture Page", [], 'exportspritesheet'],
 		[],
 		["Recalculate Texture Page", [], 'recalcspritesheet'],
-	]
+	],
+	"8FontButton" : [
+		["Import Character", [], 'na'],
+		["Export Character", [], 'na'],
+	],
+	"7SoundButton" : [
+		["Import Sound", [], 'na'],
+	],
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -52,11 +64,20 @@ func _ready():
 	for op in operations.keys():
 		var i = 0
 		var p = null
-		if op[0] >= '0' and op[0] <= '9':
-			p = get_node(op.substr(1))
+#		if op[0] >= '0' and op[0] <= '9':
+#			p = get_node(op.substr(1))
+#			p.visible = false
+#			var g = p.get_index()
+#			get_child(g+1).visible = false
+		
+		var num_n = 0
+		while op[num_n] >= '0' and op[num_n] <= '9':
+			num_n += 1
+		if num_n:
+			p = get_node(op.substr(num_n))
+			p.visible = false
 			var g = p.get_index()
 			get_child(g+1).visible = false
-			p.visible = false
 		else:
 			p = get_node(op)
 		p = p.get_popup()
@@ -73,6 +94,12 @@ func _ready():
 					if s == 'Advanced':
 						for f in get_tree().get_nodes_in_group('App')[0].f_prefixes:
 							np.add_check_item('Show ' + f.substr(0,len(f)-1))
+					elif len(item[1]) > 1:
+						np.set_name(s)
+						np.connect('id_pressed', self, item[2], [np])
+#						np.connect('id_pressed', self, "doop", [op, p])
+						for o in item[1][1]:
+							np.add_item(o[0])
 					else:
 						for recent in get_tree().get_nodes_in_group('App')[0].recent_patches:
 							np.add_item('.../' + recent.get_file())
@@ -108,7 +135,10 @@ func set_shortcut(keys):
 	return shortcut
 
 func doop(id, op, p:PopupMenu):
-	if (op[0] >= '0' and op[0] <= '9' and !get_node(op.substr(1)).visible): return
+	var num_n = 0
+	while op[num_n] >= '0' and op[num_n] <= '9':
+		num_n += 1
+	if num_n and !get_node(op.substr(num_n)).visible: return
 	if has_method(operations[op][id][2]):
 		call(operations[op][id][2])
 	else:
@@ -133,27 +163,30 @@ func savepatch():
 	app.get_node("ImportantPopups").show()
 	w.popup()
 	
-func savepatchas():
-	pass
-
-func importpatch():
-	pass
+#func savepatchas():
+#	pass
+#
+#func importpatch():
+#	pass
 	
 func openwad():
 	app.get_node("OpenWadDialog").popup()
 	
-func extract():
+func extract(resource_data=null):
 	var w :FileDialog= app.get_node("ImportantPopups/ExtractResourceDialog")
 	app.get_node("ImportantPopups").show()
 	w.clear_filters()
 	w.popup()
-	if app.selected_asset_data is BinParser:
+	if !resource_data:
+		resource_data = app.selected_asset_data
+	w.r = resource_data
+	if resource_data is BinParser:
 		w.add_filter('*.bin')
-	elif app.selected_asset_data is Meta:
+	elif resource_data is Meta:
 		w.add_filter('*.meta')
 		w.add_filter('*.gmeta')
 		if w.filename=='':w.filename = '.meta'
-	elif app.selected_asset_data is Texture:
+	elif resource_data is Texture:
 		w.add_filter('*.png')
 
 func add():
@@ -161,14 +194,18 @@ func add():
 	app.get_node("ImportantPopups").show()
 	w.popup()
 
-func replace():
-	pass
-	
+#func replace():
+#	pass
+#
 func revert():
-	pass
-	
-func merge():
-	pass
+	var f = app.selected_asset_list_path
+	if app.selected_asset_data is Meta:
+		app.base_wad.revert(f.replace('.'+f.get_extension(), '.png'))
+	app.base_wad.revert(f)
+	app.open_asset(f)
+#
+#func merge():
+#	pass
 
 func toggleassetlist():
 	app.asset_tree_container.visible = !app.asset_tree_container.visible
@@ -201,7 +238,7 @@ func convertmeta():
 #	app.base_wad.changed_files[nfn] = nm
 	app.base_wad.new_files[nfn] = nm
 #	for p in app.base_wad.patchwad_list:
-	app.base_wad.loaded_metas[nfn] = nm
+	app.base_wad.loaded_assets[nfn] = nm
 	app.meta_editor_node.meta = app.base_wad.parse_orginal_meta(app.selected_asset_name)
 #	app._on_SearchBar_text_entered('')
 	app.asset_tree.create_path(nfn,1).select(0)
@@ -221,12 +258,12 @@ func export_sprite_strips():
 	app.export_sprite_strips()
 func import_sprite_strip():
 	app._on_importSpriteStripButton_pressed()
+
 func recalcspritesheet():
 	app._on_RecalculateSheetButton_pressed()
 
 func exportspritesheet():
-	app.selected_asset_data = app.selected_asset_data.texture_page
-	extract()
+	extract(app.selected_asset_data.texture_page)
 func importspritesheet():
 	var w :FileDialog= app.get_node("ImportantPopups/ImportSheetDialog")
 	app.get_node("ImportantPopups").show()
@@ -235,10 +272,20 @@ func importspritesheet():
 func _on_TabContainer_tab_changed(tab):
 	var i = 2
 	for op in operations.keys():
-		if op[0] >= '0' and op[0] <= '9':
-			get_node(op.substr(1)).visible = false
-			get_node('Divider'+str(i)).visible = false
-		if op[0] == str(tab):
-			get_node(op.substr(1)).visible = true
-			get_node('Divider'+str(i)).visible = true
+		var num_n = 0
+		while op[num_n] >= '0' and op[num_n] <= '9':
+			num_n += 1
+		if num_n:
+#			get_node(op.substr(num_n)).visible = false
+#			get_node('Divider'+str(i)).visible = false
+			var p = get_node(op.substr(num_n))
+			var g = p.get_index()
+			p.visible = false
+			get_child(g+1).visible = false
+		for j in range(num_n):
+			if op[j] == str(tab):
+				var p = get_node(op.substr(num_n))
+				var g = p.get_index()
+				p.visible = true
+				get_child(g+1).visible = true
 		i += 1

@@ -21,14 +21,13 @@ func _ready():
 #	pass
 
 func set_bin_asset(asset):
+	bin = app.base_wad.get_bin(file)
+	selected_struct_id = asset
+	selected_struct = bin.get(asset)
 	if tree:
 		tree.reset()
-		bin = app.base_wad.get_bin(file)
-		selected_struct_id = asset
-		selected_struct = bin.get(asset)
 		tree.create_struct(selected_struct)
-		return selected_struct
-	return null
+	return selected_struct
 
 
 func parse_new_value(k,v,ntv):
@@ -67,7 +66,7 @@ func _on_Tree_item_edited(deleted=0):
 			v = l[0]
 			vs = l[1]
 		if d[last_k] is int and (vs == '0' or can_be_int_fuck_you_godot(vs)): # ex: depth
-			print(vs,' ',int(vs))
+#			print(vs,' ',int(vs))
 			v = int(vs)
 		if v != d[last_k]:
 #			d[last_k] = v

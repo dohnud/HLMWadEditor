@@ -80,7 +80,7 @@ func create_path(path:String, bold=false, current_dir=directory_dict):
 		var treeitem : TreeItem = null
 		if current_dir['contents'].has(path):
 			if !current_dir['contents'][path] is TreeItem:
-				print(path)
+#				print(path)
 				return null
 			treeitem = current_dir['contents'][path]
 		else:
@@ -101,12 +101,18 @@ func bold_treeitem_draw(treeitem:TreeItem, rect:Rect2):
 	draw_string(bold_font,rect.position + Vector2(0,rect.size.y+bold_font.size/2)/2, bolds[treeitem])
 #	draw_string(bold_font,rect.position+Vector2(0,rect.size.y), treeitem.get_text(0))
 
-func set_bold(treeitem):
+func set_bold(treeitem, bold=true):
 	if treeitem == null: return
-	bolds[treeitem] = treeitem.get_text(0)
-	treeitem.set_cell_mode(0, TreeItem.CELL_MODE_CUSTOM)
-	treeitem.set_custom_draw(0, self, "bold_treeitem_draw")
-	treeitem.set_text(0, '')
+	if bold:
+		bolds[treeitem] = treeitem.get_text(0)
+		treeitem.set_cell_mode(0, TreeItem.CELL_MODE_CUSTOM)
+		treeitem.set_custom_draw(0, self, "bold_treeitem_draw")
+		treeitem.set_text(0, '')
+	elif bolds.has(treeitem):
+#		bolds[treeitem] = treeitem.get_text(0)
+		treeitem.set_cell_mode(0, TreeItem.CELL_MODE_STRING)
+#		treeitem.set_custom_draw(0, self, "bold_treeitem_draw")
+		treeitem.set_text(0, bolds[treeitem])
 
 func _on_Tree_item_selected():
 	var treeitem = get_selected()

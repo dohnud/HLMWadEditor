@@ -24,6 +24,7 @@ func parse(file_pointer):
 	for background in backgrounds:
 		var s = background_names[background['name_pos']]
 		background_data[s] = background
+	data = background_data
 #	background_data['default'] = {
 #		'id' : -1,
 #		'dimesions' : [1,1],

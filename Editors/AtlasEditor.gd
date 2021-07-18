@@ -14,6 +14,7 @@ func _ready():
 
 
 func set_atlas(atlas_name):
+	$Label.text = atlas_name
 	set_bin_asset(atlas_name)
 #	atlas_tree.reset()
 	atlases = bin #app.base_wad.atlasbin

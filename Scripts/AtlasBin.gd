@@ -21,6 +21,7 @@ func parse(file_pointer):
 	# sprite bin data is the same size as this :0
 	atlas_sprites = parse_struct_list(f, atl)
 	atlases_backgrounds = parse_struct_list(f, atl)
+#	print(atlases_backgrounds)
 	for atlas in atlas_sprites + atlases_backgrounds:
 		var id = atlas['id']
 		var s = atlas_names.values()[id]

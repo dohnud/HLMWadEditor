@@ -45,7 +45,7 @@ func export_sprite_to_gif(file_path, sprite_name, speed=1, scale=1):
 	# close the file
 	file.close()
 
-var sprites = SpriteFrames.new()
+var sprites :SpriteFrames= SpriteFrames.new()
 var texture_page :ImageTexture= null
 
 signal resolve_progress
@@ -317,7 +317,7 @@ func resolve(userdata):
 						masq_image.unlock()
 						dest_image.unlock()
 						dest_image.crop(image_width, ty + idy)
-						print(sprite_name,' ', frame_index,': ',image_width,' x ', ty + idy)
+#						print(sprite_name,' ', frame_index,': ',image_width,' x ', ty + idy)
 						masq_image.crop(image_width, ty + idy)
 						dest_image.lock()
 						masq_image.lock()
@@ -370,13 +370,13 @@ func resolve(userdata):
 #				new_sprites.add_frame(sprite_name, f)
 #				i += 1
 		sprites = new_sprites
-	dest_image.save_png('temp_sheet.png')
+#	dest_image.save_png('temp_sheet.png')
 #	texture_dimensions = dest_image.get_size()
 #	dest_image.crop(texture_dimensions)
 #	texture_page.set_size_override(texture_dimensions)
 #	texture_page.set_data(dest_image)
 	texture_page.create_from_image(dest_image, 0)
 	texture_dimensions = texture_page.get_size()
-	print(texture_dimensions)
+#	print(texture_dimensions)
 	emit_signal('resolve_progress', 1)
 	emit_signal('resolve_complete', self)

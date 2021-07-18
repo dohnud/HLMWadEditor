@@ -41,5 +41,5 @@ func _on_TimelineSlider_gui_input(event):
 	var e :InputEvent = event
 	if event.is_action_pressed('ui_lmb') or event.is_action_released('ui_lmb'):
 		tween.stop_all()
-		tween.seek(get_local_mouse_position().x/rect_size.x)
+		tween.seek(clamp(get_local_mouse_position().x/rect_size.x,0,1))
 		editor.pause_button_node.emit_signal('toggled',false)

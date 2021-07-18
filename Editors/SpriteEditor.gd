@@ -19,6 +19,7 @@ func _ready():
 #	pass
 
 func set_sprite(sprite_name):
+	$Label.text = sprite_name
 	sprite_tree.reset()
 #	sprites = app.base_wad.spritebin
 	sprites = app.base_wad.get_bin(SpritesBin.file_path)
@@ -49,14 +50,14 @@ func _on_SpriteTree_item_edited(deleted=0):
 			value = value.replace('(','')
 			value = value.replace(')','')
 			value = value.split(',')
-			print(value)
+#			print(value)
 			if can_be_int_fuck_you_godot(value[0]) != -1 and can_be_int_fuck_you_godot(value[1]) != -1:
 				v = Vector2(can_be_int_fuck_you_godot(value[0]), can_be_int_fuck_you_godot(value[1]))
-			print(v)
+#			print(v)
 		elif d[last_k] is int and can_be_int_fuck_you_godot(value) != -1:
 			v = can_be_int_fuck_you_godot(value)
 		if v != d[last_k]:
-			print(v)
+#			print(v)
 			d[last_k] = v
 			app.base_wad.changed_files[file] = bin
 		sprite_tree.get_selected().set_text(1, str(d[last_k]))

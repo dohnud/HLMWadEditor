@@ -35,9 +35,9 @@ var rm = {
 	}],
 	'tiles' : ['32', {
 		'world_pos': 'i16vec2',
-		'tilesheet_id' : '16',
+		'id' : '16',
 		'tilesheet_pos': 'i16vec2',
-		'tilesheet_cutout_size':'i16vec2',
+		'tilesheet_size':'i16vec2',
 		'depth' : '16',
 	}],
 	'objects' : ['32', {

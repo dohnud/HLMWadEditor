@@ -17,6 +17,7 @@ func _ready():
 #	pass
 
 func set_background(background_name):
+	$Label.text = background_name
 	background_tree.reset()
 	backgrounds = app.base_wad.backgroundbin
 	background = backgrounds.background_data[background_name]
