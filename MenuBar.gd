@@ -17,18 +17,17 @@ var operations = {
 	],
 	"ResourceButton" : [
 		["Extract", [KEY_CONTROL, KEY_E], 'extract'],
-		["Replace", [KEY_CONTROL, KEY_R,], 'replace'],
+#		["Replace", [KEY_CONTROL, KEY_R,], 'replace'],
 		["Revert", [KEY_CONTROL, KEY_SHIFT, KEY_R], 'revert'],
-		[],
-		["Add", [KEY_CONTROL, KEY_SHIFT, KEY_A], 'add'],
+#		[],
+#		["Add", [KEY_CONTROL, KEY_SHIFT, KEY_A], 'add'],
 #		["Merge", [KEY_CONTROL, KEY_M], 'merge'],
 	],
 	"ViewButton" : [
-		["Toggle Asset List", [KEY_CONTROL, KEY_H], 'toggleassetlist'],
-		[],
 		["Show Only Modified Files", ['TOGGLE'], 'togglenewfileslist'],
 		["Expand Asset List", [], 'expandassetlist'],
 		[],
+		["Toggle Asset List", [KEY_CONTROL, KEY_H], 'toggleassetlist'],
 		["Advanced", [PopupMenu.new()], 'toggleadvanced'],
 	],
 	"1MetaButton" : [
@@ -38,11 +37,11 @@ var operations = {
 		["Export All Sprites", [], 'export_sprite_strips'],
 		[],
 		["Toggle Gizmos", [KEY_SHIFT, KEY_G], 'togglemetagizmos'],
-		[],
-		["Extras", [PopupMenu.new(),[
-			["Convert to GMeta", [], 'convertmeta'],
-			["Add Sprite", [], 'convertmeta'],
-		]], ''],
+#		[],
+#		["Extras", [PopupMenu.new(),[
+#			["Convert to GMeta", [], 'convertmeta'],
+#			["Add Sprite", [], 'convertmeta'],
+#		]], ''],
 	],
 	"18SpriteSheetButton" : [
 		["Import Texture Page", [], 'importspritesheet'],
@@ -176,7 +175,6 @@ func extract(resource_data=null):
 	var w :FileDialog= app.get_node("ImportantPopups/ExtractResourceDialog")
 	app.get_node("ImportantPopups").show()
 	w.clear_filters()
-	w.popup()
 	if !resource_data:
 		resource_data = app.selected_asset_data
 	w.r = resource_data
@@ -188,6 +186,9 @@ func extract(resource_data=null):
 		if w.filename=='':w.filename = '.meta'
 	elif resource_data is Texture:
 		w.add_filter('*.png')
+	else:
+		app.get_node('NotImplementedYetDialog').popup()
+	w.popup()
 
 func add():
 	var w :FileDialog= app.get_node("ImportantPopups/AddResourceDialog")
@@ -201,6 +202,8 @@ func revert():
 	var f = app.selected_asset_list_path
 	if app.selected_asset_data is Meta:
 		app.base_wad.revert(f.replace('.'+f.get_extension(), '.png'))
+	if app.selected_asset_data is WadFont:
+		app.base_wad.revert(f.replace('.'+f.get_extension(), '_0.png'))
 	app.base_wad.revert(f)
 	app.open_asset(f)
 #

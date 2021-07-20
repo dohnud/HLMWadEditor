@@ -41,7 +41,7 @@ func _on_Button_pressed():
 	var h = texture.get_height()
 	var d = w / (frame_count)
 	var nb = 'Backgrounds/' != sprite.substr(0,len('Backgrounds/'))
-	if Vector2(d,h) != meta.sprites.get_frame(sprite,0).region.size or meta.sprites.get_frame_count(sprite) < frame_count:
+	if Vector2(d,h) != meta.sprites.get_frame(sprite,0).region.size or meta.sprites.get_frame_count(sprite) != frame_count:
 		meta.needs_recalc = true
 		meta.sprites.remove_animation(sprite)
 		meta.sprites.add_animation(sprite)

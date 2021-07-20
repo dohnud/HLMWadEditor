@@ -5,7 +5,8 @@ onready var app = get_tree().get_nodes_in_group('App')[0]
 
 #var sounds = null
 #var sound = {}
-var sound :AudioStreamSample= null
+var sound_s :AudioStreamSample= null
+var sound :WadSound= null
 var sound_duration = 1
 onready var sound_player = $AudioStreamPlayer
 
@@ -33,18 +34,17 @@ func set_sound(asset):
 ##	sound_tree.create_dict(sound)
 #	return sounds
 	sound = app.base_wad.audio_stream(asset)
-	if sound == null:
-		sound = AudioStreamSample.new()
-		sound.data = [0]
 	# https://aneescraftsmanship.com/wav-file-format/
-	var samplenum = sound.loop_end*4 # check wad->audio_stream towards the bottom
+#	var samplenum = sound.stream.loop_end*4 # check wad->audio_stream towards the bottom
 #	for i in range(len(sound.data) *  * (1+int(sound.stereo)))
 	var polygon = []
 	var polygon2 = []
 	var i = 0
-	var s = len(sound.data)
-	var rand_s = 5+randf()*6+len(sound.data)/50000
-	var d = s/150
+	var s = 1
+	if sound.stream:
+		s = len(sound.stream.data)
+	var rand_s = 5+randf()*6+s/50000
+	var d = s/150.0
 	if s<150:
 		d = 1
 	for b in range(0, s, d):
@@ -67,9 +67,12 @@ func set_sound(asset):
 	poly.polygon = polygon
 	poly2.polygon = polygon2
 
-	sound_player.stream = sound
+	sound_player.stream = sound.stream
 	
-	timeline.tween.playback_speed = float(1) / sound.get_length()
+	timeline.tween.playback_speed = 0
+	if sound.stream:
+		sound.stream.loop_mode = timeline.tween.repeat
+		timeline.tween.playback_speed = float(1) / sound.stream.get_length()
 	timeline.tween.seek(0)
 	timeline.set_tween()
 	if timeline.tween.is_active():
@@ -77,7 +80,6 @@ func set_sound(asset):
 
 	pause_button_node.grab_focus()
 	timecode.text = '0.000000s'
-	sound.loop_mode = timeline.tween.repeat
 	return sound
 #
 #func parse_new_value(key, value, new_text_value):
@@ -114,7 +116,8 @@ func _on_PausePlayButton_toggled(button_pressed):
 	if button_pressed:
 		timeline.tween.resume_all()
 #		print(sound_player.volume_db)
-		sound_player.play(timeline.value * sound.get_length() * int(timeline.value!=1))
+		if sound.stream:
+			sound_player.play(timeline.value * sound.stream.get_length() * int(timeline.value!=1))
 	else:
 		timeline.tween.stop_all()
 		sound_player.stop()
@@ -122,7 +125,8 @@ func _on_PausePlayButton_toggled(button_pressed):
 
 func _on_Button_toggled(button_pressed):
 	timeline.tween.repeat = button_pressed
-	sound.loop_mode = sound.LOOP_FORWARD
+	if sound.stream:
+		sound.stream.loop_mode = sound.stream.LOOP_FORWARD
 
 
 

@@ -5,23 +5,25 @@ onready var app = get_tree().get_nodes_in_group('App')[0]
 onready var asset_label_node = $HBoxContainer/Label
 onready var sprite_sheet_icon_node = $HSplitContainer/VBoxContainer/Panel/HBoxContainer/TexturePageRect
 onready var spritelist_node = $HSplitContainer/VBoxContainer/SpriteList
-onready var frametexturerect = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect
-onready var frame_number_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer/HBoxContainer2/FrameNumber2
-onready var tex_dimensions_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer/HBoxContainer/FrameNumber
-onready var frame_tex_offset_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3/OffsetLabel
-onready var frame_tex_uv_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3/UVLabel
-onready var gizmos_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos
-onready var origin_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel
-onready var xorigin_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer/XOriginInput
-onready var yorigin_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer/YOriginInput
-#onready var fps_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/FpsSpinBox
-onready var fps_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer/HBoxContainer/FpsSpinBox
-onready var timeline = $HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline/TimelineSlider
-onready var pause_button_node = $HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton
+onready var frametexturerect = $HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect
+#onready var d = $HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect
+onready var frame_number_node = $HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer/HBoxContainer2/FrameNumber2
+onready var tex_dimensions_node = $HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer/HBoxContainer/FrameNumber
+onready var frame_tex_offset_node = $HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3/OffsetLabel
+onready var frame_tex_uv_node = $HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3/UVLabel
+onready var gizmos_node = $HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos
+onready var origin_node = $HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel
+onready var xorigin_node = $HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer/XOriginInput
+onready var yorigin_node = $HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer/YOriginInput
+#onready var fps_node = $HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/FpsSpinBox
+onready var fps_node = $HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer/HBoxContainer/FpsSpinBox
+onready var timeline = $HSplitContainer/Preview/VBoxContainer/Timeline/TimelineSlider
+onready var pause_button_node = $HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton
 
 
 var meta : Meta = Meta.new()
 var current_sprite = ''
+var current_sprite_list_index = 0
 var mode = 0
 
 var thread = null
@@ -63,6 +65,7 @@ func _on_SpriteList_item_selected(index):
 	var sprite_name = meta.sprites.get_animation_names()[index]
 	if sprite_name == 'default': return
 	current_sprite = sprite_name
+	current_sprite_list_index = index
 	var f :MetaTexture= meta.sprites.get_frame(current_sprite, 0)
 	frametexturerect.texture = f
 	tex_dimensions_node.text = str(f.get_width()) + ' x ' + str(f.get_height())

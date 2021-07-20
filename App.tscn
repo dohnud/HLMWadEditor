@@ -1,4 +1,4 @@
-[gd_scene load_steps=104 format=2]
+[gd_scene load_steps=106 format=2]
 
 [ext_resource path="res://theme.tres" type="Theme" id=1]
 [ext_resource path="res://insetshadow.tres" type="StyleBox" id=2]
@@ -47,6 +47,7 @@
 [ext_resource path="res://slightinsetshadow_nottab.tres" type="StyleBox" id=45]
 [ext_resource path="res://SoundTimelineSlider.gd" type="Script" id=46]
 [ext_resource path="res://audio_line.png" type="Texture" id=47]
+[ext_resource path="res://Timer.gd" type="Script" id=48]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.12549, 0.152941, 0.211765, 1 )
@@ -103,7 +104,7 @@ corner_radius_bottom_left = 4
 shadow_size = -37
 anti_aliasing = false
 
-[sub_resource type="Image" id=58]
+[sub_resource type="Image" id=59]
 data = {
 "data": PoolByteArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 180, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 222, 222, 222, 70, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 223, 223, 223, 0, 223, 223, 223, 180, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 0, 0, 0, 0, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ),
 "format": "RGBA8",
@@ -115,7 +116,7 @@ data = {
 [sub_resource type="ImageTexture" id=8]
 storage = 1
 lossy_quality = 0.98
-image = SubResource( 58 )
+image = SubResource( 59 )
 size = Vector2( 16, 16 )
 
 [sub_resource type="StyleBoxEmpty" id=9]
@@ -152,28 +153,20 @@ corner_radius_bottom_left = 4
 shadow_size = -37
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id=13]
-content_margin_left = 4.0
-content_margin_right = 4.0
+[sub_resource type="StyleBoxEmpty" id=15]
+
+[sub_resource type="StyleBoxFlat" id=58]
+content_margin_left = 3.0
+content_margin_right = 3.0
 content_margin_top = 3.0
 content_margin_bottom = 3.0
-bg_color = Color( 0.1827, 0.21489, 0.29, 1 )
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_color = Color( 0.321569, 0.341176, 0.380392, 1 )
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-expand_margin_bottom = 1.0
-anti_aliasing = false
-
-[sub_resource type="StyleBoxFlat" id=14]
-bg_color = Color( 0.1827, 0.21489, 0.29, 1 )
+bg_color = Color( 0.184314, 0.215686, 0.290196, 1 )
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
 border_width_bottom = 1
 border_color = Color( 0.878431, 0.878431, 0.878431, 0.258824 )
+corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
@@ -181,8 +174,6 @@ shadow_color = Color( 0, 0, 0, 0.133333 )
 shadow_size = 5
 shadow_offset = Vector2( 2, 2 )
 anti_aliasing = false
-
-[sub_resource type="StyleBoxEmpty" id=15]
 
 [sub_resource type="StyleBoxEmpty" id=16]
 
@@ -300,6 +291,38 @@ shadow_size = 5
 shadow_offset = Vector2( 2, 2 )
 anti_aliasing = false
 
+[sub_resource type="StyleBoxFlat" id=13]
+content_margin_left = 4.0
+content_margin_right = 4.0
+content_margin_top = 3.0
+content_margin_bottom = 3.0
+bg_color = Color( 0.184314, 0.215686, 0.290196, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_color = Color( 0.321569, 0.341176, 0.380392, 1 )
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+expand_margin_bottom = 1.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id=14]
+bg_color = Color( 0.1827, 0.21489, 0.29, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color( 0.878431, 0.878431, 0.878431, 0.258824 )
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color( 0, 0, 0, 0.133333 )
+shadow_size = 5
+shadow_offset = Vector2( 2, 2 )
+anti_aliasing = false
+
+[sub_resource type="StyleBoxEmpty" id=32]
+
 [sub_resource type="StyleBoxEmpty" id=33]
 
 [sub_resource type="StyleBoxEmpty" id=34]
@@ -310,11 +333,9 @@ anti_aliasing = false
 
 [sub_resource type="StyleBoxEmpty" id=37]
 
-[sub_resource type="StyleBoxEmpty" id=38]
+[sub_resource type="AudioStreamGenerator" id=38]
 
-[sub_resource type="AudioStreamGenerator" id=39]
-
-[sub_resource type="StyleBoxFlat" id=40]
+[sub_resource type="StyleBoxFlat" id=39]
 bg_color = Color( 0.1827, 0.21489, 0.29, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -330,7 +351,7 @@ shadow_size = 5
 shadow_offset = Vector2( 2, 2 )
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id=41]
+[sub_resource type="StyleBoxFlat" id=40]
 content_margin_left = 3.0
 content_margin_right = 3.0
 content_margin_top = 3.0
@@ -345,7 +366,7 @@ shadow_size = 5
 shadow_offset = Vector2( 2, 2 )
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id=42]
+[sub_resource type="StyleBoxFlat" id=41]
 content_margin_left = 5.0
 content_margin_right = 4.0
 bg_color = Color( 0.1488, 0.17616, 0.24, 1 )
@@ -360,22 +381,22 @@ corner_radius_bottom_left = 4
 shadow_size = -37
 anti_aliasing = false
 
-[sub_resource type="VisualShaderNodeTexture" id=43]
+[sub_resource type="VisualShaderNodeTexture" id=42]
 texture = ExtResource( 47 )
 
-[sub_resource type="VisualShaderNodeInput" id=44]
+[sub_resource type="VisualShaderNodeInput" id=43]
 input_name = "screen_uv"
 
-[sub_resource type="VisualShaderNodeVectorOp" id=45]
+[sub_resource type="VisualShaderNodeVectorOp" id=44]
 operator = 2
 
-[sub_resource type="VisualShaderNodeScalarConstant" id=46]
+[sub_resource type="VisualShaderNodeScalarConstant" id=45]
 constant = 35.0
 
-[sub_resource type="VisualShaderNodeVectorFunc" id=47]
+[sub_resource type="VisualShaderNodeVectorFunc" id=46]
 function = 20
 
-[sub_resource type="VisualShader" id=48]
+[sub_resource type="VisualShader" id=47]
 code = "shader_type canvas_item;
 uniform sampler2D tex_frg_3;
 
@@ -418,37 +439,37 @@ void light() {
 graph_offset = Vector2( -311, 60.6333 )
 mode = 1
 flags/light_only = false
-nodes/fragment/3/node = SubResource( 43 )
+nodes/fragment/3/node = SubResource( 42 )
 nodes/fragment/3/position = Vector2( 140, 100 )
-nodes/fragment/4/node = SubResource( 44 )
+nodes/fragment/4/node = SubResource( 43 )
 nodes/fragment/4/position = Vector2( -360, 60 )
-nodes/fragment/6/node = SubResource( 45 )
+nodes/fragment/6/node = SubResource( 44 )
 nodes/fragment/6/position = Vector2( -140, 140 )
-nodes/fragment/7/node = SubResource( 46 )
+nodes/fragment/7/node = SubResource( 45 )
 nodes/fragment/7/position = Vector2( -380, 200 )
-nodes/fragment/8/node = SubResource( 47 )
+nodes/fragment/8/node = SubResource( 46 )
 nodes/fragment/8/position = Vector2( -100, 280 )
 nodes/fragment/connections = PoolIntArray( 3, 0, 0, 0, 3, 1, 0, 1, 4, 0, 6, 0, 7, 0, 6, 1, 6, 0, 8, 0, 8, 0, 3, 0 )
 
-[sub_resource type="ShaderMaterial" id=49]
-shader = SubResource( 48 )
+[sub_resource type="ShaderMaterial" id=48]
+shader = SubResource( 47 )
 
-[sub_resource type="ImageTexture" id=50]
+[sub_resource type="ImageTexture" id=49]
 
-[sub_resource type="Gradient" id=51]
+[sub_resource type="Gradient" id=50]
 offsets = PoolRealArray( 0, 0.466667, 1 )
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 )
 
-[sub_resource type="GradientTexture" id=52]
-gradient = SubResource( 51 )
+[sub_resource type="GradientTexture" id=51]
+gradient = SubResource( 50 )
 width = 1
 
-[sub_resource type="StyleBoxFlat" id=53]
+[sub_resource type="StyleBoxFlat" id=52]
 content_margin_top = 967.0
 bg_color = Color( 0, 0, 0, 0 )
 draw_center = false
 
-[sub_resource type="StyleBoxFlat" id=54]
+[sub_resource type="StyleBoxFlat" id=53]
 bg_color = Color( 0.1827, 0.21489, 0.29, 1 )
 border_width_left = 1
 border_width_top = 1
@@ -464,7 +485,7 @@ shadow_size = 5
 shadow_offset = Vector2( 2, 2 )
 anti_aliasing = false
 
-[sub_resource type="Shader" id=55]
+[sub_resource type="Shader" id=54]
 code = "shader_type canvas_item;
 
 void fragment() {
@@ -472,10 +493,10 @@ void fragment() {
 	COLOR = vec4(c.r, c.g, c.b, ((c.r + c.g + c.b))*c.a);
 }"
 
-[sub_resource type="ShaderMaterial" id=56]
-shader = SubResource( 55 )
+[sub_resource type="ShaderMaterial" id=55]
+shader = SubResource( 54 )
 
-[sub_resource type="StyleBoxEmpty" id=57]
+[sub_resource type="StyleBoxEmpty" id=56]
 
 [node name="App" type="Control" groups=[
 "App",
@@ -522,7 +543,7 @@ __meta__ = {
 }
 
 [node name="TopMenu" type="PanelContainer" parent="Main"]
-margin_right = 1920.0
+margin_right = 1280.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 custom_styles/panel = SubResource( 1 )
@@ -530,7 +551,7 @@ custom_styles/panel = SubResource( 1 )
 [node name="MenuItems" type="HBoxContainer" parent="Main/TopMenu" groups=[
 "MenuBar",
 ]]
-margin_right = 1920.0
+margin_right = 1280.0
 margin_bottom = 25.0
 custom_constants/separation = 0
 script = ExtResource( 11 )
@@ -691,15 +712,15 @@ __meta__ = {
 
 [node name="Panel" type="Panel" parent="Main/TopMenu/MenuItems"]
 margin_left = 407.0
-margin_right = 1920.0
+margin_right = 1280.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 custom_styles/panel = SubResource( 2 )
 
 [node name="PanelContainer" type="PanelContainer" parent="Main"]
 margin_top = 27.0
-margin_right = 1920.0
-margin_bottom = 1080.0
+margin_right = 1280.0
+margin_bottom = 720.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 4 )
@@ -707,15 +728,15 @@ custom_styles/panel = SubResource( 4 )
 [node name="HBoxContainer" type="HSplitContainer" parent="Main/PanelContainer"]
 margin_left = 4.0
 margin_top = 4.0
-margin_right = 1916.0
-margin_bottom = 1049.0
+margin_right = 1276.0
+margin_bottom = 689.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 split_offset = 160
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer"]
 margin_right = 264.0
-margin_bottom = 1045.0
+margin_bottom = 685.0
 
 [node name="SearchBar" type="LineEdit" parent="Main/PanelContainer/HBoxContainer/VBoxContainer"]
 margin_right = 264.0
@@ -733,7 +754,7 @@ script = ExtResource( 29 )
 [node name="AssetTree" type="Tree" parent="Main/PanelContainer/HBoxContainer/VBoxContainer"]
 margin_top = 29.0
 margin_right = 264.0
-margin_bottom = 1045.0
+margin_bottom = 685.0
 size_flags_vertical = 3
 custom_styles/bg_focus = SubResource( 6 )
 custom_styles/bg = SubResource( 6 )
@@ -749,8 +770,8 @@ bold_font = ExtResource( 15 )
 
 [node name="TabContainer" type="TabContainer" parent="Main/PanelContainer/HBoxContainer"]
 margin_left = 272.0
-margin_right = 1912.0
-margin_bottom = 1045.0
+margin_right = 1272.0
+margin_bottom = 685.0
 custom_styles/panel = SubResource( 9 )
 tabs_visible = false
 
@@ -770,7 +791,6 @@ __meta__ = {
 }
 
 [node name="Meta" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = ExtResource( 2 )
@@ -791,11 +811,11 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor"]
-margin_right = 1624.0
+margin_right = 984.0
 margin_bottom = 25.0
 
 [node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HBoxContainer"]
-margin_right = 1624.0
+margin_right = 984.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 15 )
@@ -837,15 +857,15 @@ text = "Import sprite strip"
 
 [node name="HSplitContainer" type="HSplitContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor"]
 margin_top = 29.0
-margin_right = 1624.0
-margin_bottom = 1029.0
+margin_right = 984.0
+margin_bottom = 669.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 split_offset = 83
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer"]
 margin_right = 146.0
-margin_bottom = 1000.0
+margin_bottom = 640.0
 custom_constants/separation = 0
 
 [node name="Panel" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/VBoxContainer"]
@@ -918,7 +938,7 @@ clip_text = true
 [node name="SpriteList" type="ItemList" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/VBoxContainer"]
 margin_top = 87.0
 margin_right = 146.0
-margin_bottom = 1000.0
+margin_bottom = 640.0
 focus_neighbour_top = NodePath(".")
 focus_neighbour_right = NodePath(".")
 size_flags_vertical = 3
@@ -927,52 +947,62 @@ custom_styles/bg = SubResource( 12 )
 custom_constants/vseparation = 0
 items = [ "sprZebraLegs", null, false, "sprZebraWalkUnarmed", null, false, "sprZebraWalkM16", null, false ]
 
-[node name="TabContainer" type="TabContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer"]
+[node name="Context" type="Tabs" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer"]
+visible = false
 margin_left = 154.0
-margin_right = 1624.0
-margin_bottom = 1000.0
-custom_styles/tab_fg = SubResource( 13 )
-custom_styles/tab_bg = ExtResource( 31 )
-custom_styles/panel = SubResource( 14 )
-tab_align = 0
-
-[node name="Preview" type="Tabs" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 1.0
-margin_top = 28.0
-margin_right = -1.0
-margin_bottom = -1.0
+margin_right = 984.0
+margin_bottom = 640.0
 rect_clip_content = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 15 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="Advanced" type="Tabs" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer"]
+visible = false
+margin_left = 154.0
+margin_right = 984.0
+margin_bottom = 640.0
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 15 )
+
+[node name="Preview" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer"]
+margin_left = 154.0
+margin_right = 984.0
+margin_bottom = 640.0
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 58 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 827.0
+margin_bottom = 637.0
 custom_constants/separation = 0
 __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="PanelContainer" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer"]
-margin_right = 1468.0
-margin_bottom = 870.0
+[node name="PanelContainer" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer"]
+margin_right = 824.0
+margin_bottom = 533.0
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 16 )
 
-[node name="BG" type="TextureRect" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer"]
+[node name="BG" type="TextureRect" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer"]
 self_modulate = Color( 0.560784, 0.568627, 0.588235, 1 )
-margin_right = 1468.0
-margin_bottom = 870.0
+margin_right = 824.0
+margin_bottom = 533.0
 rect_clip_content = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
 texture = ExtResource( 5 )
 stretch_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG"]
+[node name="MarginContainer" type="MarginContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/margin_right = 4
@@ -983,11 +1013,11 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="SpriteTextureRect" type="TextureRect" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer"]
+[node name="SpriteTextureRect" type="TextureRect" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer"]
 margin_left = 4.0
 margin_top = 4.0
-margin_right = 1464.0
-margin_bottom = 866.0
+margin_right = 820.0
+margin_bottom = 529.0
 texture = ExtResource( 7 )
 expand = true
 stretch_mode = 6
@@ -996,7 +1026,7 @@ origin_icon = ExtResource( 32 )
 icon_modulate = Color( 1, 1, 1, 1 )
 color = Color( 0.705882, 0.705882, 0.705882, 0.74902 )
 
-[node name="Gizmos" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect"]
+[node name="Gizmos" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1006,20 +1036,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos"]
 margin_right = 57.0
-margin_bottom = 550.0
+margin_bottom = 523.0
 custom_constants/separation = 0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer"]
 margin_right = 57.0
 margin_bottom = 25.0
 custom_constants/separation = 0
 
-[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer/HBoxContainer"]
 margin_right = 34.0
 margin_bottom = 25.0
 size_flags_vertical = 0
@@ -1028,7 +1058,7 @@ custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
 text = "Size:"
 
-[node name="FrameNumber" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer/HBoxContainer"]
+[node name="FrameNumber" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer/HBoxContainer"]
 margin_left = 34.0
 margin_right = 42.0
 margin_bottom = 25.0
@@ -1037,13 +1067,13 @@ custom_fonts/font = ExtResource( 23 )
 custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer"]
 margin_top = 25.0
 margin_right = 57.0
 margin_bottom = 50.0
 custom_constants/separation = 0
 
-[node name="Label2" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer/HBoxContainer2"]
+[node name="Label2" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer/HBoxContainer2"]
 margin_right = 49.0
 margin_bottom = 25.0
 size_flags_vertical = 0
@@ -1052,7 +1082,7 @@ custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
 text = "Frame:"
 
-[node name="FrameNumber2" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer/HBoxContainer2"]
+[node name="FrameNumber2" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer/HBoxContainer2"]
 margin_left = 49.0
 margin_right = 57.0
 margin_bottom = 25.0
@@ -1064,22 +1094,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos"]
+[node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos"]
 margin_left = 57.0
-margin_right = 488.0
-margin_bottom = 550.0
+margin_right = 478.0
+margin_bottom = 523.0
 mouse_filter = 2
 size_flags_horizontal = 3
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos"]
-margin_left = 488.0
-margin_right = 820.0
-margin_bottom = 550.0
+[node name="VBoxContainer2" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos"]
+margin_left = 478.0
+margin_right = 810.0
+margin_bottom = 523.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2"]
+[node name="Panel" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2"]
 margin_right = 332.0
 margin_bottom = 31.0
 size_flags_vertical = 0
@@ -1088,7 +1118,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel"]
 margin_left = 3.0
 margin_top = 3.0
 margin_right = 329.0
@@ -1100,7 +1130,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer"]
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer"]
 margin_right = 60.0
 margin_bottom = 25.0
 text = "origin:  x"
@@ -1108,7 +1138,7 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="XOriginInput" type="SpinBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer"]
+[node name="XOriginInput" type="SpinBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer"]
 margin_left = 60.0
 margin_right = 184.0
 margin_bottom = 25.0
@@ -1116,7 +1146,7 @@ focus_next = NodePath("../YOriginInput")
 focus_previous = NodePath("../../../../../../../../../../../VBoxContainer/SpriteList")
 rounded = true
 
-[node name="Label2" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer"]
+[node name="Label2" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer"]
 margin_left = 184.0
 margin_right = 202.0
 margin_bottom = 25.0
@@ -1125,36 +1155,36 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="YOriginInput" type="SpinBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer"]
+[node name="YOriginInput" type="SpinBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer"]
 margin_left = 202.0
 margin_right = 326.0
 margin_bottom = 25.0
 focus_next = NodePath("../../../../../../../../../../../VBoxContainer/SpriteList")
 focus_previous = NodePath("../XOriginInput")
 
-[node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2"]
+[node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2"]
 margin_top = 35.0
 margin_right = 332.0
-margin_bottom = 521.0
+margin_bottom = 494.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="HBoxContainer3" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2"]
-margin_top = 525.0
+[node name="HBoxContainer3" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2"]
+margin_top = 498.0
 margin_right = 332.0
-margin_bottom = 550.0
+margin_bottom = 523.0
 
-[node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
-margin_right = 139.0
+[node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
+margin_right = 79.0
 margin_bottom = 25.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
-margin_left = 143.0
-margin_right = 188.0
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
+margin_left = 83.0
+margin_right = 131.0
 margin_bottom = 25.0
 size_flags_vertical = 0
 custom_fonts/font = ExtResource( 23 )
@@ -1162,9 +1192,9 @@ custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
 text = "Offset:"
 
-[node name="OffsetLabel" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
-margin_left = 192.0
-margin_right = 332.0
+[node name="OffsetLabel" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
+margin_left = 135.0
+margin_right = 214.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 size_flags_vertical = 0
@@ -1172,9 +1202,9 @@ custom_fonts/font = ExtResource( 23 )
 custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
 
-[node name="Label2" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
-margin_left = 217.0
-margin_right = 247.0
+[node name="Label2" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
+margin_left = 218.0
+margin_right = 248.0
 margin_bottom = 25.0
 size_flags_vertical = 0
 custom_fonts/font = ExtResource( 23 )
@@ -1182,8 +1212,8 @@ custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
 text = "UV:"
 
-[node name="UVLabel" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
-margin_left = 240.0
+[node name="UVLabel" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
+margin_left = 252.0
 margin_right = 332.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
@@ -1192,34 +1222,34 @@ custom_fonts/font = ExtResource( 23 )
 custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
 
-[node name="TimelineControls" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer"]
-margin_top = 870.0
-margin_right = 1468.0
-margin_bottom = 901.0
+[node name="TimelineControls" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer"]
+margin_top = 533.0
+margin_right = 824.0
+margin_bottom = 564.0
 custom_styles/panel = SubResource( 18 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls"]
 margin_left = 3.0
 margin_top = 3.0
-margin_right = 1465.0
+margin_right = 821.0
 margin_bottom = 28.0
 
-[node name="Left" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer"]
-margin_right = 484.0
+[node name="Left" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer"]
+margin_right = 270.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left"]
+[node name="PanelContainer" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left"]
 margin_right = 150.0
 margin_bottom = 25.0
 custom_styles/panel = SubResource( 19 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer"]
 margin_right = 150.0
 margin_bottom = 25.0
 custom_constants/separation = 0
 
-[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer/HBoxContainer"]
 margin_right = 26.0
 margin_bottom = 25.0
 text = "fps"
@@ -1227,23 +1257,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="FpsSpinBox" type="SpinBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer/HBoxContainer"]
+[node name="FpsSpinBox" type="SpinBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer/HBoxContainer"]
 margin_left = 26.0
 margin_right = 150.0
 margin_bottom = 25.0
 max_value = 60.0
 value = 15.0
 
-[node name="Middle" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer"]
-margin_left = 488.0
-margin_right = 973.0
+[node name="Middle" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer"]
+margin_left = 274.0
+margin_right = 544.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 alignment = 1
 
-[node name="FrameBackTrackButton" type="Button" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle"]
-margin_left = 202.0
-margin_right = 226.0
+[node name="FrameBackTrackButton" type="Button" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle"]
+margin_left = 95.0
+margin_right = 119.0
 margin_bottom = 25.0
 custom_styles/hover = SubResource( 20 )
 custom_styles/pressed = SubResource( 20 )
@@ -1252,9 +1282,9 @@ custom_styles/disabled = SubResource( 20 )
 custom_styles/normal = SubResource( 20 )
 icon = ExtResource( 8 )
 
-[node name="PausePlayButton" type="Button" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle"]
-margin_left = 230.0
-margin_right = 254.0
+[node name="PausePlayButton" type="Button" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle"]
+margin_left = 123.0
+margin_right = 147.0
 margin_bottom = 25.0
 custom_styles/hover = SubResource( 20 )
 custom_styles/pressed = SubResource( 20 )
@@ -1268,9 +1298,9 @@ script = ExtResource( 16 )
 pause = ExtResource( 6 )
 play = ExtResource( 17 )
 
-[node name="FrameAdvanceButton" type="Button" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle"]
-margin_left = 258.0
-margin_right = 282.0
+[node name="FrameAdvanceButton" type="Button" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle"]
+margin_left = 151.0
+margin_right = 175.0
 margin_bottom = 25.0
 custom_styles/hover = SubResource( 20 )
 custom_styles/pressed = SubResource( 20 )
@@ -1279,16 +1309,16 @@ custom_styles/disabled = SubResource( 20 )
 custom_styles/normal = SubResource( 20 )
 icon = ExtResource( 10 )
 
-[node name="Right" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer"]
-margin_left = 977.0
-margin_right = 1462.0
+[node name="Right" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer"]
+margin_left = 548.0
+margin_right = 818.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 alignment = 2
 
-[node name="Button" type="CheckBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Right"]
-margin_left = 438.0
-margin_right = 485.0
+[node name="Button" type="CheckBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Right"]
+margin_left = 223.0
+margin_right = 270.0
 margin_bottom = 25.0
 focus_mode = 0
 custom_styles/hover = SubResource( 23 )
@@ -1298,15 +1328,15 @@ custom_styles/normal = SubResource( 26 )
 text = "loop"
 align = 1
 
-[node name="Timeline" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer"]
-margin_top = 901.0
-margin_right = 1468.0
-margin_bottom = 971.0
+[node name="Timeline" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer"]
+margin_top = 564.0
+margin_right = 824.0
+margin_bottom = 634.0
 rect_min_size = Vector2( 0, 70 )
 rect_clip_content = true
 custom_styles/panel = SubResource( 27 )
 
-[node name="TimelineSlider" type="HSlider" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline"]
+[node name="TimelineSlider" type="HSlider" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/Timeline"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 focus_mode = 0
@@ -1325,7 +1355,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TimelineBar" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline/TimelineSlider"]
+[node name="TimelineBar" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/Timeline/TimelineSlider"]
 anchor_left = 0.5
 anchor_right = 0.5
 anchor_bottom = 1.0
@@ -1337,33 +1367,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tween" type="Tween" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline/TimelineSlider"]
+[node name="Tween" type="Tween" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/Timeline/TimelineSlider"]
 
-[node name="Context" type="Tabs" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer"]
+[node name="TabContainer" type="TabContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer"]
 visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 1.0
-margin_top = 28.0
-margin_right = -1.0
-margin_bottom = -1.0
+margin_left = 154.0
+margin_right = 984.0
+margin_bottom = 640.0
 rect_clip_content = true
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_styles/panel = SubResource( 15 )
-
-[node name="Advanced" type="Tabs" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 1.0
-margin_top = 28.0
-margin_right = -1.0
-margin_bottom = -1.0
-rect_clip_content = true
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_styles/panel = SubResource( 15 )
+custom_styles/tab_fg = SubResource( 13 )
+custom_styles/tab_bg = ExtResource( 31 )
+custom_styles/panel = SubResource( 14 )
+tab_align = 0
 
 [node name="Room" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
 visible = false
@@ -1446,8 +1461,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/bg_focus = SubResource( 33 )
-custom_styles/bg = SubResource( 34 )
+custom_styles/bg_focus = SubResource( 32 )
+custom_styles/bg = SubResource( 33 )
 columns = 2
 hide_root = true
 script = ExtResource( 20 )
@@ -1509,8 +1524,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/bg_focus = SubResource( 35 )
-custom_styles/bg = SubResource( 36 )
+custom_styles/bg_focus = SubResource( 34 )
+custom_styles/bg = SubResource( 35 )
 columns = 2
 hide_root = true
 script = ExtResource( 25 )
@@ -1570,8 +1585,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/bg_focus = SubResource( 35 )
-custom_styles/bg = SubResource( 36 )
+custom_styles/bg_focus = SubResource( 34 )
+custom_styles/bg = SubResource( 35 )
 columns = 2
 hide_root = true
 script = ExtResource( 25 )
@@ -1633,8 +1648,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/bg_focus = SubResource( 37 )
-custom_styles/bg = SubResource( 38 )
+custom_styles/bg_focus = SubResource( 36 )
+custom_styles/bg = SubResource( 37 )
 columns = 2
 hide_root = true
 script = ExtResource( 27 )
@@ -1696,8 +1711,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/bg_focus = SubResource( 37 )
-custom_styles/bg = SubResource( 38 )
+custom_styles/bg_focus = SubResource( 36 )
+custom_styles/bg = SubResource( 37 )
 columns = 2
 hide_root = true
 script = ExtResource( 42 )
@@ -1706,6 +1721,7 @@ __meta__ = {
 }
 
 [node name="Sound" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = ExtResource( 2 )
@@ -1725,7 +1741,7 @@ __meta__ = {
 }
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor"]
-stream = SubResource( 39 )
+stream = SubResource( 38 )
 
 [node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor"]
 margin_right = 1624.0
@@ -1762,8 +1778,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/bg_focus = SubResource( 37 )
-custom_styles/bg = SubResource( 38 )
+custom_styles/bg_focus = SubResource( 36 )
+custom_styles/bg = SubResource( 37 )
 columns = 2
 hide_root = true
 script = ExtResource( 27 )
@@ -1776,7 +1792,7 @@ margin_top = 29.0
 margin_right = 1624.0
 margin_bottom = 1029.0
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 40 )
+custom_styles/panel = SubResource( 39 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container"]
 margin_left = 1.0
@@ -1794,7 +1810,7 @@ margin_right = 1622.0
 [node name="TimelineControls" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer"]
 margin_right = 1622.0
 margin_bottom = 31.0
-custom_styles/panel = SubResource( 41 )
+custom_styles/panel = SubResource( 40 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1921,7 +1937,7 @@ rect_min_size = Vector2( 0, 70 )
 rect_clip_content = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 42 )
+custom_styles/panel = SubResource( 41 )
 
 [node name="Control" type="CenterContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/Timeline"]
 anchor_right = 1.0
@@ -1945,13 +1961,13 @@ __meta__ = {
 
 [node name="Polygon2D" type="Polygon2D" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/Timeline/Control/Control"]
 self_modulate = Color( 0.101961, 0.121569, 0.160784, 1 )
-material = SubResource( 49 )
+material = SubResource( 48 )
 color = Color( 0.0862745, 0.105882, 0.141176, 1 )
 polygon = PoolVector2Array( -763.116, 302.175, -729.992, 177.01, -646.837, -90.0928, -548.563, 237.487, -495.647, -122.851, -425.091, 232.447, -354.536, 106.455, -263.821, 234.967, -140.349, 189.61, -42.0751, 247.566, 86.4369, 144.253, 172.111, 222.368, 280.465, 156.852, 373.699, 237.487, 444.254, 224.888, 552.608, 267.725, 638.282, 252.606, 706.318, 285.364, 770.884, 298.175 )
 
 [node name="Polygon2D2" type="Polygon2D" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/Timeline/Control/Control"]
 self_modulate = Color( 0.0862745, 0.105882, 0.141176, 0.27451 )
-material = SubResource( 49 )
+material = SubResource( 48 )
 color = Color( 0.0882, 0.105467, 0.14, 1 )
 polygon = PoolVector2Array( -763.116, 302.175, -729.992, 177.01, -646.837, -90.0928, -548.563, 237.487, -495.647, -122.851, -425.091, 232.447, -354.536, 106.455, -263.821, 234.967, -140.349, 189.61, -42.0751, 247.566, 86.4369, 144.253, 172.111, 222.368, 280.465, 156.852, 373.699, 237.487, 444.254, 224.888, 552.608, 267.725, 638.282, 252.606, 706.318, 285.364, 770.884, 298.175 )
 
@@ -1976,10 +1992,10 @@ anchor_bottom = 1.0
 focus_mode = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_icons/tick = SubResource( 50 )
-custom_icons/grabber_highlight = SubResource( 52 )
+custom_icons/tick = SubResource( 49 )
+custom_icons/grabber_highlight = SubResource( 51 )
 custom_icons/grabber = SubResource( 28 )
-custom_styles/slider = SubResource( 53 )
+custom_styles/slider = SubResource( 52 )
 custom_styles/grabber_area_highlight = SubResource( 30 )
 custom_styles/grabber_area = SubResource( 30 )
 max_value = 1.0
@@ -2050,7 +2066,7 @@ margin_bottom = 1029.0
 rect_min_size = Vector2( 0, 300 )
 rect_clip_content = true
 size_flags_vertical = 7
-custom_styles/panel = SubResource( 54 )
+custom_styles/panel = SubResource( 53 )
 
 [node name="MarginContainer" type="MarginContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel"]
 margin_left = 1.0
@@ -2148,12 +2164,12 @@ __meta__ = {
 }
 
 [node name="LineEdit" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer/TextureRect/MarginContainer"]
-material = SubResource( 56 )
+material = SubResource( 55 )
 margin_left = 4.0
 margin_right = 1610.0
 margin_bottom = 946.0
 size_flags_vertical = 3
-custom_styles/normal = SubResource( 57 )
+custom_styles/normal = SubResource( 56 )
 text = "The quick brown fox jumped over the lazy yellow dog"
 
 [node name="CharListPanel" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor"]
@@ -2162,7 +2178,7 @@ margin_top = 531.0
 margin_right = 1624.0
 margin_bottom = 1029.0
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 54 )
+custom_styles/panel = SubResource( 53 )
 
 [node name="OpenWadDialog" type="FileDialog" parent="."]
 anchor_right = 1.0
@@ -2307,8 +2323,8 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="WaitForThreadsDialog/MarginContainer"]
-margin_right = 940.0
-margin_bottom = 388.0
+margin_right = 300.0
+margin_bottom = 146.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -2781,6 +2797,11 @@ __meta__ = {
 
 [node name="CompilingNotif" parent="NotifList" instance=ExtResource( 43 )]
 visible = false
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+script = ExtResource( 48 )
 [connection signal="text_changed" from="Main/PanelContainer/HBoxContainer/VBoxContainer/SearchBar" to="Main/PanelContainer/HBoxContainer/VBoxContainer/SearchBar" method="_on_SearchBar_text_changed"]
 [connection signal="text_entered" from="Main/PanelContainer/HBoxContainer/VBoxContainer/SearchBar" to="." method="_on_SearchBar_text_entered"]
 [connection signal="item_selected" from="Main/PanelContainer/HBoxContainer/VBoxContainer/AssetTree" to="Main/PanelContainer/HBoxContainer/VBoxContainer/AssetTree" method="_on_Tree_item_selected"]
@@ -2790,20 +2811,20 @@ visible = false
 [connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HBoxContainer/importSpriteStripButton" to="." method="_on_importSpriteStripButton_pressed"]
 [connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/VBoxContainer/Panel/Button" to="SpriteTexturePageWindow" method="_on_Button_pressed"]
 [connection signal="item_selected" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/VBoxContainer/SpriteList" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_SpriteList_item_selected"]
-[connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_SpriteTextureRect_gui_input"]
-[connection signal="mouse_exited" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_SpriteTextureRect_mouse_exited"]
-[connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer/XOriginInput" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_XOriginInput_value_changed"]
-[connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer/YOriginInput" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_YOriginInput_value_changed"]
-[connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer/HBoxContainer/FpsSpinBox" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FpsSpinBox_value_changed"]
-[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FrameBackTrackButton_pressed"]
-[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_FrameBackTrackButton_pressed"]
-[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_PausePlayButton_toggled"]
-[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_PausePlayButton_toggled"]
-[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FrameAdvanceButton_pressed"]
-[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_FrameAdvanceButton_pressed"]
-[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Right/Button" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_Button_toggled"]
-[connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline/TimelineSlider" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline/TimelineSlider" method="_on_TimelineSlider_gui_input"]
-[connection signal="tween_all_completed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/Timeline/TimelineSlider/Tween" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/TabContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_Tween_tween_all_completed"]
+[connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_SpriteTextureRect_gui_input"]
+[connection signal="mouse_exited" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_SpriteTextureRect_mouse_exited"]
+[connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer/XOriginInput" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_XOriginInput_value_changed"]
+[connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer/YOriginInput" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_YOriginInput_value_changed"]
+[connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer/HBoxContainer/FpsSpinBox" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FpsSpinBox_value_changed"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FrameBackTrackButton_pressed"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_FrameBackTrackButton_pressed"]
+[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_PausePlayButton_toggled"]
+[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_PausePlayButton_toggled"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FrameAdvanceButton_pressed"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_FrameAdvanceButton_pressed"]
+[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Right/Button" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_Button_toggled"]
+[connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/Timeline/TimelineSlider" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/Timeline/TimelineSlider" method="_on_TimelineSlider_gui_input"]
+[connection signal="tween_all_completed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/Timeline/TimelineSlider/Tween" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_Tween_tween_all_completed"]
 [connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor/TabContainer2/Room View/TextureRect" to="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor/TabContainer2/Room View/TextureRect/Control" method="_on_TextureRect_gui_input"]
 [connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor/TabContainer2/Advanced/RoomTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor/TabContainer2/Advanced/RoomTree" method="_on_RoomTree_gui_input"]
 [connection signal="item_edited" from="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor/TabContainer2/Advanced/RoomTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor" method="_on_RoomTree_item_edited"]
@@ -2818,12 +2839,12 @@ visible = false
 [connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/TabContainer2/Advanced/SoundTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/TabContainer2/Advanced/SoundTree" method="_on_ObjectTree_gui_input"]
 [connection signal="item_edited" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/TabContainer2/Advanced/SoundTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor" method="_on_SoundTree_item_edited"]
 [connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer/HBoxContainer/HSlider" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor" method="_on_HSlider_value_changed"]
-[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_FrameBackTrackButton_pressed"]
 [connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor" method="_on_FrameBackTrackButton_pressed"]
-[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_PausePlayButton_toggled"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_FrameBackTrackButton_pressed"]
 [connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor" method="_on_PausePlayButton_toggled"]
-[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_FrameAdvanceButton_pressed"]
+[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_PausePlayButton_toggled"]
 [connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor" method="_on_FrameAdvanceButton_pressed"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_FrameAdvanceButton_pressed"]
 [connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Right/Button" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor" method="_on_Button_toggled"]
 [connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/Timeline/TimelineSlider" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/Timeline/TimelineSlider" method="_on_TimelineSlider_gui_input"]
 [connection signal="resized" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/Timeline/TimelineSlider" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/Timeline/TimelineSlider" method="_on_TimelineSlider_resized"]
@@ -2835,8 +2856,10 @@ visible = false
 [connection signal="pressed" from="SpriteTexturePageWindow/VBoxContainer/HBoxContainer2/HBoxContainer2/okbutton" to="SpriteTexturePageWindow" method="_on_okbutton_pressed"]
 [connection signal="pressed" from="WaitForThreadsDialog/MarginContainer/VBoxContainer/HBoxContainer/WaitThreadsOk" to="." method="_on_WaitThreadsOk_pressed"]
 [connection signal="pressed" from="WaitForThreadsDialog/MarginContainer/VBoxContainer/HBoxContainer/WaitThreadsNo" to="." method="_on_WaitThreadsNo_pressed"]
+[connection signal="about_to_show" from="ImportantPopups/SaveGIFDialog2" to="ImportantPopups" method="_on_SaveGIFDialog2_about_to_show"]
 [connection signal="pressed" from="ImportantPopups/SaveGIFDialog2/VBoxContainer/Button" to="ImportantPopups/SaveGIFDialog2" method="_on_Button_pressed"]
 [connection signal="file_selected" from="ImportantPopups/SaveGIFDialog" to="ImportantPopups/SaveGIFDialog2" method="_on_SaveGIFDialog_file_selected"]
+[connection signal="popup_hide" from="ImportantPopups/SaveGIFDialog" to="ImportantPopups" method="_on_SaveGIFDialog_popup_hide"]
 [connection signal="file_selected" from="ImportantPopups/ExtractResourceDialog" to="ImportantPopups/ExtractResourceDialog" method="_on_ExtractResourceDialog_file_selected"]
 [connection signal="popup_hide" from="ImportantPopups/ExtractResourceDialog" to="ImportantPopups" method="_on_ExtractResourceDialog_popup_hide"]
 [connection signal="file_selected" from="ImportantPopups/AddResourceDialog" to="." method="_on_AddResourceDialog_file_selected"]
@@ -2850,8 +2873,8 @@ visible = false
 [connection signal="popup_hide" from="ImportantPopups/ImportSpriteStripDialog" to="ImportantPopups" method="_on_ImportSpriteStripDialog_popup_hide"]
 [connection signal="about_to_show" from="ImportantPopups/ImportSpriteStripSliceDialog" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_ImportSpriteStripSliceDialog_about_to_show"]
 [connection signal="popup_hide" from="ImportantPopups/ImportSpriteStripSliceDialog" to="ImportantPopups" method="_on_ImportSpriteStripSliceDialog_popup_hide"]
-[connection signal="value_changed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/SpinBox" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_SpinBox_value_changed"]
 [connection signal="value_changed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/SpinBox" to="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/Panel/ImportSpriteStripPreview" method="_on_SpinBox_value_changed"]
+[connection signal="value_changed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/SpinBox" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_SpinBox_value_changed"]
 [connection signal="pressed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer3/Button" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_Button_pressed"]
 [connection signal="file_selected" from="ImportantPopups/OpenPatchDialog" to="." method="_on_OpenPatchDialog_file_selected"]
 [connection signal="popup_hide" from="ImportantPopups/OpenPatchDialog" to="ImportantPopups" method="_on_OpenPatchDialog_popup_hide"]

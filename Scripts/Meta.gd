@@ -265,100 +265,111 @@ func convert_to_gmeta(spritebin_ref):
 
 #func resolve(animatedsprite:SpriteFrames, spritesheet:Texture):
 func resolve(userdata):
-	if userdata == null: return null
-	var animatedsprite:SpriteFrames = userdata[0]
-	var spritesheet:Texture = userdata[1]
-	var image_width = spritesheet.get_width()
-	var image_height = 1
-	var dest_image :Image = Image.new()
-	
-	var p = 0
-	var a = animatedsprite.get_animation_names()
-	var l_as = len(a)
-	
+#	if userdata == null: return null
+	var mutex = userdata[2]
 	if !needs_recalc:
 #		dest_image.create(image_width, spritesheet.get_height(), false, Image.FORMAT_RGBA8)
 #		for s in animatedsprite.get_animation_names():
 #			for i in animatedsprite.get_frame_count(s):
 #				var f :AtlasTexture= animatedsprite.get_frame(s,i)
 #				dest_image.blit_rect(f.atlas.get_data(), f.region, f.region.position)
-		return
-		emit_signal('resolve_progress', 1)
+		mutex.lock()
+		emit_signal('resolve_progress', 2)
 		emit_signal('resolve_complete', self)
-	else:
-		var rs = []
-		dest_image.create(image_width, image_height, false, Image.FORMAT_RGBA8)
-		dest_image.lock()
-		var masq_image :Image = Image.new()
-		masq_image.create(image_width, image_height, false, Image.FORMAT_RGBA8)
-		masq_image.lock()
-		var new_spritesheet = ImageTexture.new()
-		var masq_square = Image.new()
-		masq_square.create(1,1,false,Image.FORMAT_RGBA8)
-		masq_square.fill(Color(1,0,0,1))
-		var dest_size = Vector2(image_width, 1)
-		
-		var new_sprites:SpriteFrames=SpriteFrames.new()
-		new_sprites.remove_animation("default")
-		for sprite_name in a:
-			new_sprites.add_animation(sprite_name)
-			var f_count = animatedsprite.get_frame_count(sprite_name)
-			var p1 = 0
-			for frame_index in range(f_count):
-				p1 = float(frame_index) / float(f_count)
-				var frame :MetaTexture= animatedsprite.get_frame(sprite_name, frame_index)
-				var idx = frame.region.size.x
-				var idy = frame.region.size.y
-				assert(idx <= image_width)
-				
-				var found = false
-				for ty in range(2048):
-					if ty + idy > dest_image.get_height():
-						masq_image.unlock()
-						dest_image.unlock()
-						dest_image.crop(image_width, ty + idy)
+		mutex.unlock()
+		return
+	var animatedsprite:SpriteFrames = userdata[0]
+	var spritesheet:Texture = userdata[1]
+	var image_width = spritesheet.get_width()
+	# get image bigger image hegith..
+	var a = animatedsprite.get_animation_names()
+	for sprite_name in a:
+		var f_count = animatedsprite.get_frame_count(sprite_name)
+		for frame_index in range(f_count):
+			if animatedsprite.get_frame(sprite_name, frame_index).region.size.x+1 > image_width:
+				image_width = 1+animatedsprite.get_frame(sprite_name, frame_index).region.size.x
+	print(image_width)
+	var image_height = 1
+	var dest_image :Image = Image.new()
+	
+	var p = 0
+	var l_as = len(a)
+	
+	var rs = []
+	dest_image.create(image_width, image_height, false, Image.FORMAT_RGBA8)
+	dest_image.lock()
+	var masq_image :Image = Image.new()
+	masq_image.create(image_width, image_height, false, Image.FORMAT_RGBA8)
+	masq_image.lock()
+	var new_spritesheet = ImageTexture.new()
+	var masq_square = Image.new()
+	masq_square.create(1,1,false,Image.FORMAT_RGBA8)
+	masq_square.fill(Color(1,0,0,1))
+	var dest_size = Vector2(image_width, 1)
+	
+	var new_sprites:SpriteFrames=SpriteFrames.new()
+	new_sprites.remove_animation("default")
+	for sprite_name in a:
+		new_sprites.add_animation(sprite_name)
+		var f_count = animatedsprite.get_frame_count(sprite_name)
+		var p1 = 0
+		for frame_index in range(f_count):
+			p1 = float(frame_index) / float(f_count)
+			var frame :MetaTexture= animatedsprite.get_frame(sprite_name, frame_index)
+			var idx = frame.region.size.x
+			var idy = frame.region.size.y
+			assert(idx <= image_width)
+			
+			var found = false
+			for ty in range(2048):
+				if ty + idy > dest_image.get_height():
+					masq_image.unlock()
+					dest_image.unlock()
+					dest_image.crop(image_width, ty + idy)
 #						print(sprite_name,' ', frame_index,': ',image_width,' x ', ty + idy)
-						masq_image.crop(image_width, ty + idy)
-						dest_image.lock()
-						masq_image.lock()
-					for tx in range(image_width - idx):
-						var valid = !(masq_image.get_pixel(tx,ty).r8 ||
-							masq_image.get_pixel(tx, ty + idy-1).r8 ||
-							masq_image.get_pixel(tx + idx-1, ty).r8 ||
-							masq_image.get_pixel(tx + idx-1, ty + idy-1).r8)
-						if valid:
-							for ity in range(idy):
-								for itx in range(idx):
-									valid = !masq_image.get_pixel(tx + itx, ty + ity).r8
-									if !valid: break
+					masq_image.crop(image_width, ty + idy)
+					dest_image.lock()
+					masq_image.lock()
+				for tx in range(image_width - idx):
+					var valid = !(masq_image.get_pixel(tx,ty).r8 ||
+						masq_image.get_pixel(tx, ty + idy-1).r8 ||
+						masq_image.get_pixel(tx + idx-1, ty).r8 ||
+						masq_image.get_pixel(tx + idx-1, ty + idy-1).r8)
+					if valid:
+						for ity in range(idy):
+							for itx in range(idx):
+								valid = !masq_image.get_pixel(tx + itx, ty + ity).r8
 								if !valid: break
-						if valid:
-							dest_image.blit_rect(frame.atlas.get_data(), frame.region, Vector2(tx,ty))
-							masq_square.unlock()
-	#						masq_square.resize(frame.region.size.x, frame.region.size.y, Image.INTERPOLATE_NEAREST)
-							masq_square.crop(frame.region.size.x,frame.region.size.y)
-							masq_square.fill(Color(1,0,0,1))
-							masq_square.lock()
-							masq_image.blit_rect(masq_square, Rect2(Vector2.ZERO,frame.region.size), Vector2(tx,ty))
-	#						for ity in range(idy):
-	#							for itx in range(idx):
-	#								masq_image.set_pixel(tx + itx, ty + ity, Color(1,0,0,1))
-	#						print('moving ', sprite_name, frame_index, ': ', frame.region.position, ' -> ', Vector2(tx,ty))
+							if !valid: break
+					if valid:
+						dest_image.blit_rect(frame.atlas.get_data(), frame.region, Vector2(tx,ty))
+						masq_square.unlock()
+#						masq_square.resize(frame.region.size.x, frame.region.size.y, Image.INTERPOLATE_NEAREST)
+						masq_square.crop(frame.region.size.x,frame.region.size.y)
+						masq_square.fill(Color(1,0,0,1))
+						masq_square.lock()
+						masq_image.blit_rect(masq_square, Rect2(Vector2.ZERO,frame.region.size), Vector2(tx,ty))
+#						for ity in range(idy):
+#							for itx in range(idx):
+#								masq_image.set_pixel(tx + itx, ty + ity, Color(1,0,0,1))
+#						print('moving ', sprite_name, frame_index, ': ', frame.region.position, ' -> ', Vector2(tx,ty))
 #							rs.append(Rect2(int(tx),int(ty), int(idx),int(idy)))
 
-							var new_frame:MetaTexture = MetaTexture.new()
-							new_frame.uv = frame.uv
-							new_frame.region = Rect2(int(tx),int(ty), int(idx),int(idy))
-							new_frame.atlas = texture_page
-							new_sprites.add_frame(sprite_name, new_frame)
-							found = true
-						if found: break
+						var new_frame:MetaTexture = MetaTexture.new()
+						new_frame.uv = frame.uv
+						new_frame.region = Rect2(int(tx),int(ty), int(idx),int(idy))
+						new_frame.atlas = texture_page
+						new_sprites.add_frame(sprite_name, new_frame)
+						found = true
 					if found: break
-				if terminate_resolve:
-					emit_signal('resolve_complete', self)
-					return null
-				emit_signal('resolve_progress', float(p + p1)/float(l_as))#float(p)/float(len(animatedsprite.get_animation_names())))
-			p += 1
+				if found: break
+			if terminate_resolve:
+#					mutex.lock()
+#					emit_signal('resolve_complete', self)
+#					mutex.unlock()
+				return null
+			emit_signal('resolve_progress', float(p + p1)/float(l_as))#float(p)/float(len(animatedsprite.get_animation_names())))
+		p += 1
 #		var i = 0
 #		for sprite_name in a:
 #			new_sprites.add_animation(sprite_name)
@@ -369,7 +380,7 @@ func resolve(userdata):
 #				f.region = rs[i]
 #				new_sprites.add_frame(sprite_name, f)
 #				i += 1
-		sprites = new_sprites
+	sprites = new_sprites
 #	dest_image.save_png('temp_sheet.png')
 #	texture_dimensions = dest_image.get_size()
 #	dest_image.crop(texture_dimensions)
@@ -378,5 +389,9 @@ func resolve(userdata):
 	texture_page.create_from_image(dest_image, 0)
 	texture_dimensions = texture_page.get_size()
 #	print(texture_dimensions)
-	emit_signal('resolve_progress', 1)
+	mutex.lock()
+	emit_signal('resolve_progress', 2)
 	emit_signal('resolve_complete', self)
+	mutex.unlock()
+	print('PLEASE STOP PLEASE')
+	return self
