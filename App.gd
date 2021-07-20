@@ -47,10 +47,11 @@ func _init():
 func _ready():
 	
 	asset_tree = get_node(asset_tree)
-	if OS.get_screen_size().x > 1920:
-		theme.default_font.size *= 2
-		asset_tree.bold_font.size *= 2
-		tomakebiggerfont.size *= 2
+	var text_scale_multiplier = clamp(OS.get_screen_size().x / 1920,1,2)
+	if text_scale_multiplier  > 1.5:
+		theme.default_font.size *= text_scale_multiplier
+		asset_tree.bold_font.size *= text_scale_multiplier
+		tomakebiggerfont.size *= text_scale_multiplier
 	asset_tree_container = get_node(asset_tree_container)
 	meta_editor_node = get_node(meta_editor_node)
 	room_editor_node = get_node(room_editor_node)

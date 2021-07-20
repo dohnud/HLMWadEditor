@@ -116,6 +116,7 @@ boot_splash/image="res://icon1.png"
 boot_splash/use_filter=false
 boot_splash/bg_color=Color( 0.066, 0.0792, 0.11, 1 )
 config/icon="res://icon1.png"
+config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
