@@ -69,9 +69,9 @@ func _on_SpriteList_item_selected(index):
 	var f :MetaTexture= meta.sprites.get_frame(current_sprite, 0)
 	frametexturerect.texture = f
 	tex_dimensions_node.text = str(f.get_width()) + ' x ' + str(f.get_height())
-	frame_tex_offset_node.text = str(f.region.position.x) + ' x ' + str(f.region.position.y)
+	frame_tex_offset_node.text = str(f.region.position.x) + ' , ' + str(f.region.position.y)
 	if f is MetaTexture:
-		frame_tex_uv_node.text = str(f.uv.position.x) + ' x ' + str(f.uv.position.y)
+		frame_tex_uv_node.text = str(f.uv.position.x) + ', ' + str(f.uv.position.y) + '  ' + str(f.uv.size.x) + ' x ' + str(f.uv.size.y)
 	mode = 0
 	if !meta.is_gmeta and !app.base_wad.spritebin.sprite_data.has(sprite_name):
 		mode = 1

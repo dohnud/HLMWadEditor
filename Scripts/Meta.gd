@@ -87,9 +87,9 @@ func parse(file_pointer, size, _texture_page=null) -> SpriteFrames:
 #			img.meta_position = Vector2(x,y)
 			img.atlas = texture_page
 			# skip uv coords
+			# top left
 			var p = Vector2(f.get_float(), f.get_float())
-#			f.get_32()
-#			f.get_32()
+			# bottom right
 			var c =  Vector2(f.get_float(), f.get_float())
 			img.uv = Rect2(p, c-p)
 			if !center_norms.has(sprite_name):
@@ -142,8 +142,8 @@ func write(file_pointer) -> int:
 				var h  = frame.region.size.y
 				f.store_float(frame.region.position.x / texture_dimensions.x)
 				f.store_float(frame.region.position.y / texture_dimensions.y)
-				f.store_float((frame.region.position.x+w) / texture_dimensions.x)
-				f.store_float((frame.region.position.y+h) / texture_dimensions.y)
+				f.store_float(float(frame.region.position.x+w) / texture_dimensions.x)
+				f.store_float(float(frame.region.position.y+h) / texture_dimensions.y)
 		
 	for spr_name in sprites.get_animation_names():
 		if spr_name in sprite_names_ordered:
@@ -288,7 +288,6 @@ func resolve(userdata):
 		for frame_index in range(f_count):
 			if animatedsprite.get_frame(sprite_name, frame_index).region.size.x+1 > image_width:
 				image_width = 1+animatedsprite.get_frame(sprite_name, frame_index).region.size.x
-	print(image_width)
 	var image_height = 1
 	var dest_image :Image = Image.new()
 	
@@ -305,7 +304,7 @@ func resolve(userdata):
 	var masq_square = Image.new()
 	masq_square.create(1,1,false,Image.FORMAT_RGBA8)
 	masq_square.fill(Color(1,0,0,1))
-	var dest_size = Vector2(image_width, 1)
+#	var dest_size = Vector2(image_width, 1)
 	
 	var new_sprites:SpriteFrames=SpriteFrames.new()
 	new_sprites.remove_animation("default")
@@ -358,6 +357,8 @@ func resolve(userdata):
 						var new_frame:MetaTexture = MetaTexture.new()
 						new_frame.uv = frame.uv
 						new_frame.region = Rect2(int(tx),int(ty), int(idx),int(idy))
+#						if int(ty)+int(idy) > dest_size.y:
+#							dest_size = Vector2(image_width, ty + idy)
 						new_frame.atlas = texture_page
 						new_sprites.add_frame(sprite_name, new_frame)
 						found = true
@@ -380,14 +381,25 @@ func resolve(userdata):
 #				f.region = rs[i]
 #				new_sprites.add_frame(sprite_name, f)
 #				i += 1
+#	dest_image.crop(dest_size.x, dest_size.y)
+	texture_dimensions = dest_image.get_size()
 	sprites = new_sprites
+	for sprite_name in a:
+		var f_count = sprites.get_frame_count(sprite_name)
+		for frame_index in range(f_count):
+			var f = sprites.get_frame(sprite_name, frame_index)
+			sprites.get_frame(sprite_name, frame_index).uv = Rect2(
+				float(f.region.position.x) / float(texture_dimensions.x),
+				float(f.region.position.y) / float(texture_dimensions.y),
+				float(f.region.size.x) / float(texture_dimensions.x),
+				float(f.region.size.y) / float(texture_dimensions.y)
+			)
 #	dest_image.save_png('temp_sheet.png')
 #	texture_dimensions = dest_image.get_size()
 #	dest_image.crop(texture_dimensions)
 #	texture_page.set_size_override(texture_dimensions)
 #	texture_page.set_data(dest_image)
 	texture_page.create_from_image(dest_image, 0)
-	texture_dimensions = texture_page.get_size()
 #	print(texture_dimensions)
 	mutex.lock()
 	emit_signal('resolve_progress', 2)

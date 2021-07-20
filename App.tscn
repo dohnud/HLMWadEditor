@@ -791,7 +791,6 @@ __meta__ = {
 }
 
 [node name="Meta" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = ExtResource( 2 )
@@ -1028,7 +1027,6 @@ icon_modulate = Color( 1, 1, 1, 1 )
 color = Color( 0.705882, 0.705882, 0.705882, 0.74902 )
 
 [node name="Gizmos" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
@@ -1039,7 +1037,7 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos"]
 margin_right = 57.0
-margin_bottom = 523.0
+margin_bottom = 525.0
 custom_constants/separation = 0
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1097,15 +1095,15 @@ __meta__ = {
 
 [node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos"]
 margin_left = 57.0
-margin_right = 478.0
-margin_bottom = 523.0
+margin_right = 484.0
+margin_bottom = 525.0
 mouse_filter = 2
 size_flags_horizontal = 3
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos"]
-margin_left = 478.0
-margin_right = 810.0
-margin_bottom = 523.0
+margin_left = 484.0
+margin_right = 816.0
+margin_bottom = 525.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1113,6 +1111,7 @@ __meta__ = {
 [node name="Panel" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2"]
 margin_right = 332.0
 margin_bottom = 31.0
+size_flags_horizontal = 10
 size_flags_vertical = 0
 custom_styles/panel = SubResource( 16 )
 __meta__ = {
@@ -1166,15 +1165,15 @@ focus_previous = NodePath("../XOriginInput")
 [node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2"]
 margin_top = 35.0
 margin_right = 332.0
-margin_bottom = 494.0
+margin_bottom = 496.0
 mouse_filter = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2"]
-margin_top = 498.0
+margin_top = 500.0
 margin_right = 332.0
-margin_bottom = 523.0
+margin_bottom = 525.0
 
 [node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
 margin_right = 79.0
@@ -2230,7 +2229,7 @@ __meta__ = {
 [node name="Panel2" type="TextureRect" parent="SpriteTexturePageWindow/VBoxContainer"]
 self_modulate = Color( 0.560784, 0.568627, 0.588235, 1 )
 margin_right = 709.0
-margin_bottom = 418.0
+margin_bottom = 370.0
 rect_clip_content = true
 size_flags_vertical = 3
 texture = ExtResource( 5 )
@@ -2245,13 +2244,21 @@ texture = ExtResource( 7 )
 expand = true
 stretch_mode = 6
 __meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Label" type="Label" parent="SpriteTexturePageWindow/VBoxContainer/Panel2/ImportSpriteStripPreview"]
+margin_right = 8.0
+margin_bottom = 25.0
+text = "dimensions: "
+__meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="SpriteTexturePageWindow/VBoxContainer"]
-margin_top = 422.0
+margin_top = 374.0
 margin_right = 709.0
-margin_bottom = 447.0
+margin_bottom = 399.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SpriteTexturePageWindow/VBoxContainer/HBoxContainer2"]
 margin_right = 674.0
@@ -2874,8 +2881,8 @@ script = ExtResource( 48 )
 [connection signal="popup_hide" from="ImportantPopups/ImportSpriteStripDialog" to="ImportantPopups" method="_on_ImportSpriteStripDialog_popup_hide"]
 [connection signal="about_to_show" from="ImportantPopups/ImportSpriteStripSliceDialog" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_ImportSpriteStripSliceDialog_about_to_show"]
 [connection signal="popup_hide" from="ImportantPopups/ImportSpriteStripSliceDialog" to="ImportantPopups" method="_on_ImportSpriteStripSliceDialog_popup_hide"]
-[connection signal="value_changed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/SpinBox" to="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/Panel/ImportSpriteStripPreview" method="_on_SpinBox_value_changed"]
 [connection signal="value_changed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/SpinBox" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_SpinBox_value_changed"]
+[connection signal="value_changed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/SpinBox" to="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/Panel/ImportSpriteStripPreview" method="_on_SpinBox_value_changed"]
 [connection signal="pressed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer3/Button" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_Button_pressed"]
 [connection signal="file_selected" from="ImportantPopups/OpenPatchDialog" to="." method="_on_OpenPatchDialog_file_selected"]
 [connection signal="popup_hide" from="ImportantPopups/OpenPatchDialog" to="ImportantPopups" method="_on_OpenPatchDialog_popup_hide"]

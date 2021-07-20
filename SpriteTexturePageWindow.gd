@@ -16,6 +16,7 @@ func _ready():
 
 func _on_Button_pressed():
 	$VBoxContainer/Panel2/ImportSpriteStripPreview.texture = app.selected_asset_data.texture_page
+	$VBoxContainer/Panel2/ImportSpriteStripPreview/Label.text =  'dimensions: ' + str(app.selected_asset_data.texture_page.get_size())
 	popup()
 
 func _on_okbutton_pressed():
