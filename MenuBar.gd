@@ -37,7 +37,8 @@ var operations = {
 		["Export All Sprites", [], 'export_sprite_strips'],
 		[],
 		["Toggle Gizmos", [KEY_SHIFT, KEY_G], 'togglemetagizmos'],
-#		[],
+		[],
+		["Resize Sprite", [], 'resize_sprite'],
 #		["Extras", [PopupMenu.new(),[
 #			["Convert to GMeta", [], 'convertmeta'],
 #			["Add Sprite", [], 'convertmeta'],
@@ -270,6 +271,19 @@ func exportspritesheet():
 func importspritesheet():
 	var w :FileDialog= app.get_node("ImportantPopups/ImportSheetDialog")
 	app.get_node("ImportantPopups").show()
+	w.popup()
+
+func resize_sprite():
+	var meta :Meta= app.meta_editor_node.meta
+	if meta != app.selected_asset_data:
+		return
+	var w = app.get_node("ResizeSpriteDialog")
+	app.get_node("ResizeSpriteDialog/VBoxContainer/SpriteNameLabel").text = app.meta_editor_node.current_sprite
+	var f :MetaTexture= meta.sprites.get_frame(app.meta_editor_node.current_sprite, 0)
+	app.get_node('ResizeSpriteDialog/VBoxContainer/GridContainer/WidthSpinBox').value = f.region.size.x
+	app.get_node('ResizeSpriteDialog/VBoxContainer/GridContainer/HeightSpinBox').value = f.region.size.y
+	app.get_node('ResizeSpriteDialog/VBoxContainer/GridContainer/FrameCountSpinBox').value = meta.sprites.get_frame_count(app.meta_editor_node.current_sprite)
+	app.get_node('ResizeSpriteDialog/VBoxContainer/TextureRect/MarginContainer/TextureRect').texture = meta.sprites.get_frame(app.meta_editor_node.current_sprite, 0)
 	w.popup()
 
 func _on_TabContainer_tab_changed(tab):

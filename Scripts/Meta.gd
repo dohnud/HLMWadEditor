@@ -365,9 +365,11 @@ func resolve(userdata):
 					if found: break
 				if found: break
 			if terminate_resolve:
-#					mutex.lock()
-#					emit_signal('resolve_complete', self)
-#					mutex.unlock()
+#				mutex.lock()
+				emit_signal('resolve_progress', 0)
+				emit_signal('resolve_complete', self)
+#				mutex.unlock()
+#				mutex.lock()
 				return null
 			emit_signal('resolve_progress', float(p + p1)/float(l_as))#float(p)/float(len(animatedsprite.get_animation_names())))
 		p += 1

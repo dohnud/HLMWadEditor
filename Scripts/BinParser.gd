@@ -58,8 +58,22 @@ func get_s32(f):
 		return n - 0xFFffFFff - 1
 	return n
 
-func parse_type(f, type):
-	if type is Array:
+#var d = {
+#	'ivec2': Vector2(f.get_32(), f.get_32()),
+#	'i16vec2': Vector2(f.get_16(), f.get_16())
+#}
+
+var type_d = {
+	'8' : 'get_8',
+	'16' : 'get_16',
+	'32' : 'get_32',
+	'64' : 'get_64',
+}
+
+func parse_type(f:File, type):
+	if type_d.has(type):
+		return f.call(type_d[type])
+	elif type is Array:
 		if len(type) == 0:
 			return []
 		elif type[0] is String:
@@ -75,25 +89,23 @@ func parse_type(f, type):
 					return parse_simple_list(f, type[1], type[0])
 				return parse_struct_list(f, type[1], '', type[0])
 		return f.get_buffer(type[0])
-	if type is Dictionary:
+	elif type is Dictionary:
 		return parse_struct(f, type)
-	elif type == '8':
-		return f.get_8()
-	elif type == '16':
-		return f.get_16()
-	if type == '32':
-		var v = f.get_32()
-		if v == 1447:
-			var stop = true
-		return v
-	if type == '64':
-		return f.get_64()
+#	elif type == '8':
+#		return f.get_8()
+#	elif type == '16':
+#		return f.get_16()
+#	if type == '32':
+#		return f.get_32()
+#	if type == '64':
+#		return f.get_64()
 	elif type == 's32':
 		return get_s32(f)
 	elif type == 'ivec2':
 		return Vector2(f.get_32(), f.get_32())
 	elif type == 'i16vec2':
 		return Vector2(f.get_16(), f.get_16())
+	
 	return null
 
 func parse_struct(f, struct):
@@ -101,6 +113,20 @@ func parse_struct(f, struct):
 	for member in struct.keys():
 		n[member] = parse_type(f, struct[member])
 	return n
+
+func parse_object(f, struct:Object):
+	var n = struct.new()
+	for member in struct.type.keys():
+		n.set(member, parse_type(f, struct.type[member]))
+	return n
+
+func parse_object_list(f, struct, ntype='32', n=0):
+	if !n:
+		n = parse_type(f, ntype)
+	var l = []
+	for i in range(n):
+		l.append(parse_struct(f, struct))
+	return l
 
 func parse_struct_list(f, struct, ntype='32', n=0):
 	if !n:

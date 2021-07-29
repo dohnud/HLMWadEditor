@@ -160,6 +160,7 @@ func open_patchwad(file_path):
 		OS.set_window_title('HLMWadEditor - ' + file_path)
 
 func _on_SearchBar_text_entered(new_text=''):
+	new_text.to_lower()
 	asset_tree.reset()
 	if new_text == '':
 		if show_base_wad:
@@ -211,52 +212,54 @@ func _on_SearchBar_text_entered(new_text=''):
 	else:
 		if show_base_wad:
 			for file in base_wad.file_locations.keys():
+				var file_lower = file.to_lower()
 				if "Atlases/" == file.substr(0,len('Atlases/')):
 					if (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
-						if new_text in file:
+						if new_text in file_lower:
 							asset_tree.create_path(file)
 					if ".png" == file.substr(len(file)-len('.png')):
-						if new_text in file:
+						if new_text in file_lower:
 							asset_tree.create_path(file.replace('.png','.meta'))
 				if "Fonts/" == file.substr(0,len('Fonts/')):
 					if (".fnt" == file.substr(len(file)-len('.fnt'))):
-						if new_text in file:
+						if new_text in file_lower:
 							asset_tree.create_path(file)
 					elif "_0.png" == file.substr(len(file)-len('_0.png')):
-						if new_text in file:
+						if new_text in file_lower:
 							asset_tree.create_path(file.replace('_0.png','.fnt'))
 				if file.begins_with('Sounds/'):
 #					if (".wav" == file.substr(len(file)-len('.wav'))):
-					if new_text in file:
+					if new_text in file_lower:
 						asset_tree.create_path(file)
 				if file.begins_with("Music/"):
 #					if (".wav" == file.substr(len(file)-len('.wav'))):
-					if new_text in file:
+					if new_text in file_lower:
 						asset_tree.create_path(file)
 		for p in base_wad.patchwad_list:
 			for file in p.file_locations.keys() + base_wad.new_files.keys() + base_wad.changed_files.keys():
 #			for file in base_wad.new_files.keys() + base_wad.changed_files.keys():
+				var file_lower = file.to_lower()
 				if file.begins_with('Atlases/'):
 					if file.ends_with('.meta') or file.ends_with('.gmeta'):
-						if new_text in file:
+						if new_text in file_lower:
 							asset_tree.create_path(file, 1)
 					if file.ends_with('.png'):
-						if new_text in file:
+						if new_text in file_lower:
 							asset_tree.create_path(file.replace('.png','.meta'), 1)
 				if file.ends_with('Fonts/'):
 					if file.ends_with('.fnt'):
-						if new_text in file:
+						if new_text in file_lower:
 							asset_tree.create_path(file, 1)
 					elif file.end_with("_0.png"):
-						if new_text in file:
+						if new_text in file_lower:
 							asset_tree.create_path(file.replace('_0.png','.fnt'), 1)
 				if file.begins_with('Sounds/'):
 	#				if (".wav" == file.substr(len(file)-len('.wav'))):
-					if new_text in file:
+					if new_text in file_lower:
 						asset_tree.create_path(file, 1)
 				if file.begins_with("Music/"):
 	#				if (".wav" == file.substr(len(file)-len('.wav'))):
-					if new_text in file:
+					if new_text in file_lower:
 						asset_tree.create_path(file, 1)
 		var i = 0
 		for f in advanced_stuff_filter.keys():
@@ -265,7 +268,7 @@ func _on_SearchBar_text_entered(new_text=''):
 				if b:
 					var bb = base_wad.changed_files.has(f) or base_wad.new_files.has(f)
 					for n in b.data.keys():
-						if new_text in n:
+						if new_text in n.to_lower():
 							asset_tree.create_path(f_prefixes[i] + n, bb)
 			i += 1
 		
@@ -321,15 +324,17 @@ func _recalc_collision():
 	if meta is Meta:
 		for sprite in meta.sprites.get_animation_names():
 			if base_wad.spritebin.sprite_data.has(sprite):
-				if base_wad.get_bin(CollisionMasksBin.file_path).mask_data.has(base_wad.spritebin.sprite_data[sprite].id):
-					var fc = meta.sprites.get_frame_count(sprite)
-					for i in range(fc):
-						var f = meta.sprites.get_frame(sprite, i)
-						var b_list = base_wad.get_bin(CollisionMasksBin.file_path).compute_new_mask(base_wad.spritebin.sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D
-						base_wad.spritebin.sprite_data[sprite]['mask_x_bounds'] = b_list[0]
-						base_wad.spritebin.sprite_data[sprite]['mask_y_bounds'] = b_list[1]
-						base_wad.changed_files[CollisionMasksBin.file_path] = base_wad.get_bin(CollisionMasksBin.file_path)
-		
+#				if base_wad.get_bin(CollisionMasksBin.file_path).mask_data.has(base_wad.spritebin.sprite_data[sprite].id):
+				var fc = meta.sprites.get_frame_count(sprite)
+				var f = meta.sprites.get_frame(sprite, 0)
+				base_wad.get_bin(CollisionMasksBin.file_path).resize(base_wad.spritebin.sprite_data[sprite]['id'], f.region.size.x, f.region.size.y, fc)
+				for i in range(fc):
+					f = meta.sprites.get_frame(sprite, i)
+					var b_list = base_wad.get_bin(CollisionMasksBin.file_path).compute_new_mask(base_wad.spritebin.sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D
+					base_wad.spritebin.sprite_data[sprite]['mask_x_bounds'] = b_list[0]
+					base_wad.spritebin.sprite_data[sprite]['mask_y_bounds'] = b_list[1]
+					base_wad.changed_files[CollisionMasksBin.file_path] = base_wad.get_bin(CollisionMasksBin.file_path)
+
 
 
 var mutex = Mutex.new()
@@ -358,7 +363,7 @@ func _on_RecalculateSheetButton_pressed():
 	var nnotif = compilenotif.instance()
 ##	threads[selected_asset_name] = [t, meta, nnotif]
 	threads[meta] = [t, meta, nnotif, selected_asset_name, selected_asset_data]
-	meta.connect('resolve_complete', nnotif, 'resolve_complete')
+#	meta.connect('resolve_complete', nnotif, 'resolve_complete')
 	meta.connect('resolve_complete', self, 'resolve_complete')
 #	meta.connect('resolve_complete', self, '_resolve_complete')
 	meta.connect('resolve_progress', nnotif, 'update_resolve_progress')
@@ -374,18 +379,25 @@ func _on_CancelResolve(asset=null):
 		print('no thread working on: ', asset,'!')
 		return
 #	if threads[asset][0].is_active():
+#		print('still working here')
+	mutex.try_lock()
 	asset.terminate_resolve = true
-	threads[asset][0].wait_to_finish()
+	mutex.unlock()
+	var r = threads[asset][0].wait_to_finish()
+	print(r)
 	threads.erase(asset)
 
 func resolve_complete(meta):
 	call_deferred('_resolve_complete', meta)
 
 func _resolve_complete(meta):
+	mutex.unlock()
 	if !threads.has(meta):
 #		print('uh oh you gotta fix that...')
 		return
-	threads[meta][0].wait_to_finish()
+	var r = threads[meta][0].wait_to_finish()
+	if r == null:
+		_on_CancelResolve(meta)
 	var asset = threads[meta][3]
 	if threads[meta][4] is WadFont:
 		base_wad.changed_files[asset.replace('.'+asset.get_extension(),'_0.png')] = meta.texture_page
@@ -613,3 +625,37 @@ func _on_Timer_timeout():
 				$WaitForThreadsDone.popup()
 				wait_for_threads_to_resolve = false
 			threads.erase(meta)
+
+
+func _on_ResizeSpriteDialog_confirmed():
+	var meta = selected_asset_data
+	if meta is Meta:
+		var sprite = $ResizeSpriteDialog/VBoxContainer/SpriteNameLabel.text
+		if base_wad.spritebin.sprite_data.has(sprite):
+			var fc = meta.sprites.get_frame_count(sprite)
+			var nfc = int($ResizeSpriteDialog/VBoxContainer/GridContainer/FrameCountSpinBox.value)
+			var new_size = Vector2(
+				$ResizeSpriteDialog/VBoxContainer/GridContainer/HeightSpinBox.value,
+				$ResizeSpriteDialog/VBoxContainer/GridContainer/WidthSpinBox.value
+			)
+			var empty_tex = ImageTexture.new()
+			var empty_img = Image.new()
+			empty_img.create(new_size.x, new_size.y, false, Image.FORMAT_RGBA8)
+			empty_tex.create_from_image(empty_img)
+			for i in range(nfc):
+				var f = MetaTexture.new()
+				if i < fc:
+					f = meta.sprites.get_frame(sprite, i)
+				else:
+					f.atlas = empty_tex
+					meta.sprites.add_frame(sprite, f)
+				if f.atlas == meta.texture_page and f.atlas.get_data():
+					var new_atlas = ImageTexture.new()
+					var new_image = f.atlas.get_data().get_rect(f.region)
+					new_image.crop(new_size.x, new_size.y)
+					new_atlas.create_from_image(new_image)
+					f.atlas = new_atlas
+				f.region.size = new_size
+				base_wad.spritebin.sprite_data[sprite]['size'] = f.region.size
+				base_wad.changed_files[SpritesBin.file_path] = base_wad.spritebin
+			_on_RecalculateSheetButton_pressed()

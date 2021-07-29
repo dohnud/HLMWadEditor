@@ -112,6 +112,7 @@ _global_script_class_icons={
 
 config/name="HLMWadEditor"
 run/main_scene="res://App.tscn"
+run/low_processor_mode=true
 boot_splash/image="res://icon1.png"
 boot_splash/use_filter=false
 boot_splash/bg_color=Color( 0.066, 0.0792, 0.11, 1 )
@@ -122,6 +123,7 @@ config/windows_native_icon="res://icon.ico"
 
 Log="*res://Scripts/LogSingleton.gd"
 Config="*res://Scripts/SettingsSingleton.gd"
+SpriteManager="*res://Scripts/SpriteManager.gd"
 
 [display]
 
@@ -130,6 +132,10 @@ window/size/height=720
 window/dpi/allow_hidpi=true
 window/vsync/use_vsync=false
 window/energy_saving/keep_screen_on=false
+
+[editor]
+
+main_run_args="--verbose"
 
 [gui]
 
@@ -200,7 +206,6 @@ file_logging/log_path="user://.logs/godot.log"
 
 quality/driver/driver_name="GLES2"
 quality/intended_usage/framebuffer_allocation=0
-threads/thread_model=2
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
 quality/reflections/texture_array_reflections=false

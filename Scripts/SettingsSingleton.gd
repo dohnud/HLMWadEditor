@@ -5,7 +5,8 @@ class_name Settings
 
 var settings = {
 	'base_wad_path':'',
-	'recent_patches':[]
+	'recent_patches':[],
+	'multithreading':false
 }
 
 func _init():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=106 format=2]
+[gd_scene load_steps=107 format=2]
 
 [ext_resource path="res://theme.tres" type="Theme" id=1]
 [ext_resource path="res://insetshadow.tres" type="StyleBox" id=2]
@@ -48,6 +48,7 @@
 [ext_resource path="res://SoundTimelineSlider.gd" type="Script" id=46]
 [ext_resource path="res://audio_line.png" type="Texture" id=47]
 [ext_resource path="res://Timer.gd" type="Script" id=48]
+[ext_resource path="res://ResizeSpritePreview.gd" type="Script" id=49]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.12549, 0.152941, 0.211765, 1 )
@@ -791,6 +792,7 @@ __meta__ = {
 }
 
 [node name="Meta" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = ExtResource( 2 )
@@ -2394,6 +2396,143 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="ResizeSpriteDialog" type="ConfirmationDialog" parent="."]
+visible = true
+anchor_left = 0.313
+anchor_top = 0.249
+anchor_right = 0.688
+anchor_bottom = 0.75
+margin_left = 0.359985
+margin_top = -0.280014
+margin_right = 0.359985
+margin_bottom = -6.10352e-05
+window_title = "Resize Sprite"
+resizable = true
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ResizeSpriteDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = 16.0
+margin_right = -16.0
+margin_bottom = -57.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SpriteNameLabel" type="Label" parent="ResizeSpriteDialog/VBoxContainer"]
+margin_right = 448.0
+margin_bottom = 25.0
+custom_fonts/font = ExtResource( 15 )
+custom_colors/font_color_shadow = Color( 0.101961, 0.121569, 0.160784, 0.568627 )
+custom_constants/shadow_offset_x = 1
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 199
+text = "sprJaundice"
+align = 1
+
+[node name="GridContainer" type="GridContainer" parent="ResizeSpriteDialog/VBoxContainer"]
+margin_left = 114.0
+margin_top = 29.0
+margin_right = 333.0
+margin_bottom = 112.0
+size_flags_horizontal = 6
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WidthLabel" type="Label" parent="ResizeSpriteDialog/VBoxContainer/GridContainer"]
+margin_right = 91.0
+margin_bottom = 25.0
+text = "Sprite Width:"
+
+[node name="WidthSpinBox" type="SpinBox" parent="ResizeSpriteDialog/VBoxContainer/GridContainer"]
+margin_left = 95.0
+margin_right = 219.0
+margin_bottom = 25.0
+min_value = 1.0
+max_value = 1024.0
+value = 1.0
+
+[node name="HeightLabel" type="Label" parent="ResizeSpriteDialog/VBoxContainer/GridContainer"]
+margin_top = 29.0
+margin_right = 91.0
+margin_bottom = 54.0
+text = "Sprite Height:"
+
+[node name="HeightSpinBox" type="SpinBox" parent="ResizeSpriteDialog/VBoxContainer/GridContainer"]
+margin_left = 95.0
+margin_top = 29.0
+margin_right = 219.0
+margin_bottom = 54.0
+min_value = 1.0
+max_value = 1024.0
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FrameLabel" type="Label" parent="ResizeSpriteDialog/VBoxContainer/GridContainer"]
+margin_top = 58.0
+margin_right = 91.0
+margin_bottom = 83.0
+text = "Frame Count:"
+
+[node name="FrameCountSpinBox" type="SpinBox" parent="ResizeSpriteDialog/VBoxContainer/GridContainer"]
+margin_left = 95.0
+margin_top = 58.0
+margin_right = 219.0
+margin_bottom = 83.0
+min_value = 1.0
+max_value = 256.0
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="ResizeSpriteDialog/VBoxContainer"]
+self_modulate = Color( 0.560784, 0.568627, 0.588235, 1 )
+margin_top = 116.0
+margin_right = 448.0
+margin_bottom = 287.0
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ResizeSpriteDialog/VBoxContainer/TextureRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 2
+custom_constants/margin_top = 2
+custom_constants/margin_left = 2
+custom_constants/margin_bottom = 2
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="TextureRect" type="TextureRect" parent="ResizeSpriteDialog/VBoxContainer/TextureRect/MarginContainer"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 446.0
+margin_bottom = 169.0
+rect_min_size = Vector2( 1, 1 )
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 6
+script = ExtResource( 49 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+old_bounds_color = Color( 0.545098, 0.568627, 0.6, 1 )
+new_bounds_color = Color( 0.870588, 0.341176, 0.356863, 1 )
+
 [node name="ImportantPopups" type="ColorRect" parent="."]
 visible = false
 anchor_right = 1.0
@@ -2864,6 +3003,9 @@ script = ExtResource( 48 )
 [connection signal="pressed" from="SpriteTexturePageWindow/VBoxContainer/HBoxContainer2/HBoxContainer2/okbutton" to="SpriteTexturePageWindow" method="_on_okbutton_pressed"]
 [connection signal="pressed" from="WaitForThreadsDialog/MarginContainer/VBoxContainer/HBoxContainer/WaitThreadsOk" to="." method="_on_WaitThreadsOk_pressed"]
 [connection signal="pressed" from="WaitForThreadsDialog/MarginContainer/VBoxContainer/HBoxContainer/WaitThreadsNo" to="." method="_on_WaitThreadsNo_pressed"]
+[connection signal="confirmed" from="ResizeSpriteDialog" to="." method="_on_ResizeSpriteDialog_confirmed"]
+[connection signal="value_changed" from="ResizeSpriteDialog/VBoxContainer/GridContainer/WidthSpinBox" to="ResizeSpriteDialog/VBoxContainer/TextureRect/MarginContainer/TextureRect" method="_on_WidthSpinBox_value_changed"]
+[connection signal="value_changed" from="ResizeSpriteDialog/VBoxContainer/GridContainer/HeightSpinBox" to="ResizeSpriteDialog/VBoxContainer/TextureRect/MarginContainer/TextureRect" method="_on_HeightSpinBox_value_changed"]
 [connection signal="about_to_show" from="ImportantPopups/SaveGIFDialog2" to="ImportantPopups" method="_on_SaveGIFDialog2_about_to_show"]
 [connection signal="pressed" from="ImportantPopups/SaveGIFDialog2/VBoxContainer/Button" to="ImportantPopups/SaveGIFDialog2" method="_on_Button_pressed"]
 [connection signal="file_selected" from="ImportantPopups/SaveGIFDialog" to="ImportantPopups/SaveGIFDialog2" method="_on_SaveGIFDialog_file_selected"]
@@ -2881,8 +3023,8 @@ script = ExtResource( 48 )
 [connection signal="popup_hide" from="ImportantPopups/ImportSpriteStripDialog" to="ImportantPopups" method="_on_ImportSpriteStripDialog_popup_hide"]
 [connection signal="about_to_show" from="ImportantPopups/ImportSpriteStripSliceDialog" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_ImportSpriteStripSliceDialog_about_to_show"]
 [connection signal="popup_hide" from="ImportantPopups/ImportSpriteStripSliceDialog" to="ImportantPopups" method="_on_ImportSpriteStripSliceDialog_popup_hide"]
-[connection signal="value_changed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/SpinBox" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_SpinBox_value_changed"]
 [connection signal="value_changed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/SpinBox" to="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/Panel/ImportSpriteStripPreview" method="_on_SpinBox_value_changed"]
+[connection signal="value_changed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/SpinBox" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_SpinBox_value_changed"]
 [connection signal="pressed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer3/Button" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_Button_pressed"]
 [connection signal="file_selected" from="ImportantPopups/OpenPatchDialog" to="." method="_on_OpenPatchDialog_file_selected"]
 [connection signal="popup_hide" from="ImportantPopups/OpenPatchDialog" to="ImportantPopups" method="_on_OpenPatchDialog_popup_hide"]
