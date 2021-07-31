@@ -117,52 +117,23 @@ boot_splash/image="res://icon1.png"
 boot_splash/use_filter=false
 boot_splash/bg_color=Color( 0.066, 0.0792, 0.11, 1 )
 config/icon="res://icon1.png"
-config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
 Log="*res://Scripts/LogSingleton.gd"
 Config="*res://Scripts/SettingsSingleton.gd"
-SpriteManager="*res://Scripts/SpriteManager.gd"
 
 [display]
 
-window/size/width=1280
-window/size/height=720
+window/size/width=1920
+window/size/height=1080
 window/dpi/allow_hidpi=true
 window/vsync/use_vsync=false
 window/energy_saving/keep_screen_on=false
 
-[editor]
-
-main_run_args="--verbose"
-
 [gui]
 
 theme/use_hidpi=true
-
-[importer_defaults]
-
-texture={
-"compress/bptc_ldr": 0,
-"compress/hdr_mode": 0,
-"compress/lossy_quality": 0.7,
-"compress/mode": 0,
-"compress/normal_map": 0,
-"detect_3d": false,
-"flags/anisotropic": false,
-"flags/filter": false,
-"flags/mipmaps": false,
-"flags/repeat": 0,
-"flags/srgb": 2,
-"process/HDR_as_SRGB": false,
-"process/fix_alpha_border": true,
-"process/invert_color": false,
-"process/premult_alpha": false,
-"size_limit": 0,
-"stream": false,
-"svg/scale": 1.0
-}
 
 [input]
 
@@ -206,6 +177,7 @@ file_logging/log_path="user://.logs/godot.log"
 
 quality/driver/driver_name="GLES2"
 quality/intended_usage/framebuffer_allocation=0
+threads/thread_model=2
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
 quality/reflections/texture_array_reflections=false

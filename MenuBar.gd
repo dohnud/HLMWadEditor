@@ -36,9 +36,9 @@ var operations = {
 		["Export Sprite to GIF", [], 'export_sprite_gif'],
 		["Export All Sprites", [], 'export_sprite_strips'],
 		[],
-		["Toggle Gizmos", [KEY_SHIFT, KEY_G], 'togglemetagizmos'],
+		["Transform Sprite", [KEY_SHIFT, KEY_T], 'resize_sprite'],
 		[],
-		["Resize Sprite", [], 'resize_sprite'],
+		["Toggle Gizmos", [KEY_SHIFT, KEY_G], 'togglemetagizmos'],
 #		["Extras", [PopupMenu.new(),[
 #			["Convert to GMeta", [], 'convertmeta'],
 #			["Add Sprite", [], 'convertmeta'],
