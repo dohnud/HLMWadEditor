@@ -20,16 +20,16 @@ const spr = {
 	'padding' : '32'
 }
 
-class SpriteEntry:
-	var id:int
-	var size : Vector2
-	var center : Vector2
-	var mask_x_bounds : Vector2
-	var mask_y_bounds : Vector2
-	var frame_count : int
-	var flags: Array #[0x10]
-	var name_pos : int
-	var padding : int
+#class SpriteEntry:
+#	var id:int
+#	var size : Vector2
+#	var center : Vector2
+#	var mask_x_bounds : Vector2
+#	var mask_y_bounds : Vector2
+#	var frame_count : int
+#	var flags: Array #[0x10]
+#	var name_pos : int
+#	var padding : int
 
 func get_sprite(sprite_index):
 	return sprites[sprite_index]
@@ -37,11 +37,12 @@ func get_sprite(sprite_index):
 func get_sprite_name(sprite_index):
 	return sprite_names[sprites[sprite_index].name_pos]
 
+var ref_start = 0
 func parse(file_pointer):
-	reference_file = file_pointer
 	var f = file_pointer
-	sprite_indicies = parse_index_list(f)
-#	f.seek(f.get_position() + f.get_32()*4) # skip indicies
+#	ref_start = f.get_position()
+#	sprite_indicies = parse_index_list(f)
+	f.seek(f.get_position() + f.get_32()*4 + 4) # skip indicies
 	sprites = parse_struct_map(f, spr, 'id')
 	sprite_names = parse_string_map(f)
 	for sprite in sprites.values():
@@ -53,8 +54,7 @@ func parse(file_pointer):
 
 
 
-var reference_file = null
-var src_sprite_offsets = {}
+#var src_sprite_offsets = {}
 
 #func parse(file_pointer:File):
 #	reference_file = file_pointer
@@ -82,15 +82,21 @@ var src_sprite_offsets = {}
 #	data = sprite_data
 #	names = sprite_names.values()
 
-func write(new_file):
+func write(ref_file, new_file):
 	var nf :File= new_file
-	var f :File= reference_file
+	var f :File= ref_file
+#	f.seek(ref_start)
 	write_simple_list(nf, parse_simple_list(f))
 	var s = f.get_32()
+	nf.store_32(s)
 	for i in range(s):
 		var id = f.get_32()
+#		print(id)
 		if sprites.has(id):
 			write_struct(nf, spr, sprites[id])
+			f.seek(f.get_position()+60)
+		else:
+#			write_struct(nf, spr, ts)
 #			var sprite :SpriteEntry= sprites[id]
 #			nf.store_32(id)
 #			nf.store_32(sprite.size.x)
@@ -105,6 +111,6 @@ func write(new_file):
 #			nf.store_buffer(f.flags)
 #			nf.store_32(sprite.name_pos)
 #			nf.store_32(sprite.padding)
-		else:
-			nf.store_buffer(f.get_buffer(64))#4+4+4+4+4+4+4+4+4+0x10+4+4))
-	write_string_list(f, sprite_names.values())
+			nf.store_32(id)
+			nf.store_buffer(f.get_buffer(60))#4+4+4+4+4+4+4+4+4+0x10+4+4))
+	write_string_list(nf, sprite_names.values())

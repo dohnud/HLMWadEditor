@@ -144,43 +144,6 @@ func byte_array_to_int(bytes):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class MaskEntry:
 	var id:int
 	var x:int
@@ -267,20 +230,20 @@ func compute_new_mask(mask_id, image_index, img:Image) -> Array:
 	return mask.compute_mask_from_image(image_index, img)
 	
 
-var reference_file = null
+var ref_start = 0
 func parse(file_pointer:File):
-	reference_file = file_pointer
 	var f :File= file_pointer
 #	mask_indicies = parse_index_list(f)
 #	masks = parse_struct_map(f, msk, 'id')
 #	mask_names = parse_string_map(f)
 #	var tf = File.new()
-	var start = f.get_position()
+#	ref_start = f.get_position()
 	var mask_num = f.get_32()
 
-func write(new_file):
+func write(ref_file, new_file):
 	var nf :File= new_file
-	var f :File= reference_file
+	var f :File= ref_file
+#	f.seek(ref_start)
 	var mask_num = f.get_32()
 	nf.store_32(mask_num)
 #	fn.store_32(len(mask_data))
@@ -305,13 +268,13 @@ func write(new_file):
 						for bi in range(8):
 							byte = byte | ((r[b+bi] & 1) << bi)
 						nf.store_8(byte)
+			f.seek(f.get_position() + x * h * fc)
 		else:
 			nf.store_32(x)
 			nf.store_32(w)
 			nf.store_32(h)
 			nf.store_32(fc)
 			nf.store_buffer(f.get_buffer(x * h * fc))
-
 
 
 

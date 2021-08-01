@@ -37,9 +37,9 @@ func update_resolve_progress(v=0):
 func wait_for_thread(t:Thread):
 	var r = t.wait_to_finish()
 	if r == null:
-		emit_signal("cancel_resolve", asset)
+		emit_signal("cancel_resolve", asset_name)
 	else:
-		emit_signal("resolve_complete", asset)
+		emit_signal("resolve_complete", asset_name)
 	queue_free()
 
 var dest_image = Image.new()
@@ -67,6 +67,7 @@ func _process(delta):
 	var p1 = float(current_frame_index) / float(f_count)
 	update_resolve_progress(float(current_index + p1)/float(l_as))#float(p)/float(len(animatedsprite.get_animation_names()))))
 
+var image_width = 1
 func init_resolve():
 #	if !needs_recalc:
 ##		dest_image.create(image_width, spritesheet.get_height(), false, Image.FORMAT_RGBA8)
@@ -82,7 +83,7 @@ func init_resolve():
 	if !asset:return false
 	var animatedsprite:SpriteFrames = asset.sprites
 	var spritesheet:Texture = asset.texture_page
-	var image_width = spritesheet.get_width()
+	image_width = spritesheet.get_width()
 	# get image bigger image hegith..
 	var a = animatedsprite.get_animation_names()
 	for sprite_name in a:
@@ -122,7 +123,7 @@ func resolve(sprite_name, frame_index):
 func find_new_spot(sprite_name, frame_index, ty):
 	var animatedsprite:SpriteFrames = asset.sprites
 	var spritesheet:Texture = asset.texture_page
-	var image_width = spritesheet.get_width()
+#	var image_width = spritesheet.get_width()
 	var f_count = animatedsprite.get_frame_count(sprite_name)
 #	var p1 = 0
 #	for frame_index in range(f_count):
@@ -202,7 +203,7 @@ func end_resolve():
 #	print(texture_dimensions)
 #	mutex.lock()
 #	emit_signal('resolve_progress', 2)
-	emit_signal('resolve_complete', asset)
+	emit_signal('resolve_complete', asset_name)
 #	mutex.unlock()
 #	print('PLEASE STOP PLEASE')
 	return asset

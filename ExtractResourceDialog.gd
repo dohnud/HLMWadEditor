@@ -23,9 +23,6 @@ func _on_ExtractResourceDialog_file_selected(path):
 		if '.gmeta' in path:
 			if !r.is_gmeta:
 				r.convert_to_gmeta(app.base_wad.spritebin)
-		if r.has_method('write2'):
-			r.write2(f)
-		else:
 			r.write(f)
 		f.close()
 	get_parent().hide()

@@ -114,6 +114,7 @@ config/name="HLMWadEditor"
 run/main_scene="res://App.tscn"
 run/low_processor_mode=true
 boot_splash/image="res://icon1.png"
+boot_splash/fullsize=false
 boot_splash/use_filter=false
 boot_splash/bg_color=Color( 0.066, 0.0792, 0.11, 1 )
 config/icon="res://icon1.png"

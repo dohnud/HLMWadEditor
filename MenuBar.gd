@@ -17,6 +17,7 @@ var operations = {
 	],
 	"ResourceButton" : [
 		["Extract", [KEY_CONTROL, KEY_E], 'extract'],
+		[],
 #		["Replace", [KEY_CONTROL, KEY_R,], 'replace'],
 		["Revert", [KEY_CONTROL, KEY_SHIFT, KEY_R], 'revert'],
 #		[],
@@ -24,15 +25,15 @@ var operations = {
 #		["Merge", [KEY_CONTROL, KEY_M], 'merge'],
 	],
 	"ViewButton" : [
-		["Show Only Modified Files", ['TOGGLE'], 'togglenewfileslist'],
 		["Expand Asset List", [], 'expandassetlist'],
+		["Show Only Modified Files", ['TOGGLE'], 'togglenewfileslist'],
+		["Advanced", [PopupMenu.new()], 'toggleadvanced'],
 		[],
 		["Toggle Asset List", [KEY_CONTROL, KEY_H], 'toggleassetlist'],
-		["Advanced", [PopupMenu.new()], 'toggleadvanced'],
 	],
 	"1MetaButton" : [
-		["Import Sprite Strip", [KEY_SHIFT, KEY_I], 'import_sprite_strip'],
-		["Export Sprite Strip", [KEY_SHIFT, KEY_E], 'export_sprite_strip'],
+		["Import Sprite from Strip", [KEY_SHIFT, KEY_I], 'import_sprite_strip'],
+		["Export Sprite to Strip", [KEY_SHIFT, KEY_E], 'export_sprite_strip'],
 		["Export Sprite to GIF", [], 'export_sprite_gif'],
 		["Export All Sprites", [], 'export_sprite_strips'],
 		[],
@@ -125,7 +126,7 @@ func set_shortcut(keys):
 	var inputeventkey = InputEventKey.new()
 	# Sets the scanned key and uses control as the preceding command
 	inputeventkey.set_scancode(keys[len(keys)-1])
-	if OS.get_name() == 'OSX':
+	if OS.get_name() == 'OSX' and !(KEY_H in keys):
 		inputeventkey.command = KEY_CONTROL in keys
 	else:
 		inputeventkey.control = KEY_CONTROL in keys
@@ -145,6 +146,8 @@ func doop(id, op, p:PopupMenu):
 		app.get_node('NotImplementedYetDialog').popup()
 	if len(operations[op][id][1]) == 1 and operations[op][id][1][0] == 'TOGGLE':
 		p.set_item_checked(id, !p.is_item_checked(id))
+	if app.editor_tabs.get_current_tab_control():
+		app.editor_tabs.get_current_tab_control().grab_focus()
 
 func quit():
 	get_tree().quit()

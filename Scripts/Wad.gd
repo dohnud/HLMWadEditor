@@ -134,10 +134,12 @@ func lazy_find(asset_name):
 	return asset_name
 
 func goto(asset):
-	if !is_open(): open(file_path, READ)
-	for p in patchwad_list:
-		if p.exists(asset):
-			return p.goto(asset)
+	if !is_open():
+		if open(file_path, READ):
+			return null
+#	for p in patchwad_list:
+#		if p.exists(asset):
+#			return p.goto(asset)
 	var dim = file_locations[asset]
 	seek(content_offset + dim[0])
 	return dim[1]
@@ -147,7 +149,9 @@ func get(asset):
 		return new_files[asset]
 	if changed_files.has(asset):
 		return changed_files[asset]
-	var r = get_buffer(goto(asset))
+	var size = goto(asset)
+	if size == null: return null
+	var r = get_buffer(size)
 	close()
 	return r
 
@@ -214,6 +218,7 @@ func audio_stream(asset, lazy=0 ,repeat=false):
 	if asset!=null:
 		var sound = WadSound.new()
 		var size = goto(asset)
+		if size == null: return null
 		sound.parse(self, size, asset)
 		loaded_assets[asset] = sound
 		return sound
@@ -245,6 +250,7 @@ func parse_meta(asset, lazy=0):
 
 	var meta = Meta.new()
 	var size = goto(asset)
+	if size == null: return null
 	meta.parse(self, size, tex)
 	loaded_assets[asset] = meta
 	return meta
@@ -269,6 +275,7 @@ func parse_fnt(asset, lazy=0):
 
 	var meta = WadFont.new()
 	var size = goto(asset)
+	if size == null: return null
 	meta.parse(self, size, tex)
 	loaded_assets[asset] = meta
 	return meta
@@ -280,6 +287,7 @@ func parse_sprite_data():
 			return p.parse_sprite_data(asset)
 	if !exists(asset):return null
 	var size = goto(asset)
+	if size == null: return null
 	var r = SpritesBin.new()
 	r.parse(self)
 	spritebin = r
@@ -346,6 +354,7 @@ func parse_objects():
 		if p.exists(asset):
 			return p.parse_objects(asset)
 	var size = goto(asset)
+	if size == null: return null
 	var o = ObjectsBin.new()
 	o.parse(self)
 	objectbin = o
@@ -362,6 +371,7 @@ func parse_rooms():
 			return p.parse_rooms(asset)
 	if !exists(asset):return null
 	var size = goto(asset)
+	if size == null: return null
 	var o = RoomsBin.new()
 	o.parse(self)
 	roombin = o
@@ -374,6 +384,7 @@ func parse_backgrounds():
 		if p.exists(asset):
 			return p.parse_backgrounds(asset)
 	var size = goto(asset)
+	if size == null: return null
 	var b = BackgroundsBin.new()
 	b.parse(self)
 	backgroundbin = b
@@ -386,6 +397,7 @@ func parse_atlases():
 		if p.exists(asset):
 			return p.parse_backgrounds(asset)
 	var size = goto(asset)
+	if size == null: return null
 	var b = AtlasesBin.new()
 	b.parse(self)
 	loaded_assets[asset] = b
@@ -397,6 +409,7 @@ func parse_sounds():
 		if p.exists(asset):
 			return p.parse_sounds(asset)
 	var size = goto(asset)
+	if size == null: return null
 	var b = SoundsBin.new()
 	b.parse(self)
 	loaded_assets[asset] = b
@@ -408,6 +421,7 @@ func parse_col_masks():
 		if p.exists(asset):
 			return p.parse_col_masks(asset)
 	var size = goto(asset)
+	if size == null: return null
 	var b = CollisionMasksBin.new()
 	b.parse(self)
 	loaded_assets[asset] = b
@@ -448,6 +462,7 @@ func parse_orginal_meta(asset, lazy=0):
 
 	var meta = Meta.new()
 	var size = goto(asset)
+	if size == null: return null
 	meta.parse(self, size, tex)
 	loaded_assets[asset] = meta
 	return meta

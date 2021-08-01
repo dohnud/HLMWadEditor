@@ -29,14 +29,14 @@ var show_base_wad = true
 var show_advanced = false
 
 
-var f_prefixes = ['Sprites/', 'Objects/', 'Rooms/', 'Backgrounds/', 'Metadata/']
+var f_prefixes = ['Sprites/', 'Objects/', 'Rooms/', 'Backgrounds/']#, 'Metadata/']
 var advanced_stuff_filter = {
 	SpritesBin.file_path:0,
 	ObjectsBin.file_path:0,
 	RoomsBin.file_path:0,
 	BackgroundsBin.file_path:0,
 #	SoundsBin.file_path:0,
-	AtlasesBin.file_path:0
+#	AtlasesBin.file_path:0
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -48,10 +48,11 @@ func _ready():
 	
 	asset_tree = get_node(asset_tree)
 	var text_scale_multiplier = clamp(OS.get_screen_size().x / 1920,1,2)
-	if text_scale_multiplier  > 1.5:
+	if text_scale_multiplier  > 1:
 		theme.default_font.size *= text_scale_multiplier
 		asset_tree.bold_font.size *= text_scale_multiplier
 		tomakebiggerfont.size *= text_scale_multiplier
+		$NotifList.margin_left *=text_scale_multiplier
 	asset_tree_container = get_node(asset_tree_container)
 	meta_editor_node = get_node(meta_editor_node)
 	room_editor_node = get_node(room_editor_node)
@@ -145,6 +146,8 @@ func open_asset(asset_path):
 		editor_tabs.current_tab = 6
 		selected_asset_name = asset_path.substr(len('Metadata/'))
 		selected_asset_data = atlas_editor_node.set_atlas(selected_asset_name)
+	if selected_asset_data == null:
+		$ErrorDialog.popup()
 
 func open_file_dialog(name, filter, oncomplete):
 	pass
@@ -347,11 +350,11 @@ func _on_RecalculateSheetButton_pressed():
 		return
 	asset_tree.set_bold(selected_asset_treeitem)
 #	if thread and thread.is_active():
-	if threads.has(meta):
+	if threads.has(selected_asset_name):
 		print('waiting for thread to end...')
-		if threads[meta][1]:
-			threads[meta][1].queue_free()
-		_on_CancelResolve(meta)
+		if threads[selected_asset_name][1]:
+			threads[selected_asset_name][1].queue_free()
+		_on_CancelResolve(selected_asset_name)
 		print('thread ended!')
 #		threads.erase(selected_asset_name)
 	_recalc_collision()
@@ -363,7 +366,7 @@ func _on_RecalculateSheetButton_pressed():
 	var nnotif = compilenotif.instance()
 ##	threads[selected_asset_name] = [t, meta, nnotif]
 #	threads[meta] = [t, meta, nnotif, selected_asset_name, selected_asset_data]
-	threads[meta] = [meta, nnotif, selected_asset_name, selected_asset_data]
+	threads[selected_asset_name] = [meta, nnotif, selected_asset_name, selected_asset_data]
 #	meta.connect('resolve_complete', nnotif, 'resolve_complete')
 #	meta.connect('resolve_complete', self, 'resolve_complete')
 #	meta.connect('resolve_complete', self, '_resolve_complete')
@@ -371,11 +374,11 @@ func _on_RecalculateSheetButton_pressed():
 	nnotif.asset_name = selected_asset_name
 	nnotif.asset = meta
 #	print(t.start(meta, "resolve", [meta.sprites, meta.texture_page, mutex], Thread.PRIORITY_NORMAL))
-#	nnotif.connect('resolve_complete', self, '_resolve_complete')
-#	nnotif.connect('cancel_resolve', self, '_on_CancelResolve')
+	nnotif.connect('resolve_complete', self, '_resolve_complete')
+	nnotif.connect('cancel_resolve', self, '_on_CancelResolve')
 	$NotifList.add_child(nnotif)
 
-func _on_CancelResolve(asset=null):
+func _on_CancelResolve(asset=''):
 	if !threads.has(asset):
 		print('no thread working on: ', asset,'!')
 		return
@@ -390,30 +393,29 @@ func _on_CancelResolve(asset=null):
 		threads[asset][1].queue_free()
 	threads.erase(asset)
 
-func resolve_complete(meta):
-	call_deferred('_resolve_complete', meta)
+func resolve_complete(asset_path):
+#	call_deferred('_resolve_complete', meta)
+	_resolve_complete(asset_path)
 
-func _resolve_complete(meta):
+func _resolve_complete(asset_path):
 #	mutex.unlock()
-	if !threads.has(meta):
+	if !threads.has(asset_path):
 #		print('uh oh you gotta fix that...')
 		return
 #	var r = threads[meta][0].wait_to_finish()
 #	if r == null:
-#		_on_CancelResolve(meta)
-	var asset_name = threads[meta][2]
-	if threads[meta][3] is WadFont:
-		base_wad.changed_files[asset_name.replace('.'+asset_name.get_extension(),'_0.png')] = meta.texture_page
+
+	var meta = threads[asset_path][0]
+	if threads[asset_path][3] is WadFont:
+		base_wad.changed_files[asset_path.replace('.'+asset_path.get_extension(),'_0.png')] = meta.texture_page
 	else:
-		base_wad.changed_files[asset_name.replace('.'+asset_name.get_extension(),'.png')] = meta.texture_page
+		base_wad.changed_files[asset_path.replace('.'+asset_path.get_extension(),'.png')] = meta.texture_page
 	print('thread complete!')
-	if threads[meta][1]:
-		threads[meta][1].queue_free()
-	threads.erase(meta)
+	_on_CancelResolve(asset_path)
 	# reload the meta editor to show changes
 	if selected_asset_data == meta:
 		meta_editor_node._on_SpriteList_item_selected(meta_editor_node.current_sprite_list_index)
-	if wait_for_threads_to_resolve and len(threads) == 0:
+	if wait_for_threads_to_resolve and len(threads.keys()) == 0:
 		_on_SavePatchDialog_file_selected(wait_for_threads_to_resolve_path)
 		$WaitForThreadsDone.popup()
 		wait_for_threads_to_resolve = false
@@ -514,11 +516,12 @@ var wait_for_threads_to_resolve = false
 var wait_for_threads_to_resolve_path = ''
 func _on_SavePatchDialog_file_selected(path):
 	wait_for_threads_to_resolve = false
-	if len(threads) > 0:
+	print(threads.keys())
+	if len(threads.keys()) > 0:
 		$WaitForThreadsDialog.popup()
 		wait_for_threads_to_resolve_path = path
 		return
-	var result = Wad.new()
+#	var result = Wad.new()
 	var files = {}
 	for fp in base_wad.changed_files:
 		print(fp, ':', base_wad.changed_files[fp])
@@ -561,6 +564,10 @@ func _on_SavePatchDialog_file_selected(path):
 			f.store_8(e[1])
 	var offset = f.get_position()
 	
+#	if !base_wad.is_open():
+#		if base_wad.open(base_wad.file_path, File.READ):
+#			$ErrorDialog.popup()
+#			return
 	for file in files.keys():
 		var c = f.get_position()
 		var fc = files[file]
@@ -568,6 +575,16 @@ func _on_SavePatchDialog_file_selected(path):
 			f.store_buffer(fc.get_data().save_png_to_buffer())
 		elif fc is Meta:
 			fc.write(f)
+		elif fc is SpritesBin:
+			if !base_wad.goto(file):
+				$ErrorDialog.popup()
+				return
+			fc.write(base_wad, f)
+		elif fc is CollisionMasksBin:
+			if !base_wad.goto(file):
+				$ErrorDialog.popup()
+				return
+			fc.write(base_wad, f)
 		elif fc is BinParser:
 			fc.write(f)
 		elif fc is WadSound:
@@ -609,6 +626,7 @@ func _on_ImportSheetDialog_file_selected(path):
 	texture.create_from_image(image, 0)
 	selected_asset_data.texture_page.set_size_override(texture.get_size())
 	selected_asset_data.texture_page.set_data(texture.get_data())
+	_recalc_collision()
 	if selected_asset_data is WadFont:
 		base_wad.changed_files[selected_asset_name.replace('.'+selected_asset_name.get_extension(),'_0.png')] = selected_asset_data.texture_page
 	else:
@@ -618,17 +636,18 @@ func _on_ImportSheetDialog_file_selected(path):
 
 # check threads
 func _on_Timer_timeout():
-	for meta in threads.keys():
-		print(meta)
-		var tuple = threads[meta]
-		if !tuple[0].is_active():
-			if threads[meta][2]:
-				threads[meta][2].queue_free()
-			if wait_for_threads_to_resolve and len(threads) == 0:
-				_on_SavePatchDialog_file_selected(wait_for_threads_to_resolve_path)
-				$WaitForThreadsDone.popup()
-				wait_for_threads_to_resolve = false
-			threads.erase(meta)
+#	for meta in threads.keys():
+#		print(meta)
+#		var tuple = threads[meta]
+#		if !tuple[0].is_active():
+#			if threads[meta][2]:
+#				threads[meta][2].queue_free()
+#			if wait_for_threads_to_resolve and len(threads) == 0:
+#				_on_SavePatchDialog_file_selected(wait_for_threads_to_resolve_path)
+#				$WaitForThreadsDone.popup()
+#				wait_for_threads_to_resolve = false
+#			threads.erase(meta)
+	pass
 
 
 func _on_ResizeSpriteDialog_confirmed():
@@ -642,6 +661,7 @@ func _on_ResizeSpriteDialog_confirmed():
 				$ResizeSpriteDialog/VBoxContainer/GridContainer/WidthSpinBox.value,
 				$ResizeSpriteDialog/VBoxContainer/GridContainer/HeightSpinBox.value
 			)
+			var old_size = Vector2.ZERO
 			var empty_tex = ImageTexture.new()
 			var empty_img = Image.new()
 			empty_img.create(new_size.x, new_size.y, false, Image.FORMAT_RGBA8)
@@ -650,6 +670,7 @@ func _on_ResizeSpriteDialog_confirmed():
 				var f = MetaTexture.new()
 				if i < fc:
 					f = meta.sprites.get_frame(sprite, i)
+					old_size = f.region.size
 					if f.atlas == meta.texture_page and f.atlas.get_data():
 						var new_atlas = ImageTexture.new()
 						var new_image = f.atlas.get_data().get_rect(f.region)
@@ -664,7 +685,8 @@ func _on_ResizeSpriteDialog_confirmed():
 				base_wad.spritebin.sprite_data[sprite]['size'] = f.region.size
 			for i in range(nfc, fc):
 				meta.sprites.remove_frame(sprite, nfc-1)
-				print('removed frame')
 			base_wad.spritebin.sprite_data[sprite]['frame_count'] = nfc
 			base_wad.changed_files[SpritesBin.file_path] = base_wad.spritebin
-			_on_RecalculateSheetButton_pressed()
+			base_wad.changed_files[selected_asset_name] = meta
+			if old_size < new_size or fc < nfc:
+				_on_RecalculateSheetButton_pressed()

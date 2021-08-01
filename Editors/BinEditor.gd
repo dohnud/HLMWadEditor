@@ -22,6 +22,7 @@ func _ready():
 
 func set_bin_asset(asset):
 	bin = app.base_wad.get_bin(file)
+	if bin == null: return null
 	selected_struct_id = asset
 	selected_struct = bin.get(asset)
 	if tree:
