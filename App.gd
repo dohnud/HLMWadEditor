@@ -163,7 +163,7 @@ func open_patchwad(file_path):
 		OS.set_window_title('HLMWadEditor - ' + file_path)
 
 func _on_SearchBar_text_entered(new_text=''):
-	new_text.to_lower()
+	new_text = new_text.to_lower()
 	asset_tree.reset()
 	if new_text == '':
 		if show_base_wad:
