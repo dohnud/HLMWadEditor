@@ -1,13 +1,15 @@
-# **Welcome to the HLMWadEditor**
-The complete guide to the Hotline Miami Modding
+# **Welcome**
+A guide to the Hotline Miami 2 Modding
+
+---
 
 ### About
 
-In 2016, shortly after the level editor was released, the Hotline Miami modding community was given the [HLMWadExplorer](https://github.com/muster128/HLMWadExplorer/releases/tag/1.2). A tool that lets the user replace the games textures and sounds with their own. This opened the door for custom level creators and modders to make whatever they wanted. We could finally put John Wick in Hotline Miami. The Explorer used in combination with custom campaigns, and some creative problem avoiding, you could create your own game.
+In 2016, shortly after the level editor was released, the Hotline Miami modding community was given the [HLMWadExplorer](https://github.com/muster128/HLMWadExplorer/releases/tag/1.2). A tool that lets the user replace the games textures and sounds with their own. This opened the door for custom level creators and modders to craft their own characters stories and worlds with its own soundtrack. With the Explorer, a custom campaign, some cutscene magic, and some creative problem avoiding, you could pretty much create your own game.
 
-There was just one small catch. You couldn't resize textures or sprites. If you wanted to reskin the magnum revolver sprite, with a limited frame size of only 10 by 15 pixels, to be a huge railgun that would definitely be bigger that 10x15, you simply could not. The Explorer could only let you replace assets, not deeply modify them. And for a long time, modding was essentially just replacing texture pages.
+There was just one small catch. You couldn't resize textures or sprites. If you wanted to reskin the magnum revolver sprite, with a limited frame size of only 10 by 15 pixels, to be a huge railgun that would definitely be bigger that 10x15, you simply could not. The Explorer could only let you replace assets, not deeply modify them. And for a long time, modding was just reskinning existing texture pages.
 
-We knew the gatekeepers were a couple of binary files that contained sprite metadata. But more roadblocks were in the way. These binary files were encoded in a custom format only known to the developers and only readable by the game. We tried to get in contact with the developers but they informed us that they didn't have the details "readily available" So we were left with nothing but a hex editor to crack the files. In mid 2021 the file format was finally cracked by yours truly and now the floodgates were unlocked. And with the release of the Editor, the floodgates are open.
+We knew the gatekeepers were a couple of binary files that contained sprite metadata. But more roadblocks were in the way. These binary files were encoded in a custom format made and only known by the developers and only readable by the game. We tried to get in contact with the developers but they informed us that they didn't have the details "readily available" So we were left with nothing but a hex editor to crack the files. In mid 2021 the file formats were finally cracked by yours truly and the floodgates were unlocked. And with the release of the Editor, the floodgates are open.
 
 
 
@@ -15,7 +17,7 @@ We knew the gatekeepers were a couple of binary files that contained sprite meta
 
 > Shoutouts to muster128 for the patched [Explorer](https://github.com/muster128/HLMWadExplorer/releases/tag/1.2) that kickstarted the Editor project
 
-As stated in the about section, this program allowed us to view and replace the games internal files laying the defining and laying the foundation for the way Hotline Miami 2 mods are made.
+As stated in the about section, this program allowed us to view and replace the games internal files laying the defining and laying the foundation for Hotline Miami 2 modding.
 *permenantly stuck in light mode.*
 
 
@@ -33,18 +35,19 @@ The Editor is like if the Explorer did cocaine and got dark mode. It borrows a l
 
 ## *Quick Links*
 
-- `Your First Mod` - An amazing place to get started
-    0. [`Introduction`](/Tutorials/tutorial00/)
-    1. [`The .meta Tool`](/Tutorials/tutorial01.md)
-- `Tutorials` - More tutorials delving into other common effects
-* [`User Interface`](UserInterface.md) - An index defining the programs UI elements.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+- [`Getting started`](/Tutorials/0/)
+- [`An Introduction to the Editor`](/Tutorials/1/)
+- `Tutorials` - An amazing place to get started
+    - [`Your first mod`](/Tutorials/2/)
+<!-- - `Tutorials` - More tutorials delving into other common effects -->
+<!-- - `Chortles` - More in-depth explanations of the specifics behind modding. -->
+<!-- * `mkdocs build` - Build the documentation site. -->
+<!-- * `mkdocs -h` - Print help message and exit. -->
 
 ---
 
-> Any fuck ups? Or weird language? Contact me:
-
+<!-- > Contact me:
+>
 > discord: dump#7296
-
-> twitter: [@DohKnot](https://www.twitter.com/DohKnot),
+>
+> twitter: [@DohKnot](https://www.twitter.com/DohKnot), -->
