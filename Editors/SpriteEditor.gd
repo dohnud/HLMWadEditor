@@ -50,9 +50,12 @@ func _on_SpriteTree_item_edited(deleted=0):
 			value = value.replace('(','')
 			value = value.replace(')','')
 			value = value.split(',')
+			if len(value) < 2:
+				value = value.split(' ')
+			if (len(value) > 1 and len(value) < 3):
 #			print(value)
-			if can_be_int_fuck_you_godot(value[0]) != -1 and can_be_int_fuck_you_godot(value[1]) != -1:
-				v = Vector2(can_be_int_fuck_you_godot(value[0]), can_be_int_fuck_you_godot(value[1]))
+				if can_be_int_fuck_you_godot(value[0]) != -1 and can_be_int_fuck_you_godot(value[1]) != -1:
+					v = Vector2(can_be_int_fuck_you_godot(value[0]), can_be_int_fuck_you_godot(value[1]))
 #			print(v)
 		elif d[last_k] is int and can_be_int_fuck_you_godot(value) != -1:
 			v = can_be_int_fuck_you_godot(value)

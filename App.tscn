@@ -1,4 +1,4 @@
-[gd_scene load_steps=106 format=2]
+[gd_scene load_steps=109 format=2]
 
 [ext_resource path="res://theme.tres" type="Theme" id=1]
 [ext_resource path="res://insetshadow.tres" type="StyleBox" id=2]
@@ -46,8 +46,11 @@
 [ext_resource path="res://FontEditor.gd" type="Script" id=44]
 [ext_resource path="res://slightinsetshadow_nottab.tres" type="StyleBox" id=45]
 [ext_resource path="res://SoundTimelineSlider.gd" type="Script" id=46]
+[ext_resource path="res://ResizeSpriteDialog.gd" type="Script" id=47]
 [ext_resource path="res://Timer.gd" type="Script" id=48]
 [ext_resource path="res://ResizeSpritePreview.gd" type="Script" id=49]
+[ext_resource path="res://ImportPatchWindowDialog.gd" type="Script" id=50]
+[ext_resource path="res://openfoldericon.tres" type="Texture" id=51]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.12549, 0.152941, 0.211765, 1 )
@@ -542,7 +545,7 @@ __meta__ = {
 }
 
 [node name="TopMenu" type="PanelContainer" parent="Main"]
-margin_right = 1920.0
+margin_right = 1024.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 custom_styles/panel = SubResource( 1 )
@@ -550,7 +553,7 @@ custom_styles/panel = SubResource( 1 )
 [node name="MenuItems" type="HBoxContainer" parent="Main/TopMenu" groups=[
 "MenuBar",
 ]]
-margin_right = 1920.0
+margin_right = 1024.0
 margin_bottom = 25.0
 custom_constants/separation = 0
 script = ExtResource( 11 )
@@ -610,7 +613,7 @@ margin_left = 129.0
 margin_right = 179.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 50, 0 )
-text = "View"
+text = "List"
 switch_on_hover = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -626,26 +629,26 @@ custom_styles/panel = SubResource( 3 )
 
 [node name="SpriteSheetButton" type="MenuButton" parent="Main/TopMenu/MenuItems"]
 margin_left = 183.0
-margin_right = 240.0
+margin_right = 274.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 50, 0 )
-text = "Texture"
+text = "Texture Page"
 switch_on_hover = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Divider5" type="Panel" parent="Main/TopMenu/MenuItems"]
-margin_left = 240.0
-margin_right = 244.0
+margin_left = 274.0
+margin_right = 278.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 4, 15 )
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 3 )
 
 [node name="MetaButton" type="MenuButton" parent="Main/TopMenu/MenuItems"]
-margin_left = 244.0
-margin_right = 294.0
+margin_left = 278.0
+margin_right = 328.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 50, 0 )
 text = "Meta"
@@ -655,8 +658,8 @@ __meta__ = {
 }
 
 [node name="Divider6" type="Panel" parent="Main/TopMenu/MenuItems"]
-margin_left = 294.0
-margin_right = 298.0
+margin_left = 328.0
+margin_right = 332.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 4, 15 )
 size_flags_vertical = 3
@@ -666,8 +669,8 @@ __meta__ = {
 }
 
 [node name="FontButton" type="MenuButton" parent="Main/TopMenu/MenuItems"]
-margin_left = 298.0
-margin_right = 348.0
+margin_left = 332.0
+margin_right = 382.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 50, 0 )
 text = "Font"
@@ -677,8 +680,8 @@ __meta__ = {
 }
 
 [node name="Divider7" type="Panel" parent="Main/TopMenu/MenuItems"]
-margin_left = 348.0
-margin_right = 352.0
+margin_left = 382.0
+margin_right = 386.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 4, 15 )
 size_flags_vertical = 3
@@ -688,8 +691,8 @@ __meta__ = {
 }
 
 [node name="SoundButton" type="MenuButton" parent="Main/TopMenu/MenuItems"]
-margin_left = 352.0
-margin_right = 403.0
+margin_left = 386.0
+margin_right = 437.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 50, 0 )
 text = "Sound"
@@ -699,8 +702,8 @@ __meta__ = {
 }
 
 [node name="Divider8" type="Panel" parent="Main/TopMenu/MenuItems"]
-margin_left = 403.0
-margin_right = 407.0
+margin_left = 437.0
+margin_right = 441.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 4, 15 )
 size_flags_vertical = 3
@@ -710,16 +713,16 @@ __meta__ = {
 }
 
 [node name="Panel" type="Panel" parent="Main/TopMenu/MenuItems"]
-margin_left = 407.0
-margin_right = 1920.0
+margin_left = 441.0
+margin_right = 1024.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 custom_styles/panel = SubResource( 2 )
 
 [node name="PanelContainer" type="PanelContainer" parent="Main"]
 margin_top = 27.0
-margin_right = 1920.0
-margin_bottom = 1080.0
+margin_right = 1024.0
+margin_bottom = 680.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 4 )
@@ -727,15 +730,15 @@ custom_styles/panel = SubResource( 4 )
 [node name="HBoxContainer" type="HSplitContainer" parent="Main/PanelContainer"]
 margin_left = 4.0
 margin_top = 4.0
-margin_right = 1916.0
-margin_bottom = 1049.0
+margin_right = 1020.0
+margin_bottom = 649.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 split_offset = 145
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer"]
 margin_right = 249.0
-margin_bottom = 1045.0
+margin_bottom = 645.0
 
 [node name="SearchBar" type="LineEdit" parent="Main/PanelContainer/HBoxContainer/VBoxContainer"]
 margin_right = 249.0
@@ -753,7 +756,7 @@ script = ExtResource( 29 )
 [node name="AssetTree" type="Tree" parent="Main/PanelContainer/HBoxContainer/VBoxContainer"]
 margin_top = 29.0
 margin_right = 249.0
-margin_bottom = 1045.0
+margin_bottom = 645.0
 size_flags_vertical = 3
 custom_styles/bg_focus = SubResource( 6 )
 custom_styles/bg = SubResource( 6 )
@@ -769,8 +772,8 @@ bold_font = ExtResource( 15 )
 
 [node name="TabContainer" type="TabContainer" parent="Main/PanelContainer/HBoxContainer"]
 margin_left = 257.0
-margin_right = 1912.0
-margin_bottom = 1045.0
+margin_right = 1016.0
+margin_bottom = 645.0
 custom_styles/panel = SubResource( 9 )
 tabs_visible = false
 
@@ -789,7 +792,23 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
+[node name="Button" type="Button" parent="Main/PanelContainer/HBoxContainer/TabContainer/Panel"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -146.5
+margin_top = -21.5
+margin_right = 146.5
+margin_bottom = 21.5
+text = "Set Base .WAD"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Meta" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = ExtResource( 2 )
@@ -1469,7 +1488,6 @@ script = ExtResource( 20 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-folder_icon = null
 folder_mod = Color( 1, 1, 1, 1 )
 subfolder_mod = Color( 1, 1, 1, 1 )
 
@@ -1720,9 +1738,6 @@ script = ExtResource( 42 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-folder_icon = null
-folder_mod = Color( 0, 0, 0, 1 )
-subfolder_mod = Color( 0, 0, 0, 1 )
 
 [node name="Sound" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
 visible = false
@@ -2197,9 +2212,29 @@ resizable = true
 mode_overrides_title = false
 mode = 0
 access = 2
-filters = PoolStringArray( "*.wad", "*.patchwad" )
-current_dir = "/Users/caleb/Documents/Godot/HLMWadEditor"
-current_path = "/Users/caleb/Documents/Godot/HLMWadEditor/"
+filters = PoolStringArray( "*.wad" )
+current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
+current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ImportWadFileDialog" type="FileDialog" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 248.0
+margin_top = 118.0
+margin_right = -290.0
+margin_bottom = -156.0
+rect_min_size = Vector2( 400, 140 )
+window_title = "Import from WAD Archive"
+resizable = true
+mode_overrides_title = false
+mode = 0
+access = 2
+filters = PoolStringArray( "*.patchwad", "*.wad" )
+current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
+current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -2322,7 +2357,7 @@ margin_top = 315.0
 margin_right = -423.0
 margin_bottom = -373.0
 rect_min_size = Vector2( 300, 80 )
-window_title = "N/A"
+window_title = "Error!"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -2335,7 +2370,7 @@ margin_top = 16.0
 margin_right = -16.0
 margin_bottom = -57.0
 text = "Error occured!
-Check that no other program is utilizing the current base wad."
+Check that no other program is utilizing the current base wad or that it has been moved."
 align = 1
 valign = 1
 __meta__ = {
@@ -2364,8 +2399,8 @@ __meta__ = {
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="WaitForThreadsDialog/MarginContainer"]
-margin_right = 940.0
-margin_bottom = 388.0
+margin_right = 300.0
+margin_bottom = 146.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -2440,6 +2475,7 @@ margin_bottom = -6.10352e-05
 rect_min_size = Vector2( 400, 140 )
 window_title = "Transform Sprite"
 resizable = true
+script = ExtResource( 47 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -2567,8 +2603,10 @@ new_bounds_color = Color( 0.870588, 0.341176, 0.356863, 1 )
 
 [node name="ImportantPopups" type="ColorRect" parent="."]
 visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 8.9701e-05
+anchor_top = 0.000159454
+anchor_right = 1.00009
+anchor_bottom = 1.00016
 color = Color( 0.0352941, 0.0196078, 0.0509804, 0.317647 )
 script = ExtResource( 36 )
 __meta__ = {
@@ -2704,8 +2742,8 @@ resizable = true
 mode_overrides_title = false
 access = 2
 filters = PoolStringArray( "*.gif" )
-current_dir = "/Users/caleb/Documents/Godot/HLMWadEditor"
-current_path = "/Users/caleb/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
+current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -2723,8 +2761,8 @@ window_title = "Extract Resource to a File"
 resizable = true
 mode_overrides_title = false
 access = 2
-current_dir = "/Users/caleb/Documents/Godot/HLMWadEditor"
-current_path = "/Users/caleb/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
+current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
 script = ExtResource( 22 )
 __meta__ = {
 "_edit_use_anchors_": true
@@ -2745,8 +2783,8 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.meta", "*.gmeta" )
-current_dir = "/Users/caleb/Documents/Godot/HLMWadEditor"
-current_path = "/Users/caleb/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
+current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -2766,8 +2804,8 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.png" )
-current_dir = "/Users/caleb/Documents/Godot/HLMWadEditor"
-current_path = "/Users/caleb/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
+current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -2786,8 +2824,8 @@ resizable = true
 mode_overrides_title = false
 access = 2
 filters = PoolStringArray( "*.png" )
-current_dir = "/Users/caleb/Documents/Godot/HLMWadEditor"
-current_path = "/Users/caleb/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
+current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
 script = ExtResource( 33 )
 __meta__ = {
 "_edit_use_anchors_": true
@@ -2808,8 +2846,8 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.png" )
-current_dir = "/Users/caleb/Documents/Godot/HLMWadEditor"
-current_path = "/Users/caleb/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
+current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -2842,8 +2880,8 @@ __meta__ = {
 
 [node name="Panel" type="TextureRect" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer"]
 self_modulate = Color( 0.560784, 0.568627, 0.588235, 1 )
-margin_right = 649.0
-margin_bottom = 411.0
+margin_right = 1289.0
+margin_bottom = 723.0
 rect_clip_content = true
 size_flags_vertical = 3
 texture = ExtResource( 5 )
@@ -2863,24 +2901,25 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer"]
-margin_top = 415.0
-margin_right = 649.0
-margin_bottom = 446.0
+margin_top = 727.0
+margin_right = 1289.0
+margin_bottom = 758.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer"]
-margin_right = 209.0
+margin_right = 427.0
 margin_bottom = 31.0
 size_flags_horizontal = 3
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer"]
-margin_left = 213.0
-margin_right = 435.0
+margin_left = 431.0
+margin_right = 858.0
 margin_bottom = 31.0
 size_flags_horizontal = 3
 alignment = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2"]
-margin_right = 222.0
+margin_left = 102.0
+margin_right = 324.0
 margin_bottom = 31.0
 custom_styles/panel = ExtResource( 4 )
 
@@ -2910,15 +2949,15 @@ __meta__ = {
 }
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer"]
-margin_left = 439.0
-margin_right = 649.0
+margin_left = 862.0
+margin_right = 1289.0
 margin_bottom = 31.0
 size_flags_horizontal = 3
 alignment = 2
 
 [node name="Button" type="Button" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer3"]
-margin_left = 155.0
-margin_right = 210.0
+margin_left = 372.0
+margin_right = 427.0
 margin_bottom = 31.0
 rect_min_size = Vector2( 55, 0 )
 custom_styles/normal = ExtResource( 4 )
@@ -2939,8 +2978,8 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.patchwad", "*.wad" )
-current_dir = "/Users/caleb/Documents/Godot/HLMWadEditor"
-current_path = "/Users/caleb/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
+current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -2957,11 +2996,84 @@ popup_exclusive = true
 resizable = true
 access = 2
 filters = PoolStringArray( "*.patchwad" )
-current_dir = "/Users/caleb/Documents/Godot/HLMWadEditor"
-current_path = "/Users/caleb/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
+current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
+
+[node name="ImportPatchWindowDialog" type="WindowDialog" parent="ImportantPopups"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 187.0
+margin_top = 166.0
+margin_right = -205.0
+margin_bottom = -113.0
+popup_exclusive = true
+window_title = "Import Resources from Patchwad"
+resizable = true
+script = ExtResource( 50 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="ImportantPopups/ImportPatchWindowDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_right = 10
+custom_constants/margin_top = 10
+custom_constants/margin_left = 10
+custom_constants/margin_bottom = 10
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ImportantPopups/ImportPatchWindowDialog/MarginContainer"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 622.0
+margin_bottom = 391.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Resources" type="Tree" parent="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer"]
+margin_right = 612.0
+margin_bottom = 440.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_icons/arrow = ExtResource( 51 )
+custom_icons/arrow_collapsed = ExtResource( 51 )
+custom_constants/item_margin = 20
+hide_root = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer"]
+margin_top = 444.0
+margin_right = 612.0
+margin_bottom = 469.0
+
+[node name="cancelButton" type="Button" parent="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_right = 52.0
+margin_bottom = 25.0
+text = "Cancel"
+
+[node name="Control" type="Control" parent="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 56.0
+margin_right = 554.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="okButton" type="Button" parent="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 558.0
+margin_right = 612.0
+margin_bottom = 25.0
+text = "Import"
 
 [node name="NotifList" type="VBoxContainer" parent="."]
 anchor_left = 1.0
@@ -2981,10 +3093,12 @@ margin_right = 236.0
 wait_time = 3.0
 autostart = true
 script = ExtResource( 48 )
+
 [connection signal="text_changed" from="Main/PanelContainer/HBoxContainer/VBoxContainer/SearchBar" to="Main/PanelContainer/HBoxContainer/VBoxContainer/SearchBar" method="_on_SearchBar_text_changed"]
 [connection signal="text_entered" from="Main/PanelContainer/HBoxContainer/VBoxContainer/SearchBar" to="." method="_on_SearchBar_text_entered"]
 [connection signal="item_selected" from="Main/PanelContainer/HBoxContainer/VBoxContainer/AssetTree" to="Main/PanelContainer/HBoxContainer/VBoxContainer/AssetTree" method="_on_Tree_item_selected"]
 [connection signal="tab_changed" from="Main/PanelContainer/HBoxContainer/TabContainer" to="Main/TopMenu/MenuItems" method="_on_TabContainer_tab_changed"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Panel/Button" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HBoxContainer/RecalculateSheetButton" to="." method="_on_RecalculateSheetButton_pressed"]
 [connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HBoxContainer/ExportSpriteStripButton" to="." method="_on_ExportSpriteStripButton_pressed"]
 [connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HBoxContainer/importSpriteStripButton" to="." method="_on_importSpriteStripButton_pressed"]
@@ -2995,12 +3109,12 @@ script = ExtResource( 48 )
 [connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer/XOriginInput" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_XOriginInput_value_changed"]
 [connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer/YOriginInput" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_YOriginInput_value_changed"]
 [connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer/HBoxContainer/FpsSpinBox" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FpsSpinBox_value_changed"]
-[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FrameBackTrackButton_pressed"]
 [connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_FrameBackTrackButton_pressed"]
-[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_PausePlayButton_toggled"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FrameBackTrackButton_pressed"]
 [connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_PausePlayButton_toggled"]
-[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FrameAdvanceButton_pressed"]
+[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_PausePlayButton_toggled"]
 [connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_FrameAdvanceButton_pressed"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FrameAdvanceButton_pressed"]
 [connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Right/Button" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_Button_toggled"]
 [connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/Timeline/TimelineSlider" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/Timeline/TimelineSlider" method="_on_TimelineSlider_gui_input"]
 [connection signal="tween_all_completed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/Timeline/TimelineSlider/Tween" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_Tween_tween_all_completed"]
@@ -3032,10 +3146,11 @@ script = ExtResource( 48 )
 [connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer/uppercasetogglebutton" to="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor" method="_on_uppercasetogglebutton_toggled"]
 [connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer/HSlider" to="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor" method="_on_HSlider_value_changed"]
 [connection signal="file_selected" from="OpenWadDialog" to="." method="_on_OpenWadDialog_file_selected"]
+[connection signal="file_selected" from="ImportWadFileDialog" to="ImportantPopups/ImportPatchWindowDialog" method="_on_ImportWadFileDialog_file_selected"]
 [connection signal="pressed" from="SpriteTexturePageWindow/VBoxContainer/HBoxContainer2/HBoxContainer2/okbutton" to="SpriteTexturePageWindow" method="_on_okbutton_pressed"]
 [connection signal="pressed" from="WaitForThreadsDialog/MarginContainer/VBoxContainer/HBoxContainer/WaitThreadsOk" to="." method="_on_WaitThreadsOk_pressed"]
 [connection signal="pressed" from="WaitForThreadsDialog/MarginContainer/VBoxContainer/HBoxContainer/WaitThreadsNo" to="." method="_on_WaitThreadsNo_pressed"]
-[connection signal="confirmed" from="ResizeSpriteDialog" to="." method="_on_ResizeSpriteDialog_confirmed"]
+[connection signal="confirmed" from="ResizeSpriteDialog" to="ResizeSpriteDialog" method="_on_ResizeSpriteDialog_confirmed"]
 [connection signal="value_changed" from="ResizeSpriteDialog/VBoxContainer/GridContainer/WidthSpinBox" to="ResizeSpriteDialog/VBoxContainer/TextureRect/MarginContainer/TextureRect" method="_on_WidthSpinBox_value_changed"]
 [connection signal="value_changed" from="ResizeSpriteDialog/VBoxContainer/GridContainer/HeightSpinBox" to="ResizeSpriteDialog/VBoxContainer/TextureRect/MarginContainer/TextureRect" method="_on_HeightSpinBox_value_changed"]
 [connection signal="about_to_show" from="ImportantPopups/SaveGIFDialog2" to="ImportantPopups" method="_on_SaveGIFDialog2_about_to_show"]
@@ -3062,3 +3177,6 @@ script = ExtResource( 48 )
 [connection signal="popup_hide" from="ImportantPopups/OpenPatchDialog" to="ImportantPopups" method="_on_OpenPatchDialog_popup_hide"]
 [connection signal="file_selected" from="ImportantPopups/SavePatchDialog" to="." method="_on_SavePatchDialog_file_selected"]
 [connection signal="popup_hide" from="ImportantPopups/SavePatchDialog" to="ImportantPopups" method="_on_SavePatchDialog_popup_hide"]
+[connection signal="item_edited" from="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer/Resources" to="ImportantPopups/ImportPatchWindowDialog" method="_on_Resources_item_edited"]
+[connection signal="pressed" from="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer/HBoxContainer/cancelButton" to="ImportantPopups/ImportPatchWindowDialog" method="_on_cancelButton_pressed"]
+[connection signal="pressed" from="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer/HBoxContainer/okButton" to="ImportantPopups/ImportPatchWindowDialog" method="_on_okButton_pressed"]

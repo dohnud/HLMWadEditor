@@ -48,6 +48,9 @@ func parse_header():
 #	seek(0x10)
 	seek(0)
 	identifier = get_buffer(0x10)
+	print(len(identifier.get_string_from_ascii()))
+	if len(identifier.get_string_from_ascii()) < 5:
+		seek(0)
 	
 	# parse file locations
 	var num_files = get_32()

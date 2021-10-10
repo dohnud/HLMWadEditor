@@ -14,6 +14,11 @@ func _on_ImportSpriteStripDialog_file_selected(path):
 	var err = image.load(path)
 	if err != OK:
 		print('ouch couldnt load that image')
+		app.show_error_dialog('failed to open image')
+		return
+	if image.get_size().x*image.get_size().y + meta.texture_page.get_size().x * meta.texture_page.get_size().y > 4000*4000:
+		app.show_error_dialog('Sprite too big!')
+		return
 	texture = ImageTexture.new()
 	texture.create_from_image(image, 0)
 	$VBoxContainer/Panel/ImportSpriteStripPreview.texture = texture
@@ -82,7 +87,10 @@ func _on_Button_pressed():
 					f.region = Rect2(i*d, 0, d, h)
 					f.atlas = texture
 					var of :MetaTexture= meta.sprites.get_frame(s,i)
-					img.blit_rect(f.atlas.get_data(), f.region, of.region.position)
+					var tf = f.atlas.get_data()
+					if tf.get_format() != Image.FORMAT_RGBA8:
+						tf.convert(Image.FORMAT_RGBA8)
+					img.blit_rect(tf, f.region, of.region.position)
 					if nb:
 						if  app.base_wad.get_bin(CollisionMasksBin.file_path).mask_data.has(app.base_wad.spritebin.sprite_data[sprite]['id']):
 							var b_list = app.base_wad.get_bin(CollisionMasksBin.file_path).compute_new_mask(app.base_wad.spritebin.sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D

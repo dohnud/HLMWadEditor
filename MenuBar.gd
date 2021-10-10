@@ -6,13 +6,11 @@ var operations = {
 	"FileButton" : [
 		["Open Patch", [KEY_CONTROL, KEY_O], 'openpatch'],
 		["Save Patch", [KEY_CONTROL,KEY_S,], 'savepatch'],
-		["Save Patch as", [KEY_CONTROL, KEY_SHIFT, KEY_S], 'savepatchas'],
-		["Recent Patches", [PopupMenu.new()], 'openrecentpatch'],
-		[],
 		["Import from Patch", [KEY_CONTROL, KEY_I], 'importpatch'],
 		[],
-		["Switch Base Wad", [KEY_CONTROL, KEY_SHIFT, KEY_O], 'openwad'],
+		["Recent Patches", [PopupMenu.new()], 'openrecentpatch'],
 		[],
+		["Switch Base WAD", [KEY_CONTROL, KEY_SHIFT, KEY_O], 'openwad'],
 		["Quit", [KEY_CONTROL, KEY_Q], 'quit'],
 	],
 	"ResourceButton" : [
@@ -27,17 +25,20 @@ var operations = {
 	"ViewButton" : [
 		["Expand Asset List", [], 'expandassetlist'],
 		["Show Only Modified Files", ['TOGGLE'], 'togglenewfileslist'],
+		[],
 		["Advanced", [PopupMenu.new()], 'toggleadvanced'],
 		[],
 		["Toggle Asset List", [KEY_CONTROL, KEY_H], 'toggleassetlist'],
 	],
 	"1MetaButton" : [
 		["Import Sprite from Strip", [KEY_SHIFT, KEY_I], 'import_sprite_strip'],
+		[],
 		["Export Sprite to Strip", [KEY_SHIFT, KEY_E], 'export_sprite_strip'],
 		["Export Sprite to GIF", [], 'export_sprite_gif'],
 		["Export All Sprites", [], 'export_sprite_strips'],
 		[],
 		["Transform Sprite", [KEY_SHIFT, KEY_T], 'resize_sprite'],
+		["Compile All Sprites", [], 'recalcspritesheet'],
 		[],
 		["Toggle Gizmos", [KEY_SHIFT, KEY_G], 'togglemetagizmos'],
 #		["Extras", [PopupMenu.new(),[
@@ -47,12 +48,12 @@ var operations = {
 	],
 	"18SpriteSheetButton" : [
 		["Import Texture Page", [], 'importspritesheet'],
-		["Export Texture Page", [], 'exportspritesheet'],
 		[],
-		["Recalculate Texture Page", [], 'recalcspritesheet'],
+		["Export Texture Page", [], 'exportspritesheet'],
 	],
 	"8FontButton" : [
 		["Import Character", [], 'na'],
+		[],
 		["Export Character", [], 'na'],
 	],
 	"7SoundButton" : [
@@ -169,8 +170,8 @@ func savepatch():
 #func savepatchas():
 #	pass
 #
-#func importpatch():
-#	pass
+func importpatch():
+	app.get_node("ImportWadFileDialog").popup()
 	
 func openwad():
 	app.get_node("OpenWadDialog").popup()
@@ -268,6 +269,9 @@ func import_sprite_strip():
 
 func recalcspritesheet():
 	app._on_RecalculateSheetButton_pressed()
+	if app.selected_asset_data is Meta:
+		app._recalc_collision()
+		
 
 func exportspritesheet():
 	extract(app.selected_asset_data.texture_page)
@@ -281,6 +285,7 @@ func resize_sprite():
 	if meta != app.selected_asset_data:
 		return
 	var w = app.get_node("ResizeSpriteDialog")
+	w.current_tex_dim = meta.texture_page.get_size()
 	app.get_node("ResizeSpriteDialog/VBoxContainer/SpriteNameLabel").text = app.meta_editor_node.current_sprite
 	var f :MetaTexture= meta.sprites.get_frame(app.meta_editor_node.current_sprite, 0)
 	app.get_node('ResizeSpriteDialog/VBoxContainer/GridContainer/WidthSpinBox').value = f.region.size.x

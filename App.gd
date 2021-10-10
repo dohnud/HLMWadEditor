@@ -53,6 +53,10 @@ func _ready():
 		asset_tree.bold_font.size *= text_scale_multiplier
 		tomakebiggerfont.size *= text_scale_multiplier
 		$NotifList.margin_left *=text_scale_multiplier
+	var menu_node_list = $Main/TopMenu/MenuItems.get_children()
+	for n in menu_node_list:
+		if n is MenuButton:
+			n.text = '  ' + n.text + '  '
 	asset_tree_container = get_node(asset_tree_container)
 	meta_editor_node = get_node(meta_editor_node)
 	room_editor_node = get_node(room_editor_node)
@@ -64,7 +68,9 @@ func _ready():
 	font_editor_node = get_node(font_editor_node)
 	editor_tabs = get_node(editor_tabs)
 	
-	open_wad(base_wad_path)
+	if !open_wad(base_wad_path):
+		$Main/PanelContainer/HBoxContainer/TabContainer/Panel/Label.hide()
+		$Main/PanelContainer/HBoxContainer/TabContainer/Panel/Button.show()
 
 func open_wad(file_path):
 	var wad = Wad.new()
@@ -79,6 +85,8 @@ func open_wad(file_path):
 #		wad.get_ bin(CollisionMasksBin.file_path)
 		base_wad = wad
 		_on_SearchBar_text_entered('')
+		return true
+	return false
 #		var files = wad.new_files.keys()
 #		files += wad.file_locations.keys()
 #		for file in files:
@@ -146,8 +154,8 @@ func open_asset(asset_path):
 		editor_tabs.current_tab = 6
 		selected_asset_name = asset_path.substr(len('Metadata/'))
 		selected_asset_data = atlas_editor_node.set_atlas(selected_asset_name)
-	if selected_asset_data == null:
-		$ErrorDialog.popup()
+#	if selected_asset_data == null:
+#		$ErrorDialog.popup()
 
 func open_file_dialog(name, filter, oncomplete):
 	pass
@@ -345,7 +353,7 @@ var mutex = Mutex.new()
 func _on_RecalculateSheetButton_pressed():
 	var meta = selected_asset_data
 	if selected_asset_data is WadFont:
-		meta = meta.meta
+		meta = selected_asset_data.meta
 	if !(selected_asset_data is Meta):
 		return
 	asset_tree.set_bold(selected_asset_treeitem)
@@ -357,7 +365,7 @@ func _on_RecalculateSheetButton_pressed():
 		_on_CancelResolve(selected_asset_name)
 		print('thread ended!')
 #		threads.erase(selected_asset_name)
-	_recalc_collision()
+#	_recalc_collision()
 #	var t = Thread.new()
 	base_wad.changed_files[selected_asset_name] = meta
 	# Third argument is optional userdata, it can be any variable.
@@ -505,11 +513,11 @@ func _on_OpenPatchDialog_file_selected(path):
 
 
 func _on_OpenWadDialog_file_selected(path):
-	open_wad(path)
-	var config = File.new()
-	Config.settings.base_wad_path = path
-	base_wad_path = Config.settings.base_wad_path
-	Config.save()
+	if open_wad(path):
+		Config.settings.base_wad_path = path
+		base_wad_path = Config.settings.base_wad_path
+		Config.save()
+		$Main/PanelContainer/HBoxContainer/TabContainer/Panel/Label.hide()
 
 
 var wait_for_threads_to_resolve = false
@@ -576,15 +584,15 @@ func _on_SavePatchDialog_file_selected(path):
 		elif fc is Meta:
 			fc.write(f)
 		elif fc is SpritesBin:
-			if !base_wad.goto(file):
+			if base_wad.goto(file) == null:
 				$ErrorDialog.popup()
-				return
-			fc.write(base_wad, f)
+			else:
+				fc.write(base_wad, f)
 		elif fc is CollisionMasksBin:
-			if !base_wad.goto(file):
+			if base_wad.goto(file) == null:
 				$ErrorDialog.popup()
-				return
-			fc.write(base_wad, f)
+			else:
+				fc.write(base_wad, f)
 		elif fc is BinParser:
 			fc.write(f)
 		elif fc is WadSound:
@@ -649,6 +657,12 @@ func _on_Timer_timeout():
 #			threads.erase(meta)
 	pass
 
+func show_error_dialog(message=''):
+	if !message:
+		message='Error occured!\nCheck that no other program is utilizing the current base wad or that it has been moved.'
+	var w = $ErrorDialog
+	w.popup_centered()
+	w.get_node("Label2").text=message
 
 func _on_ResizeSpriteDialog_confirmed():
 	var meta = selected_asset_data
@@ -674,7 +688,6 @@ func _on_ResizeSpriteDialog_confirmed():
 					if f.atlas == meta.texture_page and f.atlas.get_data():
 						var new_atlas = ImageTexture.new()
 						var new_image = f.atlas.get_data().get_rect(f.region)
-#						empty_img = new_image
 						new_image.crop(new_size.x, new_size.y)
 						new_atlas.create_from_image(new_image, 0)
 						f.atlas = new_atlas
@@ -682,11 +695,30 @@ func _on_ResizeSpriteDialog_confirmed():
 					f.atlas = empty_tex
 					meta.sprites.add_frame(sprite, f)
 				f.region = Rect2(Vector2.ZERO, new_size)
-				base_wad.spritebin.sprite_data[sprite]['size'] = f.region.size
-			for i in range(nfc, fc):
-				meta.sprites.remove_frame(sprite, nfc-1)
-			base_wad.spritebin.sprite_data[sprite]['frame_count'] = nfc
-			base_wad.changed_files[SpritesBin.file_path] = base_wad.spritebin
+			if nfc < fc:
+				for i in range(abs(fc-nfc)):
+					meta.sprites.remove_frame(sprite, nfc)
 			base_wad.changed_files[selected_asset_name] = meta
-			if old_size < new_size or fc < nfc:
+			if base_wad.spritebin.sprite_data.has(sprite):
+				base_wad.spritebin.sprite_data[sprite]['size'] = new_size
+				base_wad.spritebin.sprite_data[sprite]['frame_count'] = nfc
+				base_wad.changed_files[SpritesBin.file_path] = base_wad.spritebin
+				base_wad.get_bin(CollisionMasksBin.file_path).resize(base_wad.spritebin.sprite_data[sprite]['id'], new_size.x, new_size.y, fc)
+				for i in range(fc):
+					var f = meta.sprites.get_frame(sprite, i)
+					var b_list = base_wad.get_bin(CollisionMasksBin.file_path).compute_new_mask(base_wad.spritebin.sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D
+					base_wad.spritebin.sprite_data[sprite]['mask_x_bounds'] = b_list[0]
+					base_wad.spritebin.sprite_data[sprite]['mask_y_bounds'] = b_list[1]
+					base_wad.changed_files[CollisionMasksBin.file_path] = base_wad.get_bin(CollisionMasksBin.file_path)
+			if old_size != new_size or fc != nfc:
 				_on_RecalculateSheetButton_pressed()
+
+
+func _on_Button_pressed():
+	$Main/PanelContainer/HBoxContainer/TabContainer/Panel/Button.hide()
+	$Main/PanelContainer/HBoxContainer/TabContainer/Panel/Label.show()
+	$OpenWadDialog.popup()
+
+
+func _on_ImportWadFileDialog_confirmed():
+	pass # Replace with function body.

@@ -50,8 +50,11 @@ func _on_RoomTree_item_edited(deleted=0):
 			value = value.replace('(','')
 			value = value.replace(')','')
 			value = value.split(',')
-			if can_be_int_fuck_you_godot(value[0]) and can_be_int_fuck_you_godot(value[1]):
-				v = Vector2(can_be_int_fuck_you_godot(value[0]), can_be_int_fuck_you_godot(value[1]))
+			if len(value) < 2:
+				value = value.split(' ')
+			if (len(value) > 1 and len(value) < 3):
+				if can_be_int_fuck_you_godot(value[0]) and can_be_int_fuck_you_godot(value[1]):
+					v = Vector2(can_be_int_fuck_you_godot(value[0]), can_be_int_fuck_you_godot(value[1]))
 		elif d[last_k] is int and can_be_int_fuck_you_godot(value):
 			v = can_be_int_fuck_you_godot(value)
 		if v != d[last_k]:

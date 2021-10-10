@@ -55,6 +55,9 @@ func _process(delta):
 	var f_count = asset.sprites.get_frame_count(current_sprite)
 	var l_as = len(asset.sprites.get_animation_names())
 	if resolve(current_sprite, current_frame_index):
+#		dest_image.unlock()
+#		dest_image.save_png(''+current_sprite+str(current_frame_index)+'.png')
+#		dest_image.lock()		
 		current_frame_index += 1
 		if current_frame_index >= f_count:
 			current_frame_index = 0
@@ -69,17 +72,6 @@ func _process(delta):
 
 var image_width = 1
 func init_resolve():
-#	if !needs_recalc:
-##		dest_image.create(image_width, spritesheet.get_height(), false, Image.FORMAT_RGBA8)
-##		for s in animatedsprite.get_animation_names():
-##			for i in animatedsprite.get_frame_count(s):
-##				var f :AtlasTexture= animatedsprite.get_frame(s,i)
-##				dest_image.blit_rect(f.atlas.get_data(), f.region, f.region.position)
-#		mutex.lock()
-#		emit_signal('resolve_progress', 2)
-#		emit_signal('resolve_complete', self)
-#		mutex.unlock()
-#		return
 	if !asset:return false
 	var animatedsprite:SpriteFrames = asset.sprites
 	var spritesheet:Texture = asset.texture_page
@@ -102,6 +94,7 @@ func init_resolve():
 	new_sprites.remove_animation("default")
 	current_sprite = asset.sprites.get_animation_names()[current_index]
 	return true
+
 
 var ty = 0
 func resolve(sprite_name, frame_index):
@@ -137,23 +130,29 @@ func find_new_spot(sprite_name, frame_index, ty):
 		masq_image.unlock()
 		dest_image.unlock()
 		dest_image.crop(image_width, ty + idy)
-#						print(sprite_name,' ', frame_index,': ',image_width,' x ', ty + idy)
+		# issue when importing large sprites.
+		# something to do with spires being too big to fit a place
 		masq_image.crop(image_width, ty + idy)
 		dest_image.lock()
 		masq_image.lock()
 	for tx in range(image_width - idx):
 		var valid = !(masq_image.get_pixel(tx,ty).r8 ||
 			masq_image.get_pixel(tx, ty + idy-1).r8 ||
-			masq_image.get_pixel(tx + idx-1, ty).r8 ||
-			masq_image.get_pixel(tx + idx-1, ty + idy-1).r8)
+			masq_image.get_pixel(tx + idx, ty).r8 ||
+			masq_image.get_pixel(tx + idx, ty + idy-1).r8)
 		if valid:
 			for ity in range(idy):
 				for itx in range(idx):
 					valid = !masq_image.get_pixel(tx + itx, ty + ity).r8
 					if !valid: break
 				if !valid: break
+		
+#		print(sprite_name,' ', frame_index,': ',image_width,' x ', ty + idy, ' ?:',valid,' @', tx,',',ty)
 		if valid:
-			dest_image.blit_rect(frame.atlas.get_data(), frame.region, Vector2(tx,ty))
+			var f = frame.atlas.get_data()
+			if f.get_format() != Image.FORMAT_RGBA8:
+				f.convert(Image.FORMAT_RGBA8)
+			dest_image.blit_rect(f, frame.region, Vector2(tx,ty))
 			masq_square.unlock()
 			masq_square.crop(frame.region.size.x,frame.region.size.y)
 			masq_square.fill(Color(1,0,0,1))
