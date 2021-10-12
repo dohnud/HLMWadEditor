@@ -283,6 +283,7 @@ func _on_SearchBar_text_entered(new_text=''):
 							asset_tree.create_path(f_prefixes[i] + n, bb)
 			i += 1
 		
+	asset_tree.update()
 var threads = {}
 #func _on_RecalculateSheetButton_pressed():
 #	var meta = selected_asset_data

@@ -12,11 +12,12 @@ func _ready():
 #func _process(delta):
 #	pass
 
-var file_list = []
+var file_dict = {}
 func _on_ImportWadFileDialog_file_selected(path):
 	get_parent().show()
 	popup()
 	var wad = Wad.new()
+	file_dict = {}
 	if !wad.opens(path, File.READ):
 		wad.parse_header()
 		patchwad = wad
@@ -28,74 +29,93 @@ func _on_ImportWadFileDialog_file_selected(path):
 			# do not list texture files that have a .meta partner, same for fonts
 			if f.ends_with('.png') and (patchwad.file_locations.has(f.replace('.png', '.meta')) or patchwad.file_locations.has(f.replace('.png', '.fnt'))):
 				continue
-			file_list.append(f)
+			file_dict[f] = false
 			var child1 = tree_r.create_item(root_r)
 			child1.set_cell_mode(0, TreeItem.CELL_MODE_CHECK)
 			child1.set_editable(0, true)
 			child1.set_text(0, f)
 #			child1.set_text_align(0, TreeItem.ALIGN_RIGHT)
 #			child1.set_selectable(0, false)
-			if f.ends_with('.meta'):
-				var m :Meta= patchwad.parse_meta(f)
+			if f.ends_with('.meta') or f.ends_with('.png'):
+				var m:Meta = null
+				# create phantom meta so u can extract specific sprites
+				if f.ends_with('.png'):
+					m = app.base_wad.parse_orginal_meta(f.replace('.png', '.meta'))
+					child1.set_text(0, f.replace('.png', '.meta'))
+					file_dict[f.replace('.png', '.meta')] = {}
+					file_dict.erase(f)
+				else:
+					m = patchwad.parse_meta(f)
+					file_dict[f] = {}
 				for sprite in m.sprites.get_animation_names():
 					var child2 = tree_r.create_item(child1)
 					child2.set_cell_mode(0, TreeItem.CELL_MODE_CHECK)
 					child2.set_editable(0, true)
 					child2.set_text(0, sprite)
-#					child2.set_text_align(0, TreeItem.ALIGN_RIGHT)
-#					child2.set_selectable(0, false)
 					child1.collapsed = true
+					file_dict[child1.get_text(0)][sprite] = false
 		tree_r.grab_focus()
-
 
 
 func _on_Resources_item_edited():
 	var t :Tree = $MarginContainer/VBoxContainer/Resources
 	var ti :TreeItem= t.get_selected()
-	print(ti)
 	if ti != null:
 		var checked = ti.is_checked(0)
 		if ti.get_text(0).ends_with('.meta'):
+			file_dict[ti.get_text(0)] = {}
 			var sprite_ti :TreeItem= ti.get_children()
 			while sprite_ti != null:
 				sprite_ti.set_checked(0, checked)
+				file_dict[ti.get_text(0)][sprite_ti.get_text(0)] = checked
 				sprite_ti = sprite_ti.get_next()
-		elif checked and ti.get_parent().get_text(0).ends_with('.meta'):
-			ti.get_parent().set_checked(0, true)
+		elif ti.get_parent().get_text(0).ends_with('.meta'):
+			if checked:
+				ti.get_parent().set_checked(0, true)
+			if !file_dict.has(ti.get_parent().get_text(0)) or !(file_dict[ti.get_parent().get_text(0)] is Dictionary):
+				file_dict[ti.get_parent().get_text(0)] = {}
+			file_dict[ti.get_parent().get_text(0)][ti.get_text(0)] = checked
+		else:
+			file_dict[ti.get_text(0)] = checked
 
 
 
 func _on_cancelButton_pressed():
+	patchwad = null
+	file_dict = {}
 	hide()
 	get_parent().hide()
 
-
+var file_list = []
 func _on_okButton_pressed():
 	var t :Tree = $MarginContainer/VBoxContainer/Resources
 	var index = 0
 	var ti_file :TreeItem= t.get_root().get_children()
-	while ti_file != null:
-		var import_file_path = file_list[index]
+#	print(file_dict)
+	for import_file_path in file_dict.keys():
 		# meta files
-		if ti_file.is_checked(0):
-			if ti_file.get_text(0).ends_with('.meta'):
-				var m :Meta= patchwad.open_asset(import_file_path)
+		if file_dict[import_file_path]:
+			if import_file_path.ends_with('.meta'):
+				var m :Meta= null
+				if patchwad.exists(import_file_path):
+					m = patchwad.open_asset(import_file_path)
+				else:
+					m = app.base_wad.parse_orginal_meta(import_file_path)
+					m.texture_page = patchwad.sprite_sheet(import_file_path.replace('.meta','.png'))
+					for s in m.sprites.get_animation_names():
+						for i in m.sprites.get_frame_count(s):
+							m.sprites.get_frame(s, i).atlas = m.texture_page
 				# check if meta file has all sprites checked
 				var do_merge = false
-				var ti_sprite :TreeItem= ti_file.get_children()
-				while ti_sprite != null:
-					# if not do meta merge :P
-					if !ti_sprite.is_checked(0):
-						do_merge = true
-						break
-				# do meta merge :P
+				if file_dict[import_file_path] is Dictionary:
+					do_merge = true
+					if len(file_dict[import_file_path].values()) == len(m.sprites.get_animation_names()):
+						do_merge = (false in file_dict[import_file_path].values())
 				if do_merge:
-					ti_sprite = ti_file.get_children()
-					while ti_sprite != null:
-						if ti_sprite.is_checked(0):
+					for sprite in file_dict[import_file_path].keys():
+						if file_dict[import_file_path][sprite]:
 							var dst_meta = app.base_wad.open_asset(import_file_path)
-							merge_sprite(dst_meta, m, ti_sprite.get_text(0), import_file_path)
-						ti_sprite = ti_sprite.get_next()
+							merge_sprite(dst_meta, m, sprite, import_file_path)
 				# otherwise just replace whole file
 				else:
 					app.base_wad.changed_files[import_file_path] = m
@@ -175,3 +195,87 @@ func merge_sprite(dst_meta:Meta, src_meta:Meta, sprite, rsc_file_path):
 	app.base_wad.changed_files[app.selected_asset_name.replace('.meta','.png')] = dst_meta.texture_page
 	app.selected_asset_name = old_n
 	app.selected_asset_data = old_d
+
+
+func _on_SearchBar_text_entered(new_text=''):
+	var t :Tree = $MarginContainer/VBoxContainer/Resources
+	new_text = new_text.to_lower()
+	t.clear()
+	var root_r = t.create_item()
+	t.set_hide_root(true)
+	for f in file_dict.keys():
+		# do not list texture files that have a .meta partner, same for fonts
+		if f.ends_with('.png') and (file_dict.has(f.replace('.png', '.meta')) or file_dict.has(f.replace('_0.png', '.fnt'))):
+			continue
+#			file_list.append(f)
+		if f.ends_with('.meta'):
+			var do_it = false
+			if new_text != '':
+				for s in file_dict[f]:
+					do_it = new_text in s.to_lower()
+					if do_it:
+						var child1 :TreeItem= t.create_item(root_r)
+						child1.set_cell_mode(0, TreeItem.CELL_MODE_CHECK)
+						child1.set_editable(0, true)
+						child1.set_text(0, f)
+						child1.collapsed = true
+						for sprite in file_dict[f].keys():
+							if new_text in sprite.to_lower() or new_text == '':
+								var child2 = t.create_item(child1)
+								child2.set_cell_mode(0, TreeItem.CELL_MODE_CHECK)
+								child2.set_editable(0, true)
+								child2.set_text(0, sprite)
+				#					child2.set_text_align(0, TreeItem.ALIGN_RIGHT)
+				#					child2.set_selectable(0, false)
+								child1.collapsed = false
+						break
+			if (!do_it and new_text in f.to_lower()) or new_text == '':
+				var child1 :TreeItem= t.create_item(root_r)
+				child1.set_cell_mode(0, TreeItem.CELL_MODE_CHECK)
+				child1.set_editable(0, true)
+				child1.set_text(0, f)
+				child1.collapsed = true
+				for sprite in file_dict[f]:
+					var child2 = t.create_item(child1)
+					child2.set_cell_mode(0, TreeItem.CELL_MODE_CHECK)
+					child2.set_editable(0, true)
+					child2.set_text(0, sprite)
+	#					child2.set_text_align(0, TreeItem.ALIGN_RIGHT)
+	#					child2.set_selectable(0, false)
+					child1.collapsed = true
+		elif new_text in f.to_lower() or new_text == '':
+			var child1 :TreeItem= t.create_item(root_r)
+			child1.set_cell_mode(0, TreeItem.CELL_MODE_CHECK)
+			child1.set_editable(0, true)
+			child1.set_text(0, f)
+			child1.collapsed = true
+#	var ti_file :TreeItem= t.get_root().get_children()
+#	while ti_file != null:
+#		var import_file_path = file_list[index]
+#		if !(new_text in ti_file.get_text(0)):
+#			ti_file.get_next_visible()
+#			var m :Meta= patchwad.open_asset(import_file_path)
+#			# check if meta file has all sprites checked
+#			var do_merge = false
+#			var ti_sprite :TreeItem= ti_file.get_children()
+#			while ti_sprite != null:
+#				# if not do meta merge :P
+#				if new_text in ti_sprite.get_text(0):
+
+
+func _on_selectAllButton_pressed():
+	var t :Tree = $MarginContainer/VBoxContainer/Resources
+	var ti = t.get_root().get_children()
+	while ti != null:
+		ti.set_checked(0, true)
+		var ti_c = ti.get_children()
+		while ti_c != null:
+			ti_c.set_checked(0, 1)
+			ti_c = ti_c.get_next()
+		ti = ti.get_next()
+	for f in file_dict.keys():
+		if file_dict[f] is Dictionary:
+			for s in file_dict[f].keys():
+				file_dict[f][s] = true
+		else:
+			file_dict[f] = true

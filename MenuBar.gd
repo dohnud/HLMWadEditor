@@ -25,10 +25,9 @@ var operations = {
 	"ViewButton" : [
 		["Expand Asset List", [], 'expandassetlist'],
 		["Show Only Modified Files", ['TOGGLE'], 'togglenewfileslist'],
-		[],
 		["Advanced", [PopupMenu.new()], 'toggleadvanced'],
 		[],
-		["Toggle Asset List", [KEY_CONTROL, KEY_H], 'toggleassetlist'],
+		["Hide Asset List", [KEY_CONTROL, KEY_H], 'toggleassetlist'],
 	],
 	"1MetaButton" : [
 		["Import Sprite from Strip", [KEY_SHIFT, KEY_I], 'import_sprite_strip'],
@@ -250,6 +249,7 @@ func convertmeta():
 	app.meta_editor_node.meta = app.base_wad.parse_orginal_meta(app.selected_asset_name)
 #	app._on_SearchBar_text_entered('')
 	app.asset_tree.create_path(nfn,1).select(0)
+	app.asset_tree.update()
 
 func export_sprite_gif():
 	var w :FileDialog= app.get_node("ImportantPopups/SaveGIFDialog")

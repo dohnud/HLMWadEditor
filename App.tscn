@@ -629,26 +629,26 @@ custom_styles/panel = SubResource( 3 )
 
 [node name="SpriteSheetButton" type="MenuButton" parent="Main/TopMenu/MenuItems"]
 margin_left = 183.0
-margin_right = 274.0
+margin_right = 240.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 50, 0 )
-text = "Texture Page"
+text = "Texture"
 switch_on_hover = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Divider5" type="Panel" parent="Main/TopMenu/MenuItems"]
-margin_left = 274.0
-margin_right = 278.0
+margin_left = 240.0
+margin_right = 244.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 4, 15 )
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 3 )
 
 [node name="MetaButton" type="MenuButton" parent="Main/TopMenu/MenuItems"]
-margin_left = 278.0
-margin_right = 328.0
+margin_left = 244.0
+margin_right = 294.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 50, 0 )
 text = "Meta"
@@ -658,8 +658,8 @@ __meta__ = {
 }
 
 [node name="Divider6" type="Panel" parent="Main/TopMenu/MenuItems"]
-margin_left = 328.0
-margin_right = 332.0
+margin_left = 294.0
+margin_right = 298.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 4, 15 )
 size_flags_vertical = 3
@@ -669,8 +669,8 @@ __meta__ = {
 }
 
 [node name="FontButton" type="MenuButton" parent="Main/TopMenu/MenuItems"]
-margin_left = 332.0
-margin_right = 382.0
+margin_left = 298.0
+margin_right = 348.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 50, 0 )
 text = "Font"
@@ -680,8 +680,8 @@ __meta__ = {
 }
 
 [node name="Divider7" type="Panel" parent="Main/TopMenu/MenuItems"]
-margin_left = 382.0
-margin_right = 386.0
+margin_left = 348.0
+margin_right = 352.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 4, 15 )
 size_flags_vertical = 3
@@ -691,8 +691,8 @@ __meta__ = {
 }
 
 [node name="SoundButton" type="MenuButton" parent="Main/TopMenu/MenuItems"]
-margin_left = 386.0
-margin_right = 437.0
+margin_left = 352.0
+margin_right = 403.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 50, 0 )
 text = "Sound"
@@ -702,8 +702,8 @@ __meta__ = {
 }
 
 [node name="Divider8" type="Panel" parent="Main/TopMenu/MenuItems"]
-margin_left = 437.0
-margin_right = 441.0
+margin_left = 403.0
+margin_right = 407.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 4, 15 )
 size_flags_vertical = 3
@@ -713,7 +713,7 @@ __meta__ = {
 }
 
 [node name="Panel" type="Panel" parent="Main/TopMenu/MenuItems"]
-margin_left = 441.0
+margin_left = 407.0
 margin_right = 1024.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
@@ -2602,7 +2602,6 @@ old_bounds_color = Color( 0.545098, 0.568627, 0.6, 1 )
 new_bounds_color = Color( 0.870588, 0.341176, 0.356863, 1 )
 
 [node name="ImportantPopups" type="ColorRect" parent="."]
-visible = false
 anchor_left = 8.9701e-05
 anchor_top = 0.000159454
 anchor_right = 1.00009
@@ -3003,6 +3002,7 @@ __meta__ = {
 }
 
 [node name="ImportPatchWindowDialog" type="WindowDialog" parent="ImportantPopups"]
+visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 187.0
@@ -3040,20 +3040,45 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="Resources" type="Tree" parent="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer"]
+[node name="SearchBar" type="LineEdit" parent="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer"]
 margin_right = 612.0
-margin_bottom = 440.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 0, 25 )
+custom_icons/clear = ExtResource( 19 )
+custom_styles/focus = ExtResource( 4 )
+custom_styles/normal = SubResource( 5 )
+custom_colors/clear_button_color = Color( 1, 1, 1, 0.584314 )
+clear_button_enabled = true
+right_icon = ExtResource( 28 )
+placeholder_text = "Seach assets"
+script = ExtResource( 29 )
+
+[node name="Resources" type="Tree" parent="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer"]
+margin_top = 29.0
+margin_right = 612.0
+margin_bottom = 323.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_icons/arrow = ExtResource( 51 )
 custom_icons/arrow_collapsed = ExtResource( 51 )
+custom_styles/bg_focus = SubResource( 5 )
+custom_styles/bg = SubResource( 5 )
 custom_constants/item_margin = 20
 hide_root = true
 
-[node name="HBoxContainer" type="HBoxContainer" parent="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer"]
-margin_top = 444.0
+[node name="RichTextLabel" type="Label" parent="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer"]
+margin_top = 327.0
 margin_right = 612.0
-margin_bottom = 469.0
+margin_bottom = 352.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_as_outline = 1
+text = "Note: Origin points and other sprite data are not overwritten when importing sprites."
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer"]
+margin_top = 356.0
+margin_right = 612.0
+margin_bottom = 381.0
+custom_constants/separation = 10
 
 [node name="cancelButton" type="Button" parent="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer/HBoxContainer"]
 margin_right = 52.0
@@ -3061,13 +3086,19 @@ margin_bottom = 25.0
 text = "Cancel"
 
 [node name="Control" type="Control" parent="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 56.0
-margin_right = 554.0
+margin_left = 62.0
+margin_right = 472.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="selectAllButton" type="Button" parent="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 482.0
+margin_right = 548.0
+margin_bottom = 25.0
+text = "Select All"
 
 [node name="okButton" type="Button" parent="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer/HBoxContainer"]
 margin_left = 558.0
@@ -3109,12 +3140,12 @@ script = ExtResource( 48 )
 [connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer/XOriginInput" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_XOriginInput_value_changed"]
 [connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer/YOriginInput" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_YOriginInput_value_changed"]
 [connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer/HBoxContainer/FpsSpinBox" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FpsSpinBox_value_changed"]
-[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_FrameBackTrackButton_pressed"]
 [connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FrameBackTrackButton_pressed"]
-[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_PausePlayButton_toggled"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_FrameBackTrackButton_pressed"]
 [connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_PausePlayButton_toggled"]
-[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_FrameAdvanceButton_pressed"]
+[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_PausePlayButton_toggled"]
 [connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_FrameAdvanceButton_pressed"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_FrameAdvanceButton_pressed"]
 [connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Right/Button" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor" method="_on_Button_toggled"]
 [connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/Timeline/TimelineSlider" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/Timeline/TimelineSlider" method="_on_TimelineSlider_gui_input"]
 [connection signal="tween_all_completed" from="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/Timeline/TimelineSlider/Tween" to="Main/PanelContainer/HBoxContainer/TabContainer/Meta/MetaEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_Tween_tween_all_completed"]
@@ -3177,6 +3208,9 @@ script = ExtResource( 48 )
 [connection signal="popup_hide" from="ImportantPopups/OpenPatchDialog" to="ImportantPopups" method="_on_OpenPatchDialog_popup_hide"]
 [connection signal="file_selected" from="ImportantPopups/SavePatchDialog" to="." method="_on_SavePatchDialog_file_selected"]
 [connection signal="popup_hide" from="ImportantPopups/SavePatchDialog" to="ImportantPopups" method="_on_SavePatchDialog_popup_hide"]
+[connection signal="text_changed" from="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer/SearchBar" to="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer/SearchBar" method="_on_SearchBar_text_changed"]
+[connection signal="text_entered" from="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer/SearchBar" to="ImportantPopups/ImportPatchWindowDialog" method="_on_SearchBar_text_entered"]
 [connection signal="item_edited" from="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer/Resources" to="ImportantPopups/ImportPatchWindowDialog" method="_on_Resources_item_edited"]
 [connection signal="pressed" from="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer/HBoxContainer/cancelButton" to="ImportantPopups/ImportPatchWindowDialog" method="_on_cancelButton_pressed"]
+[connection signal="pressed" from="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer/HBoxContainer/selectAllButton" to="ImportantPopups/ImportPatchWindowDialog" method="_on_selectAllButton_pressed"]
 [connection signal="pressed" from="ImportantPopups/ImportPatchWindowDialog/MarginContainer/VBoxContainer/HBoxContainer/okButton" to="ImportantPopups/ImportPatchWindowDialog" method="_on_okButton_pressed"]

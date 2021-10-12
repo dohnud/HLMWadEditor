@@ -159,6 +159,10 @@ func get(asset):
 	return r
 
 func open_asset(asset_path):
+	if new_files.has(asset_path):
+		return new_files[asset_path]
+	if changed_files.has(asset_path):
+		return changed_files[asset_path]
 	if '.meta' in asset_path:
 		return parse_meta(asset_path)
 	if '.gmeta' in asset_path:
@@ -204,7 +208,10 @@ func sprite_sheet(asset, lazy=0):
 		return loaded_assets[asset]
 	if !is_open(): open(file_path, READ)
 	var img = Image.new()
-	img.load_png_from_buffer(get(asset))
+	var data = get(asset)
+	if !(data is PoolByteArray):
+		return data
+	img.load_png_from_buffer(data)
 #	img.convert(fmt)
 	var tex = ImageTexture.new()
 	tex.create_from_image(img, 0)
@@ -237,6 +244,10 @@ func parse_meta(asset, lazy=0):
 	for p in patchwad_list:
 		if p.exists(asset):
 			return p.parse_meta(asset)
+	if new_files.has(asset):
+		return new_files[asset]
+	if changed_files.has(asset):
+		return changed_files[asset]
 	var tex = null
 	if ".meta" in asset:
 		tex = sprite_sheet(asset.replace(".meta", ".png"))
@@ -436,6 +447,10 @@ func get_bin(asset):
 			return p.get_bin(asset)
 	if loaded_assets.has(asset):
 		return loaded_assets[asset]
+	if new_files.has(asset):
+		return new_files[asset]
+	if changed_files.has(asset):
+		return changed_files[asset]
 	if !exists(asset):return null
 	if !is_open(): open(file_path, READ)
 	var r = null
