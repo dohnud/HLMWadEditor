@@ -118,6 +118,7 @@ boot_splash/fullsize=false
 boot_splash/use_filter=false
 boot_splash/bg_color=Color( 0.066, 0.0792, 0.11, 1 )
 config/icon="res://icon1.png"
+config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
@@ -127,8 +128,8 @@ Config="*res://Scripts/SettingsSingleton.gd"
 [display]
 
 window/size/height=680
-window/size/test_width=1920
-window/size/test_height=1080
+window/size/test_width=1024
+window/size/test_height=680
 window/dpi/allow_hidpi=true
 window/vsync/use_vsync=false
 window/energy_saving/keep_screen_on=false

@@ -314,3 +314,10 @@ func _on_TabContainer_tab_changed(tab):
 				p.visible = true
 				get_child(g+1).visible = true
 		i += 1
+
+
+func _on_exportbutton_pressed():
+	exportspritesheet()
+
+func _on_importbutton_pressed():
+	importspritesheet()
