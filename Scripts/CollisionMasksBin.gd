@@ -211,7 +211,7 @@ func resize(mask_id, width, height, frame_count:int=-1):
 	var mask :MaskEntry = null
 	if masks.has(mask_id):
 		mask = masks[mask_id]
-	else:
+	if mask == null:
 		mask = MaskEntry.new()
 		mask.id = mask_id
 		masks[mask_id] = mask
@@ -223,7 +223,7 @@ func compute_new_mask(mask_id, image_index, img:Image) -> Array:
 	var mask :MaskEntry = null
 	if masks.has(mask_id):
 		mask = masks[mask_id]
-	else:
+	if mask == null:
 		mask = MaskEntry.new()
 		mask.id = mask_id
 		masks[mask_id] = mask
@@ -276,5 +276,52 @@ func write(ref_file, new_file):
 			nf.store_32(fc)
 			nf.store_buffer(f.get_buffer(x * h * fc))
 
+var f_cache = {}
 
+func find(mask_id, ref_file):
+	var f = ref_file
+	if f_cache.has(ref_file):
+		if f_cache[ref_file].has(mask_id):
+			f.seek(f_cache[ref_file][mask_id])
+	else:
+		f_cache[ref_file] = {}
+	var mask_num = f.get_32()
+#	fn.store_32(len(mask_data))
+	var id = f.get_32()
+	f_cache[ref_file][id] = f.get_position()
+	var x = f.get_32()
+	var w = f.get_32()
+	var h = f.get_32()
+	var fc = f.get_32()
+	for i in range(mask_num):
+		if mask_id == id:
+			var mask = MaskEntry.new()
+			mask.x = x
+			mask.width = w
+			mask.height = h
+			mask.frame_count = fc
+			mask.data = []
+			var data_len = mask.x * mask.height
+			for fi in range(fc):
+				var fdata = []
+				for r in range(h):
+					var buffer = f.get_buffer(x)
+					var row = []
+					for byte in buffer:
+						for shift in range(8):
+							row.append(((byte >> shift) & 1)*0xFF)
+					fdata.append(row)
+	#				fdata += row
+				mask.data.append(fdata)
+			return mask
+		else:
+#			nf.store_buffer(f.get_buffer(x * h * fc))
+			f.seek(f.get_position() + x * h * fc)
+		id = f.get_32()
+		f_cache[ref_file][id] = f.get_position()
+		x = f.get_32()
+		w = f.get_32()
+		h = f.get_32()
+		fc = f.get_32()
+	return null
 

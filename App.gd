@@ -53,6 +53,7 @@ func _ready():
 		asset_tree.bold_font.size *= text_scale_multiplier
 		tomakebiggerfont.size *= text_scale_multiplier
 		$NotifList.margin_left *=text_scale_multiplier
+		OS.set_window_size(Vector2(1024, 680)*text_scale_multiplier)
 	var menu_node_list = $Main/TopMenu/MenuItems.get_children()
 	for n in menu_node_list:
 		if n is MenuButton:

@@ -52,8 +52,6 @@ func parse(file_pointer):
 	data = sprite_data
 	names = sprite_names.values()
 
-
-
 #var src_sprite_offsets = {}
 
 #func parse(file_pointer:File):

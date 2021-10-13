@@ -1,11 +1,11 @@
-extends WindowDialog
+extends ConfirmationDialog
 
 onready var app = get_tree().get_nodes_in_group('App')[0]
 var patchwad :Wad= null
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	get_ok().text = "Import"
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -14,6 +14,8 @@ func _ready():
 
 var file_dict = {}
 func _on_ImportWadFileDialog_file_selected(path):
+	patchwad = null
+	file_dict = {}
 	get_parent().show()
 	popup()
 	var wad = Wad.new()
@@ -27,6 +29,8 @@ func _on_ImportWadFileDialog_file_selected(path):
 		tree_r.set_hide_root(true)
 		for f in patchwad.file_locations.keys():
 			# do not list texture files that have a .meta partner, same for fonts
+			if f == CollisionMasksBin.file_path or f == SpritesBin.file_path:
+				continue
 			if f.ends_with('.png') and (patchwad.file_locations.has(f.replace('.png', '.meta')) or patchwad.file_locations.has(f.replace('.png', '.fnt'))):
 				continue
 			file_dict[f] = false
@@ -63,7 +67,9 @@ func _on_Resources_item_edited():
 	if ti != null:
 		var checked = ti.is_checked(0)
 		if ti.get_text(0).ends_with('.meta'):
-			file_dict[ti.get_text(0)] = {}
+#			file_dict[ti.get_text(0)] = {}
+			for sprite in file_dict[ti.get_text(0)].keys():
+				file_dict[ti.get_text(0)][sprite] = checked
 			var sprite_ti :TreeItem= ti.get_children()
 			while sprite_ti != null:
 				sprite_ti.set_checked(0, checked)
@@ -72,8 +78,8 @@ func _on_Resources_item_edited():
 		elif ti.get_parent().get_text(0).ends_with('.meta'):
 			if checked:
 				ti.get_parent().set_checked(0, true)
-			if !file_dict.has(ti.get_parent().get_text(0)) or !(file_dict[ti.get_parent().get_text(0)] is Dictionary):
-				file_dict[ti.get_parent().get_text(0)] = {}
+#			if !file_dict.has(ti.get_parent().get_text(0)) or !(file_dict[ti.get_parent().get_text(0)] is Dictionary):
+#				file_dict[ti.get_parent().get_text(0)] = {}
 			file_dict[ti.get_parent().get_text(0)][ti.get_text(0)] = checked
 		else:
 			file_dict[ti.get_text(0)] = checked
@@ -81,19 +87,11 @@ func _on_Resources_item_edited():
 
 
 func _on_cancelButton_pressed():
-	patchwad = null
-	file_dict = {}
-	hide()
-	get_parent().hide()
+	pass
 
 var file_list = []
 func _on_okButton_pressed():
-	var t :Tree = $MarginContainer/VBoxContainer/Resources
-	var index = 0
-	var ti_file :TreeItem= t.get_root().get_children()
-#	print(file_dict)
-	hide()
-	get_parent().hide()
+	pass
 
 func _on_SearchBar_text_entered(new_text=''):
 	var t :Tree = $MarginContainer/VBoxContainer/Resources
@@ -133,11 +131,13 @@ func _on_SearchBar_text_entered(new_text=''):
 				child1.set_editable(0, true)
 				child1.set_text(0, f)
 				child1.collapsed = true
+				child1.set_checked(0, (true in file_dict[f].values()))
 				for sprite in file_dict[f]:
 					var child2 = t.create_item(child1)
 					child2.set_cell_mode(0, TreeItem.CELL_MODE_CHECK)
 					child2.set_editable(0, true)
 					child2.set_text(0, sprite)
+					child2.set_checked(0,file_dict[f][sprite])
 	#					child2.set_text_align(0, TreeItem.ALIGN_RIGHT)
 	#					child2.set_selectable(0, false)
 					child1.collapsed = true
@@ -147,6 +147,7 @@ func _on_SearchBar_text_entered(new_text=''):
 			child1.set_editable(0, true)
 			child1.set_text(0, f)
 			child1.collapsed = true
+			child1.set_checked(0, file_dict[f])
 #	var ti_file :TreeItem= t.get_root().get_children()
 #	while ti_file != null:
 #		var import_file_path = file_list[index]
@@ -181,3 +182,8 @@ func _on_selectAllButton_pressed():
 var collision_toggle = false
 func _on_CheckBox_toggled(button_pressed):
 	collision_toggle = button_pressed
+
+
+func _on_ImportPatchWindowDialog_popup_hide():
+	hide()
+	get_parent().hide()
