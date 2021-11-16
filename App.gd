@@ -706,7 +706,7 @@ func _on_ResizeSpriteDialog_confirmed():
 				base_wad.spritebin.sprite_data[sprite]['frame_count'] = nfc
 				base_wad.changed_files[SpritesBin.file_path] = base_wad.spritebin
 				base_wad.get_bin(CollisionMasksBin.file_path).resize(base_wad.spritebin.sprite_data[sprite]['id'], new_size.x, new_size.y, fc)
-				for i in range(fc):
+				for i in range(nfc):
 					var f = meta.sprites.get_frame(sprite, i)
 					var b_list = base_wad.get_bin(CollisionMasksBin.file_path).compute_new_mask(base_wad.spritebin.sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D
 					base_wad.spritebin.sprite_data[sprite]['mask_x_bounds'] = b_list[0]

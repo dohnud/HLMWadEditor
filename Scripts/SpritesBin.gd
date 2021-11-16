@@ -8,7 +8,7 @@ var sprites = {}
 var sprite_indicies = []
 var sprite_names = {}
 
-const spr = {
+var spr = {
 	'id' : '32',
 	'size' : 'ivec2',
 	'center' : 'ivec2',
