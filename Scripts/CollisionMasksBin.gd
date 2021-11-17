@@ -147,16 +147,16 @@ func byte_array_to_int(bytes):
 class MaskEntry:
 	var id:int
 	var x:int
-	var width:int
-	var height: int
-	var frame_count:int
+	var width:int = 1
+	var height: int = 1
+	var frame_count:int = 1
 	var data : Array # [frame1[10][12], frame2[48][33]]
 	
 	func resize(_width:int, _height:int, _frame_count:int=-1):
 		if _frame_count < 1:
 			if width == _width and height == _height:
 				return self
-			_frame_count = frame_count
+			_frame_count = max(1, frame_count)
 		if width == _width and height == _height and frame_count == _frame_count:
 			return self
 		frame_count = _frame_count
