@@ -12,82 +12,82 @@ _global_script_classes=[ {
 "base": "BinParser",
 "class": "AtlasesBin",
 "language": "GDScript",
-"path": "res://Scripts/AtlasBin.gd"
+"path": "res://Scripts/Asset Scripts/AtlasBin.gd"
 }, {
 "base": "BinParser",
 "class": "BackgroundsBin",
 "language": "GDScript",
-"path": "res://Scripts/BackgroundsBin.gd"
+"path": "res://Scripts/Asset Scripts/BackgroundsBin.gd"
 }, {
 "base": "Control",
 "class": "BinEditor",
 "language": "GDScript",
-"path": "res://Editors/BinEditor.gd"
+"path": "res://Scripts/Editor Scripts/BinEditor.gd"
 }, {
 "base": "Node",
 "class": "BinParser",
 "language": "GDScript",
-"path": "res://Scripts/BinParser.gd"
+"path": "res://Scripts/Asset Scripts/BinParser.gd"
 }, {
 "base": "BinParser",
 "class": "CollisionMasksBin",
 "language": "GDScript",
-"path": "res://Scripts/CollisionMasksBin.gd"
+"path": "res://Scripts/Asset Scripts/CollisionMasksBin.gd"
 }, {
 "base": "Node",
 "class": "Logger",
 "language": "GDScript",
-"path": "res://Scripts/LogSingleton.gd"
+"path": "res://Scripts/Asset Scripts/LogSingleton.gd"
 }, {
 "base": "Node",
 "class": "Meta",
 "language": "GDScript",
-"path": "res://Scripts/Meta.gd"
+"path": "res://Scripts/Asset Scripts/Meta.gd"
 }, {
 "base": "AtlasTexture",
 "class": "MetaTexture",
 "language": "GDScript",
-"path": "res://Scripts/MetaTexture.gd"
+"path": "res://Scripts/Asset Scripts/MetaTexture.gd"
 }, {
 "base": "BinParser",
 "class": "ObjectsBin",
 "language": "GDScript",
-"path": "res://Scripts/ObjectsBin.gd"
+"path": "res://Scripts/Asset Scripts/ObjectsBin.gd"
 }, {
 "base": "BinParser",
 "class": "RoomsBin",
 "language": "GDScript",
-"path": "res://Scripts/RoomsBin.gd"
+"path": "res://Scripts/Asset Scripts/RoomsBin.gd"
 }, {
 "base": "Node",
 "class": "Settings",
 "language": "GDScript",
-"path": "res://Scripts/SettingsSingleton.gd"
+"path": "res://Scripts/Asset Scripts/SettingsSingleton.gd"
 }, {
 "base": "BinParser",
 "class": "SoundsBin",
 "language": "GDScript",
-"path": "res://Scripts/SoundsBin.gd"
+"path": "res://Scripts/Asset Scripts/SoundsBin.gd"
 }, {
 "base": "BinParser",
 "class": "SpritesBin",
 "language": "GDScript",
-"path": "res://Scripts/SpritesBin.gd"
+"path": "res://Scripts/Asset Scripts/SpritesBin.gd"
 }, {
 "base": "File",
 "class": "Wad",
 "language": "GDScript",
-"path": "res://Scripts/Wad.gd"
+"path": "res://Scripts/Asset Scripts/Wad.gd"
 }, {
 "base": "Node",
 "class": "WadFont",
 "language": "GDScript",
-"path": "res://Scripts/WadFont.gd"
+"path": "res://Scripts/Asset Scripts/WadFont.gd"
 }, {
 "base": "Node",
 "class": "WadSound",
 "language": "GDScript",
-"path": "res://Scripts/WadSound.gd"
+"path": "res://Scripts/Asset Scripts/WadSound.gd"
 } ]
 _global_script_class_icons={
 "AtlasesBin": "",
@@ -111,19 +111,19 @@ _global_script_class_icons={
 [application]
 
 config/name="HLMWadEditor"
-run/main_scene="res://App.tscn"
+run/main_scene="res://Scripts/App.tscn"
 run/low_processor_mode=true
-boot_splash/image="res://icon1.png"
+boot_splash/image="res://Icons/icon1.png"
 boot_splash/fullsize=false
 boot_splash/use_filter=false
 boot_splash/bg_color=Color( 0.066, 0.0792, 0.11, 1 )
-config/icon="res://icon1.png"
+config/icon="res://Icons/icon1.png"
 config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
-Log="*res://Scripts/LogSingleton.gd"
-Config="*res://Scripts/SettingsSingleton.gd"
+Log="*res://Scripts/Asset Scripts/LogSingleton.gd"
+Config="*res://Scripts/Asset Scripts/SettingsSingleton.gd"
 
 [display]
 
