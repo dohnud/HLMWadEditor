@@ -41,5 +41,5 @@ func _on_ExportSpriteStripDialog_dir_selected(dir):
 			var f :MetaTexture= meta.sprites.get_frame(sprite, i)
 			img.crop((i+1) * f.region.size.x, f.region.size.y)
 			img.blit_rect(f.atlas.get_data(), f.region, Vector2(i * f.region.size.x,0))
-		var e = img.save_png(dir+'/'+sprite+'.png')
+		var e = img.save_png(dir+'/'+sprite+'_strip.png')
 	OS.shell_open(str("file://", dir))

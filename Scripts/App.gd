@@ -468,8 +468,8 @@ func _on_ExportSpriteStripButton_pressed():
 	w.filters = ['*.png']
 	w.current_file = ''
 	w.get_line_edit().text = ''
-	w.get_line_edit().text = meta_editor_node.current_sprite+'.png'
-	w.current_file = meta_editor_node.current_sprite+'.png'
+	w.get_line_edit().text = meta_editor_node.current_sprite+'_strip.png'
+	w.current_file = meta_editor_node.current_sprite+'_strip.png'
 
 func export_sprite_strips():
 	var w :FileDialog= get_node("ImportantPopups/ExportSpriteStripDialog")
@@ -480,6 +480,8 @@ func export_sprite_strips():
 	w.mode = FileDialog.MODE_OPEN_DIR
 	w.window_title = 'Select a destination Folder'
 	w.filters = []
+	w.current_file = ''
+	w.get_line_edit().text = ''
 	get_node("ImportantPopups").show()
 	w.popup()
 
