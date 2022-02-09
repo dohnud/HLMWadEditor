@@ -163,13 +163,13 @@ func open_asset(asset_path):
 		return new_files[asset_path]
 	if changed_files.has(asset_path):
 		return changed_files[asset_path]
-	if '.meta' in asset_path:
+	if asset_path.ends_with('.meta'):
 		return parse_meta(asset_path)
-	if '.gmeta' in asset_path:
+	if asset_path.ends_with('.gmeta'):
 		return parse_meta(asset_path)
-	if '.png' in asset_path:
+	if asset_path.ends_with('.png'):
 		return sprite_sheet(asset_path)
-	if '.bin' in asset_path:
+	if asset_path.ends_with('.bin'):
 		return get_bin(asset_path)
 	return null
 

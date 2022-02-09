@@ -2609,7 +2609,6 @@ old_bounds_color = Color( 0.545098, 0.568627, 0.6, 1 )
 new_bounds_color = Color( 0.870588, 0.341176, 0.356863, 1 )
 
 [node name="ImportantPopups" type="ColorRect" parent="."]
-visible = false
 anchor_left = 8.9701e-05
 anchor_top = 0.000159454
 anchor_right = 1.00009
@@ -2860,6 +2859,7 @@ __meta__ = {
 }
 
 [node name="ImportSpriteStripSliceDialog" type="WindowDialog" parent="ImportantPopups"]
+visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 146.0
@@ -2913,20 +2913,36 @@ margin_right = 714.0
 margin_bottom = 506.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer"]
-margin_right = 235.0
+margin_right = 165.0
 margin_bottom = 31.0
 size_flags_horizontal = 3
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer"]
-margin_left = 239.0
-margin_right = 474.0
+margin_left = 169.0
+margin_right = 544.0
 margin_bottom = 31.0
 size_flags_horizontal = 3
 alignment = 1
 
+[node name="PanelContainer2" type="PanelContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2"]
+margin_right = 149.0
+margin_bottom = 31.0
+custom_styles/panel = ExtResource( 11 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer2"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 146.0
+margin_bottom = 28.0
+
+[node name="CheckButton" type="CheckBox" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer"]
+margin_right = 143.0
+margin_bottom = 25.0
+text = "Overwrite Collision"
+
 [node name="PanelContainer" type="PanelContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2"]
-margin_left = 6.0
-margin_right = 228.0
+margin_left = 153.0
+margin_right = 375.0
 margin_bottom = 31.0
 custom_styles/panel = ExtResource( 11 )
 
@@ -2956,15 +2972,15 @@ __meta__ = {
 }
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer"]
-margin_left = 478.0
+margin_left = 548.0
 margin_right = 714.0
 margin_bottom = 31.0
 size_flags_horizontal = 3
 alignment = 2
 
 [node name="Button" type="Button" parent="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer3"]
-margin_left = 181.0
-margin_right = 236.0
+margin_left = 111.0
+margin_right = 166.0
 margin_bottom = 31.0
 rect_min_size = Vector2( 55, 0 )
 custom_styles/normal = ExtResource( 11 )

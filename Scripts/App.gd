@@ -470,6 +470,7 @@ func _on_ExportSpriteStripButton_pressed():
 	w.get_line_edit().text = ''
 	w.get_line_edit().text = meta_editor_node.current_sprite+'_strip.png'
 	w.current_file = meta_editor_node.current_sprite+'_strip.png'
+	w.get_line_edit().text = meta_editor_node.current_sprite+'_strip.png'
 
 func export_sprite_strips():
 	var w :FileDialog= get_node("ImportantPopups/ExportSpriteStripDialog")
@@ -544,7 +545,7 @@ func _on_SavePatchDialog_file_selected(path):
 	
 	var f = File.new()
 	if f.open(path, File.WRITE):
-		print('couldnt open',path,'\nfile in use?')
+		print('could not open',path,'\nfile in use?')
 		return
 	f.store_buffer(base_wad.identifier)
 
@@ -591,12 +592,24 @@ func _on_SavePatchDialog_file_selected(path):
 			if base_wad.goto(file) == null:
 				$ErrorDialog.popup()
 			else:
-				fc.write(base_wad, f)
+				var bw = base_wad
+				for p in bw.patchwad_list:
+					if p.exists(file):
+						bw = p
+						break
+				bw.goto(file)
+				fc.write(bw, f)
 		elif fc is CollisionMasksBin:
 			if base_wad.goto(file) == null:
 				$ErrorDialog.popup()
 			else:
-				fc.write(base_wad, f)
+				var bw = base_wad
+				for p in bw.patchwad_list:
+					if p.exists(file):
+						bw = p
+						break
+				bw.goto(file)
+				fc.write(bw, f)
 		elif fc is BinParser:
 			fc.write(f)
 		elif fc is WadSound:

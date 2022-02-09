@@ -6,6 +6,7 @@ var operations = {
 	"FileButton" : [
 		["Open Patch", [KEY_CONTROL, KEY_O], 'openpatch'],
 		["Save Patch", [KEY_CONTROL,KEY_S,], 'savepatch'],
+		[],
 		["Import from Patch", [KEY_CONTROL, KEY_I], 'importpatch'],
 		[],
 		["Recent Patches", [PopupMenu.new()], 'openrecentpatch'],
@@ -258,7 +259,9 @@ func export_sprite_gif():
 	var meta :Meta= app.meta_editor_node.meta
 	nw.meta = meta
 	nw.sprite = app.meta_editor_node.current_sprite
+	
 	w.popup()
+	w.get_line_edit().text = app.meta_editor_node.current_sprite+'.gif'
 
 func export_sprite_strip():
 	app._on_ExportSpriteStripButton_pressed()

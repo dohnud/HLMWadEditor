@@ -80,7 +80,7 @@ func merge_sprite(dst_meta:Meta, src_meta:Meta, sprite, rsc_file_path):
 		dst_meta.sprites.add_animation(sprite)
 		if nb and collision_toggle:
 			patchwad.goto(CollisionMasksBin.file_path)
-			var import_mask = patch_collisionbin.find(base_spritebin.sprite_data[sprite]['id'])
+			var import_mask = patch_collisionbin.find(base_spritebin.sprite_data[sprite]['id'], patchwad)
 			if import_mask != null:
 				base_collisionbin.masks[base_spritebin.sprite_data[sprite]['id']] = import_mask
 #			app.base_wad.get_bin(CollisionMasksBin.file_path).resize(base_spritebin.sprite_data[sprite]['id'], w,h, frame_count) # :D
