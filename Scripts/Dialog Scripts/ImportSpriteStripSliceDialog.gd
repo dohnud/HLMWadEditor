@@ -54,7 +54,7 @@ func _on_Button_pressed():
 		meta.sprites.add_animation(sprite)
 		if nb and collision_toggle:
 			collision_bin.resize(app.base_wad.spritebin.sprite_data[sprite]['id'], d,h, frame_count) # :D
-		app.base_wad.changed_files[CollisionMasksBin.file_path] = collision_bin
+			app.base_wad.changed_files[CollisionMasksBin.file_path] = collision_bin
 		for i in range(frame_count):
 			var f = MetaTexture.new()
 			f.region = Rect2(i*d, 0, d, h)
@@ -66,14 +66,14 @@ func _on_Button_pressed():
 				app.base_wad.spritebin.sprite_data[sprite]['mask_y_bounds'] = b_list[1]
 		app.meta_editor_node.frametexturerect.update()
 		if nb:
-			if collision_toggle:
-				app.base_wad.spritebin.sprite_data[sprite]['size'] = Vector2(d, h)
-				app.base_wad.spritebin.sprite_data[sprite]['frame_count'] = frame_count
+#			if collision_toggle:
+			app.base_wad.spritebin.sprite_data[sprite]['size'] = Vector2(d, h)
+			app.base_wad.spritebin.sprite_data[sprite]['frame_count'] = frame_count
 	#			app.base_wad.get_bin(CollisionMasksBin.file_path).resize(app.base_wad.spritebin.sprite_data[sprite]['id'], d,h, frame_count) # :D
 	#			app.base_wad.changed_files[CollisionMasksBin.file_path] = app.base_wad.get_bin(CollisionMasksBin.file_path)
-				app.base_wad.changed_files[SpritesBin.file_path] = app.base_wad.spritebin
-				app.base_wad.changed_files[app.selected_asset_name] = app.selected_asset_data # mark .meta as changed cuz it was
-				app._on_RecalculateSheetButton_pressed() # recalc sprite sheet in background
+			app.base_wad.changed_files[SpritesBin.file_path] = app.base_wad.spritebin
+			app.base_wad.changed_files[app.selected_asset_name] = app.selected_asset_data # mark .meta as changed cuz it was
+			app._on_RecalculateSheetButton_pressed() # recalc sprite sheet in background
 		else:
 			var tilesheet = sprite.substr(sprite.find_last('/')+1)
 			app.base_wad.backgroundbin.background_data[tilesheet]['size'] = Vector2(w,h)
