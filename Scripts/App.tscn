@@ -713,8 +713,30 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Panel" type="Panel" parent="Main/TopMenu/MenuItems"]
+[node name="RoomButton" type="MenuButton" parent="Main/TopMenu/MenuItems"]
 margin_left = 407.0
+margin_right = 457.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 50, 0 )
+text = "Room"
+switch_on_hover = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Divider9" type="Panel" parent="Main/TopMenu/MenuItems"]
+margin_left = 457.0
+margin_right = 461.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 4, 15 )
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="Main/TopMenu/MenuItems"]
+margin_left = 461.0
 margin_right = 1024.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
@@ -1486,6 +1508,7 @@ script = ExtResource( 28 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+folder_icon = null
 folder_mod = Color( 1, 1, 1, 1 )
 subfolder_mod = Color( 1, 1, 1, 1 )
 
@@ -1670,6 +1693,9 @@ script = ExtResource( 18 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+folder_icon = null
+folder_mod = Color( 0, 0, 0, 1 )
+subfolder_mod = Color( 0, 0, 0, 1 )
 
 [node name="Atlas" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
 visible = false
@@ -1732,6 +1758,9 @@ script = ExtResource( 42 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+folder_icon = null
+folder_mod = Color( 0, 0, 0, 1 )
+subfolder_mod = Color( 0, 0, 0, 1 )
 
 [node name="Sound" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
 visible = false
@@ -1798,6 +1827,9 @@ script = ExtResource( 18 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+folder_icon = null
+folder_mod = Color( 0, 0, 0, 1 )
+subfolder_mod = Color( 0, 0, 0, 1 )
 
 [node name="Container" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor"]
 margin_top = 29.0
@@ -2206,8 +2238,8 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.wad" )
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -2226,8 +2258,8 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.patchwad", "*.wad" )
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -2738,8 +2770,8 @@ resizable = true
 mode_overrides_title = false
 access = 2
 filters = PoolStringArray( "*.gif" )
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -2757,8 +2789,8 @@ window_title = "Extract Resource to a File"
 resizable = true
 mode_overrides_title = false
 access = 2
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 script = ExtResource( 23 )
 __meta__ = {
 "_edit_use_anchors_": true
@@ -2779,8 +2811,8 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.meta", "*.gmeta" )
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -2800,8 +2832,8 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.png" )
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -2820,8 +2852,8 @@ resizable = true
 mode_overrides_title = false
 access = 2
 filters = PoolStringArray( "*.png" )
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 script = ExtResource( 43 )
 __meta__ = {
 "_edit_use_anchors_": true
@@ -2842,8 +2874,8 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.png" )
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -2991,8 +3023,8 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.patchwad", "*.wad" )
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -3009,8 +3041,8 @@ popup_exclusive = true
 resizable = true
 access = 2
 filters = PoolStringArray( "*.patchwad" )
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -3223,7 +3255,6 @@ margin_right = 236.0
 [node name="Timer" type="Timer" parent="."]
 wait_time = 3.0
 script = ExtResource( 17 )
-
 [connection signal="text_changed" from="Main/PanelContainer/HBoxContainer/VBoxContainer/SearchBar" to="Main/PanelContainer/HBoxContainer/VBoxContainer/SearchBar" method="_on_SearchBar_text_changed"]
 [connection signal="text_entered" from="Main/PanelContainer/HBoxContainer/VBoxContainer/SearchBar" to="." method="_on_SearchBar_text_entered"]
 [connection signal="item_selected" from="Main/PanelContainer/HBoxContainer/VBoxContainer/AssetTree" to="Main/PanelContainer/HBoxContainer/VBoxContainer/AssetTree" method="_on_Tree_item_selected"]
@@ -3262,12 +3293,12 @@ script = ExtResource( 17 )
 [connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/TabContainer2/Advanced/SoundTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/TabContainer2/Advanced/SoundTree" method="_on_ObjectTree_gui_input"]
 [connection signal="item_edited" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/TabContainer2/Advanced/SoundTree" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor" method="_on_SoundTree_item_edited"]
 [connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer/HBoxContainer/HSlider" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor" method="_on_HSlider_value_changed"]
-[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor" method="_on_FrameBackTrackButton_pressed"]
 [connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_FrameBackTrackButton_pressed"]
-[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor" method="_on_PausePlayButton_toggled"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameBackTrackButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor" method="_on_FrameBackTrackButton_pressed"]
 [connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_PausePlayButton_toggled"]
-[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor" method="_on_FrameAdvanceButton_pressed"]
+[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor" method="_on_PausePlayButton_toggled"]
 [connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_FrameAdvanceButton_pressed"]
+[connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/FrameAdvanceButton" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor" method="_on_FrameAdvanceButton_pressed"]
 [connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Right/Button" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor" method="_on_Button_toggled"]
 [connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/Timeline/TimelineSlider" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/Timeline/TimelineSlider" method="_on_TimelineSlider_gui_input"]
 [connection signal="resized" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/Timeline/TimelineSlider" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/Timeline/TimelineSlider" method="_on_TimelineSlider_resized"]

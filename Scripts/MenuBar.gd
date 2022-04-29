@@ -59,6 +59,9 @@ var operations = {
 	"7SoundButton" : [
 		["Import Sound", [], 'na'],
 	],
+	"2RoomButton" : [
+		["Add Generic Object to Room", [], 'room_add_object'],
+	],
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -194,6 +197,9 @@ func extract(resource_data=null):
 	else:
 		app.get_node('NotImplementedYetDialog').popup()
 	w.popup()
+
+func room_add_object():
+	app.room_editor_node.add_generic_object()
 
 func add():
 	var w :FileDialog= app.get_node("ImportantPopups/AddResourceDialog")

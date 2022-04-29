@@ -16,6 +16,14 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+func add_generic_object():
+	room['objects'].append({
+		'mystery' : 1,
+		'mystery1' : 1,
+		'mystery2' : 1,
+		'id' : 2342,
+		'pos': Vector2(0,0),
+	})
 
 func set_room(room_name):
 	set_bin_asset(room_name)
@@ -55,7 +63,7 @@ func _on_RoomTree_item_edited(deleted=0):
 			if (len(value) > 1 and len(value) < 3):
 				if can_be_int_fuck_you_godot(value[0]) and can_be_int_fuck_you_godot(value[1]):
 					v = Vector2(can_be_int_fuck_you_godot(value[0]), can_be_int_fuck_you_godot(value[1]))
-		elif d[last_k] is int and can_be_int_fuck_you_godot(value):
+		elif d[last_k] is int and (can_be_int_fuck_you_godot(value) or value == '0'):
 			v = can_be_int_fuck_you_godot(value)
 		if v != d[last_k]:
 			d[last_k] = v
