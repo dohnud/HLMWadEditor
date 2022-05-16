@@ -21,8 +21,8 @@ func _ready():
 func set_sprite(sprite_name):
 	$Label.text = sprite_name
 	sprite_tree.reset()
-#	sprites = app.base_wad.spritebin
-	sprites = app.base_wad.get_bin(SpritesBin.file_path)
+#	sprites = app.base_wad.get_bin(SpritesBin)
+	sprites = app.base_wad.get_bin(SpritesBin)
 	bin = sprites
 	sprite = sprites.sprite_data[sprite_name]
 	sprite_tree.create_dict(sprite)

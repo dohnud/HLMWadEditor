@@ -4,7 +4,9 @@ class_name CollisionMasksBin
 
 
 
-const file_path = 'GL/hlm2_collision_masks.bin'
+var version = 2
+static func get_file_path():
+	return 'GL/hlm2_collision_masks.bin'
 var mask_data = {}
 var masks = {}
 var mask_indicies = []

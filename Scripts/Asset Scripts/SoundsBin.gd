@@ -2,8 +2,12 @@ extends BinParser
 
 class_name SoundsBin
 
-const file_path = 'GL/hlm2_sounds.bin'
-const snd = {
+var version = 2
+static func get_file_path():
+	return 'GL/hlm2_sounds.bin'
+func _to_string():
+	return get_file_path()
+var snd = {
 	'id' : '32',
 	'mystery' : '32',
 	'name_pos' : '32',

@@ -1,27 +1,23 @@
-extends BinParser
+extends "res://Scripts/Asset Scripts/SpritesBin.gd"
 
-class_name SpritesBin
+class_name phyreSpritesBin
 
 #const file_path = 'GL/hlm2_sprites.bin'
 #const alt_file_path = 'GL/hotline_sprites.bin'
 static func get_file_path():
-	return 'GL/hlm2_sprites.bin'
-var version = 2
-var sprite_data = {}
-var sprites = {}
-var sprite_indicies = []
-var sprite_names = {}
+	return 'GL/hotline_sprites.bin'
+func _to_string():
+	return 'GL/hotline_sprites.bin'
 
-var spr = {
+func _init():
+	spr = {
 	'id' : '32',
 	'size' : 'ivec2',
 	'center' : 'ivec2',
 	'mask_x_bounds' : 'ivec2',
 	'mask_y_bounds' : 'ivec2',
 	'frame_count' : '32',
-	'flags': [0x10],
-	'name_pos' : '32',
-	'padding' : '32'
+	'padding':[4*4]
 }
 
 #class SpriteEntry:
@@ -39,20 +35,36 @@ func get_sprite(sprite_index):
 	return sprites[sprite_index]
 
 func get_sprite_name(sprite_index):
-	return sprite_names[sprites[sprite_index].name_pos]
+	if sprite_index < 0 or !sprites.has(sprite_index): return 'NULL'
+	return sprites[sprite_index]['name']
 
-var ref_start = 0
+#var ref_start = 0
 func parse(file_pointer):
 	var f = file_pointer
 #	ref_start = f.get_position()
 #	sprite_indicies = parse_index_list(f)
-	f.seek(f.get_position() + f.get_32()*4 + 4) # skip indicies
-	sprites = parse_struct_map(f, spr, 'id')
-	sprite_names = parse_string_map(f)
-	for sprite in sprites.values():
-		var s = sprite_names[sprite['name_pos']]
+	sprite_indicies = parse_simple_list(f)
+	var sprite_num = f.get_32()
+	for i in range(sprite_num):
+		var sprite = parse_struct(f, spr)
+		sprite['name'] = f.get_buffer(92).get_string_from_ascii()
+		sprites[sprite['id']] = sprite
+		
+#	for sprite in sprites.values():
+		var s = sprite['name'].get_file()
+#		prints(sprite['id'], sprite['name'])
 		sprite['name'] = s
 		sprite_data[s] = sprite
+	
+#	var csv = File.new()
+#	if !csv.open('./sprite_data.csv',File.WRITE):
+#		csv.store_string('id, name, frame count, dimensions, anchor point')
+#		for i in range(sprite_num):
+#			if sprites.has(i):
+#				var spr = sprites[i]
+#				csv.store_string(
+#					"%s, %s, %s, %s, %s\n" % [spr.id, spr.name, spr.frame_count, spr.size, spr.center]
+#				)
 	data = sprite_data
 	names = sprite_names.values()
 
@@ -96,23 +108,9 @@ func write(ref_file, new_file):
 #		print(id)
 		if sprites.has(id):
 			write_struct(nf, spr, sprites[id])
-			f.seek(f.get_position()+60)
+			for j in range(92-len(sprites[id]['name'])):
+				nf.store_8(0)
+			f.seek(f.get_position()+148-0x04)
 		else:
-#			write_struct(nf, spr, ts)
-#			var sprite :SpriteEntry= sprites[id]
-#			nf.store_32(id)
-#			nf.store_32(sprite.size.x)
-#			nf.store_32(sprite.size.y)
-#			nf.store_32(sprite.center.x)
-#			nf.store_32(sprite.center.y)
-#			nf.store_32(sprite.mask_x_bounds.x)
-#			nf.store_32(sprite.mask_x_bounds.y)
-#			nf.store_32(sprite.mask_y_bounds.x)
-#			nf.store_32(sprite.mask_y_bounds.y)
-#			nf.store_32(sprite.frame_count)
-#			nf.store_buffer(f.flags)
-#			nf.store_32(sprite.name_pos)
-#			nf.store_32(sprite.padding)
-			nf.store_32(id)
-			nf.store_buffer(f.get_buffer(60))#4+4+4+4+4+4+4+4+4+0x10+4+4))
+			nf.store_buffer(f.get_buffer(148-0x04))#4+4+4+4+4+4+4+4+4+0x10+4+4))
 	write_string_list(nf, sprite_names.values())

@@ -1,6 +1,6 @@
-extends Node
+extends BinParser
 
-class_name Meta
+class_name PhyreMeta
 
 #- .meta file identifier - 16 byte byte array
 #- game (hm1 or hm2) -      4 byte integer
@@ -60,125 +60,199 @@ var center_norms = {}
 var sprite_names_ordered = []
 var texture_dimensions = Vector2.ZERO
 
-func parse(file_pointer, size, _texture_page=null) -> SpriteFrames:
-	texture_page = _texture_page
-	var f = file_pointer
+var dumb_datas = []
+var global_pixel_data_offset = 0
+var uvs = []
+var order = {}
+
+func parse(file_pointer, size, spritebin, atlasbin, bgbin, asset_path):
+	var f :File= file_pointer
 	var start = f.get_position()
-	# skip id, gameid, unusedid
-	f.seek(start + 0x10 + 0x04 + 0x04)
 	
-	while f.get_position() < start + size:
-		# parse sprite name
-		var sprite_name_l = f.get_8()
-		var sprite_name = f.get_buffer(sprite_name_l).get_string_from_ascii()
-		sprites.add_animation(sprite_name)
-		sprite_names_ordered.append(sprite_name)
-		
-		# parse sprite frame
-		var image_count = f.get_32()
-		for i in range(image_count):
-			f.get_32() #4 bytes of padding for some reason
-			var img = MetaTexture.new()
-			var w = f.get_32()
-			var h = f.get_32()
-			var x = f.get_32()
-			var y = f.get_32()
-			img.region = Rect2(x,y,w,h);
-#			img.position = Vector2(x,y)
-#			img.meta_position = Vector2(x,y)
-			img.atlas = texture_page
-			# skip uv coords
-			# top left
-			var p = Vector2(f.get_float(), f.get_float())
-			# bottom right
-			var c =  Vector2(f.get_float(), f.get_float())
-			img.uv = Rect2(p, c-p)
-			if !center_norms.has(sprite_name):
-				center_norms[sprite_name] = c
-			sprites.add_frame(sprite_name, img)
-			sprites.set_animation_speed(sprite_name, 60)
-	f.seek(start + size)
-	sprites.remove_animation("default")
-	return sprites
+	var file_name = asset_path.get_file().replace('.ags.phyre','')
+	var target_atlas_id = atlasbin.atlas_names.find(file_name)
+	
+	 # file signature
+	dumb_datas.append([
+		f.get_buffer(4),
+		f.get_32(),      # important (header size)
+		f.get_32(),      # important (next size)
+		f.get_buffer(4),
+		f.get_32(),
+		f.get_32(),      # important (texture_header_size)
+		f.get_32(),
+		f.get_32(),      # important (texture info size)
+		f.get_32(),
+		f.get_32(),f.get_32(),f.get_32(),f.get_32(),
+		f.get_32(),
+		f.get_32(),      # important (texture offset)
+	])
+	dumb_datas.append([f.get_buffer(dumb_datas[0][1] - (f.get_position()-start))])
+	
+	global_pixel_data_offset = start + 0x80+100 + dumb_datas[0][1] + dumb_datas[0][2] + dumb_datas[0][14] + dumb_datas[0][5] - 47
+	
+	dumb_datas.append([
+		f.get_buffer(4),
+		f.get_32(),      # important (data size)
+		f.get_32(),      # important (next size)
+	])
+	dumb_datas.append([f.get_buffer(dumb_datas[2][1] - 0x4 - 0x4)])
+	
+	dumb_datas.append([
+		f.get_32(),
+		f.get_32(),      # important (block size)
+		f.get_32(),
+		f.get_32(),
+		f.get_32(),      # padding
+		f.get_32(),
+		f.get_32(),
+		f.get_32(),      # padding
+		f.get_32(),
+		f.get_32(),
+		f.get_32(),
+		f.get_32(),
+		f.get_32(),
+		f.get_32(),      # padding
+		f.get_32(),      # important (num images)
+	])
+	dumb_datas.append([f.get_buffer(dumb_datas[4][1] + 80)])
+	
+	var num_images = dumb_datas[4][14]
+	
+	dumb_datas.append([])
+	for i in range(num_images):
+		var stuff = [f.get_float(), f.get_float(),f.get_float(),f.get_float(),f.get_float(),f.get_float()]
+		uvs.append(Rect2(
+			stuff[2],stuff[3],
+			stuff[4],stuff[5]
+		))
+		dumb_datas[6].append_array(stuff)
+	
+	dumb_datas.append([[]])
+	var image_names = []
+	var j = 0
+	while j < num_images:
+		var s = ''
+		var c = f.get_8()
+		dumb_datas[7][0].append(c)
+		while c != 0:
+			s += char(c)
+			c = f.get_8()
+			dumb_datas[7][0].append(c)
+		if s == '': continue
+		image_names.append(s)
+		j += 1
+	
+	var comeback = f.get_position()
+	var texture_block_header = f.get_buffer(200)
+	var rgba8_tag_index = 0
+	while rgba8_tag_index<200 and texture_block_header.subarray(rgba8_tag_index,rgba8_tag_index+5).get_string_from_ascii() != 'RGBA8':
+		rgba8_tag_index+=1
+	if rgba8_tag_index < 1 or rgba8_tag_index >= 200:
+		print('FUCK! @', f.get_position())
+		return
+	
+	var comeonman = (19 - dumb_datas[0][7])
+	global_pixel_data_offset = comeback + rgba8_tag_index + dumb_datas[0][5] + 37 - comeonman
+	
+	var texture_height = bytes_to_int(texture_block_header.subarray(rgba8_tag_index-36, rgba8_tag_index-33))
+	var texture_width  = bytes_to_int(texture_block_header.subarray(rgba8_tag_index-40, rgba8_tag_index-37))
+	
+	# 
+	f.seek(comeback)
+	dumb_datas.append([f.get_buffer(global_pixel_data_offset - f.get_position())])
+
+	
+	
+	f.seek(global_pixel_data_offset)
+	var img = Image.new()
+	img.create_from_data(texture_width, texture_height, false, Image.FORMAT_RGBA8, f.get_buffer(texture_width * texture_height * 4))
+	texture_dimensions = Vector2(texture_width, texture_height)
+
+	print('im tired',f.get_position())
+	texture_page = ImageTexture.new()
+	texture_page.create_from_image(img, 0)
+	
+	sprites = SpriteFrames.new()
+	sprites.remove_animation('default')
+	var sprite_order = {}
+	var i = 0
+	var t = 0
+	# if there is no target atlas then the name of the file IS the sprite name and doesnt need an atlas lookup
+	if file_name == 'background':
+		# TODO: redo and fix phyreMeta parsing for backgrounds.ags.phyre
+		for k in range(len(bgbin.background_data.values())):
+			var bg = bgbin.background_data.values()[i]
+			sprites.add_animation(str(bg.name))
+			var mt = MetaTexture.new()
+			mt.atlas = texture_page
+			mt.uv = uvs[k]
+			mt.region = Rect2(
+				uvs[k].position.x * float(texture_page.get_width()),
+				uvs[k].position.y * float(texture_page.get_height()),
+				uvs[k].size.x * float(texture_page.get_width()),
+				uvs[k].size.y * float(texture_page.get_height())
+			)
+			sprites.add_frame(str(bg.name), mt)
+	elif target_atlas_id < 0:
+		var spr
+		if spritebin.sprite_data.has(file_name):
+			spr = spritebin.sprite_data[file_name]
+		sprites.add_animation(str(spr.name))
+		for k in range(t, t + spr.frame_count):
+			var mt = MetaTexture.new()
+			mt.atlas = texture_page
+			mt.uv = uvs[k]
+			mt.region = Rect2(
+				uvs[k].position.x * float(texture_page.get_width()),
+				uvs[k].position.y * float(texture_page.get_height()),
+				uvs[k].size.x * float(texture_page.get_width()),
+				uvs[k].size.y * float(texture_page.get_height())
+			)
+			sprites.add_frame(str(spr.name), mt)
+	else:
+		for spr in spritebin.sprites.values():
+			var a = atlasbin.atlas_sprites[spr.id]
+	#		prints(spritebin.get_sprite_name(spr.id), a)
+			if a == target_atlas_id:
+				sprite_order[spr.id] = t
+				sprites.add_animation(str(spr.name))
+				for k in range(t, t + spr.frame_count):
+					var mt = MetaTexture.new()
+					mt.atlas = texture_page
+					mt.uv = uvs[k]
+					mt.region = Rect2(
+						uvs[k].position.x * float(texture_page.get_width()),
+						uvs[k].position.y * float(texture_page.get_height()),
+						uvs[k].size.x * float(texture_page.get_width()),
+						uvs[k].size.y * float(texture_page.get_height())
+					)
+					sprites.add_frame(str(spr.name), mt)
+				t += spr.frame_count
+				i += 1
+	order = sprite_order
+
+
+
+func bytes_to_int(bytes):
+	var t = 0
+	for i in range(len(bytes)):
+		t += bytes[i] << (i*8)
+	return t
+
 
 func write(file_pointer) -> int:
-	texture_dimensions = texture_page.get_size()
-	print(texture_dimensions)
 	var f = file_pointer
 	var start = f.get_position()
-	f.store_8(15)
-	f.store_buffer(PoolByteArray('AGTEXTUREPACKER'.to_ascii()))
-	f.store_32(0x02) # gameid 1 = hm1 2 = hm2
-	f.store_32(0x01) # unused for hm2
-	
-	for spr_name in sprite_names_ordered:
-		if !sprites.has_animation(spr_name):
-			continue
-		f.store_8(len(spr_name))
-		f.store_buffer(spr_name.to_ascii())
-		var image_count = sprites.get_frame_count(spr_name)
-		f.store_32(image_count)
-		for i in range(image_count):
-			f.store_buffer(PoolByteArray('dump'.to_ascii()))
-			#f.store_32(0)
-			# all frames are atlastextures
-			var frame = sprites.get_frame(spr_name, i)
-			f.store_32(frame.region.size.x)
-			f.store_32(frame.region.size.y)
-			f.store_32(frame.region.position.x)
-			f.store_32(frame.region.position.y)
-#			if texture_dimensions == Vector2.ZERO:
-#				f.store_32(0)
-#				f.store_32(0)
-#				f.store_32(0)
-#				f.store_32(0)
-#			else:
-			if is_gmeta:
-				f.store_float(0)
-				f.store_float(0)
-				f.store_float(center_norms[spr_name].x)
-				f.store_float(center_norms[spr_name].y)
+	for data in dumb_datas:
+		for field in data:
+			if field is Array or field is PoolByteArray:
+				f.store_buffer(field)
+			elif field is float:
+				f.store_float(field)
 			else:
-				var w  = frame.region.size.x
-				var h  = frame.region.size.y
-				f.store_float(frame.region.position.x / texture_dimensions.x)
-				f.store_float(frame.region.position.y / texture_dimensions.y)
-				f.store_float(float(frame.region.position.x+w) / texture_dimensions.x)
-				f.store_float(float(frame.region.position.y+h) / texture_dimensions.y)
-		
-	for spr_name in sprites.get_animation_names():
-		if spr_name in sprite_names_ordered:
-			continue
-		f.store_8(len(spr_name))
-		f.store_buffer(spr_name.to_ascii())
-		var image_count = sprites.get_frame_count(spr_name)
-		f.store_32(image_count)
-		for i in range(image_count):
-			f.store_buffer(PoolByteArray('dump'.to_ascii()))
-			# all frames are atlastextures
-			var frame = sprites.get_frame(spr_name, i)
-			f.store_32(frame.region.size.x)
-			f.store_32(frame.region.size.y)
-			f.store_32(frame.region.position.x)
-			f.store_32(frame.region.position.y)
-#			if texture_dimensions == Vector2.ZERO:
-#				f.store_32(0)
-#				f.store_32(0)
-#				f.store_32(0)
-#				f.store_32(0)
-#			else:
-			if is_gmeta:
-				f.store_float(0)
-				f.store_float(0)
-				f.store_float(center_norms[spr_name].x)
-				f.store_float(center_norms[spr_name].y)
-			else:
-				var w  = frame.region.size.x
-				var h  = frame.region.size.y
-				f.store_float(frame.region.position.x / texture_dimensions.x)
-				f.store_float(frame.region.position.y / texture_dimensions.y)
-				f.store_float((frame.region.position.x+w) / texture_dimensions.x)
-				f.store_float((frame.region.position.y+h) / texture_dimensions.y)
+				f.store_32(field)
+	f.store_buffer(texture_page.get_data().get_data())
 	return f.get_position() - start
 #
 #func writeg(file_pointer):

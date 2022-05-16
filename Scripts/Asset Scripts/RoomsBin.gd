@@ -2,7 +2,9 @@ extends BinParser
 
 class_name RoomsBin
 
-const file_path = 'GL/hlm2_rooms.bin'
+var version = 2
+static func get_file_path():
+	return 'GL/hlm2_rooms.bin'
 var file_size = 0
 var name_indices = []
 var room_data = {}

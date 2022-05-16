@@ -20,7 +20,9 @@ export(Color) var color
 var origin_pos = Vector2.ZERO
 var origin_draw_pos = Vector2.ZERO
 
-onready var metaeditor = get_tree().get_nodes_in_group('MetaApp')[0]
+#onready var metaeditor = get_tree().get_nodes_in_group('MetaApp')[0]
+export(NodePath) var metaeditor_path
+onready var metaeditor = get_node(metaeditor_path)
 
 func _draw():
 	if !texture:return
@@ -47,15 +49,16 @@ func _draw():
 	var dy = sprite_h / (sy)
 	draw_rect(Rect2(x,y,dx,dy), color, false, 1)
 	origin_draw_pos = Vector2(x,y) + (origin_pos/Vector2(texture.get_width(),texture.get_height())) * Vector2(dx, dy) - origin_icon.get_size()/2
+	var s = metaeditor.app.base_wad.get_bin(SpritesBin)
 	if metaeditor.meta.is_gmeta:
 		var nv = Vector2(origin_pos.x / texture.get_width(), origin_pos.y / texture.get_height())
 		if metaeditor.meta.center_norms[metaeditor.current_sprite] != nv:
 			metaeditor.meta.center_norms[metaeditor.current_sprite] = nv
 			metaeditor.app.base_wad.changed_files[metaeditor.app.selected_asset_name] = metaeditor.meta
-	elif metaeditor.app.base_wad.spritebin.sprite_data.has(metaeditor.current_sprite):
-		if metaeditor.app.base_wad.spritebin.sprite_data[metaeditor.current_sprite]['center'] != origin_pos:
-			metaeditor.app.base_wad.spritebin.sprite_data[metaeditor.current_sprite]['center'] = origin_pos
-			metaeditor.app.base_wad.changed_files['GL/hlm2_sprites.bin'] = metaeditor.app.base_wad.spritebin
+	elif s.sprite_data.has(metaeditor.current_sprite):
+		if s.sprite_data[metaeditor.current_sprite]['center'] != origin_pos:
+			s.sprite_data[metaeditor.current_sprite]['center'] = origin_pos
+			metaeditor.app.base_wad.changed_files[s.get_file_path()] = s
 	draw_texture(origin_icon, origin_draw_pos+Vector2.ONE, Color(0,0,0,0.3))
 	draw_texture(origin_icon, origin_draw_pos, icon_modulate)
 	

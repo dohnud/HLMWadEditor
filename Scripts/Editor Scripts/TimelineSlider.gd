@@ -1,6 +1,7 @@
 extends HSlider
 
-onready var editor = get_tree().get_nodes_in_group('MetaApp')[0]
+#onready var editor = get_tree().get_nodes_in_group('MetaApp')[0]
+export(NodePath) var editor
 
 onready var parent = get_parent()
 onready var tween = $Tween
@@ -8,6 +9,7 @@ var stopped = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	editor = get_node(editor)
 	connect("value_changed", self, 'update_pos')
 	connect("resized", self, "update_pos")
 	tween.connect("tween_all_completed", self, 'set_tween')
@@ -29,10 +31,11 @@ func update_pos(v:float=0):
 		var c = editor.meta.sprites.get_frame_count(editor.current_sprite)
 		var i = clamp(value * c, 0, max(0,c-1))
 		var f = editor.meta.sprites.get_frame(editor.current_sprite, i)
-		editor.frametexturerect.texture = f
-		editor.frame_tex_offset_node.text = str(f.region.position.x) + ', ' + str(f.region.position.y)
-		if f is MetaTexture:
-			editor.frame_tex_uv_node.text = str(f.uv.position.x) + ', ' + str(f.uv.position.y) + '  ' + str(f.uv.size.x) + ' x ' + str(f.uv.size.y)
+		if f:
+			editor.frametexturerect.texture = f
+			editor.frame_tex_offset_node.text = str(f.region.position.x) + ', ' + str(f.region.position.y)
+			if f is MetaTexture:
+				editor.frame_tex_uv_node.text = str(f.uv.position.x) + ', ' + str(f.uv.position.y) + '  ' + str(f.uv.size.x) + ' x ' + str(f.uv.size.y)
 		editor.frame_number_node.text = str(int(i))
 		#editor.animatedsprite_node.frame = (value-1/editor.meta.sprites.get_frame_count(editor.current_sprite)) * editor.meta.sprites.get_frame_count(editor.current_sprite)
 

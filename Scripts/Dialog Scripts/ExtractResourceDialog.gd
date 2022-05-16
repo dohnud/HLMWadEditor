@@ -22,7 +22,7 @@ func _on_ExtractResourceDialog_file_selected(path):
 		f.open(path, File.WRITE)
 		if '.gmeta' in path:
 			if !r.is_gmeta:
-				r.convert_to_gmeta(app.base_wad.spritebin)
+				r.convert_to_gmeta(app.base_wad.get_bin(SpritesBin))
 			r.write(f)
 		f.close()
 	get_parent().hide()

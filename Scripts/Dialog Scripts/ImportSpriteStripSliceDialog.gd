@@ -6,7 +6,7 @@ onready var app = get_tree().get_nodes_in_group('App')[0]
 var texture :ImageTexture= null
 var f_count = 1
 
-var meta :Meta = null
+var meta = null
 var sprite = null
 
 func _on_ImportSpriteStripDialog_file_selected(path):
@@ -47,44 +47,44 @@ func _on_Button_pressed():
 	var d = w / (frame_count)
 	var nb = 'Backgrounds/' != sprite.substr(0,len('Backgrounds/'))
 	var collision_toggle = $VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/CheckButton.pressed
-	var collision_bin = app.base_wad.get_bin(CollisionMasksBin.file_path)
+	var collision_bin = app.base_wad.get_bin(CollisionMasksBin)
 	if Vector2(d,h) != meta.sprites.get_frame(sprite,0).region.size or meta.sprites.get_frame_count(sprite) != frame_count:
 		meta.needs_recalc = true
 		meta.sprites.remove_animation(sprite)
 		meta.sprites.add_animation(sprite)
 		if nb and collision_toggle:
-			collision_bin.resize(app.base_wad.spritebin.sprite_data[sprite]['id'], d,h, frame_count) # :D
-			app.base_wad.changed_files[CollisionMasksBin.file_path] = collision_bin
+			collision_bin.resize(app.base_wad.get_bin(SpritesBin).sprite_data[sprite]['id'], d,h, frame_count) # :D
+			app.base_wad.changed_files[CollisionMasksBin.get_file_path()] = collision_bin
 		for i in range(frame_count):
 			var f = MetaTexture.new()
 			f.region = Rect2(i*d, 0, d, h)
 			f.atlas = texture
 			meta.sprites.add_frame(sprite, f)
 			if nb and collision_toggle:
-				var b_list = app.base_wad.get_bin(CollisionMasksBin.file_path).compute_new_mask(app.base_wad.spritebin.sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D
-				app.base_wad.spritebin.sprite_data[sprite]['mask_x_bounds'] = b_list[0]
-				app.base_wad.spritebin.sprite_data[sprite]['mask_y_bounds'] = b_list[1]
+				var b_list = app.base_wad.get_bin(CollisionMasksBin).compute_new_mask(app.base_wad.get_bin(SpritesBin).sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D
+				app.base_wad.get_bin(SpritesBin).sprite_data[sprite]['mask_x_bounds'] = b_list[0]
+				app.base_wad.get_bin(SpritesBin).sprite_data[sprite]['mask_y_bounds'] = b_list[1]
 		app.meta_editor_node.frametexturerect.update()
 		if nb:
 #			if collision_toggle:
-			app.base_wad.spritebin.sprite_data[sprite]['size'] = Vector2(d, h)
-			app.base_wad.spritebin.sprite_data[sprite]['frame_count'] = frame_count
-	#			app.base_wad.get_bin(CollisionMasksBin.file_path).resize(app.base_wad.spritebin.sprite_data[sprite]['id'], d,h, frame_count) # :D
-	#			app.base_wad.changed_files[CollisionMasksBin.file_path] = app.base_wad.get_bin(CollisionMasksBin.file_path)
-			app.base_wad.changed_files[SpritesBin.file_path] = app.base_wad.spritebin
+			app.base_wad.get_bin(SpritesBin).sprite_data[sprite]['size'] = Vector2(d, h)
+			app.base_wad.get_bin(SpritesBin).sprite_data[sprite]['frame_count'] = frame_count
+	#			app.base_wad.get_bin(CollisionMasksBin.get_file_path()).resize(app.base_wad.get_bin(SpritesBin).sprite_data[sprite]['id'], d,h, frame_count) # :D
+	#			app.base_wad.changed_files[CollisionMasksBin.get_file_path()] = app.base_wad.get_bin(CollisionMasksBin.get_file_path())
+			app.base_wad.changed_files[SpritesBin.get_file_path()] = app.base_wad.get_bin(SpritesBin)
 			app.base_wad.changed_files[app.selected_asset_name] = app.selected_asset_data # mark .meta as changed cuz it was
 			app._on_RecalculateSheetButton_pressed() # recalc sprite sheet in background
 		else:
 			var tilesheet = sprite.substr(sprite.find_last('/')+1)
 			app.base_wad.backgroundbin.background_data[tilesheet]['size'] = Vector2(w,h)
-			app.base_wad.changed_files[BackgroundsBin.file_path] = app.base_wad.backgroundbin
+			app.base_wad.changed_files[BackgroundsBin.get_file_path()] = app.base_wad.backgroundbin
 		#		app.base_wad.backgroundbin.background_data[tilesheet]['tile_size'] = Vector2(w/frame_count, w/frame_count)
 	else:
 #		var dest_image = Image.new()
 #		dest_image.create(meta.texture_page.get_width(), meta.texture_page.get_height(), false, Image.FORMAT_RGBA8)
 		meta.needs_recalc = false
+		var img = meta.texture_page.get_data()
 		for s in meta.sprites.get_animation_names():
-			var img = meta.texture_page.get_data()
 			if s == sprite:
 				for i in range(frame_count):
 					var f = MetaTexture.new()
@@ -96,19 +96,22 @@ func _on_Button_pressed():
 						tf.convert(Image.FORMAT_RGBA8)
 					img.blit_rect(tf, f.region, of.region.position)
 					if nb:
-#						if  app.base_wad.get_bin(CollisionMasksBin.file_path).mask_data.has(app.base_wad.spritebin.sprite_data[sprite]['id']):
+#						if  app.base_wad.get_bin(CollisionMasksBin.get_file_path()).mask_data.has(app.base_wad.get_bin(SpritesBin).sprite_data[sprite]['id']):
 						if collision_toggle:
-							var b_list = app.base_wad.get_bin(CollisionMasksBin.file_path).compute_new_mask(app.base_wad.spritebin.sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D
-							app.base_wad.spritebin.sprite_data[sprite]['mask_x_bounds'] = b_list[0]
-							app.base_wad.spritebin.sprite_data[sprite]['mask_y_bounds'] = b_list[1]
-							app.base_wad.changed_files[CollisionMasksBin.file_path] = app.base_wad.get_bin(CollisionMasksBin.file_path)
-							app.base_wad.changed_files[SpritesBin.file_path] = app.base_wad.spritebin
+							var b_list = app.base_wad.get_bin(CollisionMasksBin).compute_new_mask(app.base_wad.get_bin(SpritesBin).sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D
+							app.base_wad.get_bin(SpritesBin).sprite_data[sprite]['mask_x_bounds'] = b_list[0]
+							app.base_wad.get_bin(SpritesBin).sprite_data[sprite]['mask_y_bounds'] = b_list[1]
+							app.base_wad.changed_files[CollisionMasksBin.get_file_path()] = app.base_wad.get_bin(CollisionMasksBin)
+							app.base_wad.changed_files[SpritesBin.get_file_path()] = app.base_wad.get_bin(SpritesBin)
 					else:
 						var tilesheet = sprite.substr(sprite.find_last('/')+1)
 						app.base_wad.backgroundbin.background_data[tilesheet]['size'] = Vector2(w,h)
-						app.base_wad.changed_files[BackgroundsBin.file_path] = app.base_wad.backgroundbin
-				meta.texture_page.set_data(img)
-	app.base_wad.changed_files[app.selected_asset_name.replace('.meta','.png')] = meta.texture_page
+						app.base_wad.changed_files[BackgroundsBin.get_file_path()] = app.base_wad.backgroundbin
+		meta.texture_page.set_data(img)
+	if meta is PhyreMeta:
+		app.base_wad.changed_files[app.selected_asset_name] = meta
+	else:
+		app.base_wad.changed_files[app.selected_asset_name.replace('.meta','.png')] = meta.texture_page
 	hide()
 	get_parent().hide()
 

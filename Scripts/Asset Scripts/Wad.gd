@@ -8,22 +8,22 @@ var file_locations = {}
 var patchwad_list = []
 var content_offset = -1
 var content_size
+var version = WAD_VERSION.HM2
+
+enum WAD_VERSION {
+	HM1,
+	HM2,
+	HM2v2
+}
 
 var sprite_data = {}
-var spritebin = null setget , spritebin_g
-func spritebin_g():
-	return get_bin(SpritesBin.file_path)
+var spritebin = null
+var atlasbin = null
 var object_data = {}
-var objectbin = null setget , objectbin_g
-func objectbin_g():
-	return get_bin(ObjectsBin.file_path)
+var objectbin = null
 var max_object_index = -1
-var roombin = null setget , roombin_g
-func roombin_g():
-	return get_bin(RoomsBin.file_path)
-var backgroundbin = null setget , bgbin_g
-func bgbin_g():
-	return get_bin(BackgroundsBin.file_path)
+var roombin = null
+var backgroundbin = null
 
 var loaded_assets = {
 	#"path/to/file.meta" : Meta()
@@ -49,8 +49,11 @@ func parse_header():
 	seek(0)
 	identifier = get_buffer(0x10)
 	print(len(identifier.get_string_from_ascii()))
+	version = WAD_VERSION.HM2v2
 	if len(identifier.get_string_from_ascii()) < 5:
+		version = WAD_VERSION.HM1
 		seek(0)
+		content_offset = get_32()
 	
 	# parse file locations
 	var num_files = get_32()
@@ -60,8 +63,14 @@ func parse_header():
 		# metadata
 		var file_name_l = get_32();
 		var file_name = get_buffer(file_name_l).get_string_from_ascii()
-		var file_len = get_64()
-		var file_offset = get_64()
+		var file_len = 0
+		var file_offset = 0
+		if version != WAD_VERSION.HM1:
+			file_len = get_64()
+			file_offset = get_64()
+		else:
+			file_len = get_32()
+			file_offset = get_32()
 		# add to file locations
 		file_locations[file_name] = [file_offset, file_len]
 		#file_list.append(file_name)
@@ -69,27 +78,28 @@ func parse_header():
 	# parse directories (unused but maybe useful later?)
 #	var debug = File.new()
 #	debug.open('debug.txt', File.WRITE)
-	var _num_dirs = get_32()
-	for _i in range(_num_dirs):
-		var _dir_name_l = get_32()
-		var _dir_name = get_buffer(_dir_name_l).get_string_from_ascii()
-#		debug.store_string('+'+_dir_name+'\n')
-		var _num_entries = get_32()
-		for _j in range(_num_entries):
-			var _entry_name_l = get_32()
-			var _entry_name = get_buffer(_entry_name_l).get_string_from_ascii()
-#			debug.store_string(' '+_entry_name+' ')
-			var _entry_type = get_8()
+	if version == WAD_VERSION.HM2v2:
+		var _num_dirs = get_32()
+		for _i in range(_num_dirs):
+			var _dir_name_l = get_32()
+			var _dir_name = get_buffer(_dir_name_l).get_string_from_ascii()
+	#		debug.store_string('+'+_dir_name+'\n')
+			var _num_entries = get_32()
+			for _j in range(_num_entries):
+				var _entry_name_l = get_32()
+				var _entry_name = get_buffer(_entry_name_l).get_string_from_ascii()
+	#			debug.store_string(' '+_entry_name+' ')
+				var _entry_type = get_8()
 #			debug.store_string(str(_entry_type)+'\n')
 	
 	
 	# raw file data starts here
-	content_offset = get_position()
+	if version != WAD_VERSION.HM1:
+		content_offset = get_position()
 	
 	patchwad_list = [get_script().new()]
 	close()
 
-	
 
 func add_file(file_path, dest_folder='Assets/'):
 	var f = File.new()
@@ -129,6 +139,7 @@ func add_file_data(file_path, file_data):
 
 func exists(asset_name):
 	return file_locations.has(asset_name)
+
 
 func lazy_find(asset_name):
 	for k in file_locations.keys():
@@ -268,6 +279,82 @@ func parse_meta(asset, lazy=0):
 	meta.parse(self, size, tex)
 	loaded_assets[asset] = meta
 	return meta
+	
+func parse_phyremeta(asset, lazy=0):
+	if lazy:
+		asset = lazy_find(asset)
+	for p in patchwad_list:
+		if p.exists(asset):
+			return p.parse_meta(asset)
+	if new_files.has(asset):
+		return new_files[asset]
+	if changed_files.has(asset):
+		return changed_files[asset]
+	if asset in loaded_assets.keys():
+#		loaded_assets[asset].texture_page.set_size_override(tex.get_size())
+#		loaded_assets[asset].texture_page.set_data(tex.get_data())
+		return loaded_assets[asset]
+	
+	var a = get_bin(phyreAtlasesBin)
+	var s = get_bin(phyreSpritesBin)
+	var b = get_bin(phyreBackgroundsBin)
+	var size = goto(asset)
+	if size == null: return null
+	var ags = PhyreMeta.new()
+	ags.parse(self, size, s, a, b, asset)
+	close()
+	loaded_assets[asset] = ags
+	return ags
+
+
+func sprite_id_to_atlas_id(sprite_id):
+	return atlasbin.atlas_sprites[sprite_id]
+
+func sprite_id_to_atlas_name(sprite_id):
+	return atlasbin.atlas_names[sprite_id_to_atlas_id(sprite_id)]
+
+func sprite_id_to_sprite_name(sprite_id):
+	return spritebin.get_sprite_name(sprite_id)
+
+func sprite_id_to_uv_index(sprite_id):
+	return atlasbin.atlas_data[sprite_id]
+
+var meta_cache = {}
+
+func get_frames(sprite_id):
+	var target_atlas_id = sprite_id_to_atlas_id(sprite_id)
+	if target_atlas_id >= 4294967295 - 10:
+		return []
+	var frames = []
+	var ags = null
+	if meta_cache.has(target_atlas_id):
+		ags = meta_cache[target_atlas_id]
+		frames = ags.get_frames(ags.order[sprite_id], spritebin.sprites[sprite_id].frame_count)
+	else:
+		ags = parse_phyremeta(sprite_id_to_atlas_name(sprite_id))
+		if ags == null:
+			return []
+		var sprite_order = {}
+		var i = 0
+		var t = 0
+		for spr in spritebin.sprites.values():
+			var a = sprite_id_to_atlas_id(spr.id)
+			if spr.id == sprite_id:
+				frames = ags.get_frames(i, spr.frame_count)
+			if a == target_atlas_id:
+				sprite_order[spr.id] = t
+				t += spr.frame_count
+				i += 1
+		meta_cache[target_atlas_id] = ags
+		ags.order = sprite_order
+#	if len(frames) and ags:
+#		var spr = spritebin.sprites[sprite_id]
+#		var img = Image.new()
+#		img.create(spr.frame_count * spr.size.x, spr.size.y, false, Image.FORMAT_RGBA8)
+#		for j in range(len(frames)):
+#			img.blit_rect(ags.texture.get_data(), frames[j].region, Vector2(j*spr.size.x, 0))
+#		img.save_png("res://Scripts/Asset Scripts/parsed ags files/strips/%s.png" % [sprite_id_to_sprite_name(sprite_id)])
+	return frames
 
 func parse_fnt(asset, lazy=0):
 	if lazy:
@@ -294,8 +381,7 @@ func parse_fnt(asset, lazy=0):
 	loaded_assets[asset] = meta
 	return meta
 
-func parse_sprite_data():
-	var asset = 'GL/hlm2_sprites.bin'
+func parse_sprite_data(asset):
 	for p in patchwad_list:
 		if p.exists(asset):
 			return p.parse_sprite_data(asset)
@@ -303,51 +389,14 @@ func parse_sprite_data():
 	var size = goto(asset)
 	if size == null: return null
 	var r = SpritesBin.new()
+	if version == WAD_VERSION.HM1:
+		r = phyreSpritesBin.new()
 	r.parse(self)
 	spritebin = r
 	sprite_data = r.sprite_data
 	loaded_assets[asset] = r
 	return r
-	var sprite_num = get_32()
-	#while get_position() < content_offset + dim[0] + dim[1]:
-	# sprite data begin
-#	seek(content_offset + dim[0] + 0x4440)
-	var sprite_indices = {}
-	var sprite_index = get_32()
-	while sprite_index < sprite_num:
-		var w = get_32()
-		var h = get_32()
-		var x = get_32()
-		var y = get_32()
-		var alx = get_32()
-		var aux = get_32()
-		var aly = get_32()
-		var auy = get_32()
-		var frame_count = get_32()
-		var flags = get_buffer(0x10)
-		var name_pos = get_32()
-		get_32() # padding
-		sprite_indices[sprite_index] = {
-			'id' : sprite_index,
-			'dimesions' : [w,h],
-			'center' : Vector2(x,y),
-			'frame_count' : frame_count,
-		}
-		#print(sprite_indices[sprite_index])
-		sprite_index = get_32()
-	for index in sprite_indices.keys():
-		var s = ''
-		var i = get_buffer(1)[0]
-		while i != 0:
-			s += char(i)
-			i = get_buffer(1)[0]
-		sprite_data[s] = sprite_indices[index]
-	sprite_data['default'] = {
-		'id' : -1,
-		'dimesions' : [1,1],
-		'center' : Vector2(0,0),
-		'frame_count' : 1,
-	}
+	
 
 func get_sprite_data(sprite_name):
 	return spritebin.sprite_data[sprite_name]
@@ -362,14 +411,15 @@ func get_s32():
 #		return n - 0xFFffFFff - 1
 #	return n
 
-func parse_objects():
-	var asset = 'GL/hlm2_objects.bin'
+func parse_objects(asset):
 	for p in patchwad_list:
 		if p.exists(asset):
 			return p.parse_objects(asset)
 	var size = goto(asset)
 	if size == null: return null
 	var o = ObjectsBin.new()
+	if version == WAD_VERSION.HM1:
+		o = phyreObjectsBin.new()
 	o.parse(self)
 	objectbin = o
 	loaded_assets[asset] = o
@@ -378,8 +428,7 @@ func parse_objects():
 func get_object_data(object_name):
 	return objectbin.object_data[object_name]
 
-func parse_rooms():
-	var asset = 'GL/hlm2_rooms.bin'
+func parse_rooms(asset):
 	for p in patchwad_list:
 		if p.exists(asset):
 			return p.parse_rooms(asset)
@@ -387,61 +436,67 @@ func parse_rooms():
 	var size = goto(asset)
 	if size == null: return null
 	var o = RoomsBin.new()
+	if version == WAD_VERSION.HM1:
+		o = phyreRoomsBin.new()
 	o.parse(self)
 	roombin = o
 	loaded_assets[asset] = o
 	return o
 
-func parse_backgrounds():
-	var asset = 'GL/hlm2_backgrounds.bin'
+func parse_backgrounds(asset):
 	for p in patchwad_list:
 		if p.exists(asset):
 			return p.parse_backgrounds(asset)
 	var size = goto(asset)
 	if size == null: return null
 	var b = BackgroundsBin.new()
+	if version == WAD_VERSION.HM1:
+		b = phyreBackgroundsBin.new()
 	b.parse(self)
 	backgroundbin = b
 	loaded_assets[asset] = b
 	return b
 
-func parse_atlases():
-	var asset = 'GL/hlm2_atlases.bin'
+func parse_atlases(asset):
 	for p in patchwad_list:
 		if p.exists(asset):
 			return p.parse_backgrounds(asset)
 	var size = goto(asset)
 	if size == null: return null
 	var b = AtlasesBin.new()
+	if version == WAD_VERSION.HM1:
+		b = phyreAtlasesBin.new()
 	b.parse(self)
 	loaded_assets[asset] = b
 	return b
 
-func parse_sounds():
-	var asset = 'GL/hlm2_sounds.bin'
+func parse_sounds(asset):
 	for p in patchwad_list:
 		if p.exists(asset):
 			return p.parse_sounds(asset)
 	var size = goto(asset)
 	if size == null: return null
 	var b = SoundsBin.new()
+	if version == WAD_VERSION.HM1:
+		b = phyreSoundsBin.new()
 	b.parse(self)
 	loaded_assets[asset] = b
 	return b
 
-func parse_col_masks():
-	var asset = CollisionMasksBin.file_path
+func parse_col_masks(asset):
 	for p in patchwad_list:
 		if p.exists(asset):
 			return p.parse_col_masks(asset)
 	var size = goto(asset)
 	if size == null: return null
 	var b = CollisionMasksBin.new()
+	if version == WAD_VERSION.HM1:
+		b = phyreCollisionMasksBin.new()
 	b.parse(self)
 	loaded_assets[asset] = b
 	return b
 
-func get_bin(asset):
+func get_from_cache(asset):
 	for p in patchwad_list:
 		if p.exists(asset):
 			return p.get_bin(asset)
@@ -451,26 +506,59 @@ func get_bin(asset):
 		return new_files[asset]
 	if changed_files.has(asset):
 		return changed_files[asset]
-	if !exists(asset):return null
+	return null
+
+func get_bin(bintype):
+	var asset = bintype
+	if !(bintype is String):
+		asset = bintype.get_file_path() # by default will be hm2
 	if !is_open(): open(file_path, READ)
 	var r = null
-	if asset == SpritesBin.file_path:
-		r = parse_sprite_data()
-	elif asset == ObjectsBin.file_path:
-		r = parse_objects()
-	elif asset == RoomsBin.file_path:
-		r = parse_rooms()
-	elif asset == BackgroundsBin.file_path:
-		r = parse_backgrounds()
-	elif asset == AtlasesBin.file_path:
-		r = parse_atlases()
-	elif asset == SoundsBin.file_path:
-		r = parse_sounds()
-	elif asset == CollisionMasksBin.file_path:
-		r = parse_col_masks()
+	if asset.ends_with('sprites.bin'):
+		if version == WAD_VERSION.HM1:
+			asset = phyreSpritesBin.get_file_path()
+		r = get_from_cache(asset)
+		if !r:
+			r = parse_sprite_data(asset)
+	elif asset.ends_with('objects.bin'):
+		if version == WAD_VERSION.HM1:
+			asset = phyreObjectsBin.get_file_path()
+		r = get_from_cache(asset)
+		if !r:
+			r = parse_objects(asset)
+	elif asset.ends_with('rooms.bin'):
+		if version == WAD_VERSION.HM1:
+			asset = phyreRoomsBin.get_file_path()
+		r = get_from_cache(asset)
+		if !r:
+			r = parse_rooms(asset)
+	elif asset.ends_with('backgrounds.bin'):
+		if version == WAD_VERSION.HM1:
+			asset = phyreBackgroundsBin.get_file_path()
+		r = get_from_cache(asset)
+		if !r:
+			r = parse_backgrounds(asset)
+	elif asset.ends_with('atlases.bin'):
+		if version == WAD_VERSION.HM1:
+			asset = phyreAtlasesBin.get_file_path()
+		r = get_from_cache(asset)
+		if !r:
+			r = parse_atlases(asset)
+	elif asset.ends_with('sounds.bin'):
+		if version == WAD_VERSION.HM1:
+			asset = phyreSoundsBin.get_file_path()
+		r = get_from_cache(asset)
+		if !r:
+			r = parse_sounds(asset)
+	elif asset.ends_with('masks.bin'):
+		if version == WAD_VERSION.HM1:
+			asset = phyreCollisionMasksBin.get_file_path()
+		r = get_from_cache(asset)
+		if !r:
+			r = parse_col_masks(asset)
 	close()
-	loaded_assets[asset] = r
 	return r
+	if !exists(asset):return null
 
 func parse_orginal_meta(asset, lazy=0):
 	if !is_open(): open(file_path, READ)

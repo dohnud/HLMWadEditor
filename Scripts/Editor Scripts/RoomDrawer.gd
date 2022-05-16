@@ -15,10 +15,10 @@ func create_room():
 		for o in get_children():
 			remove_child(o)
 			o.queue_free()
-		if!a: a = app.base_wad.get_bin(AtlasesBin.file_path)
-		if!o: o = app.base_wad.get_bin(ObjectsBin.file_path)
-		if!s: s = app.base_wad.get_bin(SpritesBin.file_path)
-		if!b: b = app.base_wad.get_bin(BackgroundsBin.file_path)
+		if!a: a = app.base_wad.get_bin(AtlasesBin)
+		if!o: o = app.base_wad.get_bin(ObjectsBin)
+		if!s: s = app.base_wad.get_bin(SpritesBin)
+		if!b: b = app.base_wad.get_bin(BackgroundsBin)
 		draw_set_transform(rect_position,0,Vector2.ONE)
 		var i = 0
 		var tile_meta = app.base_wad.parse_meta('Atlases/Backgrounds.meta')

@@ -5,7 +5,8 @@ class_name BinEditor
 onready var app = get_tree().get_nodes_in_group('App')[0]
 onready var tree = null#$TabContainer2/Advanced/Tree
 
-var file = 'GL/hlm2_sprites.bin'
+var filetype = SpritesBin
+var file = ''
 var bin :BinParser= null
 var selected_struct = null
 var selected_struct_id = null
@@ -21,7 +22,8 @@ func _ready():
 #	pass
 
 func set_bin_asset(asset):
-	bin = app.base_wad.get_bin(file)
+	bin = app.base_wad.get_bin(filetype)
+	file = filetype.get_file_path()
 	if bin == null: return null
 	selected_struct_id = asset
 	selected_struct = bin.get(asset)
@@ -73,11 +75,11 @@ func _on_Tree_item_edited(deleted=0):
 #			d[last_k] = v
 			changed_d[last_k] = v
 			bin.changed[selected_struct_id] = changed_d
-			app.base_wad.changed_files[file] = bin
+			app.base_wad.changed_filetypes[filetype] = bin
 		tree.get_selected().set_text(1, vs)
 	elif deleted == 1:
 		d.remove(last_k)
-		app.base_wad.changed_files[file] = bin
+		app.base_wad.changed_filetypes[filetype] = bin
 		tree.get_selected().free()
 		print('kapow!')
 	elif deleted == 2:

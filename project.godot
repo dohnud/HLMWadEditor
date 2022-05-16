@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "BinParser",
 "class": "AtlasesBin",
 "language": "GDScript",
-"path": "res://Scripts/Asset Scripts/AtlasBin.gd"
+"path": "res://Scripts/Asset Scripts/AtlasesBin.gd"
 }, {
 "base": "BinParser",
 "class": "BackgroundsBin",
@@ -37,7 +37,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Logger",
 "language": "GDScript",
-"path": "res://Scripts/Asset Scripts/LogSingleton.gd"
+"path": "res://Scripts/Singletons/LogSingleton.gd"
 }, {
 "base": "Node",
 "class": "Meta",
@@ -55,6 +55,11 @@ _global_script_classes=[ {
 "path": "res://Scripts/Asset Scripts/ObjectsBin.gd"
 }, {
 "base": "BinParser",
+"class": "PhyreMeta",
+"language": "GDScript",
+"path": "res://Scripts/Asset Scripts/PhyreMeta.gd"
+}, {
+"base": "BinParser",
 "class": "RoomsBin",
 "language": "GDScript",
 "path": "res://Scripts/Asset Scripts/RoomsBin.gd"
@@ -62,7 +67,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "Settings",
 "language": "GDScript",
-"path": "res://Scripts/Asset Scripts/SettingsSingleton.gd"
+"path": "res://Scripts/Singletons/SettingsSingleton.gd"
 }, {
 "base": "BinParser",
 "class": "SoundsBin",
@@ -88,6 +93,46 @@ _global_script_classes=[ {
 "class": "WadSound",
 "language": "GDScript",
 "path": "res://Scripts/Asset Scripts/WadSound.gd"
+}, {
+"base": "BinParser",
+"class": "hotlineMeta",
+"language": "GDScript",
+"path": "res://Scripts/Asset Scripts/temp.gd"
+}, {
+"base": "BinParser",
+"class": "phyreAtlasesBin",
+"language": "GDScript",
+"path": "res://Scripts/Asset Scripts/phyreAtlasesBin.gd"
+}, {
+"base": "BinParser",
+"class": "phyreBackgroundsBin",
+"language": "GDScript",
+"path": "res://Scripts/Asset Scripts/phyreBackgroundsBin.gd"
+}, {
+"base": "BinParser",
+"class": "phyreCollisionMasksBin",
+"language": "GDScript",
+"path": "res://Scripts/Asset Scripts/phyreCollisionMasksBin.gd"
+}, {
+"base": "BinParser",
+"class": "phyreObjectsBin",
+"language": "GDScript",
+"path": "res://Scripts/Asset Scripts/phyreObjectsBin.gd"
+}, {
+"base": "BinParser",
+"class": "phyreRoomsBin",
+"language": "GDScript",
+"path": "res://Scripts/Asset Scripts/phyreRoomsBin.gd"
+}, {
+"base": "BinParser",
+"class": "phyreSoundsBin",
+"language": "GDScript",
+"path": "res://Scripts/Asset Scripts/phyreSoundsBin.gd"
+}, {
+"base": "BinParser",
+"class": "phyreSpritesBin",
+"language": "GDScript",
+"path": "res://Scripts/Asset Scripts/phyreSpritesBin.gd"
 } ]
 _global_script_class_icons={
 "AtlasesBin": "",
@@ -99,13 +144,22 @@ _global_script_class_icons={
 "Meta": "",
 "MetaTexture": "",
 "ObjectsBin": "",
+"PhyreMeta": "",
 "RoomsBin": "",
 "Settings": "",
 "SoundsBin": "",
 "SpritesBin": "",
 "Wad": "",
 "WadFont": "",
-"WadSound": ""
+"WadSound": "",
+"hotlineMeta": "",
+"phyreAtlasesBin": "",
+"phyreBackgroundsBin": "",
+"phyreCollisionMasksBin": "",
+"phyreObjectsBin": "",
+"phyreRoomsBin": "",
+"phyreSoundsBin": "",
+"phyreSpritesBin": ""
 }
 
 [application]
@@ -122,8 +176,8 @@ config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
-Log="*res://Scripts/Asset Scripts/LogSingleton.gd"
-Config="*res://Scripts/Asset Scripts/SettingsSingleton.gd"
+Log="*res://Scripts/Singletons/LogSingleton.gd"
+Config="*res://Scripts/Singletons/SettingsSingleton.gd"
 
 [display]
 
@@ -179,7 +233,9 @@ file_logging/log_path="user://.logs/godot.log"
 [rendering]
 
 quality/driver/driver_name="GLES2"
+2d/options/use_nvidia_rect_flicker_workaround=true
 quality/intended_usage/framebuffer_allocation=0
+quality/intended_usage/framebuffer_allocation.mobile=0
 threads/thread_model=2
 vram_compression/import_etc=true
 vram_compression/import_etc2=false

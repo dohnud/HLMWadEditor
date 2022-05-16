@@ -2,12 +2,15 @@ extends BinParser
 
 class_name AtlasesBin
 
-const file_path = 'GL/hlm2_atlases.bin'
+
+static func get_file_path():
+	return 'GL/hlm2_atlases.bin'
 var atlas_data = {}
 var atlases_backgrounds = {}
 var atlas_sprites = {}
 var name_indicies = []
 var atlas_names = {}
+var version = 2
 
 var atl = {
 	'id': '32',

@@ -71,8 +71,8 @@ func create_dict(dict, path=''):
 		else:
 			var s = str(dict[k])
 			if (k == 'sprite_index' or k == 'mask_sprite') and dict[k]>=0:
-				if app.base_wad.spritebin.sprites.has(dict[k]):
-					s = app.base_wad.spritebin.sprites[dict[k]]['name']
+				if app.base_wad.get_bin(SpritesBin).sprites.has(dict[k]):
+					s = app.base_wad.get_bin(SpritesBin).sprites[dict[k]]['name']
 			if dict[k] == -1:
 				s = 'Null'
 			if (k == 'parent' or k == 'id') and dict[k]>=0:

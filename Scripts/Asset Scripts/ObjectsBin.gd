@@ -2,8 +2,10 @@ extends BinParser
 
 class_name ObjectsBin
 
-const file_path = 'GL/hlm2_objects.bin'
-const obj = {
+var version = 2
+static func get_file_path():
+	return 'GL/hlm2_objects.bin'
+var obj = {
 #			'nameindex' : object_name_indicies[id],
 	'id' : '32',
 	'sprite_index' : 's32',

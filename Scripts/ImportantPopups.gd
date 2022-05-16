@@ -45,3 +45,7 @@ func _on_SaveGIFDialog_popup_hide():
 
 func _on_SaveGIFDialog2_about_to_show():
 	show()
+
+
+func _on_MergePatchDialog_popup_hide():
+	hide()

@@ -29,7 +29,7 @@ func _on_ImportWadFileDialog_file_selected(path):
 		tree_r.set_hide_root(true)
 		for f in patchwad.file_locations.keys():
 			# do not list texture files that have a .meta partner, same for fonts
-			if f == CollisionMasksBin.file_path or f == SpritesBin.file_path:
+			if f == CollisionMasksBin.get_file_path() or f == SpritesBin.get_file_path():
 				continue
 			if f.ends_with('.png') and (patchwad.file_locations.has(f.replace('.png', '.meta')) or patchwad.file_locations.has(f.replace('.png', '.fnt'))):
 				continue

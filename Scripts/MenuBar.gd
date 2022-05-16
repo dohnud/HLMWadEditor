@@ -8,6 +8,7 @@ var operations = {
 		["Save Patch", [KEY_CONTROL,KEY_S,], 'savepatch'],
 		[],
 		["Import from Patch", [KEY_CONTROL, KEY_I], 'importpatch'],
+		["Merge into WAD", [], 'mergepatch'],
 		[],
 		["Recent Patches", [PopupMenu.new()], 'openrecentpatch'],
 		[],
@@ -39,6 +40,22 @@ var operations = {
 		[],
 		["Transform Sprite", [KEY_SHIFT, KEY_T], 'resize_sprite'],
 		["Compile All Sprites", [], 'recalcspritesheet'],
+		[],
+		["Toggle Gizmos", [KEY_SHIFT, KEY_G], 'togglemetagizmos'],
+#		["Extras", [PopupMenu.new(),[
+#			["Convert to GMeta", [], 'convertmeta'],
+#			["Add Sprite", [], 'convertmeta'],
+#		]], ''],
+	],
+	"9AGSButton" : [
+		["Import Sprite from Strip", [KEY_SHIFT, KEY_I], 'import_sprite_strip'],
+		[],
+		["Export Sprite to Strip", [KEY_SHIFT, KEY_E], 'export_sprite_strip'],
+		["Export Sprite to GIF", [], 'export_sprite_gif'],
+		["Export All Sprites", [], 'export_sprite_strips'],
+#		[],
+#		["Transform Sprite", [KEY_SHIFT, KEY_T], 'resize_sprite'],
+#		["Compile All Sprites", [], 'recalcspritesheet'],
 		[],
 		["Toggle Gizmos", [KEY_SHIFT, KEY_G], 'togglemetagizmos'],
 #		["Extras", [PopupMenu.new(),[
@@ -175,7 +192,16 @@ func savepatch():
 #
 func importpatch():
 	app.get_node("ImportWadFileDialog").popup()
-	
+
+func mergepatch():
+	app.get_node("ImportantPopups").show()
+	var nw = app.get_node("ImportantPopups/MergePatchDialog")
+	nw.src_patch = app.base_wad
+	nw.dest_patch = app.base_wad
+	nw._on_Label2_item_selected(0)
+	nw._on_Label4_item_selected(0)
+	nw.popup()
+
 func openwad():
 	app.get_node("OpenWadDialog").popup()
 	
@@ -242,12 +268,17 @@ func toggleadvanced(id, popup:PopupMenu):
 	app._on_SearchBar_text_entered('')
 
 func togglemetagizmos():
-	app.meta_editor_node.gizmos_node.visible = !app.meta_editor_node.gizmos_node.visible
-	app.meta_editor_node.frametexturerect.update()
+	if app.editor_tabs.current_tab != 9:
+		app.meta_editor_node.gizmos_node.visible = !app.meta_editor_node.gizmos_node.visible
+		app.meta_editor_node.frametexturerect.update()
+		return
+		
+	app.ags_editor_node.gizmos_node.visible = !app.ags_editor_node.gizmos_node.visible
+	app.ags_editor_node.frametexturerect.update()
 
 func convertmeta():
 	var nm = app.meta_editor_node.meta
-	nm.convert_to_gmeta(app.base_wad.spritebin)
+	nm.convert_to_gmeta(app.base_wad.get_bin(SpritesBin))
 	var nfn = app.selected_asset_name.replace('.meta','.gmeta')
 #	app.base_wad.changed_files[nfn] = nm
 	app.base_wad.new_files[nfn] = nm

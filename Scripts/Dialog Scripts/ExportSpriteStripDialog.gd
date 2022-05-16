@@ -3,7 +3,7 @@ extends FileDialog
 
 onready var app = get_tree().get_nodes_in_group('App')[0]
 
-var meta :Meta = null
+var meta = null
 var sprite = null
 
 var export_mode = 0

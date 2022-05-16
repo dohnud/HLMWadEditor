@@ -2,7 +2,9 @@ extends Control
 
 export(NodePath) var asset_tree
 export(NodePath) var asset_tree_container
-export(NodePath) var meta_editor_node 
+export(NodePath) var meta_editor_node_path
+var meta_editor_node
+export(NodePath) var ags_editor_node 
 export(NodePath) var room_editor_node
 export(NodePath) var sprite_editor_node
 export(NodePath) var background_editor_node
@@ -15,7 +17,7 @@ export(PackedScene) var compilenotif
 
 export(Font) var tomakebiggerfont
 
-var base_wad :Wad = null
+var base_wad  = null
 var base_wad_path = ''
 var recent_patches = []
 
@@ -30,13 +32,13 @@ var show_advanced = false
 
 
 var f_prefixes = ['Sprites/', 'Objects/', 'Rooms/', 'Backgrounds/']#, 'Metadata/']
-var advanced_stuff_filter = {
-	SpritesBin.file_path:0,
-	ObjectsBin.file_path:0,
-	RoomsBin.file_path:0,
-	BackgroundsBin.file_path:0,
-#	SoundsBin.file_path:0,
-#	AtlasesBin.file_path:0
+onready var advanced_stuff_filter = {
+	SpritesBin:0,
+	ObjectsBin:0,
+	RoomsBin:0,
+	BackgroundsBin:0,
+#	SoundsBin.get_file_path():0,
+#	AtlasesBin.get_file_path():0
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -59,7 +61,8 @@ func _ready():
 		if n is MenuButton:
 			n.text = '  ' + n.text + '  '
 	asset_tree_container = get_node(asset_tree_container)
-	meta_editor_node = get_node(meta_editor_node)
+	meta_editor_node = get_node(meta_editor_node_path)
+	ags_editor_node = get_node(ags_editor_node)
 	room_editor_node = get_node(room_editor_node)
 	sprite_editor_node = get_node(sprite_editor_node)
 	background_editor_node = get_node(background_editor_node)
@@ -83,7 +86,7 @@ func open_wad(file_path):
 			var o :ObjectsBin= wad.parse_objects()
 			var r :RoomsBin = wad.parse_rooms()
 			var b :BackgroundsBin = wad.parse_backgrounds()
-#		wad.get_ bin(CollisionMasksBin.file_path)
+#		wad.get_ bin(CollisionMasksBin.get_file_path())
 		base_wad = wad
 		_on_SearchBar_text_entered('')
 		return true
@@ -107,15 +110,17 @@ func open_asset(asset_path):
 #	print(asset_path)
 	if asset_path.ends_with('.meta'):
 		editor_tabs.current_tab = 1
-		selected_asset_name = asset_path
+		selected_asset_name = asset_path #
+		meta_editor_node = get_node(meta_editor_node_path) #
 		selected_asset_data = meta_editor_node.set_asset(asset_path)
 		meta_editor_node.spritelist_node.grab_focus()
-	if asset_path.ends_with('.gmeta'):
-		editor_tabs.current_tab = 1
-		selected_asset_name = asset_path
-		selected_asset_data = meta_editor_node.set_asset(asset_path)
-		meta_editor_node.spritelist_node.grab_focus()
-		selected_asset_data.is_gmeta = true
+	if asset_path.ends_with('.ags.phyre'):
+		editor_tabs.current_tab = 9
+		meta_editor_node = ags_editor_node # im lazy
+		selected_asset_name = asset_path 
+		selected_asset_data = ags_editor_node.set_asset('GL/'+asset_path)
+		selected_asset_data.is_hm1 = true
+		ags_editor_node.spritelist_node.grab_focus()
 	if asset_path.ends_with('.fnt'):
 		editor_tabs.current_tab = 8
 		selected_asset_name = asset_path
@@ -179,6 +184,8 @@ func _on_SearchBar_text_entered(new_text=''):
 			for file in base_wad.file_locations.keys():
 				if file.begins_with('Atlases/') and (file.ends_with('.meta') or file.ends_with('.gmeta')):
 					asset_tree.create_path(file)
+				if file.begins_with('GL/') and file.ends_with('.phyre'):
+					asset_tree.create_path(file.substr(3,99999))
 				if file.begins_with('Fonts/') and file.ends_with('.fnt'):
 					asset_tree.create_path(file)
 #				if "Sounds/" == file.substr(0,len('Sounds/')):
@@ -197,6 +204,9 @@ func _on_SearchBar_text_entered(new_text=''):
 						asset_tree.create_path(file, 1)
 					if file.ends_with('.png'):
 						asset_tree.create_path(file.replace('.png','.meta'), 1)
+				# hotline 1 :3
+				print(file)
+#				if file.begins_with('')
 				# again for Fonts
 				if file.ends_with('Fonts/'):
 					if file.ends_with('.fnt'):
@@ -336,17 +346,17 @@ func _recalc_collision():
 	var meta = selected_asset_data
 	if meta is Meta:
 		for sprite in meta.sprites.get_animation_names():
-			if base_wad.spritebin.sprite_data.has(sprite):
-#				if base_wad.get_bin(CollisionMasksBin.file_path).mask_data.has(base_wad.spritebin.sprite_data[sprite].id):
+			if base_wad.get_bin(SpritesBin).sprite_data.has(sprite):
+#				if base_wad.get_bin(CollisionMasksBin.get_file_path()).mask_data.has(base_wad.get_bin(SpritesBin).sprite_data[sprite].id):
 				var fc = meta.sprites.get_frame_count(sprite)
 				var f = meta.sprites.get_frame(sprite, 0)
-				base_wad.get_bin(CollisionMasksBin.file_path).resize(base_wad.spritebin.sprite_data[sprite]['id'], f.region.size.x, f.region.size.y, fc)
+				base_wad.get_bin(CollisionMasksBin.get_file_path()).resize(base_wad.get_bin(SpritesBin).sprite_data[sprite]['id'], f.region.size.x, f.region.size.y, fc)
 				for i in range(fc):
 					f = meta.sprites.get_frame(sprite, i)
-					var b_list = base_wad.get_bin(CollisionMasksBin.file_path).compute_new_mask(base_wad.spritebin.sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D
-					base_wad.spritebin.sprite_data[sprite]['mask_x_bounds'] = b_list[0]
-					base_wad.spritebin.sprite_data[sprite]['mask_y_bounds'] = b_list[1]
-					base_wad.changed_files[CollisionMasksBin.file_path] = base_wad.get_bin(CollisionMasksBin.file_path)
+					var b_list = base_wad.get_bin(CollisionMasksBin.get_file_path()).compute_new_mask(base_wad.get_bin(SpritesBin).sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D
+					base_wad.get_bin(SpritesBin).sprite_data[sprite]['mask_x_bounds'] = b_list[0]
+					base_wad.get_bin(SpritesBin).sprite_data[sprite]['mask_y_bounds'] = b_list[1]
+					base_wad.changed_files[CollisionMasksBin.get_file_path()] = base_wad.get_bin(CollisionMasksBin.get_file_path())
 
 
 
@@ -457,7 +467,7 @@ func _on_WaitThreadsNo_pressed():
 func _on_ExportSpriteStripButton_pressed():
 	var w :FileDialog= get_node("ImportantPopups/ExportSpriteStripDialog")
 	var meta = meta_editor_node.meta
-	w.meta = meta
+	w.meta = meta_editor_node.meta
 	w.sprite = meta_editor_node.current_sprite
 	w.export_mode = 0
 	w.mode = FileDialog.MODE_SAVE_FILE
@@ -475,7 +485,7 @@ func _on_ExportSpriteStripButton_pressed():
 func export_sprite_strips():
 	var w :FileDialog= get_node("ImportantPopups/ExportSpriteStripDialog")
 	var meta = meta_editor_node.meta
-	w.meta = meta
+	w.meta = meta_editor_node.meta
 	w.sprite = meta_editor_node.current_sprite
 	w.export_mode = 1
 	w.mode = FileDialog.MODE_OPEN_DIR
@@ -492,8 +502,7 @@ func export_sprite_strips():
 func _on_importSpriteStripButton_pressed():
 	var w :FileDialog= get_node("ImportantPopups/ImportSpriteStripDialog")
 	var nw :WindowDialog= get_node("ImportantPopups/ImportSpriteStripSliceDialog")
-	var meta = meta_editor_node.meta
-	nw.meta = meta
+	nw.meta = meta_editor_node.meta
 	nw.sprite = meta_editor_node.current_sprite
 	get_node("ImportantPopups").show()
 	w.popup()
@@ -566,19 +575,19 @@ func _on_SavePatchDialog_file_selected(path):
 		asset_tree.create_path(k)
 	var dd = asset_tree.directory_dict
 	print_dir(dd)
-	f.store_32(len(fuckyoudirs.keys()))
-	for d in fuckyoudirs.keys():
+	f.store_32(len(dirs.keys()))
+	for d in dirs.keys():
 		f.store_32(len(d))
 		f.store_string(d)
-		f.store_32(len(fuckyoudirs[d]))
-		for e in fuckyoudirs[d]:
+		f.store_32(len(dirs[d]))
+		for e in dirs[d]:
 			f.store_32(len(e[0]))
 			f.store_string(e[0])
 			f.store_8(e[1])
 	var offset = f.get_position()
 	
 #	if !base_wad.is_open():
-#		if base_wad.open(base_wad.file_path, File.READ):
+#		if base_wad.open(base_wad.get_file_path(), File.READ):
 #			$ErrorDialog.popup()
 #			return
 	for file in files.keys():
@@ -625,19 +634,19 @@ func _on_SavePatchDialog_file_selected(path):
 	 
 
 
-var fuckyoudirs = {}
+var dirs = {}
 func print_dir(d, i=''):
 	for l in d['contents'].keys():
 		if d['contents'][l] is Dictionary:
 			var s = i + '/' + l
 			if i == '': s = l
 			if s == '/': s == ''
-			fuckyoudirs[s] = []
+			dirs[s] = []
 			for k in d['contents'][l]['contents'].keys():
 				if d['contents'][l]['contents'][k] is Dictionary:
-					fuckyoudirs[s].append([k,1])
+					dirs[s].append([k,1])
 				else:
-					fuckyoudirs[s].append([k,0])
+					dirs[s].append([k,0])
 			print_dir(d['contents'][l], s)
 
 
@@ -651,12 +660,12 @@ func _on_ImportSheetDialog_file_selected(path):
 	texture.create_from_image(image, 0)
 	selected_asset_data.texture_page.set_size_override(texture.get_size())
 	selected_asset_data.texture_page.set_data(texture.get_data())
-	_recalc_collision()
+	#_recalc_collision()
 	if selected_asset_data is WadFont:
 		base_wad.changed_files[selected_asset_name.replace('.'+selected_asset_name.get_extension(),'_0.png')] = selected_asset_data.texture_page
 	else:
 		base_wad.changed_files[selected_asset_name.replace('.'+selected_asset_name.get_extension(),'.png')] = selected_asset_data.texture_page
-
+	meta_editor_node.frametexturerect.update()
 
 
 # check threads
@@ -685,7 +694,7 @@ func _on_ResizeSpriteDialog_confirmed():
 	var meta = selected_asset_data
 	if meta is Meta:
 		var sprite = $ResizeSpriteDialog/VBoxContainer/SpriteNameLabel.text
-		if base_wad.spritebin.sprite_data.has(sprite):
+		if base_wad.get_bin(SpritesBin).sprite_data.has(sprite):
 			var fc = meta.sprites.get_frame_count(sprite)
 			var nfc = int($ResizeSpriteDialog/VBoxContainer/GridContainer/FrameCountSpinBox.value)
 			var new_size = Vector2(
@@ -716,17 +725,17 @@ func _on_ResizeSpriteDialog_confirmed():
 				for i in range(abs(fc-nfc)):
 					meta.sprites.remove_frame(sprite, nfc)
 			base_wad.changed_files[selected_asset_name] = meta
-			if base_wad.spritebin.sprite_data.has(sprite):
-				base_wad.spritebin.sprite_data[sprite]['size'] = new_size
-				base_wad.spritebin.sprite_data[sprite]['frame_count'] = nfc
-				base_wad.changed_files[SpritesBin.file_path] = base_wad.spritebin
-				base_wad.get_bin(CollisionMasksBin.file_path).resize(base_wad.spritebin.sprite_data[sprite]['id'], new_size.x, new_size.y, fc)
+			if base_wad.get_bin(SpritesBin).sprite_data.has(sprite):
+				base_wad.get_bin(SpritesBin).sprite_data[sprite]['size'] = new_size
+				base_wad.get_bin(SpritesBin).sprite_data[sprite]['frame_count'] = nfc
+				base_wad.changed_files[SpritesBin.get_file_path()] = base_wad.get_bin(SpritesBin)
+				base_wad.get_bin(CollisionMasksBin.get_file_path()).resize(base_wad.get_bin(SpritesBin).sprite_data[sprite]['id'], new_size.x, new_size.y, fc)
 				for i in range(nfc):
 					var f = meta.sprites.get_frame(sprite, i)
-					var b_list = base_wad.get_bin(CollisionMasksBin.file_path).compute_new_mask(base_wad.spritebin.sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D
-					base_wad.spritebin.sprite_data[sprite]['mask_x_bounds'] = b_list[0]
-					base_wad.spritebin.sprite_data[sprite]['mask_y_bounds'] = b_list[1]
-					base_wad.changed_files[CollisionMasksBin.file_path] = base_wad.get_bin(CollisionMasksBin.file_path)
+					var b_list = base_wad.get_bin(CollisionMasksBin.get_file_path()).compute_new_mask(base_wad.get_bin(SpritesBin).sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D
+					base_wad.get_bin(SpritesBin).sprite_data[sprite]['mask_x_bounds'] = b_list[0]
+					base_wad.get_bin(SpritesBin).sprite_data[sprite]['mask_y_bounds'] = b_list[1]
+					base_wad.changed_files[CollisionMasksBin.get_file_path()] = base_wad.get_bin(CollisionMasksBin.get_file_path())
 			if old_size != new_size or fc != nfc:
 				_on_RecalculateSheetButton_pressed()
 

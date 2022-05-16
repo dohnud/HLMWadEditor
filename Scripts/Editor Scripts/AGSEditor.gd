@@ -21,7 +21,7 @@ onready var timeline = $HSplitContainer/Preview/VBoxContainer/Timeline/TimelineS
 onready var pause_button_node = $HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton
 
 
-var meta : Meta = Meta.new()
+var meta : PhyreMeta = null
 var current_sprite = ''
 var current_sprite_list_index = 0
 var mode = 0
@@ -39,7 +39,7 @@ func _ready():
 #	pass
 
 func set_asset(asset_path):
-	meta = app.base_wad.parse_meta(asset_path)
+	meta = app.base_wad.parse_phyremeta(asset_path)
 	asset_label_node.text = asset_path.get_file()
 	sprite_sheet_icon_node.texture = meta.texture_page
 	spritelist_node.clear()
@@ -73,7 +73,8 @@ func _on_SpriteList_item_selected(index):
 	if f is MetaTexture:
 		frame_tex_uv_node.text = str(f.uv.position.x) + ', ' + str(f.uv.position.y) + '  ' + str(f.uv.size.x) + ' x ' + str(f.uv.size.y)
 	mode = 0
-	if !meta.is_gmeta and !app.base_wad.get_bin(SpritesBin).sprite_data.has(sprite_name):
+	var s = app.base_wad.get_bin(SpritesBin)
+	if !meta.is_gmeta and !(s.sprite_data.has(sprite_name)):
 		mode = 1
 	timeline.tween.playback_speed = (fps_node.value) / meta.sprites.get_frame_count(current_sprite)
 	#timeline.tween.stop_all()
@@ -87,9 +88,9 @@ func _on_SpriteList_item_selected(index):
 			yorigin_node.value = meta.center_norms[current_sprite].y * yorigin_node.max_value
 			frametexturerect.origin_pos = meta.center_norms[current_sprite] * Vector2(xorigin_node.max_value, yorigin_node.max_value)
 		else:
-			xorigin_node.value = app.base_wad.get_bin(SpritesBin).sprite_data[current_sprite]['center'].x
-			yorigin_node.value = app.base_wad.get_bin(SpritesBin).sprite_data[current_sprite]['center'].y
-			frametexturerect.origin_pos = app.base_wad.get_bin(SpritesBin).sprite_data[current_sprite]['center']
+			xorigin_node.value = s.sprite_data[current_sprite]['center'].x
+			yorigin_node.value = s.sprite_data[current_sprite]['center'].y
+			frametexturerect.origin_pos = s.sprite_data[current_sprite]['center']
 	else:
 		origin_node.visible = false
 		frametexturerect.origin_pos = Vector2(-9999,-9999)

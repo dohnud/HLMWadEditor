@@ -70,21 +70,21 @@ func merge_sprite(dst_meta:Meta, src_meta:Meta, sprite, rsc_file_path):
 	var w = region.size.x
 	var h = region.size.y
 	var nb = 'Backgrounds/' != sprite.substr(0,len('Backgrounds/'))
-	var base_spritebin = app.base_wad.spritebin
-	var patch_spritebin = patchwad.spritebin
-	var base_collisionbin = app.base_wad.get_bin(CollisionMasksBin.file_path)
-	var patch_collisionbin = patchwad.get_bin(CollisionMasksBin.file_path)
+	var base_spritebin = app.base_wad.get_bin(SpritesBin)
+	var patch_spritebin = patchwad.get_bin(SpritesBin)
+	var base_collisionbin = app.base_wad.get_bin(CollisionMasksBin)
+	var patch_collisionbin = patchwad.get_bin(CollisionMasksBin)
 	if Vector2(w,h) != dst_meta.sprites.get_frame(sprite,0).region.size or dst_meta.sprites.get_frame_count(sprite) != frame_count:
 		dst_meta.needs_recalc = true
 		dst_meta.sprites.remove_animation(sprite)
 		dst_meta.sprites.add_animation(sprite)
 		if nb and collision_toggle:
-			patchwad.goto(CollisionMasksBin.file_path)
+			patchwad.goto(CollisionMasksBin.get_file_path())
 			var import_mask = patch_collisionbin.find(base_spritebin.sprite_data[sprite]['id'], patchwad)
 			if import_mask != null:
 				base_collisionbin.masks[base_spritebin.sprite_data[sprite]['id']] = import_mask
-#			app.base_wad.get_bin(CollisionMasksBin.file_path).resize(base_spritebin.sprite_data[sprite]['id'], w,h, frame_count) # :D
-			app.base_wad.changed_files[CollisionMasksBin.file_path] = base_collisionbin
+#			app.base_wad.get_bin(CollisionMasksBin.get_file_path()).resize(base_spritebin.sprite_data[sprite]['id'], w,h, frame_count) # :D
+			app.base_wad.changed_files[CollisionMasksBin.get_file_path()] = base_collisionbin
 		for i in range(frame_count):
 			var f = src_meta.sprites.get_frame(sprite, i)
 			dst_meta.sprites.add_frame(sprite, f)
@@ -95,15 +95,15 @@ func merge_sprite(dst_meta:Meta, src_meta:Meta, sprite, rsc_file_path):
 		if nb:
 			base_spritebin.sprite_data[sprite]['size'] = Vector2(w, h)
 			base_spritebin.sprite_data[sprite]['frame_count'] = frame_count
-#			app.base_wad.get_bin(CollisionMasksBin.file_path).resize(base_spritebin.sprite_data[sprite]['id'], d,h, frame_count) # :D
-#			app.base_wad.changed_files[CollisionMasksBin.file_path] = app.base_wad.get_bin(CollisionMasksBin.file_path)
-			app.base_wad.changed_files[SpritesBin.file_path] = base_spritebin
+#			app.base_wad.get_bin(CollisionMasksBin.get_file_path()).resize(base_spritebin.sprite_data[sprite]['id'], d,h, frame_count) # :D
+#			app.base_wad.changed_files[CollisionMasksBin.get_file_path()] = app.base_wad.get_bin(CollisionMasksBin.get_file_path())
+			app.base_wad.changed_files[SpritesBin.get_file_path()] = base_spritebin
 			app.base_wad.changed_files[app.selected_asset_name] = dst_meta # mark .meta as changed cuz it was
 			app._on_RecalculateSheetButton_pressed() # recalc sprite sheet in background
 		else:
 			var tilesheet = sprite.substr(sprite.find_last('/')+1)
 			app.base_wad.backgroundbin.background_data[tilesheet]['size'] = Vector2(w,h)
-			app.base_wad.changed_files[BackgroundsBin.file_path] = app.base_wad.backgroundbin
+			app.base_wad.changed_files[BackgroundsBin.get_file_path()] = app.base_wad.backgroundbin
 		#		app.base_wad.backgroundbin.background_data[tilesheet]['tile_size'] = Vector2(w/frame_count, w/frame_count)
 	else:
 #		var dest_image = Image.new()
@@ -112,11 +112,11 @@ func merge_sprite(dst_meta:Meta, src_meta:Meta, sprite, rsc_file_path):
 		var img = dst_meta.texture_page.get_data()
 		if nb:
 			if collision_toggle:
-				patchwad.goto(CollisionMasksBin.file_path)
+				patchwad.goto(CollisionMasksBin.get_file_path())
 				var import_mask = patch_collisionbin.find(base_spritebin.sprite_data[sprite]['id'], patchwad)
 				if import_mask != null:
 					base_collisionbin.masks[base_spritebin.sprite_data[sprite]['id']] = import_mask
-				app.base_wad.changed_files[CollisionMasksBin.file_path] = base_collisionbin
+				app.base_wad.changed_files[CollisionMasksBin.get_file_path()] = base_collisionbin
 			else:
 				base_collisionbin.resize(base_spritebin.sprite_data[sprite]['id'], w,h, frame_count)
 		for i in range(frame_count):
@@ -132,25 +132,25 @@ func merge_sprite(dst_meta:Meta, src_meta:Meta, sprite, rsc_file_path):
 					base_spritebin.sprite_data[sprite]['mask_x_bounds'] = b_list[0]
 					base_spritebin.sprite_data[sprite]['mask_y_bounds'] = b_list[1]
 #				if collision_toggle:
-#					var collisionbin = patchwad.get_bin(CollisionMasksBin.file_path)
-#					patchwad.goto(CollisionMasksBin.file_path)
+#					var collisionbin = patchwad.get_bin(CollisionMasksBin.get_file_path())
+#					patchwad.goto(CollisionMasksBin.get_file_path())
 #					var import_mask = collisionbin.find(base_spritebin.sprite_data[sprite]['id'], patchwad)
-#					app.base_wad.get_bin(CollisionMasksBin.file_path).masks[base_spritebin.sprite_data[sprite]['id']] = import_mask
+#					app.base_wad.get_bin(CollisionMasksBin.get_file_path()).masks[base_spritebin.sprite_data[sprite]['id']] = import_mask
 				if sprite_toggle:
-					var p_spritebin_sprite = patchwad.spritebin.sprite_data[sprite]
+					var p_spritebin_sprite = patchwad.get_bin(SpritesBin).sprite_data[sprite]
 					base_spritebin.sprite_data[sprite]['mask_x_bounds'] = p_spritebin_sprite['mask_x_bounds']
 					base_spritebin.sprite_data[sprite]['mask_y_bounds'] = p_spritebin_sprite['mask_y_bounds']
-#					app.base_wad.changed_files[CollisionMasksBin.file_path] = app.base_wad.get_bin(CollisionMasksBin.file_path)
-#					app.base_wad.changed_files[SpritesBin.file_path] = base_spritebin
+#					app.base_wad.changed_files[CollisionMasksBin.get_file_path()] = app.base_wad.get_bin(CollisionMasksBin.get_file_path())
+#					app.base_wad.changed_files[SpritesBin.get_file_path()] = base_spritebin
 #				if !skip_sprite_data_update:
 					base_spritebin.sprite_data[sprite]['size'] = p_spritebin_sprite['size']
 					base_spritebin.sprite_data[sprite]['frame_count'] = p_spritebin_sprite['frame_count']
-					app.base_wad.changed_files[SpritesBin.file_path] = base_spritebin
-			elif patchwad.exists(BackgroundsBin.file_path):
+					app.base_wad.changed_files[SpritesBin.get_file_path()] = base_spritebin
+			elif patchwad.exists(BackgroundsBin.get_file_path()):
 				var tilesheet = sprite.substr(sprite.find_last('/')+1)
 				var b = app.base_wad.backgroundbin
 				app.base_wad.backgroundbin.background_data[tilesheet]['size'] = Vector2(w,h)
-				app.base_wad.changed_files[BackgroundsBin.file_path] = app.base_wad.backgroundbin
+				app.base_wad.changed_files[BackgroundsBin.get_file_path()] = app.base_wad.backgroundbin
 		dst_meta.texture_page.set_data(img)
 	app.base_wad.changed_files[app.selected_asset_name.replace('.meta','.png')] = dst_meta.texture_page
 	app.selected_asset_name = old_n
@@ -165,8 +165,8 @@ func _on_ImportPatchWindowDialog_confirmed():
 	patchwad = pw.patchwad
 	pw.patchwad = null
 #	collision_toggle = pw.collision_toggle
-	collision_toggle = patchwad.exists(CollisionMasksBin.file_path)
-	sprite_toggle = patchwad.exists(SpritesBin.file_path)
+	collision_toggle = patchwad.exists(CollisionMasksBin.get_file_path())
+	sprite_toggle = patchwad.exists(SpritesBin.get_file_path())
 	import_file_total = 1
 	current_import_percent_index = 1
 	$MarginContainer/VBoxContainer/Control.text = ''

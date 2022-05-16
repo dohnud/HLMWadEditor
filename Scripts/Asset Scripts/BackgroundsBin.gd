@@ -2,7 +2,9 @@ extends BinParser
 
 class_name BackgroundsBin
 
-const file_path = 'GL/hlm2_backgrounds.bin'
+var version = 2
+static func get_file_path():
+	return 'GL/hlm2_backgrounds.bin'
 var background_data = {}
 var background_indicies = []
 var background_names = {}

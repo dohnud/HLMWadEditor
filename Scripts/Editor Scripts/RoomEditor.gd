@@ -9,7 +9,7 @@ var room = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	file = RoomsBin.file_path
+	filetype = RoomsBin
 	tree = room_tree
 
 

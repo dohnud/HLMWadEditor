@@ -8,7 +8,7 @@ var object = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	file = ObjectsBin.file_path
+	file = ObjectsBin
 	tree = object_tree
 	pass # Replace with function body.
 
@@ -29,13 +29,13 @@ func parse_new_value(key, value, new_text_value):
 		if int(new_text_value) == -1 or new_text_value=='Null':
 			return [-1, 'Null']
 		# sets sprite index from name
-		if app.base_wad.spritebin.sprite_data.has(new_text_value):
-			sprite_index = app.base_wad.spritebin.sprite_data[new_text_value]['id']
+		if app.base_wad.get_bin(SpritesBin).sprite_data.has(new_text_value):
+			sprite_index = app.base_wad.get_bin(SpritesBin).sprite_data[new_text_value]['id']
 		# sets sprite index from index
-		elif (int(new_text_value) or new_text_value=='0') and app.base_wad.spritebin.sprites.has(int(new_text_value)):
+		elif (int(new_text_value) or new_text_value=='0') and app.base_wad.get_bin(SpritesBin).sprites.has(int(new_text_value)):
 			sprite_index = int(new_text_value)
-		if app.base_wad.spritebin.sprites.has(sprite_index):
-			return [sprite_index, app.base_wad.spritebin.sprites[sprite_index]['name']]
+		if app.base_wad.get_bin(SpritesBin).sprites.has(sprite_index):
+			return [sprite_index, app.base_wad.get_bin(SpritesBin).sprites[sprite_index]['name']]
 	if key == 'parent':
 		var object_index = value
 		if bin.data.has(new_text_value):
