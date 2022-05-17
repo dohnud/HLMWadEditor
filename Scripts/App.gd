@@ -595,6 +595,8 @@ func _on_SavePatchDialog_file_selected(path):
 		var fc = files[file]
 		if fc is Texture:
 			f.store_buffer(fc.get_data().save_png_to_buffer())
+		elif fc is PhyreMeta:
+			fc.write(f)
 		elif fc is Meta:
 			fc.write(f)
 		elif fc is SpritesBin:
