@@ -28,8 +28,9 @@ func update_pos(v:float=0):
 	$TimelineBar.rect_position.x = parent.rect_size.x * value - 2
 	$TimelineBar.rect_size = rect_size
 	if editor.timecode:
-		if editor.sound.stream:
-			editor.timecode.text = str(v*editor.sound.stream.get_length())+'s'
+		if editor.sound:
+			if editor.sound.stream:
+				editor.timecode.text = str(v*editor.sound.stream.get_length())+'s'
 #	if editor.frametexturerect:
 #		var c = editor.meta.sprites.get_frame_count(editor.current_sprite)
 #		var i = clamp(value * c, 0, max(0,c-1))

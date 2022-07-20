@@ -104,7 +104,7 @@ func merge_sprite(dst_meta:Meta, src_meta:Meta, sprite, rsc_file_path):
 			var tilesheet = sprite.substr(sprite.find_last('/')+1)
 			app.base_wad.backgroundbin.background_data[tilesheet]['size'] = Vector2(w,h)
 			app.base_wad.changed_files[BackgroundsBin.get_file_path()] = app.base_wad.backgroundbin
-		#		app.base_wad.backgroundbin.background_data[tilesheet]['tile_size'] = Vector2(w/frame_count, w/frame_count)
+#			app.base_wad.backgroundbin.background_data[tilesheet]['tile_size'] = Vector2(w/frame_count, w/frame_count)
 	else:
 #		var dest_image = Image.new()
 #		dest_image.create(meta.texture_page.get_width(), meta.texture_page.get_height(), false, Image.FORMAT_RGBA8)
@@ -120,7 +120,7 @@ func merge_sprite(dst_meta:Meta, src_meta:Meta, sprite, rsc_file_path):
 			else:
 				base_collisionbin.resize(base_spritebin.sprite_data[sprite]['id'], w,h, frame_count)
 		for i in range(frame_count):
-			var f = src_meta.sprites.get_frame(sprite, i)
+			var f :MetaTexture= src_meta.sprites.get_frame(sprite, i)
 			var of :MetaTexture= dst_meta.sprites.get_frame(sprite,i)
 			var tf = f.atlas.get_data()
 			if tf.get_format() != Image.FORMAT_RGBA8:

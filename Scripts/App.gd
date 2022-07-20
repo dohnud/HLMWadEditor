@@ -76,11 +76,15 @@ func _ready():
 		$Main/PanelContainer/HBoxContainer/TabContainer/Panel/Label.hide()
 		$Main/PanelContainer/HBoxContainer/TabContainer/Panel/Button.show()
 
+
 func open_wad(file_path):
 	var wad = Wad.new()
 #	file_path = file_path
 	if !wad.opens(file_path, File.READ):
-		wad.parse_header()
+		if !wad.parse_header():
+			# one or more files is corrupted
+			$ErrorDialog.popup()
+			$ErrorDialog/Label2.text = "One or more resources is corrupted or missing!"
 		if show_advanced:
 			var s :SpritesBin= wad.parse_sprite_data()
 			var o :ObjectsBin= wad.parse_objects()
@@ -169,7 +173,10 @@ func open_file_dialog(name, filter, oncomplete):
 func open_patchwad(file_path):
 	var pwad = Wad.new()
 	if !pwad.opens(file_path, File.READ_WRITE):
-		pwad.parse_header()
+		if !pwad.parse_header():
+			# one or more files is corrupted
+			$ErrorDialog.popup()
+			$ErrorDialog/Label2.text = "One or more resources is corrupted or missing!\ncontact a developer!"
 		base_wad.reset()
 		base_wad.patchwad_list = []
 		base_wad.patch(pwad)
@@ -567,8 +574,8 @@ func _on_SavePatchDialog_file_selected(path):
 		f.store_32(len(k))
 		f.store_buffer(PoolByteArray(k.to_ascii()))
 		comebackf[k] = f.get_position()
-		f.store_64(0xFFffFFffFFffFF) # len
-		f.store_64(0xFFffFFffFFffFF) # offset
+		f.store_64(0x7fffffffffffffff) # len
+		f.store_64(0x7fffffffffffffff) # offset
 	
 	asset_tree.reset()
 	for k in files.keys():
@@ -628,6 +635,9 @@ func _on_SavePatchDialog_file_selected(path):
 		elif fc is WadFont:
 			fc.write(f)
 		var s = f.get_position() - c
+		if s <= 2 or s >= 0x7fffffffffffffff - 1:
+			$ErrorDialog.popup()
+			return
 		var o = c - offset
 		f.seek(comebackf[file])
 		f.store_64(s)
@@ -750,3 +760,21 @@ func _on_Button_pressed():
 
 func _on_ImportWadFileDialog_confirmed():
 	pass # Replace with function body.
+
+
+func _on_ImportSoundDialog_file_selected(path):
+	var sound = WadSound.new()
+	var f = File.new()
+	if f.open(path, File.READ):
+		ErrorLog.show_user_error('ouch couldnt open: ' + path)
+		return null
+	sound.parse(f, f.get_len(), path)
+	if sound.stream == null:
+		ErrorLog.show_user_error('ouch couldnt open: ' + path)
+		return null
+#	selected_asset_data.texture_page.set_size_override(texture.get_size())
+#	selected_asset_data.texture_page.set_data(texture.get_data())
+	base_wad.changed_files[selected_asset_name] = sound
+	sound_editor_node._on_PausePlayButton_toggled(false)
+	sound_editor_node.set_sound(selected_asset_name)
+#	sound_editor_node.update()

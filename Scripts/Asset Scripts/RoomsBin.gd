@@ -43,7 +43,7 @@ var rm = {
 		'depth' : '16',
 	}],
 	'objects' : ['32', {
-		'mystery' : '16',
+		'instance_id' : '16',
 		'mystery1' : '16',
 		'mystery2' : '16',
 		'id' : '16',

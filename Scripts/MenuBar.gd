@@ -6,8 +6,8 @@ var operations = {
 	"FileButton" : [
 		["Open Patch", [KEY_CONTROL, KEY_O], 'openpatch'],
 		["Save Patch", [KEY_CONTROL,KEY_S,], 'savepatch'],
-		[],
-		["Import from Patch", [KEY_CONTROL, KEY_I], 'importpatch'],
+#		[],
+#		["Import from Patch", [KEY_CONTROL, KEY_I], 'importpatch'],
 		["Merge into WAD", [], 'mergepatch'],
 		[],
 		["Recent Patches", [PopupMenu.new()], 'openrecentpatch'],
@@ -74,7 +74,7 @@ var operations = {
 		["Export Character", [], 'na'],
 	],
 	"7SoundButton" : [
-		["Import Sound", [], 'na'],
+		["Import Sound", [], 'importsound'],
 	],
 	"2RoomButton" : [
 		["Add Generic Object to Room", [], 'room_add_object'],
@@ -217,11 +217,14 @@ func extract(resource_data=null):
 	elif resource_data is Meta:
 		w.add_filter('*.meta')
 		w.add_filter('*.gmeta')
-		if w.filename=='':w.filename = '.meta'
+		if w.current_file=='':w.current_file = '.meta'
 	elif resource_data is Texture:
 		w.add_filter('*.png')
+	elif resource_data is WadSound:
+		w.add_filter('*.' + app.selected_asset_name.get_extension())
 	else:
 		app.get_node('NotImplementedYetDialog').popup()
+	w.current_file = app.selected_asset_name.get_file()
 	w.popup()
 
 func room_add_object():
@@ -332,6 +335,20 @@ func resize_sprite():
 	app.get_node('ResizeSpriteDialog/VBoxContainer/GridContainer/HeightSpinBox').value = f.region.size.y
 	app.get_node('ResizeSpriteDialog/VBoxContainer/GridContainer/FrameCountSpinBox').value = meta.sprites.get_frame_count(app.meta_editor_node.current_sprite)
 	app.get_node('ResizeSpriteDialog/VBoxContainer/TextureRect/MarginContainer/TextureRect').texture = meta.sprites.get_frame(app.meta_editor_node.current_sprite, 0)
+	w.popup()
+
+func importsound():
+	var mode = "*.*"
+	if app.sound_editor_node.sound.stream is AudioStreamSample:
+		mode = "*.wav"
+	elif app.sound_editor_node.sound.stream is AudioStreamMP3:
+		mode = "*.mp3"
+	elif app.sound_editor_node.sound.stream is AudioStreamOGGVorbis:
+		mode = "*.ogg"
+	var w :FileDialog= app.get_node("ImportantPopups/ImportSoundDialog")
+	w.clear_filters()
+	w.add_filter(mode)
+	app.get_node("ImportantPopups").show()
 	w.popup()
 
 func _on_TabContainer_tab_changed(tab):

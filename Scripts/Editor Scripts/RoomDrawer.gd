@@ -89,14 +89,15 @@ func create_room():
 func room_item_clicked(e:InputEvent, i, obj, meta_sprite_name):
 	if e.is_action_pressed("ui_lmb"):
 		print(i,':', obj,' ',meta_sprite_name)
-	_on_TextureRect_gui_input(e, false)
+		ErrorLog.show_user_error(str(i) + ' : ' + obj + '  ' + meta_sprite_name, false)
+	_on_TextureRect_gui_input(e, true)
 	
 #var rect_scale = 1
 func _on_TextureRect_gui_input(e:InputEvent,happy=true):
 	if happy:
 		if e is InputEventMagnifyGesture:
-			var ns = e.factor-rect_scale
-			rect_position -= (rect_scale-ns) * (get_local_mouse_position())
+			var ns = e.factor * rect_scale
+			rect_position -= (rect_scale - ns) * (get_local_mouse_position())
 			rect_scale = ns
 		if e.is_action_pressed("ui_scroll_up"):
 			var ns = rect_scale * 1.1

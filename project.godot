@@ -35,6 +35,11 @@ _global_script_classes=[ {
 "path": "res://Scripts/Asset Scripts/CollisionMasksBin.gd"
 }, {
 "base": "Node",
+"class": "ErrorLogger",
+"language": "GDScript",
+"path": "res://Scripts/Singletons/ErrorSingleton.gd"
+}, {
+"base": "Node",
 "class": "Logger",
 "language": "GDScript",
 "path": "res://Scripts/Singletons/LogSingleton.gd"
@@ -140,6 +145,7 @@ _global_script_class_icons={
 "BinEditor": "",
 "BinParser": "",
 "CollisionMasksBin": "",
+"ErrorLogger": "",
 "Logger": "",
 "Meta": "",
 "MetaTexture": "",
@@ -178,6 +184,7 @@ config/windows_native_icon="res://icon.ico"
 
 Log="*res://Scripts/Singletons/LogSingleton.gd"
 Config="*res://Scripts/Singletons/SettingsSingleton.gd"
+ErrorLog="*res://Scripts/Singletons/ErrorSingleton.gd"
 
 [display]
 

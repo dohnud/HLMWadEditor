@@ -71,6 +71,11 @@ func parse_header():
 		else:
 			file_len = get_32()
 			file_offset = get_32()
+		if file_len >= 0xffffffffffffff or file_offset >= 0xffffffffffffff:
+			Log.log("File: " + file_name + "is corrupted or missing, please contact a developer")
+			print("File:" + file_name + "is corrupted or missing")
+			printerr("File:" + file_name + "is corrupted or missing")
+			return 0
 		# add to file locations
 		file_locations[file_name] = [file_offset, file_len]
 		#file_list.append(file_name)
@@ -99,6 +104,7 @@ func parse_header():
 	
 	patchwad_list = [get_script().new()]
 	close()
+	return 1
 
 
 func add_file(file_path, dest_folder='Assets/'):
@@ -154,7 +160,14 @@ func goto(asset):
 #	for p in patchwad_list:
 #		if p.exists(asset):
 #			return p.goto(asset)
+	if !file_locations.has(asset):
+		return null
 	var dim = file_locations[asset]
+	if dim[0] >= 0xffffffffffffff or dim[1] >= 0xffffffffffffff:
+		Log.log("File: " + asset + "is corrupted or missing, please contact a developer")
+		print("File:" + asset + "is corrupted or missing")
+		printerr("File:" + asset + "is corrupted or missing")
+		return null
 	seek(content_offset + dim[0])
 	return dim[1]
 
@@ -182,13 +195,17 @@ func open_asset(asset_path):
 		return sprite_sheet(asset_path)
 	if asset_path.ends_with('.bin'):
 		return get_bin(asset_path)
+	if asset_path.ends_with('.mp3') or \
+		asset_path.ends_with('.wav') or \
+		asset_path.ends_with('.ogg') :
+		return audio_stream(asset_path)
 	return null
 
-func apply_patchwad(f):
-	var patchwad = get_script().new()
-	patchwad.open(f, File.READ)
-	patchwad.parse_header()
-	patchwad_list.append(patchwad)
+#func apply_patchwad(f):
+#	var patchwad = get_script().new()
+#	patchwad.open(f, File.READ)
+#	patchwad.parse_header()
+#	patchwad_list.append(patchwad)
 
 func patch(wad):
 	patchwad_list.append(wad)
@@ -205,6 +222,7 @@ func revert(asset):
 	changed_files.erase(asset)
 	new_files.erase(asset)
 	loaded_assets.erase(asset)
+#	file_locations.erase(asset) # leave commented
 	for p in patchwad_list:
 		p.revert(asset)
 		p.file_locations.erase(asset)
@@ -233,6 +251,8 @@ func sprite_sheet(asset, lazy=0):
 func audio_stream(asset, lazy=0 ,repeat=false):
 	if lazy:
 		asset = lazy_find(asset)
+	if changed_files.has(asset):
+		return changed_files[asset]
 	if asset in loaded_assets.keys():
 		return loaded_assets[asset]
 	
@@ -243,6 +263,7 @@ func audio_stream(asset, lazy=0 ,repeat=false):
 		sound.parse(self, size, asset)
 		loaded_assets[asset] = sound
 		return sound
+	ErrorLog.show_user_error("couldnt find file: " + asset)
 
 
 func byte_array_to_int(bytes):

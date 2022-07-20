@@ -1,4 +1,4 @@
-[gd_scene load_steps=111 format=2]
+[gd_scene load_steps=112 format=2]
 
 [ext_resource path="res://Scripts/Editor Scripts/TimelineSlider.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/App.gd" type="Script" id=2]
@@ -54,6 +54,7 @@
 [ext_resource path="res://Scripts/Editor Scripts/BackgroundEditor.gd" type="Script" id=52]
 [ext_resource path="res://Scripts/Editor Scripts/AGSEditor.gd" type="Script" id=53]
 [ext_resource path="res://Scripts/MergePatchDialog.gd" type="Script" id=54]
+[ext_resource path="res://Scripts/ErrorDialog.gd" type="Script" id=55]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.12549, 0.152941, 0.211765, 1 )
@@ -2993,6 +2994,7 @@ margin_right = -167.0
 margin_bottom = -401.0
 rect_min_size = Vector2( 300, 80 )
 window_title = "Error!"
+script = ExtResource( 55 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -3572,6 +3574,7 @@ __meta__ = {
 }
 
 [node name="ImportSheetDialog" type="FileDialog" parent="ImportantPopups"]
+visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 68.0
@@ -3586,6 +3589,28 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.png" )
+current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
+current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ImportSoundDialog" type="FileDialog" parent="ImportantPopups"]
+visible = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 68.0
+margin_top = 61.0
+margin_right = -83.0004
+margin_bottom = -53.0004
+rect_min_size = Vector2( 400, 140 )
+popup_exclusive = true
+window_title = "Import an Audio File"
+resizable = true
+mode_overrides_title = false
+mode = 0
+access = 2
+filters = PoolStringArray( "*.wav" )
 current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
 current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
 __meta__ = {
@@ -4105,6 +4130,7 @@ script = ExtResource( 17 )
 [connection signal="pressed" from="SpriteTexturePageWindow/VBoxContainer/HBoxContainer2/HBoxContainer/exportbutton" to="Main/TopMenu/MenuItems" method="_on_exportbutton_pressed"]
 [connection signal="pressed" from="SpriteTexturePageWindow/VBoxContainer/HBoxContainer2/HBoxContainer/importbutton" to="Main/TopMenu/MenuItems" method="_on_importbutton_pressed"]
 [connection signal="pressed" from="SpriteTexturePageWindow/VBoxContainer/HBoxContainer2/HBoxContainer2/okbutton" to="SpriteTexturePageWindow" method="_on_okbutton_pressed"]
+[connection signal="popup_hide" from="ErrorDialog" to="ErrorDialog" method="_on_ErrorDialog_popup_hide"]
 [connection signal="pressed" from="WaitForThreadsDialog/MarginContainer/VBoxContainer/HBoxContainer/WaitThreadsOk" to="." method="_on_WaitThreadsOk_pressed"]
 [connection signal="pressed" from="WaitForThreadsDialog/MarginContainer/VBoxContainer/HBoxContainer/WaitThreadsNo" to="." method="_on_WaitThreadsNo_pressed"]
 [connection signal="confirmed" from="ResizeSpriteDialog" to="ResizeSpriteDialog" method="_on_ResizeSpriteDialog_confirmed"]
@@ -4124,6 +4150,8 @@ script = ExtResource( 17 )
 [connection signal="popup_hide" from="ImportantPopups/AddResourceDialog" to="ImportantPopups" method="_on_ExtractResourceDialog_popup_hide"]
 [connection signal="file_selected" from="ImportantPopups/ImportSheetDialog" to="." method="_on_ImportSheetDialog_file_selected"]
 [connection signal="popup_hide" from="ImportantPopups/ImportSheetDialog" to="ImportantPopups" method="_on_ExtractResourceDialog_popup_hide"]
+[connection signal="file_selected" from="ImportantPopups/ImportSoundDialog" to="." method="_on_ImportSoundDialog_file_selected"]
+[connection signal="popup_hide" from="ImportantPopups/ImportSoundDialog" to="ImportantPopups" method="_on_ExtractResourceDialog_popup_hide"]
 [connection signal="dir_selected" from="ImportantPopups/ExportSpriteStripDialog" to="ImportantPopups/ExportSpriteStripDialog" method="_on_ExportSpriteStripDialog_dir_selected"]
 [connection signal="file_selected" from="ImportantPopups/ExportSpriteStripDialog" to="ImportantPopups/ExportSpriteStripDialog" method="_on_ExportSpriteStripDialog_file_selected"]
 [connection signal="popup_hide" from="ImportantPopups/ExportSpriteStripDialog" to="ImportantPopups" method="_on_ExportSpriteStripDialog_popup_hide"]

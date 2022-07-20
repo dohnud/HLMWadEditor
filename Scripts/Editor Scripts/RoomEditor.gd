@@ -5,6 +5,7 @@ extends BinEditor
 onready var room_tree = $TabContainer2/Advanced/RoomTree
 
 var rooms = null
+var room_name = ""
 var room = {}
 
 # Called when the node enters the scene tree for the first time.
@@ -17,16 +18,28 @@ func _ready():
 #func _process(delta):
 #	pass
 func add_generic_object():
-	room['objects'].append({
+	var new_obj = {
 		'mystery' : 1,
 		'mystery1' : 1,
 		'mystery2' : 1,
 		'id' : 2342,
 		'pos': Vector2(0,0),
-	})
+	}
+	var objecttreeitem = room_tree.get_root().get_children().get_next().get_next().get_next()
+	var new_objecttreeitem = room_tree.create_item(objecttreeitem)
+	new_objecttreeitem.set_text(0,str(len(room['objects'])))
+	for k in new_obj.keys():
+		var fieldtreeitem = room_tree.create_item(new_objecttreeitem)
+		fieldtreeitem.set_editable(0, false)
+		fieldtreeitem.set_editable(1, true)
+		fieldtreeitem.set_text(0, k)
+		fieldtreeitem.set_text(1, str(new_obj[k]))
+	room['objects'].append(new_obj)
+	
 
 func set_room(room_name):
 	set_bin_asset(room_name)
+	
 	$Label.text = room_name
 #	object_tree.reset()
 	rooms = bin #app.base_wad.objectbin

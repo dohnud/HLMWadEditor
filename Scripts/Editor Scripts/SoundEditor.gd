@@ -19,7 +19,7 @@ onready var pause_button_node = $Container/VBoxContainer/TimelineControls/HBoxCo
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	sound_player.volume_db = -90*(exp(6.90775527898*(1-.25))*0.001)
+	sound_player.volume_db = -90*(exp(6.90775527898*(1-.25))*0.001) # hand crafted perfection
 	pass
 #	file = SoundsBin.get_file_path()
 #	tree = sound_tree
@@ -71,7 +71,10 @@ func set_sound(asset):
 	
 	timeline.tween.playback_speed = 0
 	if sound.stream:
-		sound.stream.loop_mode = timeline.tween.repeat
+		if sound.stream is AudioStreamSample:
+			sound.stream.loop_mode = timeline.tween.repeat
+		else:
+			sound.stream.loop = timeline.tween.repeat
 		timeline.tween.playback_speed = float(1) / sound.stream.get_length()
 	timeline.tween.seek(0)
 	timeline.set_tween()

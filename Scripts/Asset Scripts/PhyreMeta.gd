@@ -87,86 +87,103 @@ func parse(file_pointer, size, spritebin, atlasbin, bgbin, asset_path):
 		f.get_32(),
 		f.get_32(),      # important (texture offset)
 	])
-	dumb_datas.append([f.get_buffer(dumb_datas[0][1] - (f.get_position()-start))])
 	
-	global_pixel_data_offset = start + 0x80+100 + dumb_datas[0][1] + dumb_datas[0][2] + dumb_datas[0][14] + dumb_datas[0][5] - 47
+	var texture_height = 1
+	var texture_width = 1
 	
-	dumb_datas.append([
-		f.get_buffer(4),
-		f.get_32(),      # important (data size)
-		f.get_32(),      # important (next size)
-	])
-	dumb_datas.append([f.get_buffer(dumb_datas[2][1] - 0x4 - 0x4)])
-	
-	dumb_datas.append([
-		f.get_32(),
-		f.get_32(),      # important (block size)
-		f.get_32(),
-		f.get_32(),
-		f.get_32(),      # padding
-		f.get_32(),
-		f.get_32(),
-		f.get_32(),      # padding
-		f.get_32(),
-		f.get_32(),
-		f.get_32(),
-		f.get_32(),
-		f.get_32(),
-		f.get_32(),      # padding
-		f.get_32(),      # important (num images)
-	])
-	dumb_datas.append([f.get_buffer(dumb_datas[4][1] + 80)])
-	
-	var num_images = dumb_datas[4][14]
-	
-	dumb_datas.append([])
-	for i in range(num_images):
-		var stuff = [f.get_float(), f.get_float(),f.get_float(),f.get_float(),f.get_float(),f.get_float()]
-		uvs.append(Rect2(
-			stuff[2],stuff[3],
-			stuff[4],stuff[5]
-		))
-		dumb_datas[6].append_array(stuff)
-	
-	dumb_datas.append([[]])
-	var image_names = []
-	var j = 0
-	while j < num_images:
-		var s = ''
-		var c = f.get_8()
-		dumb_datas[7][0].append(c)
-		while c != 0:
-			s += char(c)
-			c = f.get_8()
+	if file_name != 'background':
+		dumb_datas.append([f.get_buffer(dumb_datas[0][1] - (f.get_position()-start))])
+		
+		global_pixel_data_offset = start + 0x80+100 + dumb_datas[0][1] + dumb_datas[0][2] + dumb_datas[0][14] + dumb_datas[0][5] - 47
+		
+		dumb_datas.append([
+			f.get_buffer(4),
+			f.get_32(),      # important (data size)
+			f.get_32(),      # important (next size)
+		])
+		dumb_datas.append([f.get_buffer(dumb_datas[2][1] - 0x4 - 0x4)])
+		
+		dumb_datas.append([
+			f.get_32(),
+			f.get_32(),      # important (block size)
+			f.get_32(),
+			f.get_32(),
+			f.get_32(),      # padding
+			f.get_32(),
+			f.get_32(),
+			f.get_32(),      # padding
+			f.get_32(),
+			f.get_32(),
+			f.get_32(),
+			f.get_32(),
+			f.get_32(),
+			f.get_32(),      # padding
+			f.get_32(),      # important (num images)
+		])
+		dumb_datas.append([f.get_buffer(dumb_datas[4][1] + 80)])
+		
+		var num_images = dumb_datas[4][14]
+		
+		dumb_datas.append([])
+		for i in range(num_images):
+			var stuff = [f.get_float(), f.get_float(),f.get_float(),f.get_float(),f.get_float(),f.get_float()]
+			uvs.append(Rect2(
+				stuff[2],1 - stuff[3] - stuff[5],
+				stuff[4],stuff[5]
+			))
+			dumb_datas[6].append_array(stuff)
+		
+		dumb_datas.append([[]])
+		var image_names = []
+		var j = 0
+		while j < num_images:
+			var s = ''
+			var c = f.get_8()
 			dumb_datas[7][0].append(c)
-		if s == '': continue
-		image_names.append(s)
-		j += 1
+			while c != 0:
+				s += char(c)
+				c = f.get_8()
+				dumb_datas[7][0].append(c)
+			if s == '': continue
+			image_names.append(s)
+			j += 1
+		
+		var comeback = f.get_position()
+		var texture_block_header = f.get_buffer(200)
+		var rgba8_tag_index = 0
+		while rgba8_tag_index<200 and texture_block_header.subarray(rgba8_tag_index,rgba8_tag_index+5).get_string_from_ascii() != 'RGBA8':
+			rgba8_tag_index+=1
+		if rgba8_tag_index < 1 or rgba8_tag_index >= 200:
+			print('FUCK! @', f.get_position())
+			return
+		
+		var comeonman = (19 - dumb_datas[0][7])
+		global_pixel_data_offset = comeback + rgba8_tag_index + dumb_datas[0][5] + 37 - comeonman
+		
+		texture_height = bytes_to_int(texture_block_header.subarray(rgba8_tag_index-36, rgba8_tag_index-33))
+		texture_width  = bytes_to_int(texture_block_header.subarray(rgba8_tag_index-40, rgba8_tag_index-37))
+		f.seek(comeback)
+		dumb_datas.append([f.get_buffer(global_pixel_data_offset - f.get_position())])
+	else:
+		texture_width = 1024
+		texture_height = 1024
 	
-	var comeback = f.get_position()
-	var texture_block_header = f.get_buffer(200)
-	var rgba8_tag_index = 0
-	while rgba8_tag_index<200 and texture_block_header.subarray(rgba8_tag_index,rgba8_tag_index+5).get_string_from_ascii() != 'RGBA8':
-		rgba8_tag_index+=1
-	if rgba8_tag_index < 1 or rgba8_tag_index >= 200:
-		print('FUCK! @', f.get_position())
-		return
-	
-	var comeonman = (19 - dumb_datas[0][7])
-	global_pixel_data_offset = comeback + rgba8_tag_index + dumb_datas[0][5] + 37 - comeonman
-	
-	var texture_height = bytes_to_int(texture_block_header.subarray(rgba8_tag_index-36, rgba8_tag_index-33))
-	var texture_width  = bytes_to_int(texture_block_header.subarray(rgba8_tag_index-40, rgba8_tag_index-37))
-	
+		f.seek(start + 2928)
+		for i in range(4):
+			var stuff = [f.get_float(), f.get_float(),f.get_float(),f.get_float(),f.get_float(),f.get_float()]
+			uvs.append(Rect2(
+				stuff[2], 1-stuff[3]-stuff[5],
+				stuff[4],stuff[5]
+			))
+		global_pixel_data_offset = start + 3309
 	# 
-	f.seek(comeback)
-	dumb_datas.append([f.get_buffer(global_pixel_data_offset - f.get_position())])
 
 	
 	
 	f.seek(global_pixel_data_offset)
 	var img = Image.new()
 	img.create_from_data(texture_width, texture_height, false, Image.FORMAT_RGBA8, f.get_buffer(texture_width * texture_height * 4))
+	img.flip_y()
 	texture_dimensions = Vector2(texture_width, texture_height)
 
 	print('im tired',f.get_position())
@@ -182,7 +199,7 @@ func parse(file_pointer, size, spritebin, atlasbin, bgbin, asset_path):
 	if file_name == 'background':
 		# TODO: redo and fix phyreMeta parsing for backgrounds.ags.phyre
 		for k in range(len(bgbin.background_data.values())):
-			var bg = bgbin.background_data.values()[i]
+			var bg = bgbin.background_data.values()[k]
 			sprites.add_animation(str(bg.name))
 			var mt = MetaTexture.new()
 			mt.atlas = texture_page
@@ -252,7 +269,9 @@ func write(file_pointer) -> int:
 				f.store_float(field)
 			else:
 				f.store_32(field)
-	f.store_buffer(texture_page.get_data().get_data())
+	var img = texture_page.get_data()
+	img.flip_y()
+	f.store_buffer(img.get_data())
 	return f.get_position() - start
 #
 #func writeg(file_pointer):

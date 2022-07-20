@@ -3,7 +3,7 @@ extends Node
 class_name WadSound
 
 var data = []
-var stream = AudioStreamSample.new()
+var stream = AudioStream.new()
 
 func parse(f, size, asset):
 	data = f.get_buffer(size)
@@ -117,17 +117,17 @@ func parse(f, size, asset):
 		newstream.loop_mode = 0 #change to 0 or delete this line if you don't want loop, also check out modes 2 and 3 in the docs
 
 	#if file is ogg
-#	elif asset.ends_with(".ogg"):
-#		newstream = AudioStreamOGGVorbis.new()
-#		newstream.loop = false #set to false or delete this line if you don't want to loop
-#		newstream.data = bytes
+	elif asset.ends_with(".ogg"):
+		newstream = AudioStreamOGGVorbis.new()
+		newstream.loop = false #set to false or delete this line if you don't want to loop
+		newstream.data = bytes
 
 	#if file is mp3
-#		elif asset.ends_with(".mp3"):
-##			newstream = AudioStreamMP3.new()
-#			newstream.loop = true #set to false or delete this line if you don't want to loop
-#			newstream.data = bytes
-#			return newstream
+	elif asset.ends_with(".mp3"):
+		newstream = AudioStreamMP3.new()
+		newstream.loop = true #set to false or delete this line if you don't want to loop
+		newstream.data = bytes
+#		newstream.set_data(bytes)
 
 	else:
 		print ("ERROR: audio preview failed")
