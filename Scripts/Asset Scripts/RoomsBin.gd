@@ -47,7 +47,7 @@ var rm = {
 		'mystery1' : '16',
 		'mystery2' : '16',
 		'object_id' : '16',
-		'pos': 'i16vec2',
+		'position': 'i16vec2',
 	}],
 	'footers' : ['16', {'bytes':[20]}],
 	'end_bytes' : [2],
