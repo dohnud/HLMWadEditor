@@ -18,13 +18,22 @@ func _ready():
 #func _process(delta):
 #	pass
 func add_generic_object():
-	var new_obj = {
-		'mystery' : 1,
-		'mystery1' : 1,
-		'mystery2' : 1,
-		'id' : 2342,
-		'pos': Vector2(0,0),
-	}
+	var new_obj;
+	if bin is phyreRoomsBin:
+		new_obj = {
+			'instance': 0,
+			'id' : 7,
+			'pos': Vector2(0,0),
+			'm' : 0
+		}
+	else:
+		new_obj = {
+			'instace_id' : 1,
+			'mystery1' : 1,
+			'mystery2' : 1,
+			'object_id' : 2342,
+			'pos': Vector2(0,0),
+		}
 	var objecttreeitem = room_tree.get_root().get_children().get_next().get_next().get_next()
 	var new_objecttreeitem = room_tree.create_item(objecttreeitem)
 	new_objecttreeitem.set_text(0,str(len(room['objects'])))
@@ -55,7 +64,7 @@ func _on_RoomTree_item_edited(deleted=0):
 	var p = []
 	while ti != null:
 		var s = ti.get_text(0)
-		if can_be_int_fuck_you_godot(s) or s == '0':
+		if can_be_int_fuck_you_godot(s) != null or s == '0':
 			s = can_be_int_fuck_you_godot(s)
 		p.push_front(s)
 		ti = ti.get_parent()
@@ -74,9 +83,11 @@ func _on_RoomTree_item_edited(deleted=0):
 			if len(value) < 2:
 				value = value.split(' ')
 			if (len(value) > 1 and len(value) < 3):
-				if can_be_int_fuck_you_godot(value[0]) and can_be_int_fuck_you_godot(value[1]):
-					v = Vector2(can_be_int_fuck_you_godot(value[0]), can_be_int_fuck_you_godot(value[1]))
-		elif d[last_k] is int and (can_be_int_fuck_you_godot(value) or value == '0'):
+				var r1 = can_be_int_fuck_you_godot(value[0])
+				var r2 = can_be_int_fuck_you_godot(value[1])
+				if r1 != null and r2 != null:
+					v = Vector2(r1, r2)
+		elif d[last_k] is int and (can_be_int_fuck_you_godot(value) != null or value == '0'):
 			v = can_be_int_fuck_you_godot(value)
 		if v != d[last_k]:
 			d[last_k] = v
@@ -97,9 +108,12 @@ func can_be_int_fuck_you_godot(string:String):
 		var l = string.split('+')
 		var s = 0
 		for i in l:
-			s += can_be_int_fuck_you_godot(i)
+			var r = can_be_int_fuck_you_godot(i)
+			if r != null:
+				s += r
 		return s
 	for c in string:
-		if ord(c) > ord('A')-1 and ord(c) < ord('z')+1 or c == '/':
-			return 0
+#		if ord(c) > ord('A')-1 and ord(c) < ord('z')+1 or c == '/':
+		if ord(c) < ord('0') or ord(c) > ord('9'):
+			return null
 	return int(string)

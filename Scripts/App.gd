@@ -118,11 +118,12 @@ func open_asset(asset_path):
 		meta_editor_node = get_node(meta_editor_node_path) #
 		selected_asset_data = meta_editor_node.set_asset(asset_path)
 		meta_editor_node.spritelist_node.grab_focus()
+		selected_asset_data.is_hm1 = false
 	if asset_path.ends_with('.ags.phyre'):
 		editor_tabs.current_tab = 9
 		meta_editor_node = ags_editor_node # im lazy
 		selected_asset_name = asset_path 
-		selected_asset_data = ags_editor_node.set_asset('GL/'+asset_path)
+		selected_asset_data = ags_editor_node.set_asset(asset_path)
 		selected_asset_data.is_hm1 = true
 		ags_editor_node.spritelist_node.grab_focus()
 	if asset_path.ends_with('.fnt'):
@@ -192,7 +193,7 @@ func _on_SearchBar_text_entered(new_text=''):
 				if file.begins_with('Atlases/') and (file.ends_with('.meta') or file.ends_with('.gmeta')):
 					asset_tree.create_path(file)
 				if file.begins_with('GL/') and file.ends_with('.phyre'):
-					asset_tree.create_path(file.substr(3,99999))
+					asset_tree.create_path(file)#).substr(3,99999))
 				if file.begins_with('Fonts/') and file.ends_with('.fnt'):
 					asset_tree.create_path(file)
 #				if "Sounds/" == file.substr(0,len('Sounds/')):
@@ -213,6 +214,8 @@ func _on_SearchBar_text_entered(new_text=''):
 						asset_tree.create_path(file.replace('.png','.meta'), 1)
 				# hotline 1 :3
 				print(file)
+				if file.begins_with('GL/') and file.ends_with('.phyre'):
+					asset_tree.create_path(file, 1)#).substr(3,99999))
 #				if file.begins_with('')
 				# again for Fonts
 				if file.ends_with('Fonts/'):
@@ -563,13 +566,18 @@ func _on_SavePatchDialog_file_selected(path):
 	if f.open(path, File.WRITE):
 		print('could not open',path,'\nfile in use?')
 		return
-	f.store_buffer(base_wad.identifier)
+	if base_wad.version != Wad.WAD_VERSION.HM1:
+		f.store_buffer(base_wad.identifier)
+	else:
+		f.store_32(0xFFffFFff)
 
 	var num_files = len(files.keys())
 	f.store_32(num_files)
 	var current_offset = 0
 	var comebackf = {}
 	for k in files.keys():
+		if base_wad.version == Wad.WAD_VERSION.HM1 and k.begins_with('GL/'):
+			k = k.replace('hlm2','hotline')
 		# metadata
 		f.store_32(len(k))
 		f.store_buffer(PoolByteArray(k.to_ascii()))
@@ -577,21 +585,27 @@ func _on_SavePatchDialog_file_selected(path):
 		f.store_64(0x7fffffffffffffff) # len
 		f.store_64(0x7fffffffffffffff) # offset
 	
-	asset_tree.reset()
-	for k in files.keys():
-		asset_tree.create_path(k)
-	var dd = asset_tree.directory_dict
-	print_dir(dd)
-	f.store_32(len(dirs.keys()))
-	for d in dirs.keys():
-		f.store_32(len(d))
-		f.store_string(d)
-		f.store_32(len(dirs[d]))
-		for e in dirs[d]:
-			f.store_32(len(e[0]))
-			f.store_string(e[0])
-			f.store_8(e[1])
+	if base_wad.version == Wad.WAD_VERSION.HM2:
+		asset_tree.reset()
+		for k in files.keys():
+			asset_tree.create_path(k)
+		var dd = asset_tree.directory_dict
+		print_dir(dd)
+		f.store_32(len(dirs.keys()))
+		for d in dirs.keys():
+			f.store_32(len(d))
+			f.store_string(d)
+			f.store_32(len(dirs[d]))
+			for e in dirs[d]:
+				f.store_32(len(e[0]))
+				f.store_string(e[0])
+				f.store_8(e[1])
 	var offset = f.get_position()
+	
+	if base_wad.version == Wad.WAD_VERSION.HM1:
+		f.seek(0x0)
+		f.store_32(offset)
+		f.seek(offset)
 	
 #	if !base_wad.is_open():
 #		if base_wad.open(base_wad.get_file_path(), File.READ):

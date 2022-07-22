@@ -92,11 +92,13 @@ func can_be_int_fuck_you_godot(string:String):
 		var l = string.split('+')
 		var s = 0
 		for i in l:
-			s += can_be_int_fuck_you_godot(i)
+			var r = can_be_int_fuck_you_godot(i)
+			if r != null:
+				s += r
 		return s
 	for c in string:
 		if ord(c) > ord('A')-1 and ord(c) < ord('z')+1 or c == '/':
-			return 0
+			return null
 	return int(string)
 #func change_order(_room, new_next, new_previous):
 #	sprites.sprite

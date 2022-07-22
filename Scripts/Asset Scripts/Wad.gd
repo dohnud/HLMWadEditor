@@ -182,11 +182,13 @@ func get(asset):
 	close()
 	return r
 
-func open_asset(asset_path):
+func open_asset(asset_path, base_wad=null):
 	if new_files.has(asset_path):
 		return new_files[asset_path]
 	if changed_files.has(asset_path):
 		return changed_files[asset_path]
+	if asset_path.ends_with('.ags.phyre'):
+		return parse_phyremeta(asset_path, base_wad)
 	if asset_path.ends_with('.meta'):
 		return parse_meta(asset_path)
 	if asset_path.ends_with('.gmeta'):
@@ -210,7 +212,7 @@ func open_asset(asset_path):
 func patch(wad):
 	patchwad_list.append(wad)
 	for f in wad.file_locations.keys():
-		changed_files[f] = wad.open_asset(f)
+		changed_files[f] = wad.open_asset(f, self)
 
 func reset():
 	changed_files = {}
@@ -301,12 +303,12 @@ func parse_meta(asset, lazy=0):
 	loaded_assets[asset] = meta
 	return meta
 	
-func parse_phyremeta(asset, lazy=0):
+func parse_phyremeta(asset, base_wad=null, lazy=0):
 	if lazy:
 		asset = lazy_find(asset)
 	for p in patchwad_list:
 		if p.exists(asset):
-			return p.parse_meta(asset)
+			return p.parse_phyremeta(asset)
 	if new_files.has(asset):
 		return new_files[asset]
 	if changed_files.has(asset):
@@ -316,9 +318,13 @@ func parse_phyremeta(asset, lazy=0):
 #		loaded_assets[asset].texture_page.set_data(tex.get_data())
 		return loaded_assets[asset]
 	
-	var a = get_bin(phyreAtlasesBin)
-	var s = get_bin(phyreSpritesBin)
-	var b = get_bin(phyreBackgroundsBin)
+	var from = self
+	if base_wad != null:
+		from = base_wad
+	var a = from.get_bin(phyreAtlasesBin)
+	var s = from.get_bin(phyreSpritesBin)
+	var b = from.get_bin(phyreBackgroundsBin)
+		
 	var size = goto(asset)
 	if size == null: return null
 	var ags = PhyreMeta.new()

@@ -34,7 +34,7 @@ func _on_SpriteTree_item_edited(deleted=0):
 	var p = []
 	while ti != null:
 		var s = ti.get_text(0)
-		if can_be_int_fuck_you_godot(s) != -1:
+		if can_be_int_fuck_you_godot(s) != null:
 			s = can_be_int_fuck_you_godot(s)
 		p.push_front(s)
 		ti = ti.get_parent()
@@ -54,10 +54,10 @@ func _on_SpriteTree_item_edited(deleted=0):
 				value = value.split(' ')
 			if (len(value) > 1 and len(value) < 3):
 #			print(value)
-				if can_be_int_fuck_you_godot(value[0]) != -1 and can_be_int_fuck_you_godot(value[1]) != -1:
+				if can_be_int_fuck_you_godot(value[0]) != null and can_be_int_fuck_you_godot(value[1]) != null:
 					v = Vector2(can_be_int_fuck_you_godot(value[0]), can_be_int_fuck_you_godot(value[1]))
 #			print(v)
-		elif d[last_k] is int and can_be_int_fuck_you_godot(value) != -1:
+		elif d[last_k] is int and can_be_int_fuck_you_godot(value) != null:
 			v = can_be_int_fuck_you_godot(value)
 		if v != d[last_k]:
 #			print(v)
@@ -80,10 +80,10 @@ func can_be_int_fuck_you_godot(string:String):
 		var s = 0
 		for i in l:
 			var p = can_be_int_fuck_you_godot(i)
-			if p != -1:
+			if p != null:
 				s += p
 		return s
 	for c in string:
 		if ord(c) > ord('A')-1 and ord(c) < ord('z')+1 or c == '/':
-			return -1
+			return null
 	return int(string)

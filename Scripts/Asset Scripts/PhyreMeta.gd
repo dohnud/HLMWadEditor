@@ -212,7 +212,7 @@ func parse(file_pointer, size, spritebin, atlasbin, bgbin, asset_path):
 			)
 			sprites.add_frame(str(bg.name), mt)
 	elif target_atlas_id < 0:
-		var spr
+		var spr;
 		if spritebin.sprite_data.has(file_name):
 			spr = spritebin.sprite_data[file_name]
 		sprites.add_animation(str(spr.name))

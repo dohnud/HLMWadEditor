@@ -9,6 +9,7 @@ var object = {}
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	file = ObjectsBin
+	filetype = ObjectsBin
 	tree = object_tree
 	pass # Replace with function body.
 
@@ -40,7 +41,7 @@ func parse_new_value(key, value, new_text_value):
 		var object_index = value
 		if bin.data.has(new_text_value):
 			object_index = bin.data[new_text_value]['id']
-		if bin.names.has(can_be_int_fuck_you_godot(new_text_value)):
+		if can_be_int_fuck_you_godot(new_text_value) != null and bin.names.has(can_be_int_fuck_you_godot(new_text_value)):
 			object_index = can_be_int_fuck_you_godot(new_text_value)
 		return [object_index, bin.names[object_index]]
 	return [value, new_text_value]

@@ -49,6 +49,11 @@ func _on_Button_pressed():
 	var collision_toggle = $VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer2/HBoxContainer/CheckButton.pressed
 	var collision_bin = app.base_wad.get_bin(CollisionMasksBin)
 	if Vector2(d,h) != meta.sprites.get_frame(sprite,0).region.size or meta.sprites.get_frame_count(sprite) != frame_count:
+		if meta is PhyreMeta:
+			ErrorLog.show_user_error("Cannot import sprites that modify frame boundaries or frame counts! \n Please modify and resize your sprite strip to " + str(meta.sprites.get_frame(sprite,0).region.size.x * meta.sprites.get_frame_count(sprite)) + 'x' + str(meta.sprites.get_frame(sprite,0).region.size.y),false)
+			hide()
+			get_parent().hide()
+			return
 		meta.needs_recalc = true
 		meta.sprites.remove_animation(sprite)
 		meta.sprites.add_animation(sprite)
