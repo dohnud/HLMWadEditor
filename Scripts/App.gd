@@ -483,6 +483,7 @@ func _on_ExportSpriteStripButton_pressed():
 	w.mode = FileDialog.MODE_SAVE_FILE
 	get_node("ImportantPopups").show()
 	w.popup()
+	w.invalidate()
 	w.deselect_items()
 	w.window_title = 'Export Sprite Strip to PNG'
 	w.filters = ['*.png']
@@ -505,6 +506,7 @@ func export_sprite_strips():
 	w.get_line_edit().text = ''
 	get_node("ImportantPopups").show()
 	w.popup()
+	w.invalidate()
 
 #func change_sprite_attr(sprite_name, attr, new_value):
 #	pass
@@ -516,6 +518,7 @@ func _on_importSpriteStripButton_pressed():
 	nw.sprite = meta_editor_node.current_sprite
 	get_node("ImportantPopups").show()
 	w.popup()
+	w.invalidate()
 	w.show_hidden_files = true
 	w.show_hidden_files = false
 
@@ -784,7 +787,14 @@ func _on_ImportWadFileDialog_confirmed():
 	pass # Replace with function body.
 
 
-func _on_ImportSoundDialog_file_selected(path):
+func _on_ImportSoundDialog_file_selected(path : String):
+	if path.get_extension() != selected_asset_list_path.get_extension():
+		var new_asset_path = selected_asset_list_path.get_basename() + '.' + path.get_extension()
+		var new_asset_name = selected_asset_name.get_basename() + '.' + path.get_extension()
+		base_wad.file_locations[new_asset_path] = base_wad.file_locations[selected_asset_list_path]
+		base_wad.file_locations.erase(selected_asset_list_path)
+		selected_asset_list_path = new_asset_path
+		selected_asset_name = new_asset_name
 	var sound = WadSound.new()
 	var f = File.new()
 	if f.open(path, File.READ):
@@ -796,7 +806,7 @@ func _on_ImportSoundDialog_file_selected(path):
 		return null
 #	selected_asset_data.texture_page.set_size_override(texture.get_size())
 #	selected_asset_data.texture_page.set_data(texture.get_data())
-	base_wad.changed_files[selected_asset_name] = sound
+	base_wad.changed_files[selected_asset_list_path] = sound
 	sound_editor_node._on_PausePlayButton_toggled(false)
 	sound_editor_node.set_sound(selected_asset_name)
 #	sound_editor_node.update()

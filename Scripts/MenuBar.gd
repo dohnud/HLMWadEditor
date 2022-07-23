@@ -74,7 +74,7 @@ var operations = {
 		["Export Character", [], 'na'],
 	],
 	"7SoundButton" : [
-		["Import Sound", [], 'importsound'],
+		["Import Sound", [KEY_SHIFT, KEY_I], 'importsound'],
 	],
 	"2RoomButton" : [
 		["Add Generic Object to Room", [], 'room_add_object'],
@@ -181,11 +181,13 @@ func openpatch():
 	var w :FileDialog= app.get_node("ImportantPopups/OpenPatchDialog")
 	app.get_node("ImportantPopups").show()
 	w.popup()
+	w.invalidate()
 
 func savepatch():
 	var w :FileDialog= app.get_node("ImportantPopups/SavePatchDialog")
 	app.get_node("ImportantPopups").show()
 	w.popup()
+	w.invalidate()
 	
 #func savepatchas():
 #	pass
@@ -203,7 +205,9 @@ func mergepatch():
 	nw.popup()
 
 func openwad():
-	app.get_node("OpenWadDialog").popup()
+	var w = app.get_node("OpenWadDialog")
+	w.popup()
+	w.invalidate()
 	
 func extract(resource_data=null):
 	var w :FileDialog= app.get_node("ImportantPopups/ExtractResourceDialog")
@@ -226,6 +230,7 @@ func extract(resource_data=null):
 		app.get_node('NotImplementedYetDialog').popup()
 	w.current_file = app.selected_asset_name.get_file()
 	w.popup()
+	w.invalidate()
 
 func room_add_object():
 	app.room_editor_node.add_generic_object()
@@ -234,6 +239,7 @@ func add():
 	var w :FileDialog= app.get_node("ImportantPopups/AddResourceDialog")
 	app.get_node("ImportantPopups").show()
 	w.popup()
+	w.invalidate()
 
 #func replace():
 #	pass
@@ -322,6 +328,7 @@ func importspritesheet():
 	var w :FileDialog= app.get_node("ImportantPopups/ImportSheetDialog")
 	app.get_node("ImportantPopups").show()
 	w.popup()
+	w.invalidate()
 
 func resize_sprite():
 	var meta :Meta= app.meta_editor_node.meta
@@ -340,16 +347,17 @@ func resize_sprite():
 func importsound():
 	var mode = "*.*"
 	if app.sound_editor_node.sound.stream is AudioStreamSample:
-		mode = "*.wav"
+		mode = "*.wav ; WAV Audio files"
 	elif app.sound_editor_node.sound.stream is AudioStreamMP3:
-		mode = "*.mp3"
+		mode = "*.mp3 ; MP3 Audio files"
 	elif app.sound_editor_node.sound.stream is AudioStreamOGGVorbis:
-		mode = "*.ogg"
+		mode = "*.ogg ; OGG Audio files"
 	var w :FileDialog= app.get_node("ImportantPopups/ImportSoundDialog")
 	w.clear_filters()
 	w.add_filter(mode)
 	app.get_node("ImportantPopups").show()
 	w.popup()
+	w.invalidate()
 
 func _on_TabContainer_tab_changed(tab):
 	var i = 2

@@ -130,6 +130,7 @@ func _on_Label2_item_selected(index):
 		return
 	else:
 		select_patch_dialog.popup()
+		select_patch_dialog.invalidate()
 
 
 func _on_Label4_item_selected(index):
@@ -141,6 +142,7 @@ func _on_Label4_item_selected(index):
 		return
 	else:
 		select_patch_dialog.popup()
+		select_patch_dialog.invalidate()
 
 
 func _on_OpenPatchDialog2_file_selected(path):
