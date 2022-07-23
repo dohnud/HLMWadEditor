@@ -52,8 +52,8 @@ func _on_Button_pressed():
 			nf.store_buffer(dest_patch.identifier)
 		nf.store_32(len(dest_patch.file_locations.keys()))
 		for file in dest_patch.file_locations.keys():
-			if dif_files.has(file.substr(3)):
-				var fc = dif_files[file.substr(3)]
+			if dif_files.has(file):
+				var fc = dif_files[file]
 				var c = nf.get_position()
 				if fc is Texture:
 					nf.store_buffer(fc.get_data().save_png_to_buffer())

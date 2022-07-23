@@ -129,7 +129,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Asset Scripts/phyreRoomsBin.gd"
 }, {
-"base": "BinParser",
+"base": "SoundsBin",
 "class": "phyreSoundsBin",
 "language": "GDScript",
 "path": "res://Scripts/Asset Scripts/phyreSoundsBin.gd"

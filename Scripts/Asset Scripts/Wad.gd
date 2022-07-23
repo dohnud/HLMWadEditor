@@ -266,6 +266,7 @@ func audio_stream(asset, lazy=0 ,repeat=false):
 		loaded_assets[asset] = sound
 		return sound
 	ErrorLog.show_user_error("couldnt find file: " + asset)
+	return null
 
 
 func byte_array_to_int(bytes):

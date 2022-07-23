@@ -582,8 +582,12 @@ func _on_SavePatchDialog_file_selected(path):
 		f.store_32(len(k))
 		f.store_buffer(PoolByteArray(k.to_ascii()))
 		comebackf[k] = f.get_position()
-		f.store_64(0x7fffffffffffffff) # len
-		f.store_64(0x7fffffffffffffff) # offset
+		if base_wad.version == Wad.WAD_VERSION.HM1:
+			f.store_32(0x7fffffff)
+			f.store_32(0x7fffffff)
+		else:
+			f.store_64(0x7fffffffffffffff) # len
+			f.store_64(0x7fffffffffffffff) # offset
 	
 	if base_wad.version == Wad.WAD_VERSION.HM2:
 		asset_tree.reset()
@@ -654,8 +658,12 @@ func _on_SavePatchDialog_file_selected(path):
 			return
 		var o = c - offset
 		f.seek(comebackf[file])
-		f.store_64(s)
-		f.store_64(o)
+		if base_wad.version == Wad.WAD_VERSION.HM1:
+			f.store_32(s)
+			f.store_32(o)
+		else:
+			f.store_64(s)
+			f.store_64(o)
 		f.seek(c+s)
 	 
 

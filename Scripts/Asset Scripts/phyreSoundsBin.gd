@@ -1,14 +1,22 @@
-extends "res://Scripts/Asset Scripts/SoundsBin.gd"
+extends SoundsBin
 
 class_name phyreSoundsBin
 
-#const file_path = 'GL/hlm2_sprites.bin'
-#const alt_file_path = 'GL/hotline_sprites.bin'
 static func get_file_path():
 	return 'GL/hotline_sounds.bin'
 func _to_string():
-	return 'GL/hotline_sounds.bin'
+	return get_file_path()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _init():
+	snd = {
+		'id' : '64',
+		'name_buffer' : [40],
+		'mystery' : '32',
+		'flag 2' : '32',
+	}
+
+func parse(f):
+	sound_data = parse_struct_list(f, snd)
+	
+	data = sound_data
+	names = sound_names
