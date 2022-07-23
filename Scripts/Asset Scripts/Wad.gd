@@ -261,7 +261,9 @@ func audio_stream(asset, lazy=0 ,repeat=false):
 	if asset!=null:
 		var sound = WadSound.new()
 		var size = goto(asset)
-		if size == null: return null
+		if size == null: 
+			ErrorLog.show_user_error("couldnt find file: " + asset)
+			return null
 		sound.parse(self, size, asset)
 		loaded_assets[asset] = sound
 		return sound

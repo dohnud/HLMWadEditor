@@ -51,6 +51,8 @@ func _on_Button_pressed():
 		else:
 			nf.store_buffer(dest_patch.identifier)
 		nf.store_32(len(dest_patch.file_locations.keys()))
+		
+		nf.seek(dest_patch.content_offset)
 		for file in dest_patch.file_locations.keys():
 			if dif_files.has(file):
 				var fc = dif_files[file]
@@ -82,7 +84,6 @@ func _on_Button_pressed():
 						bw.goto(file)
 						fc.write(bw, nf)
 				elif fc is BinParser:
-					print('writing a bin... hmmm i wonder')
 					fc.write(nf)
 				elif fc is WadSound:
 					fc.write(nf)
