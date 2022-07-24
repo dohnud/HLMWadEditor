@@ -592,7 +592,7 @@ func _on_SavePatchDialog_file_selected(path):
 			f.store_64(0x7fffffffffffffff) # len
 			f.store_64(0x7fffffffffffffff) # offset
 	
-	if base_wad.version == Wad.WAD_VERSION.HM2:
+	if base_wad.version != Wad.WAD_VERSION.HM1:
 		asset_tree.reset()
 		for k in files.keys():
 			asset_tree.create_path(k)

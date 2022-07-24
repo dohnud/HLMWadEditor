@@ -75,11 +75,11 @@ func _on_Tree_item_edited(deleted=0):
 #			d[last_k] = v
 			changed_d[last_k] = v
 			bin.changed[selected_struct_id] = changed_d
-			app.base_wad.changed_filetypes[filetype] = bin
+			app.base_wad.changed_files[file] = bin
 		tree.get_selected().set_text(1, vs)
 	elif deleted == 1:
 		d.remove(last_k)
-		app.base_wad.changed_filetypes[filetype] = bin
+		app.base_wad.changed_files[file] = bin
 		tree.get_selected().free()
 		print('kapow!')
 	elif deleted == 2:

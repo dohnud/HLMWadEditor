@@ -6,6 +6,8 @@ class_name SpritesBin
 #const alt_file_path = 'GL/hotline_sprites.bin'
 static func get_file_path():
 	return 'GL/hlm2_sprites.bin'
+func _to_string():
+	return 'GL/hlm2_sprites.bin'
 var version = 2
 var sprite_data = {}
 var sprites = {}

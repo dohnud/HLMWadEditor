@@ -5,6 +5,8 @@ class_name ObjectsBin
 var version = 2
 static func get_file_path():
 	return 'GL/hlm2_objects.bin'
+func _to_string():
+	return 'GL/hlm2_objects.bin'
 var obj = {
 #			'nameindex' : object_name_indicies[id],
 	'id' : '32',

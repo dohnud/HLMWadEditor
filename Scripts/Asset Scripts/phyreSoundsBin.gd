@@ -5,7 +5,7 @@ class_name phyreSoundsBin
 static func get_file_path():
 	return 'GL/hotline_sounds.bin'
 func _to_string():
-	return get_file_path()
+	return 'GL/hotline_objects.bin'
 
 func _init():
 	snd = {
