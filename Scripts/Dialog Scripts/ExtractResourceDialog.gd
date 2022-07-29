@@ -32,7 +32,8 @@ func _on_ExtractResourceDialog_file_selected(path):
 				r.write(f)
 			elif r is SpritesBin:
 				if bw.goto(file) == null:
-					$ErrorDialog.popup()
+#					$ErrorDialog.popup()
+					ErrorLog.show_generic_error()
 				else:
 					for p in bw.patchwad_list:
 						if p.exists(file):
@@ -42,7 +43,7 @@ func _on_ExtractResourceDialog_file_selected(path):
 					r.write(bw, f)
 			elif r is CollisionMasksBin:
 				if bw.goto(file) == null:
-					$ErrorDialog.popup()
+					ErrorLog.show_generic_error()
 				else:
 					for p in bw.patchwad_list:
 						if p.exists(file):

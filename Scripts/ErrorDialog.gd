@@ -1,10 +1,6 @@
 extends AcceptDialog
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,4 +13,5 @@ func _ready():
 
 
 func _on_ErrorDialog_popup_hide():
-	$Label2.text = "Error occured!\n Check that no other program is utilizing the current base wad or that it has been moved."
+	return
+	$Label2.text = ErrorLog.default_err

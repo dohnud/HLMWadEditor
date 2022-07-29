@@ -47,9 +47,9 @@ func _init():
 		'tilesheet_size':'ivec2',
 	}],
 	'objects' : ['32', {
-		'instance': '32',
-		'id' : '32',
-		'pos': 'ivec2',
+		'instance_id': '32',
+		'object_id' : '32',
+		'position': 'ivec2',
 		'm' : '32'
 	}],
 	'footers' : ['32', {'bytes':[40]}],
@@ -68,7 +68,7 @@ func parse(file_pointer):
 	room_order = parse_simple_list(f)
 	
 	# parse rooms :D
-	var rooms = parse_struct_map(f, rm, 'id')
+	var rooms = parse_struct_map(f, rm, 'object_id')
 	
 	# parse room names :S
 	#room_names = parse_string_map(f)
@@ -82,9 +82,9 @@ func parse(file_pointer):
 			var n = r['objects'][i]['instance']
 			if i_s.has(n):
 #				print(i_s[n], n)
-				i_s[n].append(r['objects'][i]['id'])
+				i_s[n].append(r['objects'][i]['object_id'])
 			else:
-				i_s[n] = [r['objects'][i]['id']]
+				i_s[n] = [r['objects'][i]['object_id']]
 #			var fm = (n>>14) & 0b111111111111111111
 #			if r['objects'][i]['id'] == 156:
 #			if n / 1000 == int(n/1000):

@@ -72,12 +72,12 @@ func parse_header():
 			file_len = get_32()
 			file_offset = get_32()
 		if file_len >= 0xffffffffffffff or file_offset >= 0xffffffffffffff:
-			Log.log("File: " + file_name + "is corrupted or missing, please contact a developer")
-			print("File:" + file_name + "is corrupted or missing")
-			printerr("File:" + file_name + "is corrupted or missing")
-			return 0
-		# add to file locations
-		file_locations[file_name] = [file_offset, file_len]
+			ErrorLog.show_user_error("File: \"" + file_name + "\" is corrupted or missing, please contact a developer")
+			print("File: \"" + file_name + "\" is corrupted or missing")
+			printerr("File: \"" + file_name + "\" is corrupted or missing")
+		else:
+			# add to file locations
+			file_locations[file_name] = [file_offset, file_len]
 		#file_list.append(file_name)
 		
 	# parse directories (unused but maybe useful later?)
@@ -590,11 +590,28 @@ func get_bin(bintype):
 	return r
 	if !exists(asset):return null
 
-func parse_orginal_meta(asset, lazy=0):
+func parse_original_sprite_sheet(asset, lazy=0):
+	if lazy:
+		asset = lazy_find(asset)
+	if !is_open(): open(file_path, READ)
+	var img = Image.new()
+	var size = goto(asset)
+	var data = get_buffer(size)
+	if !(data is PoolByteArray):
+		return data
+	img.load_png_from_buffer(data)
+#	img.convert(fmt)
+	var tex = ImageTexture.new()
+	tex.create_from_image(img, 0)
+	close()
+	return tex
+
+func parse_orginal_meta(asset, lazy=0, tex=null):
 	if !is_open(): open(file_path, READ)
 	if lazy:
 		asset = lazy_find(asset)
-	var tex = sprite_sheet(asset.replace(".meta", ".png"))
+	if tex == null:
+		tex = sprite_sheet(asset.replace(".meta", ".png"))
 
 	var meta = Meta.new()
 	var size = goto(asset)

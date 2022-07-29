@@ -40,7 +40,7 @@ func create_room():
 			9 : "Backgrounds/tlEdges",
 			15 : "Backgrounds/tlEdges",
 		}
-		if version == 2:
+		if version != Wad.WAD_VERSION.HM1:
 			for tl in room['tiles']:
 				var atlas_tuple = a.atlases_backgrounds[tl.id]
 				var sprite_name = a.atlas_names.values()[atlas_tuple['id']] + '.meta'
@@ -76,8 +76,8 @@ func create_room():
 			var f = null;
 			var offset = Vector2(0,0);
 			var meta_sprite_name = '';
-			if version == 2:
-				var atlas_tuple = a.atlas_sprites[o.object_data[o.object_names[obj['id']]]['sprite_index']]
+			if version != Wad.WAD_VERSION.HM1:
+				var atlas_tuple = a.atlas_sprites[o.object_data[o.object_names[obj['object_id']]]['sprite_index']]
 				var meta_name = 'Atlases/' + a.atlas_names.values()[atlas_tuple['id']] + '.meta'
 				var meta_sprite_index = atlas_tuple['atlas_id']
 				var meta = app.base_wad.parse_meta(meta_name)
@@ -85,7 +85,7 @@ func create_room():
 				f = meta.sprites.get_frame(meta_sprite_name, 0)
 				offset = s.sprite_data[meta_sprite_name]['center']
 			else:
-				var default_object_sprite = o.object_data[o.object_names[obj['id']]]['sprite_index']
+				var default_object_sprite = o.object_data[o.object_names[obj['object_id']]]['sprite_index']
 				if default_object_sprite != -1:
 					var atlas_sprite = a.atlas_sprites[default_object_sprite]
 					var atlas_name = a.atlas_names[atlas_sprite]
@@ -100,7 +100,7 @@ func create_room():
 #			draw_circle(obj['pos']*rect_scale,2,Color(1,1,1,1))
 			var s = TextureRect.new()
 			s.texture = f
-			s.rect_position = (obj['pos'] - offset)
+			s.rect_position = (obj['position'] - offset)
 			s.focus_mode = Control.FOCUS_NONE
 			s.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			s.mouse_filter = Control.MOUSE_FILTER_PASS
@@ -108,7 +108,7 @@ func create_room():
 			add_child(s)
 			i += 1
 #		for obj in room['objects']:
-#			draw_string(get_font('font'), obj['pos']*rect_scale, str(obj['id']))
+#			draw_string(get_font('font'), obj['pos']*rect_scale, str(obj['object_id']))
 
 func room_item_clicked(e:InputEvent, i, obj, meta_sprite_name):
 	if e.is_action_pressed("ui_lmb"):

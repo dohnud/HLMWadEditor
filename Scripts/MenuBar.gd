@@ -6,11 +6,10 @@ var operations = {
 	"FileButton" : [
 		["Open Patch", [KEY_CONTROL, KEY_O], 'openpatch'],
 		["Save Patch", [KEY_CONTROL,KEY_S,], 'savepatch'],
-#		[],
-#		["Import from Patch", [KEY_CONTROL, KEY_I], 'importpatch'],
-		["Merge into WAD", [], 'mergepatch'],
-		[],
 		["Recent Patches", [PopupMenu.new()], 'openrecentpatch'],
+		[],
+		["Import from Patch", [KEY_CONTROL, KEY_I], 'importpatch'],
+		["Merge into WAD", [], 'mergepatch'],
 		[],
 		["Switch Base WAD", [KEY_CONTROL, KEY_SHIFT, KEY_O], 'openwad'],
 		["Quit", [KEY_CONTROL, KEY_Q], 'quit'],
@@ -302,7 +301,7 @@ func export_sprite_gif():
 	var w :FileDialog= app.get_node("ImportantPopups/SaveGIFDialog")
 	var nw = app.get_node("ImportantPopups/SaveGIFDialog2")
 	app.get_node("ImportantPopups").show()
-	var meta :Meta= app.meta_editor_node.meta
+	var meta = app.meta_editor_node.meta
 	nw.meta = meta
 	nw.sprite = app.meta_editor_node.current_sprite
 	

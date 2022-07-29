@@ -23,7 +23,9 @@ func _on_ImportWadFileDialog_file_selected(path):
 	if !wad.opens(path, File.READ):
 		if !wad.parse_header():
 			# one or more files is corrupted
-			app.get_node("ErrorDialog").popup()
+#			app.get_node("ErrorDialog").popup()
+#			ErrorLog.show_generic_error()
+			return
 		patchwad = wad
 		var tree_r :Tree = $MarginContainer/VBoxContainer/Resources
 		tree_r.clear()

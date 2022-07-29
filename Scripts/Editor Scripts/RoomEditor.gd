@@ -21,9 +21,9 @@ func add_generic_object():
 	var new_obj;
 	if bin is phyreRoomsBin:
 		new_obj = {
-			'instance': 0,
-			'id' : 7,
-			'pos': Vector2(0,0),
+			'instance_id': 0,
+			'object_id' : 7,
+			'position': Vector2(0,0),
 			'm' : 0
 		}
 	else:
@@ -32,7 +32,7 @@ func add_generic_object():
 			'mystery1' : 1,
 			'mystery2' : 1,
 			'object_id' : 2342,
-			'pos': Vector2(0,0),
+			'position': Vector2(0,0),
 		}
 	var objecttreeitem = room_tree.get_root().get_children().get_next().get_next().get_next()
 	var new_objecttreeitem = room_tree.create_item(objecttreeitem)

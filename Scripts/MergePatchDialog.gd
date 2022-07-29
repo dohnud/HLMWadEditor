@@ -63,7 +63,7 @@ func _on_Button_pressed():
 					fc.write(nf)
 				elif fc is SpritesBin:
 					if dest_patch.goto(file) == null:
-						$ErrorDialog.popup()
+						ErrorLog.show_generic_error()
 					else:
 						var bw = dest_patch
 						for p in bw.patchwad_list:
@@ -74,7 +74,7 @@ func _on_Button_pressed():
 						fc.write(bw, nf)
 				elif fc is CollisionMasksBin:
 					if dest_patch.goto(file) == null:
-						$ErrorDialog.popup()
+						ErrorLog.show_generic_error()
 					else:
 						var bw = dest_patch
 						for p in bw.patchwad_list:

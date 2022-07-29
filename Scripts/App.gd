@@ -31,7 +31,7 @@ var show_base_wad = true
 var show_advanced = false
 
 
-var f_prefixes = ['Sprites/', 'Objects/', 'Rooms/', 'Backgrounds/']#, 'Metadata/']
+const f_prefixes = ['Sprites/', 'Objects/', 'Rooms/', 'Backgrounds/']#, 'Metadata/']
 onready var advanced_stuff_filter = {
 	SpritesBin:0,
 	ObjectsBin:0,
@@ -83,8 +83,7 @@ func open_wad(file_path):
 	if !wad.opens(file_path, File.READ):
 		if !wad.parse_header():
 			# one or more files is corrupted
-			$ErrorDialog.popup()
-			$ErrorDialog/Label2.text = "One or more resources is corrupted or missing!"
+			ErrorLog.show_user_error("One or more resources is corrupted or missing!")
 		if show_advanced:
 			var s :SpritesBin= wad.parse_sprite_data()
 			var o :ObjectsBin= wad.parse_objects()
@@ -176,13 +175,13 @@ func open_patchwad(file_path):
 	if !pwad.opens(file_path, File.READ_WRITE):
 		if !pwad.parse_header():
 			# one or more files is corrupted
-			$ErrorDialog.popup()
-			$ErrorDialog/Label2.text = "One or more resources is corrupted or missing!\ncontact a developer!"
-		base_wad.reset()
-		base_wad.patchwad_list = []
-		base_wad.patch(pwad)
-		open_asset(selected_asset_list_path)
-		OS.set_window_title('HLMWadEditor - ' + file_path)
+			ErrorLog.show_user_error("One or more resources is corrupted or missing!\ncontact a developer!")
+		else:
+			base_wad.reset()
+			base_wad.patchwad_list = []
+			base_wad.patch(pwad)
+			open_asset(selected_asset_list_path)
+			OS.set_window_title('HLMWadEditor - ' + file_path)
 
 func _on_SearchBar_text_entered(new_text=''):
 	new_text = new_text.to_lower()
@@ -245,18 +244,29 @@ func _on_SearchBar_text_entered(new_text=''):
 		if show_base_wad:
 			for file in base_wad.file_locations.keys():
 				var file_lower = file.to_lower()
-				if "Atlases/" == file.substr(0,len('Atlases/')):
-					if (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
+#				if "Atlases/" == file.substr(0,len('Atlases/')):
+				if file.begins_with("Atlases/"):
+#					if (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
+					if file.ends_with(".meta"):
 						if new_text in file_lower:
 							asset_tree.create_path(file)
-					if ".png" == file.substr(len(file)-len('.png')):
+#					if ".png" == file.substr(len(file)-len('.png')):
+					if file.ends_with(".png"):
 						if new_text in file_lower:
 							asset_tree.create_path(file.replace('.png','.meta'))
-				if "Fonts/" == file.substr(0,len('Fonts/')):
-					if (".fnt" == file.substr(len(file)-len('.fnt'))):
+				if file.begins_with("GL/"):
+#					if (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
+					if file.ends_with(".phyre"):
 						if new_text in file_lower:
 							asset_tree.create_path(file)
-					elif "_0.png" == file.substr(len(file)-len('_0.png')):
+#				if "Fonts/" == file.substr(0,len('Fonts/')):
+				if file.begins_with("Fonts/"):
+#					if (".fnt" == file.substr(len(file)-len('.fnt'))):
+					if file.ends_with(".fnt"):
+						if new_text in file_lower:
+							asset_tree.create_path(file)
+#					elif "_0.png" == file.substr(len(file)-len('_0.png')):
+					if file.ends_with("_0.png"):
 						if new_text in file_lower:
 							asset_tree.create_path(file.replace('_0.png','.fnt'))
 				if file.begins_with('Sounds/'):
@@ -273,6 +283,10 @@ func _on_SearchBar_text_entered(new_text=''):
 				var file_lower = file.to_lower()
 				if file.begins_with('Atlases/'):
 					if file.ends_with('.meta') or file.ends_with('.gmeta'):
+						if new_text in file_lower:
+							asset_tree.create_path(file, 1)
+				if file.begins_with('GL/'):
+					if file.ends_with('.phyre'):
 						if new_text in file_lower:
 							asset_tree.create_path(file, 1)
 					if file.ends_with('.png'):
@@ -628,19 +642,22 @@ func _on_SavePatchDialog_file_selected(path):
 		elif fc is Meta:
 			fc.write(f)
 		elif fc is SpritesBin:
-			if base_wad.goto(file) == null:
-				$ErrorDialog.popup()
+			if base_wad.goto(file) == null: 
+				ErrorLog.log_error("base wad: \"" + base_wad_path + "\"" + "does not contain: \"" + file + "\"")
 			else:
 				var bw = base_wad
 				for p in bw.patchwad_list:
 					if p.exists(file):
 						bw = p
 						break
+				if bw == base_wad:
+					ErrorLog.show_user_error("no replacement for \"" + file + "\" found!")
+					return null
 				bw.goto(file)
 				fc.write(bw, f)
 		elif fc is CollisionMasksBin:
 			if base_wad.goto(file) == null:
-				$ErrorDialog.popup()
+				ErrorLog.show_generic_error()
 			else:
 				var bw = base_wad
 				for p in bw.patchwad_list:
@@ -657,7 +674,7 @@ func _on_SavePatchDialog_file_selected(path):
 			fc.write(f)
 		var s = f.get_position() - c
 		if s <= 2 or s >= 0x7fffffffffffffff - 1:
-			$ErrorDialog.popup()
+			ErrorLog.show_generic_error()
 			return
 		var o = c - offset
 		f.seek(comebackf[file])
@@ -668,7 +685,7 @@ func _on_SavePatchDialog_file_selected(path):
 			f.store_64(s)
 			f.store_64(o)
 		f.seek(c+s)
-	 
+	OS.set_window_title('HLMWadEditor - ' + path)
 
 
 var dirs = {}
@@ -695,6 +712,12 @@ func _on_ImportSheetDialog_file_selected(path):
 		print('ouch couldnt load: ', path)
 		return null
 	texture.create_from_image(image, 0)
+	if texture.get_size() != selected_asset_data.texture_page.get_size():
+		if base_wad.version == Wad.WAD_VERSION.HM1:
+			ErrorLog.show_user_error("Expected an image with dimensions of:" + str(selected_asset_data.texture_page.get_size()) + "\n Instead recieved: " + str(texture.get_size()), false)
+			return
+		elif !(selected_asset_data is WadFont):
+			ErrorLog.show_user_error("Expected an image with dimensions of:" + str(selected_asset_data.texture_page.get_size()) + "\nInstead recieved: " + str(texture.get_size()) + "\nThis operation may cause visual distortions", false)
 	selected_asset_data.texture_page.set_size_override(texture.get_size())
 	selected_asset_data.texture_page.set_data(texture.get_data())
 	#_recalc_collision()

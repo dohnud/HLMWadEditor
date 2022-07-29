@@ -21,27 +21,29 @@ func _process(delta):
 				current_import_percent_index += 1
 				$MarginContainer/VBoxContainer/Control.text = import_file_path
 				$MarginContainer/VBoxContainer/ProgressBar.value = float(current_import_percent_index)/float(import_file_total)
-				var m :Meta= null
+				var src_meta = null
 				var dst_meta = app.base_wad.open_asset(import_file_path)
 				if patchwad.exists(import_file_path):
-					m = patchwad.open_asset(import_file_path)
+					src_meta = patchwad.open_asset(import_file_path)
 					if !(false in file_dict[import_file_path].values()):
-						dst_meta = m # shortcut to skip compilation
-					app.base_wad.changed_files[import_file_path] = m
+						dst_meta = src_meta # shortcut to skip compilation
 					for sprite in file_dict[import_file_path].keys():
 						if file_dict[import_file_path][sprite]:
-							merge_sprite(dst_meta, m, sprite, import_file_path)
+							merge_sprite(dst_meta, src_meta, sprite, import_file_path)
+					app.base_wad.changed_files[import_file_path] = dst_meta
 				else:
-					m = app.base_wad.parse_orginal_meta(import_file_path)
+					src_meta = app.base_wad.parse_orginal_meta(import_file_path, 0, patchwad.sprite_sheet(import_file_path.replace('.meta','.png')))
+#					src_meta.texture_page.get_data().save_png('lookatme.png')
 					if !(false in file_dict[import_file_path].values()):
-						dst_meta = m # shortcut to skip compilation
-					m.texture_page = patchwad.sprite_sheet(import_file_path.replace('.meta','.png'))
-					for sprite in m.sprites.get_animation_names():
-						for i in m.sprites.get_frame_count(sprite):
-							m.sprites.get_frame(sprite, i).atlas = m.texture_page
+						dst_meta = src_meta # shortcut to skip compilation
+#					src_meta.texture_page = patchwad.sprite_sheet(import_file_path.replace('.meta','.png'))
+					for sprite in src_meta.sprites.get_animation_names():
+#						for i in src_meta.sprites.get_frame_count(sprite):
+#							src_meta.sprites.get_frame(sprite, i).atlas = src_meta.texture_page
 						if file_dict[import_file_path][sprite]:
-							merge_sprite(dst_meta, m, sprite, import_file_path)
-				app.base_wad.changed_files[import_file_path.replace('.meta', '.png')] = m.texture_page
+							merge_sprite(dst_meta, src_meta, sprite, import_file_path)
+					app.base_wad.changed_files[import_file_path] = dst_meta
+				app.base_wad.changed_files[import_file_path.replace('.meta', '.png')] = dst_meta.texture_page
 		# everything else files
 		else:
 			current_import_percent_index += 1
@@ -119,13 +121,15 @@ func merge_sprite(dst_meta:Meta, src_meta:Meta, sprite, rsc_file_path):
 				app.base_wad.changed_files[CollisionMasksBin.get_file_path()] = base_collisionbin
 			else:
 				base_collisionbin.resize(base_spritebin.sprite_data[sprite]['id'], w,h, frame_count)
+		var skip_blit = src_meta == dst_meta
 		for i in range(frame_count):
 			var f :MetaTexture= src_meta.sprites.get_frame(sprite, i)
 			var of :MetaTexture= dst_meta.sprites.get_frame(sprite,i)
-			var tf = f.atlas.get_data()
-			if tf.get_format() != Image.FORMAT_RGBA8:
-				tf.convert(Image.FORMAT_RGBA8)
-			img.blit_rect(tf, f.region, of.region.position)
+			if !skip_blit:
+				var tf = f.atlas.get_data()
+				if tf.get_format() != Image.FORMAT_RGBA8:
+					tf.convert(Image.FORMAT_RGBA8)
+				img.blit_rect(tf, f.region, of.region.position)
 			if nb:
 				if !collision_toggle:
 					var b_list = base_collisionbin.compute_new_mask(base_spritebin.sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D
@@ -163,7 +167,7 @@ func _on_ImportPatchWindowDialog_confirmed():
 	var pw = app.get_node('ImportantPopups/ImportPatchWindowDialog')
 	file_dict = pw.file_dict
 	patchwad = pw.patchwad
-	pw.patchwad = null
+#	pw.patchwad = null
 #	collision_toggle = pw.collision_toggle
 	collision_toggle = patchwad.exists(CollisionMasksBin.get_file_path())
 	sprite_toggle = patchwad.exists(SpritesBin.get_file_path())
