@@ -20,6 +20,7 @@ export(Font) var tomakebiggerfont
 var base_wad  = null
 var base_wad_path = ''
 var recent_patches = []
+var current_open_patch_path = ''
 
 var selected_asset_list_path = ''
 var selected_asset_name = ''
@@ -544,6 +545,7 @@ func _on_AddResourceDialog_file_selected(path):
 func _on_OpenPatchDialog_file_selected(path):
 	open_patchwad(path)
 	_on_SearchBar_text_entered('')
+	current_open_patch_path = path
 	if path in Config.settings.recent_patches:
 		return
 	Config.settings.recent_patches.append(path)
@@ -564,6 +566,12 @@ func _on_OpenWadDialog_file_selected(path):
 var wait_for_threads_to_resolve = false
 var wait_for_threads_to_resolve_path = ''
 func _on_SavePatchDialog_file_selected(path):
+	var save_directory :Directory= null
+	if path == current_open_patch_path:
+		save_directory = Directory.new()
+		if !save_directory.open(current_open_patch_path.get_base_dir()):
+			path += '_tmp'
+			
 	wait_for_threads_to_resolve = false
 	print(threads.keys())
 	if len(threads.keys()) > 0:
@@ -672,6 +680,8 @@ func _on_SavePatchDialog_file_selected(path):
 			fc.write(f)
 		elif fc is WadFont:
 			fc.write(f)
+		else:
+			ErrorLog.log_error('Uncaught resource: ' + str(fc) + '(' + str(typeof(fc)) + ')')
 		var s = f.get_position() - c
 		if s <= 2 or s >= 0x7fffffffffffffff - 1:
 			ErrorLog.show_generic_error()
@@ -685,6 +695,10 @@ func _on_SavePatchDialog_file_selected(path):
 			f.store_64(s)
 			f.store_64(o)
 		f.seek(c+s)
+	if save_directory != null \
+	and !save_directory.remove(current_open_patch_path) \
+	and !save_directory.rename(path, current_open_patch_path):
+		print('overwrite success!')
 	OS.set_window_title('HLMWadEditor - ' + path)
 
 

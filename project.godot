@@ -24,7 +24,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Editor Scripts/BinEditor.gd"
 }, {
-"base": "Node",
+"base": "Resource",
 "class": "BinParser",
 "language": "GDScript",
 "path": "res://Scripts/Asset Scripts/BinParser.gd"
@@ -44,7 +44,7 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Singletons/LogSingleton.gd"
 }, {
-"base": "Node",
+"base": "Resource",
 "class": "Meta",
 "language": "GDScript",
 "path": "res://Scripts/Asset Scripts/Meta.gd"
@@ -89,12 +89,12 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/Asset Scripts/Wad.gd"
 }, {
-"base": "Node",
+"base": "Resource",
 "class": "WadFont",
 "language": "GDScript",
 "path": "res://Scripts/Asset Scripts/WadFont.gd"
 }, {
-"base": "Node",
+"base": "Resource",
 "class": "WadSound",
 "language": "GDScript",
 "path": "res://Scripts/Asset Scripts/WadSound.gd"

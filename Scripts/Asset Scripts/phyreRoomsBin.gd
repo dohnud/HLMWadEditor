@@ -68,7 +68,7 @@ func parse(file_pointer):
 	room_order = parse_simple_list(f)
 	
 	# parse rooms :D
-	var rooms = parse_struct_map(f, rm, 'object_id')
+	var rooms = parse_struct_map(f, rm, 'id')
 	
 	# parse room names :S
 	#room_names = parse_string_map(f)
