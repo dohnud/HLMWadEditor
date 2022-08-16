@@ -658,9 +658,9 @@ func _on_SavePatchDialog_file_selected(path):
 					if p.exists(file):
 						bw = p
 						break
-				if bw == base_wad:
-					ErrorLog.show_user_error("no replacement for \"" + file + "\" found!")
-					return null
+#				if bw == base_wad:
+#					ErrorLog.show_user_error("no replacement for \"" + file + "\" found!")
+#					return null
 				bw.goto(file)
 				fc.write(bw, f)
 		elif fc is CollisionMasksBin:

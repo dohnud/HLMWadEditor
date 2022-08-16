@@ -12,6 +12,7 @@ func _init():
 
 
 func log(string, sep='\n'):
+	print(string)
 	f.store_string(string + sep)
 
 func log_array(array, sep='\n', prefix=''):
