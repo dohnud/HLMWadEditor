@@ -177,9 +177,9 @@ boot_splash/image="res://Icons/icon1.png"
 boot_splash/fullsize=false
 boot_splash/use_filter=false
 boot_splash/bg_color=Color( 0.066, 0.0792, 0.11, 1 )
-config/icon="res://Exports/icon.png"
-config/macos_native_icon="res://Exports/icon.icns"
-config/windows_native_icon="res://Exports/icon.ico"
+config/icon="res://Icons/Application/icon.png"
+config/macos_native_icon="res://Icons/Application/icon.icns"
+config/windows_native_icon="res://Icons/Application/icon.ico"
 
 [autoload]
 
