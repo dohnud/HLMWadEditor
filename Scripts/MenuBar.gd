@@ -17,7 +17,7 @@ var operations = {
 	"ResourceButton" : [
 		["Extract", [KEY_CONTROL, KEY_E], 'extract'],
 		[],
-#		["Replace", [KEY_CONTROL, KEY_R,], 'replace'],
+		["Replace", [KEY_CONTROL, KEY_R,], 'replace'],
 		["Revert", [KEY_CONTROL, KEY_SHIFT, KEY_R], 'revert'],
 #		[],
 #		["Add", [KEY_CONTROL, KEY_SHIFT, KEY_A], 'add'],
@@ -240,9 +240,27 @@ func add():
 	w.popup()
 	w.invalidate()
 
-#func replace():
-#	pass
-#
+func replace():
+	var w :FileDialog= app.get_node("ImportantPopups/ReplaceResourceDialog")
+	app.get_node("ImportantPopups").show()
+	w.clear_filters()
+	var resource_data = app.selected_asset_data
+	if resource_data is BinParser:
+		w.add_filter('*.bin')
+	elif resource_data is Meta:
+		w.add_filter('*.meta')
+		w.add_filter('*.gmeta')
+		if w.current_file=='':w.current_file = '.meta'
+	elif resource_data is Texture:
+		w.add_filter('*.png')
+	elif resource_data is WadSound:
+		w.add_filter('*.' + app.selected_asset_name.get_extension())
+	else:
+		app.get_node('NotImplementedYetDialog').popup()
+	w.r = app.selected_asset_data
+	w.popup()
+	w.invalidate()
+
 func revert():
 	var f = app.selected_asset_list_path
 	if app.selected_asset_data is Meta:

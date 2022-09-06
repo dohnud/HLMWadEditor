@@ -34,14 +34,14 @@ func _init():
 		'enabled':'32',
 		'm1':'32', 'm2':'32',
 		'size':'ivec2',
-		'position' : 'ivec2',
+		'position' : 'svec2',
 		'port' : 'ivec2',
 		'extra' : 'ivec2',
 		'filler': [3 * 4]
 	}],
 	'tiles' : ['32', {
 		'depth' : 's32',
-		'world_pos': 'ivec2',
+		'world_pos': 'svec2',
 		'tilesheet_pos': 'ivec2',
 		'm':'32',
 		'tilesheet_size':'ivec2',
@@ -49,7 +49,7 @@ func _init():
 	'objects' : ['32', {
 		'instance_id': '32',
 		'object_id' : '32',
-		'position': 'ivec2',
+		'position': 'svec2',
 		'm' : '32'
 	}],
 	'footers' : ['32', {'bytes':[40]}],
@@ -79,7 +79,7 @@ func parse(file_pointer):
 		var s = room_id#room_names[r['name_pos']]
 		print('room: ', s)
 		for i in range(len(r['objects'])):
-			var n = r['objects'][i]['instance']
+			var n = r['objects'][i]['instance_id']
 			if i_s.has(n):
 #				print(i_s[n], n)
 				i_s[n].append(r['objects'][i]['object_id'])
@@ -88,9 +88,9 @@ func parse(file_pointer):
 #			var fm = (n>>14) & 0b111111111111111111
 #			if r['objects'][i]['id'] == 156:
 #			if n / 1000 == int(n/1000):
-#				print(r['objects'][i-1]['instance'])
+#				print(r['objects'][i-1]['instance_id'])
 #				print(n)
-#				print(r['objects'][i+1]['instance'])
+#				print(r['objects'][i+1]['instance_id'])
 #				printraw(' ',str(n & 0b11111111111111),' ')
 #				for bi in range(13):
 #					printraw((fm>>bi)&1)

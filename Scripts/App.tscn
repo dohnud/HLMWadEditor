@@ -1,4 +1,4 @@
-[gd_scene load_steps=112 format=2]
+[gd_scene load_steps=113 format=2]
 
 [ext_resource path="res://Scripts/Editor Scripts/TimelineSlider.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/App.gd" type="Script" id=2]
@@ -55,6 +55,7 @@
 [ext_resource path="res://Scripts/Editor Scripts/AGSEditor.gd" type="Script" id=53]
 [ext_resource path="res://Scripts/MergePatchDialog.gd" type="Script" id=54]
 [ext_resource path="res://Scripts/ErrorDialog.gd" type="Script" id=55]
+[ext_resource path="res://Scripts/ReplaceResourceDialog.gd" type="Script" id=56]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.12549, 0.152941, 0.211765, 1 )
@@ -111,7 +112,7 @@ corner_radius_bottom_left = 4
 shadow_size = -37
 anti_aliasing = false
 
-[sub_resource type="Image" id=7]
+[sub_resource type="Image" id=57]
 data = {
 "data": PoolByteArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 180, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 222, 222, 222, 70, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 223, 223, 223, 0, 223, 223, 223, 180, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 0, 0, 0, 0, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ),
 "format": "RGBA8",
@@ -123,7 +124,7 @@ data = {
 [sub_resource type="ImageTexture" id=8]
 storage = 1
 lossy_quality = 0.98
-image = SubResource( 7 )
+image = SubResource( 57 )
 size = Vector2( 16, 16 )
 
 [sub_resource type="StyleBoxEmpty" id=9]
@@ -2316,7 +2317,7 @@ size_flags_vertical = 3
 split_offset = 100
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer"]
-margin_right = 163.0
+margin_right = 110.0
 margin_bottom = 600.0
 custom_constants/separation = 0
 
@@ -2418,7 +2419,7 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Preview" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer"]
-margin_left = 171.0
+margin_left = 118.0
 margin_right = 788.0
 margin_bottom = 600.0
 rect_clip_content = true
@@ -2846,8 +2847,8 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.wad" )
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -2866,8 +2867,8 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.patchwad", "*.wad" )
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -3019,7 +3020,6 @@ __meta__ = {
 }
 
 [node name="SpriteTexturePageWindow" type="WindowDialog" parent="."]
-visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 123.0
@@ -3242,7 +3242,6 @@ old_bounds_color = Color( 0.545098, 0.568627, 0.6, 1 )
 new_bounds_color = Color( 0.870588, 0.341176, 0.356863, 1 )
 
 [node name="ImportantPopups" type="ColorRect" parent="."]
-visible = false
 anchor_left = 8.9701e-05
 anchor_top = 0.000159454
 anchor_right = 1.00009
@@ -3372,9 +3371,9 @@ __meta__ = {
 visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 340.0
-margin_top = 270.0
-margin_right = -260.0
+margin_left = 63.0
+margin_top = 196.0
+margin_right = -87.0004
 margin_bottom = -257.0
 rect_min_size = Vector2( 424, 153 )
 popup_exclusive = true
@@ -3405,10 +3404,10 @@ __meta__ = {
 }
 
 [node name="GridContainer" type="GridContainer" parent="ImportantPopups/MergePatchDialog/VBoxContainer"]
-margin_left = 13.0
-margin_top = 17.0
-margin_right = 411.0
-margin_bottom = 71.0
+margin_left = 238.0
+margin_top = 40.0
+margin_right = 636.0
+margin_bottom = 94.0
 size_flags_horizontal = 4
 size_flags_vertical = 6
 columns = 2
@@ -3456,58 +3455,66 @@ items = [ "current open Base WAD (will make copy)", null, false, 0, null, "selec
 selected = 0
 
 [node name="Control" type="HBoxContainer" parent="ImportantPopups/MergePatchDialog/VBoxContainer"]
-margin_top = 93.0
-margin_right = 424.0
-margin_bottom = 118.0
+margin_top = 138.0
+margin_right = 874.0
+margin_bottom = 163.0
+custom_constants/separation = 0
 alignment = 1
 
 [node name="Label" type="Label" parent="ImportantPopups/MergePatchDialog/VBoxContainer/Control"]
-margin_left = 129.0
-margin_right = 188.0
+margin_left = 384.0
+margin_right = 443.0
 margin_bottom = 25.0
 text = "merging"
 
 [node name="Label2" type="Label" parent="ImportantPopups/MergePatchDialog/VBoxContainer/Control"]
-margin_left = 192.0
-margin_right = 200.0
+margin_left = 443.0
+margin_right = 451.0
 margin_bottom = 25.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 0
 custom_constants/shadow_offset_y = 2
 
 [node name="Label3" type="Label" parent="ImportantPopups/MergePatchDialog/VBoxContainer/Control"]
-margin_left = 204.0
-margin_right = 235.0
+margin_left = 451.0
+margin_right = 482.0
 margin_bottom = 25.0
 text = "and"
 
 [node name="Label4" type="Label" parent="ImportantPopups/MergePatchDialog/VBoxContainer/Control"]
-margin_left = 239.0
-margin_right = 247.0
+margin_left = 482.0
+margin_right = 490.0
 margin_bottom = 25.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 0
 custom_constants/shadow_offset_y = 2
 
-[node name="Label5" type="Label" parent="ImportantPopups/MergePatchDialog/VBoxContainer/Control"]
-margin_left = 251.0
-margin_right = 283.0
-margin_bottom = 25.0
-text = "into"
+[node name="Control3" type="HBoxContainer" parent="ImportantPopups/MergePatchDialog/VBoxContainer"]
+margin_top = 167.0
+margin_right = 874.0
+margin_bottom = 192.0
+custom_constants/separation = 0
+alignment = 1
 
-[node name="Label6" type="Label" parent="ImportantPopups/MergePatchDialog/VBoxContainer/Control"]
-margin_left = 287.0
-margin_right = 295.0
+[node name="Label5" type="Label" parent="ImportantPopups/MergePatchDialog/VBoxContainer/Control3"]
+margin_left = 413.0
+margin_right = 452.0
+margin_bottom = 25.0
+text = "into: "
+
+[node name="Label6" type="Label" parent="ImportantPopups/MergePatchDialog/VBoxContainer/Control3"]
+margin_left = 452.0
+margin_right = 460.0
 margin_bottom = 25.0
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 0
 custom_constants/shadow_offset_y = 2
 
 [node name="Button" type="Button" parent="ImportantPopups/MergePatchDialog/VBoxContainer"]
-margin_left = 186.0
-margin_top = 122.0
-margin_right = 238.0
-margin_bottom = 147.0
+margin_left = 411.0
+margin_top = 196.0
+margin_right = 463.0
+margin_bottom = 221.0
 size_flags_horizontal = 4
 size_flags_vertical = 0
 text = "Merge"
@@ -3529,8 +3536,8 @@ resizable = true
 mode_overrides_title = false
 access = 2
 filters = PoolStringArray( "*.gif" )
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -3548,9 +3555,30 @@ window_title = "Extract Resource to a File"
 resizable = true
 mode_overrides_title = false
 access = 2
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 script = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="ReplaceResourceDialog" type="FileDialog" parent="ImportantPopups"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 88.0
+margin_top = 73.0
+margin_right = -90.0004
+margin_bottom = -53.0004
+rect_min_size = Vector2( 400, 140 )
+popup_exclusive = true
+window_title = "Replace Resource to a File"
+resizable = true
+mode_overrides_title = false
+mode = 0
+access = 2
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
+script = ExtResource( 56 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -3570,14 +3598,13 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.meta", "*.gmeta" )
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
 
 [node name="ImportSheetDialog" type="FileDialog" parent="ImportantPopups"]
-visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 68.0
@@ -3592,14 +3619,13 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.png" )
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
 
 [node name="ImportSoundDialog" type="FileDialog" parent="ImportantPopups"]
-visible = true
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 68.0
@@ -3614,8 +3640,8 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.wav" )
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -3634,8 +3660,8 @@ resizable = true
 mode_overrides_title = false
 access = 2
 filters = PoolStringArray( "*.png" )
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 script = ExtResource( 43 )
 __meta__ = {
 "_edit_use_anchors_": true
@@ -3656,8 +3682,8 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.png" )
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -3804,8 +3830,8 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.patchwad", "*.wad" )
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -3825,8 +3851,8 @@ mode_overrides_title = false
 mode = 0
 access = 2
 filters = PoolStringArray( "*.patchwad", "*.wad" )
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -3843,8 +3869,8 @@ popup_exclusive = true
 resizable = true
 access = 2
 filters = PoolStringArray( "*.patchwad" )
-current_dir = "/Users/calebd/Documents/Godot/HLMWadEditor"
-current_path = "/Users/calebd/Documents/Godot/HLMWadEditor/"
+current_dir = "/Users/caleb/GitHub/HLMWadEditor"
+current_path = "/Users/caleb/GitHub/HLMWadEditor/"
 __meta__ = {
 "_edit_use_anchors_": true
 }
@@ -4149,6 +4175,8 @@ script = ExtResource( 17 )
 [connection signal="popup_hide" from="ImportantPopups/SaveGIFDialog" to="ImportantPopups" method="_on_SaveGIFDialog_popup_hide"]
 [connection signal="file_selected" from="ImportantPopups/ExtractResourceDialog" to="ImportantPopups/ExtractResourceDialog" method="_on_ExtractResourceDialog_file_selected"]
 [connection signal="popup_hide" from="ImportantPopups/ExtractResourceDialog" to="ImportantPopups" method="_on_ExtractResourceDialog_popup_hide"]
+[connection signal="file_selected" from="ImportantPopups/ReplaceResourceDialog" to="ImportantPopups/ReplaceResourceDialog" method="_on_ReplaceResourceDialog_file_selected"]
+[connection signal="popup_hide" from="ImportantPopups/ReplaceResourceDialog" to="ImportantPopups" method="_on_ExtractResourceDialog_popup_hide"]
 [connection signal="file_selected" from="ImportantPopups/AddResourceDialog" to="." method="_on_AddResourceDialog_file_selected"]
 [connection signal="popup_hide" from="ImportantPopups/AddResourceDialog" to="ImportantPopups" method="_on_ExtractResourceDialog_popup_hide"]
 [connection signal="file_selected" from="ImportantPopups/ImportSheetDialog" to="." method="_on_ImportSheetDialog_file_selected"]
@@ -4162,8 +4190,8 @@ script = ExtResource( 17 )
 [connection signal="popup_hide" from="ImportantPopups/ImportSpriteStripDialog" to="ImportantPopups" method="_on_ImportSpriteStripDialog_popup_hide"]
 [connection signal="about_to_show" from="ImportantPopups/ImportSpriteStripSliceDialog" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_ImportSpriteStripSliceDialog_about_to_show"]
 [connection signal="popup_hide" from="ImportantPopups/ImportSpriteStripSliceDialog" to="ImportantPopups" method="_on_ImportSpriteStripSliceDialog_popup_hide"]
-[connection signal="value_changed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/SpinBox" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_SpinBox_value_changed"]
 [connection signal="value_changed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/SpinBox" to="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/Panel/ImportSpriteStripPreview" method="_on_SpinBox_value_changed"]
+[connection signal="value_changed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer2/PanelContainer/HBoxContainer/SpinBox" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_SpinBox_value_changed"]
 [connection signal="pressed" from="ImportantPopups/ImportSpriteStripSliceDialog/VBoxContainer/HBoxContainer/HBoxContainer3/Button" to="ImportantPopups/ImportSpriteStripSliceDialog" method="_on_Button_pressed"]
 [connection signal="file_selected" from="ImportantPopups/OpenPatchDialog" to="." method="_on_OpenPatchDialog_file_selected"]
 [connection signal="popup_hide" from="ImportantPopups/OpenPatchDialog" to="ImportantPopups" method="_on_OpenPatchDialog_popup_hide"]

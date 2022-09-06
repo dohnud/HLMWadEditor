@@ -138,7 +138,7 @@ func _on_Label4_item_selected(index):
 	if index == 0:
 		dest_patch = app.base_wad
 		$VBoxContainer/Control/Label4.text = Config.settings.base_wad_path.get_file()
-		$VBoxContainer/Control/Label6.text = Config.settings.base_wad_path.get_basename() + '_modified.'  + Config.settings.base_wad_path.get_extension()
+		$VBoxContainer/Control3/Label6.text = Config.settings.base_wad_path.get_basename() + '_modified.'  + Config.settings.base_wad_path.get_extension()
 		return
 	else:
 		select_patch_dialog.popup()
@@ -153,4 +153,4 @@ func _on_OpenPatchDialog2_file_selected(path):
 		return
 	dest_patch = path
 	$VBoxContainer/Control/Label4.text = path.get_file()
-	$VBoxContainer/Control/Label6.text = path.get_basename() + '_modified.'  + path.get_extension()
+	$VBoxContainer/Control3/Label6.text = path.get_basename() + '_modified.'  + path.get_extension()

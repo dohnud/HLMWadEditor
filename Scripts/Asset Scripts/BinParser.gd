@@ -58,12 +58,18 @@ func get_s32(f):
 		return n - 0xFFffFFff - 1
 	return n
 
+func store_s32(f, value):
+	if value < 0:
+		f.store_32(0xFFffFFff + value + 1)
+	else:
+		f.store_32(value)
+
 #var d = {
 #	'ivec2': Vector2(f.get_32(), f.get_32()),
 #	'i16vec2': Vector2(f.get_16(), f.get_16())
 #}
 
-var type_d = {
+const type_d = {
 	'8' : 'get_8',
 	'16' : 'get_16',
 	'32' : 'get_32',
@@ -103,6 +109,8 @@ func parse_type(f:File, type):
 		return get_s32(f)
 	elif type == 'ivec2':
 		return Vector2(f.get_32(), f.get_32())
+	elif type == 'svec2':
+		return Vector2(get_s32(f), get_s32(f))
 	elif type == 'i16vec2':
 		return Vector2(f.get_16(), f.get_16())
 	
@@ -195,13 +203,18 @@ func write_type(f, type, value):
 		f.store_8(value)
 	elif type == '16':
 		f.store_16(value)
-	elif type == '32' or type == 's32':
+	elif type == '32':
 		f.store_32(value)
+	elif type == 's32':
+		store_s32(f, value)
 	elif type == '64':
 		f.store_64(value)
 	elif type == 'ivec2':
 		f.store_32(value.x)
 		f.store_32(value.y)
+	elif type == 'svec2':
+		store_s32(f, value.x)
+		store_s32(f, value.y)
 	elif type == 'i16vec2':
 		f.store_16(value.x)
 		f.store_16(value.y)
