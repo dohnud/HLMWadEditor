@@ -102,7 +102,7 @@ func parse_header():
 	if version != WAD_VERSION.HM1:
 		content_offset = get_position()
 	
-	patchwad_list = [get_script().new()]
+	patchwad_list = []#[get_script().new()]
 	close()
 	return 1
 

@@ -41,6 +41,7 @@ var operations = {
 		["Compile All Sprites", [], 'recalcspritesheet'],
 		[],
 		["Toggle Gizmos", [KEY_SHIFT, KEY_G], 'togglemetagizmos'],
+		["Show Collision", [], 'togglecollisiongizmo'],
 #		["Extras", [PopupMenu.new(),[
 #			["Convert to GMeta", [], 'convertmeta'],
 #			["Add Sprite", [], 'convertmeta'],
@@ -301,6 +302,13 @@ func togglemetagizmos():
 		
 	app.ags_editor_node.gizmos_node.visible = !app.ags_editor_node.gizmos_node.visible
 	app.ags_editor_node.frametexturerect.update()
+
+func togglecollisiongizmo():
+	if app.editor_tabs.current_tab != 9:
+		app.meta_editor_node.show_collision_mask = !app.meta_editor_node.show_collision_mask
+		app.meta_editor_node.frametexturerect.update()
+		app.meta_editor_node.timeline.update_pos(app.meta_editor_node.timeline.current_time)
+		return
 
 func convertmeta():
 	var nm = app.meta_editor_node.meta

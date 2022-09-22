@@ -59,6 +59,19 @@ func _draw():
 		if s.sprite_data[metaeditor.current_sprite]['center'] != origin_pos:
 			s.sprite_data[metaeditor.current_sprite]['center'] = origin_pos
 			metaeditor.app.base_wad.changed_files[s.get_file_path()] = s
+
+#	if metaeditor.show_collision_mask:
+#		var sprite_id = s.sprite_data[metaeditor.current_sprite]['id']
+#		var c = metaeditor.app.base_wad.get_bin(CollisionMasksBin)
+#		var ref = metaeditor.app.base_wad
+#		if len(metaeditor.app.base_wad.patchwad_list):
+#			var result = metaeditor.app.base_wad.patchwad_list[0].goto(CollisionMasksBin.get_file_path())
+#			if result != null:
+#				ref = metaeditor.app.base_wad.patchwad_list[0]
+#		ref.goto(CollisionMasksBin.get_file_path())
+#		var mask = c.find(sprite_id, ref)
+#		draw_texture(mask.images[0], Vector2(x,y))
+
 	draw_texture(origin_icon, origin_draw_pos+Vector2.ONE, Color(0,0,0,0.3))
 	draw_texture(origin_icon, origin_draw_pos, icon_modulate)
 	

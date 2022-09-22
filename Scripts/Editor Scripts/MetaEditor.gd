@@ -26,6 +26,8 @@ var current_sprite = ''
 var current_sprite_list_index = 0
 var mode = 0
 
+var show_collision_mask = false
+
 var thread = null
 var resolve_progress = 0
 
@@ -93,6 +95,9 @@ func _on_SpriteList_item_selected(index):
 	else:
 		origin_node.visible = false
 		frametexturerect.origin_pos = Vector2(-9999,-9999)
+		
+	timeline.current_mask = null
+	timeline.update_pos(timeline.current_time)
 	_on_FpsSpinBox_value_changed(fps_node.value)
 #	animatedsprite_node.play(sprite_name)
 #	animatedsprite_node.stop()

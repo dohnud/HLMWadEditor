@@ -393,7 +393,7 @@ func _on_RecalculateSheetButton_pressed():
 		meta = selected_asset_data.meta
 	if !(selected_asset_data is Meta):
 		return
-	asset_tree.set_bold(selected_asset_treeitem)
+#	asset_tree.set_bold(selected_asset_treeitem)
 #	if thread and thread.is_active():
 	if threads.has(selected_asset_name):
 		print('waiting for thread to end...')

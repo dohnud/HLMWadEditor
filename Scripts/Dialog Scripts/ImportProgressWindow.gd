@@ -60,9 +60,7 @@ func _process(delta):
 		current_import_file_index = 0
 		patchwad = null
 
-var collision_toggle = false
-
-func merge_sprite(dst_meta:Meta, src_meta:Meta, sprite, rsc_file_path):
+func merge_sprite(dst_meta:Meta, src_meta:Meta, sprite:String, rsc_file_path:String):
 	var old_n = app.selected_asset_name 
 	var old_d = app.selected_asset_data
 	app.selected_asset_name = rsc_file_path
@@ -80,22 +78,27 @@ func merge_sprite(dst_meta:Meta, src_meta:Meta, sprite, rsc_file_path):
 		dst_meta.needs_recalc = true
 		dst_meta.sprites.remove_animation(sprite)
 		dst_meta.sprites.add_animation(sprite)
-		if nb and collision_toggle:
+		if nb and collision_toggle and wants_collision:
 			patchwad.goto(CollisionMasksBin.get_file_path())
 			var import_mask = patch_collisionbin.find(base_spritebin.sprite_data[sprite]['id'], patchwad)
 			if import_mask != null:
 				base_collisionbin.masks[base_spritebin.sprite_data[sprite]['id']] = import_mask
+			else:
+				ErrorLog.show_user_error("Attempted to import collision for sprite:" + sprite + ". But none was found!")
 #			app.base_wad.get_bin(CollisionMasksBin.get_file_path()).resize(base_spritebin.sprite_data[sprite]['id'], w,h, frame_count) # :D
 			app.base_wad.changed_files[CollisionMasksBin.get_file_path()] = base_collisionbin
 		for i in range(frame_count):
 			var f = src_meta.sprites.get_frame(sprite, i)
 			dst_meta.sprites.add_frame(sprite, f)
-			if nb and !collision_toggle:
+			if nb and !collision_toggle and wants_collision:
 				var b_list = base_collisionbin.compute_new_mask(base_spritebin.sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D
 				base_spritebin.sprite_data[sprite]['mask_x_bounds'] = b_list[0]
 				base_spritebin.sprite_data[sprite]['mask_y_bounds'] = b_list[1]
 		if nb:
 			base_spritebin.sprite_data[sprite]['size'] = Vector2(w, h)
+			if sprite_toggle:
+				var p_spritebin_sprite = patch_spritebin.sprite_data[sprite]
+				base_spritebin.sprite_data[sprite]['center'] = p_spritebin_sprite['center']
 			base_spritebin.sprite_data[sprite]['frame_count'] = frame_count
 #			app.base_wad.get_bin(CollisionMasksBin.get_file_path()).resize(base_spritebin.sprite_data[sprite]['id'], d,h, frame_count) # :D
 #			app.base_wad.changed_files[CollisionMasksBin.get_file_path()] = app.base_wad.get_bin(CollisionMasksBin.get_file_path())
@@ -113,11 +116,13 @@ func merge_sprite(dst_meta:Meta, src_meta:Meta, sprite, rsc_file_path):
 		dst_meta.needs_recalc = false
 		var img = dst_meta.texture_page.get_data()
 		if nb:
-			if collision_toggle:
+			if collision_toggle and wants_collision:
 				patchwad.goto(CollisionMasksBin.get_file_path())
 				var import_mask = patch_collisionbin.find(base_spritebin.sprite_data[sprite]['id'], patchwad)
 				if import_mask != null:
 					base_collisionbin.masks[base_spritebin.sprite_data[sprite]['id']] = import_mask
+				else:
+					ErrorLog.show_user_error("Attempted to import collision for sprite:" + sprite + ". But none was found!")
 				app.base_wad.changed_files[CollisionMasksBin.get_file_path()] = base_collisionbin
 			else:
 				base_collisionbin.resize(base_spritebin.sprite_data[sprite]['id'], w,h, frame_count)
@@ -131,10 +136,11 @@ func merge_sprite(dst_meta:Meta, src_meta:Meta, sprite, rsc_file_path):
 					tf.convert(Image.FORMAT_RGBA8)
 				img.blit_rect(tf, f.region, of.region.position)
 			if nb:
-				if !collision_toggle:
+				if !collision_toggle and wants_collision:
 					var b_list = base_collisionbin.compute_new_mask(base_spritebin.sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D
 					base_spritebin.sprite_data[sprite]['mask_x_bounds'] = b_list[0]
 					base_spritebin.sprite_data[sprite]['mask_y_bounds'] = b_list[1]
+					app.base_wad.changed_files[CollisionMasksBin.get_file_path()] = base_collisionbin
 #				if collision_toggle:
 #					var collisionbin = patchwad.get_bin(CollisionMasksBin.get_file_path())
 #					patchwad.goto(CollisionMasksBin.get_file_path())
@@ -148,6 +154,7 @@ func merge_sprite(dst_meta:Meta, src_meta:Meta, sprite, rsc_file_path):
 #					app.base_wad.changed_files[SpritesBin.get_file_path()] = base_spritebin
 #				if !skip_sprite_data_update:
 					base_spritebin.sprite_data[sprite]['size'] = p_spritebin_sprite['size']
+					base_spritebin.sprite_data[sprite]['center'] = p_spritebin_sprite['center']
 					base_spritebin.sprite_data[sprite]['frame_count'] = p_spritebin_sprite['frame_count']
 					app.base_wad.changed_files[SpritesBin.get_file_path()] = base_spritebin
 			elif patchwad.exists(BackgroundsBin.get_file_path()):
@@ -162,13 +169,15 @@ func merge_sprite(dst_meta:Meta, src_meta:Meta, sprite, rsc_file_path):
 
 
 var sprite_toggle = false
+var collision_toggle = false
 var import_file_total = 1
+var wants_collision = false
 func _on_ImportPatchWindowDialog_confirmed():
 	var pw = app.get_node('ImportantPopups/ImportPatchWindowDialog')
 	file_dict = pw.file_dict
 	patchwad = pw.patchwad
 #	pw.patchwad = null
-#	collision_toggle = pw.collision_toggle
+	wants_collision = pw.collision_toggle
 	collision_toggle = patchwad.exists(CollisionMasksBin.get_file_path())
 	sprite_toggle = patchwad.exists(SpritesBin.get_file_path())
 	import_file_total = 1

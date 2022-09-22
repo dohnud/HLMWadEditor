@@ -144,7 +144,7 @@ func byte_array_to_int(bytes):
 #					f.store_8(byte)
 
 
-
+var image_cache = {}
 
 class MaskEntry:
 	var id:int
@@ -153,6 +153,7 @@ class MaskEntry:
 	var height: int = 1
 	var frame_count:int = 1
 	var data : Array # [frame1[10][12], frame2[48][33]]
+	var images : Array
 	
 	func resize(_width:int, _height:int, _frame_count:int=-1):
 		if _frame_count < 1:
@@ -165,6 +166,7 @@ class MaskEntry:
 		width = _width
 		height = _height
 		x = ceil(float(width)/8.0)
+		images.resize(frame_count)
 		data.resize(frame_count)
 		for f in range(frame_count):
 			var frame = data[f]
@@ -195,6 +197,8 @@ class MaskEntry:
 #			l = image_index + 1
 		resize(x_bounds.x, y_bounds.x)
 		var f = data[image_index]
+		var bytes = []
+#		bytes.resize(len(f) * len(f[0]))
 		for y in range(len(f)):
 			for x in range(len(f[y])):
 				f[y][x] = 0
@@ -205,6 +209,12 @@ class MaskEntry:
 						if x > x_bounds.y: x_bounds.y = x
 						if y < y_bounds.x: y_bounds.x = y
 						if y > y_bounds.y: y_bounds.y = y
+					bytes.append(f[y][x])
+		var tex = ImageTexture.new()
+		var img1 = Image.new()
+		img1.create_from_data(width, height, 0, Image.FORMAT_L8, bytes)
+		tex.create_from_image(img1, 0)
+		images[image_index] = tex
 		return [x_bounds, y_bounds]
 
 #var masks = {}
@@ -229,7 +239,8 @@ func compute_new_mask(mask_id, image_index, img:Image) -> Array:
 		mask = MaskEntry.new()
 		mask.id = mask_id
 		masks[mask_id] = mask
-	return mask.compute_mask_from_image(image_index, img)
+	var m = mask.compute_mask_from_image(image_index, img)
+	return m
 	
 
 var ref_start = 0
@@ -278,19 +289,25 @@ func write(ref_file, new_file):
 			nf.store_32(fc)
 			nf.store_buffer(f.get_buffer(x * h * fc))
 
+
 var f_cache = {}
 
 func find(mask_id, ref_file):
+	if masks.has(mask_id): return masks[mask_id]
+	if !ref_file: return null
 	var f = ref_file
+	var mask_num = 1
 	if f_cache.has(ref_file):
 		if f_cache[ref_file].has(mask_id):
 			f.seek(f_cache[ref_file][mask_id])
+		else:
+			mask_num = f.get_32()
 	else:
+		mask_num = f.get_32()
 		f_cache[ref_file] = {}
-	var mask_num = f.get_32()
 #	fn.store_32(len(mask_data))
 	var id = f.get_32()
-	f_cache[ref_file][id] = f.get_position()
+	f_cache[ref_file][id] = f.get_position() - 0x04
 	var x = f.get_32()
 	var w = f.get_32()
 	var h = f.get_32()
@@ -305,6 +322,7 @@ func find(mask_id, ref_file):
 			mask.data = []
 			var data_len = mask.x * mask.height
 			for fi in range(fc):
+				var p_data = []
 				var fdata = []
 				for r in range(h):
 					var buffer = f.get_buffer(x)
@@ -313,14 +331,22 @@ func find(mask_id, ref_file):
 						for shift in range(8):
 							row.append(((byte >> shift) & 1)*0xFF)
 					fdata.append(row)
+					p_data.append_array(row)
 	#				fdata += row
 				mask.data.append(fdata)
+				var tex = ImageTexture.new()
+				var img1 = Image.new()
+#				img1.create_from_data(w, h, 0, Image.FORMAT_L8, f)
+				img1.create_from_data(x*8, h,0, Image.FORMAT_L8, p_data)
+#				img1.save_png("HELP_"+str(id)+'_' +str(fi)+ ".png")
+				tex.create_from_image(img1, 0)
+				mask.images.append(tex)
 			return mask
 		else:
 #			nf.store_buffer(f.get_buffer(x * h * fc))
 			f.seek(f.get_position() + x * h * fc)
 		id = f.get_32()
-		f_cache[ref_file][id] = f.get_position()
+		f_cache[ref_file][id] = f.get_position() - 0x04
 		x = f.get_32()
 		w = f.get_32()
 		h = f.get_32()
