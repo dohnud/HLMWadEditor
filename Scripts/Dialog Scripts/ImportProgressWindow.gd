@@ -121,6 +121,9 @@ func merge_sprite(dst_meta:Meta, src_meta:Meta, sprite:String, rsc_file_path:Str
 				var import_mask = patch_collisionbin.find(base_spritebin.sprite_data[sprite]['id'], patchwad)
 				if import_mask != null:
 					base_collisionbin.masks[base_spritebin.sprite_data[sprite]['id']] = import_mask
+					var p_spritebin_sprite = patch_spritebin.sprite_data[sprite]
+					base_spritebin.sprite_data[sprite]['mask_x_bounds'] = p_spritebin_sprite['mask_x_bounds']
+					base_spritebin.sprite_data[sprite]['mask_y_bounds'] = p_spritebin_sprite['mask_y_bounds']
 				else:
 					ErrorLog.show_user_error("Attempted to import collision for sprite:" + sprite + ". But none was found!")
 				app.base_wad.changed_files[CollisionMasksBin.get_file_path()] = base_collisionbin
@@ -148,8 +151,6 @@ func merge_sprite(dst_meta:Meta, src_meta:Meta, sprite:String, rsc_file_path:Str
 #					app.base_wad.get_bin(CollisionMasksBin.get_file_path()).masks[base_spritebin.sprite_data[sprite]['id']] = import_mask
 				if sprite_toggle:
 					var p_spritebin_sprite = patchwad.get_bin(SpritesBin).sprite_data[sprite]
-					base_spritebin.sprite_data[sprite]['mask_x_bounds'] = p_spritebin_sprite['mask_x_bounds']
-					base_spritebin.sprite_data[sprite]['mask_y_bounds'] = p_spritebin_sprite['mask_y_bounds']
 #					app.base_wad.changed_files[CollisionMasksBin.get_file_path()] = app.base_wad.get_bin(CollisionMasksBin.get_file_path())
 #					app.base_wad.changed_files[SpritesBin.get_file_path()] = base_spritebin
 #				if !skip_sprite_data_update:
