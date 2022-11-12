@@ -1,0 +1,30 @@
+site_name: The Guide to Hotline Miami 2 Modding
+site_url: https://example.com/
+markdown_extensions:
+  - admonition
+theme:
+  name: null
+  custom_dir: 'mkdocs_windmill'
+  # Copy settings from mkdocs_theme.yml, which is ignored by custom_dir themes.
+  static_templates: [404.html]
+  search_index_only: true
+  include_search_page: true
+
+extra:
+  article_nav_top: false
+  article_nav_bottom: false
+
+
+extra_css: [extra.css]
+
+
+nav:
+  - Welcome: index.md
+  - Getting Started: 'Tutorials/0/index.md'
+  - Introduction to the Editor: 'Tutorials/1/index.md'
+  - Your First Mod:
+    - 'Weapon Sprites': 'Tutorials/2/index.md'
+    - 'Walking Animations': 'Tutorials/3/index.md'
+    - 'Attack Animations': 'Tutorials/4/index.md'
+  - Tutorials:
+    - Your First Mod: 'Tutorials/5/index.md'
