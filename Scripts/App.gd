@@ -699,7 +699,8 @@ func _on_SavePatchDialog_file_selected(path):
 	and !save_directory.remove(current_open_patch_path) \
 	and !save_directory.rename(path, current_open_patch_path):
 		print('overwrite success!')
-	OS.set_window_title('HLMWadEditor - ' + path)
+	if !path.ends_with('tmp'):
+		OS.set_window_title('HLMWadEditor - ' + path)
 
 
 var dirs = {}
