@@ -3,6 +3,7 @@ The Wad Editor is an overhauled and feature complete version of the Explorer. In
 
 
 >For up to date downloads visit the [Releases](https://github.com/DohKnot/HLMWadEditor/releases/latest) page.
+>
 >Check out the [wiki](https://dohnud.github.io/HLMWadEditor) for tutorials and more information on the modding Hotline Miami 1 or 2!
 
 The Editor borrows a lot of concepts and design from the Explorer, so modders of old can take advantage of the familiarity without the restrictions of the Explorer.
