@@ -1,5 +1,14 @@
-site_name: The Guide to Hotline Miami 2 Modding
-site_url: https://example.com/
+site_name: The Guide to Hotline Miami Modding
+site_url: https://dohnud.github.io/
+site_author: doh nud
+
+# Repository
+repo_name: HLMWadEditor
+repo_url: https://github.com/dohnud/
+edit_uri: edit/docs/src
+docs_dir: 'src'
+
+
 markdown_extensions:
   - admonition
 theme:

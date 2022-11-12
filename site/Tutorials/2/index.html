@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="author" content="doh nud">
+    <link rel="canonical" href="https://dohnud.github.io/Tutorials/2/">
+    <link rel="shortcut icon" href="../../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Weapon Sprites - The Guide to Hotline Miami Modding</title>
+    <link href="../../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/highlight.css">
+    <link href="../../extra.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../../js/jquery-3.2.1.min.js"></script>
+    <script src="../../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '../..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Your First Mod", url: "#_top", children: [
+              {title: "Changing a Weapon", url: "#changing-a-weapon" },
+              {title: "Exporting a sprite", url: "#exporting-a-sprite" },
+              {title: "Editing a sprite", url: "#editing-a-sprite" },
+              {title: "Importing a sprite", url: "#importing-a-sprite" },
+              {title: "Next Step", url: "#next-step" },
+          ]},
+        ];
+
+    </script>
+    <script src="../../js/base.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="your-first-mod">Your First Mod</h1>
+<hr />
+<p>Ok so you've downloaded the Editor, set it up, and you <em>still</em> want to make a mod.
+Fantastic, this is what we'll be making as your first mod:</p>
+<div class="fartbox">
+<span>
+<img src="/Tutorials/2/showoff0.png" alt="we will enlarge the base games magnum sprite">
+</span>
+<span>
+<img src="/Tutorials/2/showoff1.png" alt="we will enlarge the base games magnum sprite">
+You can pick it up :O
+</span>
+<span>
+<img src="/Tutorials/2/showoff2.png" alt="we will enlarge the base games magnum sprite">
+And you can shoot it :o
+</span>
+</div>
+
+<p>For our first mod we will be making a revolver with a comically large barrel. To boil our mod into the resources we'll actually be modifying: the dropped magnum sprite, the Son's magnum walking sprite, and the Son's magnum attack sprite. Although we're only changing three sprites, this tutorial will teach you the fundamentals and the correct process to make a hotline miami 2 mod.</p>
+<p>Each sprite will have its own article. This article will change the magnum weapon itself. The next two articles will cover changing the <a href="/Tutorials/3/">walking animation</a>, and the <a href="/Tutorials/4/">attack animation</a>.</p>
+<p>To summarize, this tutorial will answer how to use the editor and how to work with sprite strips. The core two pillars of indie gamedev.</p>
+<hr />
+<!-- ## Step #1 -->
+
+<h2 id="changing-a-weapon">Changing a Weapon</h2>
+<p>Our first step in making our bigger magnum mod is to make the magnum bigger... Okay our first step in crafting our marvelous modification is to resprite our existing dropped magnum sprite, called <code>sprMagnum</code> in the <code>Atlases/Weapons.meta</code> file, to have a longer barrel and therefore be bigger than the original sprite requiring additional space.</p>
+<div class="fartbox">
+<span>
+<img src="/Tutorials/2/magnum_preview_normal.png" alt="a normal sized magnum sprite">
+</span>
+<span>
+<img src="/Tutorials/2/magnum_preview_long.png" alt="a magnum with a longer barrel">
+</span>
+</div>
+
+<p>Editing this sprite will be pretty straight forward since this sprite is only one frame.</p>
+<h2 id="exporting-a-sprite">Exporting a sprite</h2>
+<p>To edit our Magnum we will want to use our sprite editor of choice. Whether thats Photoshop, Gimp, or Aseprite is up to you (I recommend Aseprite since it has a bunch of features tailored for sprite animation). We need to get this preview image onto our hard drive so we can start respriting. To do so we are going to Export our sprite by going to our menu bar at the top of the window, under <code>Meta</code>, and clicking the <code>Export Sprite to Strip</code> option (<code>Shift + E</code> is its keyboard shortcut).</p>
+<p><img src="/Tutorials/2/magnum_export_start.png" alt="go to Meta -> Export Sprite to Strip"&gt;</p>
+<p>A pop up window will appear prompting us to save our sprite to a location on our computer. Make sure you remember where you save your sprite as we will be opening this file in an your image editor of choice to do the actual respriting. </p>
+<p><img src="/Tutorials/2/magnum_export_window.png" alt="Choose a location and save your sprite strip"></p>
+<h2 id="editing-a-sprite">Editing a sprite</h2>
+<p>Heres where the Editors use falls off. Open the exported magnum sprite with your program of choice, for these tutorials I will use Aseprite although GIMP or any other image editor also works.</p>
+<p><img src="/Tutorials/2/open_spritestrip.png" alt="open your sprite"></p>
+<p>Since this isn't a tutorial on how to use Aseprite nor how to be creative nor how use your brain, I'll simply show the before and after of respriting our magnum.</p>
+<p><img src="/Tutorials/2/aseprite_0.png" alt="Before">
+<img src="/Tutorials/2/aseprite_1.png" alt="After"></p>
+<p>Now that we've made our changes to the magnum sprite and saved it to our computer we need hop back to the Editor and add our resprited magnum to our mod.</p>
+<h2 id="importing-a-sprite">Importing a sprite</h2>
+<p>Back in the editor with <code>sprMagnum</code> selected, just as we exported our sprite, in the menu bar at the top of the window under <code>Meta</code> click <code>Import Sprite from Strip</code> to import our newly modified sprite (<code>Shift + I</code> is its keyboard shortcut).</p>
+<p><img src="/Tutorials/2/magnum_import_start.png" alt="go to Meta -> Export Sprite to Strip"&gt;</p>
+<p>From this file dialog we will traverse to where we saved our modified magnum sprite and open it.</p>
+<p><img src="/Tutorials/2/magnum_import_end.png" alt="Choose a location and save your sprite strip"></p>
+<p>Since the Editor can import sprites strips containing multiple frames of an animation we can change how many frames to split the sprite strip into. For this case we are only modifying a single sprite so we'll leave it at one. To apply our import click <code>Import</code> at the bottom of the popup window.</p>
+<p><img src="/Tutorials/2/magnum_import_dialog.png" alt="Choose a location and save your sprite strip"></p>
+<blockquote>
+<h4 id="compiling-texture-pages">Compiling Texture pages</h4>
+<p>This is the more boring part of the modding process. Since every sprite is packed tightly together into a single texture page image changing the size of a sprite without moving the rest of the sprites would have sprites overlapping each other, not good. Therefore, every time we increase the size of a sprite the texture page needs to be repacked. Unfortunately, most computers need way more than 16ms (duration of a frame, 1/60th of a second) in order to recalculate and pack all the sprites back into the texture page. To solve this, and quickly, the Editor compiles texture pages in the background. We can see what textures the Editor is working on the top right of the window as a little popup.</p>
+<p><img src="/Tutorials/2/magnum_import_compile.png" alt="Choose a location and save your sprite strip"></p>
+</blockquote>
+<hr />
+<h2 id="next-step">Next Step</h2>
+<p>After importing our new magnum weapon sprite we still need to mod our players walking and attacking animations to match the new weapon. The <a href="/Tutorials/3/">next article</a> will go over changing the players walking animation to fit our bigger weapon.</p>
+<hr />
+
+  <br>
+</div>
+
+<footer class="container-fluid wm-page-content">
+      <p>
+        <a href="https://github.com/dohnud/edit/docs/src/Tutorials/2/index.md">Edit on HLMWadEditor</a>
+      </p>
+  <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>
