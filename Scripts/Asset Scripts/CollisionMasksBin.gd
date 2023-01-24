@@ -195,7 +195,7 @@ class MaskEntry:
 #		var l = len(data)
 #		if image_index >= l:
 #			l = image_index + 1
-		resize(x_bounds.x, y_bounds.x)
+		resize(x_bounds.x, y_bounds.x, image_index+1)
 		var f = data[image_index]
 		var bytes = []
 #		bytes.resize(len(f) * len(f[0]))

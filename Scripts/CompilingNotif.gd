@@ -52,6 +52,7 @@ var current_index = 0
 var current_frame_index = 0
 
 func _process(delta):
+	if quick_end: return
 	var f_count = asset.sprites.get_frame_count(current_sprite)
 	var l_as = len(asset.sprites.get_animation_names())
 	if resolve(current_sprite, current_frame_index):
@@ -71,6 +72,7 @@ func _process(delta):
 	update_resolve_progress(float(current_index + p1)/float(l_as))#float(p)/float(len(animatedsprite.get_animation_names()))))
 
 var image_width = 1
+var quick_end = true
 func init_resolve():
 	if !asset:return false
 	var animatedsprite:SpriteFrames = asset.sprites
@@ -78,12 +80,27 @@ func init_resolve():
 	image_width = spritesheet.get_width()
 	# get image bigger image hegith..
 	var a = animatedsprite.get_animation_names()
+	var s = app.base_wad.get_bin(SpritesBin)
+	if s:
+		s = s.sprite_data
 	for sprite_name in a:
 		var f_count = animatedsprite.get_frame_count(sprite_name)
+		if s:
+			if s[sprite_name]['frame_count'] != f_count:
+				quick_end = false
+			s[sprite_name]['frame_count'] = f_count
 		for frame_index in range(f_count):
-			if animatedsprite.get_frame(sprite_name, frame_index).region.size.x+1 > image_width:
+			var f = animatedsprite.get_frame(sprite_name, frame_index)
+			if s:
+				if s[sprite_name]['size'] != f.get_size():
+					quick_end = false
+				s[sprite_name]['size'] = f.get_size()
+			if f.region.size.x+1 > image_width:
 				image_width = 1+animatedsprite.get_frame(sprite_name, frame_index).region.size.x
-
+	if quick_end:
+		emit_signal('resolve_complete', asset_name)
+		queue_free()
+		return
 	var image_height = 1
 	dest_image.create(image_width, image_height, false, Image.FORMAT_RGBA8)
 	dest_image.lock()
@@ -182,12 +199,12 @@ func find_new_spot(sprite_name, frame_index, ty):
 func end_resolve():
 	asset.texture_dimensions = dest_image.get_size()
 	asset.sprites = new_sprites
-	var a = asset.sprites.get_animation_names()	
+	var a = asset.sprites.get_animation_names()
 	for sprite_name in a:
 		var f_count = asset.sprites.get_frame_count(sprite_name)
 		for frame_index in range(f_count):
 			var f = asset.sprites.get_frame(sprite_name, frame_index)
-			asset.sprites.get_frame(sprite_name, frame_index).uv = Rect2(
+			f.uv = Rect2(
 				float(f.region.position.x) / float(asset.texture_dimensions.x),
 				float(f.region.position.y) / float(asset.texture_dimensions.y),
 				float(f.region.size.x) / float(asset.texture_dimensions.x),

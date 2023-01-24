@@ -38,7 +38,8 @@ var operations = {
 		["Export All Sprites", [], 'export_sprite_strips'],
 		[],
 		["Transform Sprite", [KEY_SHIFT, KEY_T], 'resize_sprite'],
-		["Compile All Sprites", [], 'recalcspritesheet'],
+		["Recalculate Sprite Sheet", [], 'recalcspritesheet'],
+		["Recalculate All Collision Masks", [], 'recalccollisionmasks'],
 		[],
 		["Toggle Gizmos", [KEY_SHIFT, KEY_G], 'togglemetagizmos'],
 		["Show Collision", [], 'togglecollisiongizmo'],
@@ -343,6 +344,8 @@ func import_sprite_strip():
 
 func recalcspritesheet():
 	app._on_RecalculateSheetButton_pressed()
+
+func recalccollisionmasks():
 	if app.selected_asset_data is Meta:
 		app._recalc_collision()
 		

@@ -58,7 +58,7 @@ func update_pos(v:float=0):
 				editor.frametexturerect.texture = current_mask.images[min(i, len(current_mask.images)-1)]
 		else:
 			editor.frametexturerect.texture = f
-		editor.frame_number_node.text = str(int(i))
+		editor.frame_number_node.text = str(int(i)+1)
 		#editor.animatedsprite_node.frame = (value-1/editor.meta.sprites.get_frame_count(editor.current_sprite)) * editor.meta.sprites.get_frame_count(editor.current_sprite)
 
 

@@ -421,7 +421,9 @@ func parse_sprite_data(asset):
 	var r = SpritesBin.new()
 	if version == WAD_VERSION.HM1:
 		r = phyreSpritesBin.new()
-	r.parse(self)
+	var e = r.parse(self)
+	if e:
+		ErrorLog.show_user_error('Sprite data file: "hlm2_sprites.bin" is corrupted!\nNote any changes you might have made and Revert the file\n(List->Advanced->Show Sprites, click a sprite then Resource->Revert)')
 	spritebin = r
 	sprite_data = r.sprite_data
 	loaded_assets[asset] = r

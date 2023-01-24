@@ -46,17 +46,22 @@ func get_sprite_name(sprite_index):
 var ref_start = 0
 func parse(file_pointer):
 	var f = file_pointer
+	var err = 0
 #	ref_start = f.get_position()
 #	sprite_indicies = parse_index_list(f)
 	f.seek(f.get_position() + f.get_32()*4 + 4) # skip indicies
 	sprites = parse_struct_map(f, spr, 'id')
 	sprite_names = parse_string_map(f)
 	for sprite in sprites.values():
-		var s = sprite_names[sprite['name_pos']]
+		var s = sprite_names.get(sprite['name_pos'], 0)
+		if s is int:
+			err = 1
+			continue
 		sprite['name'] = s
 		sprite_data[s] = sprite
 	data = sprite_data
 	names = sprite_names.values()
+	return err
 
 #var src_sprite_offsets = {}
 

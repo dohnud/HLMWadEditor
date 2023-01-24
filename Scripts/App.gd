@@ -1,5 +1,7 @@
 extends Control
 
+class_name App
+
 export(NodePath) var asset_tree
 export(NodePath) var asset_tree_container
 export(NodePath) var meta_editor_node_path
@@ -320,6 +322,7 @@ func _on_SearchBar_text_entered(new_text=''):
 			i += 1
 		
 	asset_tree.update()
+	$Main/TopMenu/MenuItems.expandassetlist()
 var threads = {}
 #func _on_RecalculateSheetButton_pressed():
 #	var meta = selected_asset_data

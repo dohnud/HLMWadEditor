@@ -103,7 +103,10 @@ func _on_Button_pressed():
 					if nb:
 #						if  app.base_wad.get_bin(CollisionMasksBin.get_file_path()).mask_data.has(app.base_wad.get_bin(SpritesBin).sprite_data[sprite]['id']):
 						if collision_toggle:
-							var b_list = app.base_wad.get_bin(CollisionMasksBin).compute_new_mask(app.base_wad.get_bin(SpritesBin).sprite_data[sprite]['id'], i, f.atlas.get_data().get_rect(f.region)) # :D
+							var b = app.base_wad.get_bin(CollisionMasksBin)
+							var sprite_index = app.base_wad.get_bin(SpritesBin).sprite_data[sprite]['id']
+							
+							var b_list = b.compute_new_mask(sprite_index, i, f.atlas.get_data().get_rect(f.region)) # :D
 							app.base_wad.get_bin(SpritesBin).sprite_data[sprite]['mask_x_bounds'] = b_list[0]
 							app.base_wad.get_bin(SpritesBin).sprite_data[sprite]['mask_y_bounds'] = b_list[1]
 							app.base_wad.changed_files[CollisionMasksBin.get_file_path()] = app.base_wad.get_bin(CollisionMasksBin)
