@@ -28,7 +28,7 @@ func add_generic_object():
 		}
 	else:
 		new_obj = {
-			'instace_id' : 1,
+			'instance_id' : 1,
 			'mystery1' : 1,
 			'mystery2' : 1,
 			'object_id' : 2342,
@@ -71,7 +71,12 @@ func _on_RoomTree_item_edited(deleted=0):
 	p.pop_front()
 	var last_k = p.pop_back()
 	var d = room
+	var type_d = rooms.rm
 	for k in p:
+		if not(k is int):
+			type_d = type_d[k]
+		else:
+			type_d = type_d[1]
 		d = d[k]
 	if deleted == 0:
 		var value = room_tree.get_selected().get_text(1)
@@ -89,6 +94,8 @@ func _on_RoomTree_item_edited(deleted=0):
 					v = Vector2(r1, r2)
 		elif d[last_k] is int and (can_be_int_fuck_you_godot(value) != null or value == '0'):
 			v = can_be_int_fuck_you_godot(value)
+			var limit = (1<<int(type_d[last_k])) - 1
+			v = clamp(v, 0, limit)
 		if v != d[last_k]:
 			d[last_k] = v
 			app.base_wad.changed_files[file] = bin
