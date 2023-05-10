@@ -1,5 +1,7 @@
-tool
+# BUG in VERSION>3.3 https://www.reddit.com/r/godot/comments/wtb975/tree_control_hiding_items_when_focused_after/
+# "Fixed! For anyone else with this f'ed up issue, it is all about that focus mode. If it's anything but 'none' the Tree control displays the above behavior."
 extends Tree
+
 
 onready var app = get_tree().get_nodes_in_group('App')[0]
 
@@ -129,3 +131,4 @@ func _on_Tree_item_selected():
 	asset = asset.substr(1)
 	app.open_asset(asset)
 	app.selected_asset_treeitem = treeitem
+

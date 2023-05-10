@@ -178,23 +178,37 @@ func openrecentpatch(id, popup):
 	var a = get_tree().get_nodes_in_group('App')[0]
 	a._on_OpenPatchDialog_file_selected(a.recent_patches[id])
 
+
+
 func openpatch():
-	var w :FileDialog= app.get_node("ImportantPopups/OpenPatchDialog")
-	app.get_node("ImportantPopups").show()
-	w.popup()
-	w.invalidate()
+#	var w :FileDialog= app.get_node("ImportantPopups/OpenPatchDialog")
+#	app.get_node("ImportantPopups").show()
+#	w.popup()
+#	w.invalidate()
+	NativeDialog.popup_open_dialog("Open A Patchwad", ["*.patchwad ; Patchwad Archive"], app, '_on_OpenPatchDialog_file_selected')
 
 func savepatch():
-	var w :FileDialog= app.get_node("ImportantPopups/SavePatchDialog")
-	app.get_node("ImportantPopups").show()
-	w.popup()
-	w.invalidate()
+#	var w :FileDialog= app.get_node("ImportantPopups/SavePatchDialog")
+#	app.get_node("ImportantPopups").show()
+#	w.popup()
+#	w.invalidate()
+	NativeDialog.popup_save_dialog(
+		"Save Patchwad",
+		["*.patchwad ; Patchwad Archive"],
+		app, '_on_SavePatchDialog_file_selected'
+	)
 	
 #func savepatchas():
 #	pass
 #
 func importpatch():
-	app.get_node("ImportWadFileDialog").popup()
+	#app.get_node("ImportWadFileDialog").popup()
+	var w = app.get_node("ImportantPopups/ImportPatchWindowDialog")
+	NativeDialog.popup_open_dialog(
+		"Open Patchwad to Import from",
+		["*.patchwad ; Patchwad Archive", "*.wad ; WAD Archive"],
+		w, '_on_ImportWadFileDialog_file_selected'
+	)
 
 func mergepatch():
 	app.get_node("ImportantPopups").show()
@@ -206,37 +220,46 @@ func mergepatch():
 	nw.popup()
 
 func openwad():
-	var w = app.get_node("OpenWadDialog")
-	w.popup()
-	w.invalidate()
+#	var w = app.get_node("OpenWadDialog")
+#	w.popup()
+#	w.invalidate()
+	NativeDialog.popup_open_dialog(
+		"Select a Base WAD to reference",
+		["*.wad ; WAD Archive"],
+		app, '_on_OpenWadDialog_file_selected'
+	)
 	
 func extract(resource_data=null):
 	var w :FileDialog= app.get_node("ImportantPopups/ExtractResourceDialog")
-	app.get_node("ImportantPopups").show()
-	w.clear_filters()
+	w.current_file = app.selected_asset_name.get_file()
+	var d = NativeDialog.popup_save_dialog(
+		"Save HLM2 Resource to a file",
+		app.selected_asset_name.get_file(),
+		['* ; Any File'],
+		w,'_on_ExtractResourceDialog_file_selected',
+		false
+	)
 	if !resource_data:
 		resource_data = app.selected_asset_data
 	w.r = resource_data
 	if resource_data is BinParser:
-		w.add_filter('*.bin')
+		d.add_filter('*.bin ; Binary File')
 	elif resource_data is Meta:
-		w.add_filter('*.meta')
-		w.add_filter('*.gmeta')
+		d.add_filter('*.meta ; Meta Sprite Atlas')
 		if w.current_file=='':w.current_file = '.meta'
 	elif resource_data is Texture:
-		w.add_filter('*.png')
+		d.add_filter('*.png ; Image File')
 	elif resource_data is WadSound:
-		w.add_filter('*.' + app.selected_asset_name.get_extension())
+		d.add_filter('*.' + app.selected_asset_name.get_extension() + ' ; Audio File')
 	else:
 		app.get_node('NotImplementedYetDialog').popup()
-	w.current_file = app.selected_asset_name.get_file()
-	w.popup()
-	w.invalidate()
+	d.show()
 
 func room_add_object():
 	app.room_editor_node.add_generic_object()
 
 func add():
+	# TODO: DEPRECATED
 	var w :FileDialog= app.get_node("ImportantPopups/AddResourceDialog")
 	app.get_node("ImportantPopups").show()
 	w.popup()
@@ -244,24 +267,26 @@ func add():
 
 func replace():
 	var w :FileDialog= app.get_node("ImportantPopups/ReplaceResourceDialog")
-	app.get_node("ImportantPopups").show()
-	w.clear_filters()
+	var d = NativeDialog.popup_open_dialog(
+		"Save HLM2 Resource to a file",
+		['* ; Any File'],
+		w,'_on_ReplaceResourceDialog_file_selected',
+		false
+	)
 	var resource_data = app.selected_asset_data
 	if resource_data is BinParser:
-		w.add_filter('*.bin')
+		d.add_filter('*.bin ; Binary File')
 	elif resource_data is Meta:
-		w.add_filter('*.meta')
-		w.add_filter('*.gmeta')
+		d.add_filter('*.meta ; Meta Sprite Atlas')
 		if w.current_file=='':w.current_file = '.meta'
 	elif resource_data is Texture:
-		w.add_filter('*.png')
+		d.add_filter('*.png ; Image File')
 	elif resource_data is WadSound:
-		w.add_filter('*.' + app.selected_asset_name.get_extension())
+		d.add_filter('*.' + app.selected_asset_name.get_extension() + ' ; Audio File')
 	else:
 		app.get_node('NotImplementedYetDialog').popup()
 	w.r = app.selected_asset_data
-	w.popup()
-	w.invalidate()
+	d.show()
 
 func revert():
 	var f = app.selected_asset_list_path
@@ -327,13 +352,17 @@ func convertmeta():
 func export_sprite_gif():
 	var w :FileDialog= app.get_node("ImportantPopups/SaveGIFDialog")
 	var nw = app.get_node("ImportantPopups/SaveGIFDialog2")
-	app.get_node("ImportantPopups").show()
 	var meta = app.meta_editor_node.meta
 	nw.meta = meta
 	nw.sprite = app.meta_editor_node.current_sprite
 	
-	w.popup()
-	w.get_line_edit().text = app.meta_editor_node.current_sprite+'.gif'
+#	w.get_line_edit().text = app.meta_editor_node.current_sprite+'.gif'
+	NativeDialog.popup_save_dialog(
+		"Save Sprite to GIF",
+		['*.gif ; GIF Animation'],
+		app.meta_editor_node.current_sprite+'.gif',
+		nw, '_on_SaveGIFDialog_file_selected'
+	)
 
 func export_sprite_strip():
 	app._on_ExportSpriteStripButton_pressed()

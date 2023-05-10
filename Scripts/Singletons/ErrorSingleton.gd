@@ -35,4 +35,4 @@ func show_next_user_error_in_queue() -> void:
 		_show_user_error(err[0], err[1])
 
 func log_error(msg : String) -> void:
-	Log.log("ERR: " + msg)
+	Log.log("[ERR] : " + msg)

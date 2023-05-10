@@ -15,5 +15,6 @@ func _on_Button_pressed():
 
 
 func _on_SaveGIFDialog_file_selected(_path):
+	if !_path:return
 	path = _path
 	popup()

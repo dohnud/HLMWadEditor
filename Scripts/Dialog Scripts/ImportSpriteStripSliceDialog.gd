@@ -10,6 +10,7 @@ var meta = null
 var sprite = null
 
 func _on_ImportSpriteStripDialog_file_selected(path):
+	if !path: return
 	var image = Image.new()
 	var err = image.load(path)
 	if err != OK:

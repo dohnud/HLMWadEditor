@@ -498,18 +498,25 @@ func _on_ExportSpriteStripButton_pressed():
 	w.meta = meta_editor_node.meta
 	w.sprite = meta_editor_node.current_sprite
 	w.export_mode = 0
-	w.mode = FileDialog.MODE_SAVE_FILE
-	get_node("ImportantPopups").show()
-	w.popup()
-	w.invalidate()
-	w.deselect_items()
-	w.window_title = 'Export Sprite Strip to PNG'
-	w.filters = ['*.png']
-	w.current_file = ''
-	w.get_line_edit().text = ''
-	w.get_line_edit().text = meta_editor_node.current_sprite+'_strip.png'
-	w.current_file = meta_editor_node.current_sprite+'_strip.png'
-	w.get_line_edit().text = meta_editor_node.current_sprite+'_strip.png'
+	#w.mode = FileDialog.MODE_SAVE_FILE
+#	get_node("ImportantPopups").show()
+#	w.popup()
+#	w.invalidate()
+#	w.deselect_items()
+#	w.window_title = 'Export Sprite Strip to PNG'
+#	w.filters = ['*.png']
+#	w.current_file = ''
+#	w.get_line_edit().text = ''
+#	w.get_line_edit().text = meta_editor_node.current_sprite+'_strip.png'
+#	w.current_file = meta_editor_node.current_sprite+'_strip.png'
+#	w.get_line_edit().text = meta_editor_node.current_sprite+'_strip.png'
+	
+	var d = NativeDialog.popup_save_dialog(
+		'Export Sprite Strip to PNG',
+		['*.png ; PNG Image'],
+		meta_editor_node.current_sprite + '_strip.png',
+		w, '_on_ExportSpriteStripDialog_file_selected'
+	)
 
 func export_sprite_strips():
 	var w :FileDialog= get_node("ImportantPopups/ExportSpriteStripDialog")
@@ -517,35 +524,50 @@ func export_sprite_strips():
 	w.meta = meta_editor_node.meta
 	w.sprite = meta_editor_node.current_sprite
 	w.export_mode = 1
-	w.mode = FileDialog.MODE_OPEN_DIR
-	w.window_title = 'Select a destination Folder'
-	w.filters = []
-	w.current_file = ''
-	w.get_line_edit().text = ''
-	get_node("ImportantPopups").show()
-	w.popup()
-	w.invalidate()
+	NativeDialog.popup_folder_dialog(
+		"Select a Destination Folder to Save Sprites to",
+		w, '_on_ExportSpriteStripDialog_dir_selected'
+	)
+#	w.mode = FileDialog.MODE_OPEN_DIR
+#	w.window_title = 'Select a destination Folder'
+#	w.filters = []
+#	w.current_file = ''
+#	w.get_line_edit().text = ''
+#	get_node("ImportantPopups").show()
+#	w.popup()
+#	w.invalidate()
 
 #func change_sprite_attr(sprite_name, attr, new_value):
 #	pass
 
 func _on_importSpriteStripButton_pressed():
 	var w :FileDialog= get_node("ImportantPopups/ImportSpriteStripDialog")
+	w.show_hidden_files = false
 	var nw :WindowDialog= get_node("ImportantPopups/ImportSpriteStripSliceDialog")
 	nw.meta = meta_editor_node.meta
 	nw.sprite = meta_editor_node.current_sprite
-	get_node("ImportantPopups").show()
-	w.popup()
-	w.invalidate()
-	w.show_hidden_files = true
-	w.show_hidden_files = false
+	
+	var dialog = NativeDialog.popup_open_dialog(
+		w.window_title,
+		['*.png ; PNG Images'],
+		self, "_on_importSpriteStripFileSelected"
+	)
 
+func _on_importSpriteStripFileSelected(file):
+	if !file: return
+	var nw :WindowDialog= get_node("ImportantPopups/ImportSpriteStripSliceDialog")
+	get_node("ImportantPopups").hide()
+	nw._on_ImportSpriteStripDialog_file_selected(file)
+
+
+# DEPRECATED
 func _on_AddResourceDialog_file_selected(path):
 	base_wad.add_file(path)
 	_on_SearchBar_text_entered('')
 
 
 func _on_OpenPatchDialog_file_selected(path):
+	if !path: return
 	open_patchwad(path)
 	_on_SearchBar_text_entered('')
 	current_open_patch_path = path
@@ -559,6 +581,7 @@ func _on_OpenPatchDialog_file_selected(path):
 
 
 func _on_OpenWadDialog_file_selected(path):
+	if !path: return
 	if open_wad(path):
 		Config.settings.base_wad_path = path
 		base_wad_path = Config.settings.base_wad_path
@@ -569,6 +592,7 @@ func _on_OpenWadDialog_file_selected(path):
 var wait_for_threads_to_resolve = false
 var wait_for_threads_to_resolve_path = ''
 func _on_SavePatchDialog_file_selected(path):
+	if !path: return
 	var save_directory :Directory= null
 	if path == current_open_patch_path:
 		save_directory = Directory.new()
@@ -723,6 +747,7 @@ func print_dir(d, i=''):
 
 
 func _on_ImportSheetDialog_file_selected(path):
+	if !path: return
 	var image = Image.new()
 	var texture = ImageTexture.new()
 	var err = image.load(path)
@@ -829,6 +854,7 @@ func _on_ImportWadFileDialog_confirmed():
 
 
 func _on_ImportSoundDialog_file_selected(path : String):
+	if !path: return
 	if path.get_extension() != selected_asset_list_path.get_extension():
 		var new_asset_path = selected_asset_list_path.get_basename() + '.' + path.get_extension()
 		var new_asset_name = selected_asset_name.get_basename() + '.' + path.get_extension()

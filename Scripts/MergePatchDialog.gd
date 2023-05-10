@@ -146,6 +146,7 @@ func _on_Label4_item_selected(index):
 
 
 func _on_OpenPatchDialog2_file_selected(path):
+	if !path: return
 	$VBoxContainer/Control.show()
 	if mode == 0:
 		src_patch = path

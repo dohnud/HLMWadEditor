@@ -19,7 +19,7 @@ func parse_simple_list(f, type='32',n=-1):
 		n = parse_type(f, type)
 		if n == null: return []
 	var index_list = []
-	for i in range(n):
+	for _i in range(n):
 		index_list.append(parse_type(f, type))
 	return index_list
 
@@ -30,12 +30,16 @@ func parse_string_list(f):
 	var size = f.get_32()
 	var start = f.get_position()
 	var l = []
-	while f.get_position() < start + size:
+	var p = 0
+	#while f.get_position() < start + size:
+	while p < size:
 		var s = ''
-		var i = f.get_buffer(1)[0]
+		var i = f.get_8()#get_buffer(1)[0]
+		p += 1
 		while i != 0:
 			s += char(i)
-			i = f.get_buffer(1)[0]
+			i = f.get_8()#get_buffer(1)[0]
+			p += 1
 		l.append(s)
 	return l
 

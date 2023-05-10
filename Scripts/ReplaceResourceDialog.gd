@@ -7,6 +7,7 @@ var r = null
 
 
 func _on_ReplaceResourceDialog_file_selected(path):
+	if !path: return
 #	if r is Texture:
 #		r.get_data().save_png(path)
 #	else:

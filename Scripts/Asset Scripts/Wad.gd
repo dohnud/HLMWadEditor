@@ -103,6 +103,20 @@ func parse_header():
 		content_offset = get_position()
 	
 	patchwad_list = []#[get_script().new()]
+	
+#	var f = File.new()
+#	f.open("res://object_data.txt", _File.WRITE)
+#	var shit = {
+#		9 : [], #wall
+#		25 : [], #door
+#		84 : [], #glass
+#	}
+#	var o :ObjectsBin= get_bin(ObjectsBin)
+#	for obj in o.object_data.values():
+#		while obj.parent > 0 and not(shit.has(obj.parent)):
+#			var s = o.object_names[obj.parent]
+#			obj = o.object_data[s]
+	
 	close()
 	return 1
 
@@ -242,7 +256,10 @@ func sprite_sheet(asset, lazy=0):
 	var data = get(asset)
 	if !(data is PoolByteArray):
 		return data
-	img.load_png_from_buffer(data)
+	var err = img.load_png_from_buffer(data)
+	if err:
+		Log.log("Failed to load texture page: " + asset)
+		ErrorLog.show_user_error("Failed to load texture page: " + asset)
 #	img.convert(fmt)
 	var tex = ImageTexture.new()
 	tex.create_from_image(img, 0)

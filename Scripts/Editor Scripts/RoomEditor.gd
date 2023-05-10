@@ -46,10 +46,10 @@ func add_generic_object():
 	room['objects'].append(new_obj)
 	
 
-func set_room(room_name):
-	set_bin_asset(room_name)
+func set_room(_room_name):
+	set_bin_asset(_room_name)
 	
-	$Label.text = room_name
+	$Label.text = _room_name
 #	object_tree.reset()
 	rooms = bin #app.base_wad.objectbin
 	room = selected_struct #objects.object_data[object_name]

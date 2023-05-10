@@ -14,6 +14,7 @@ func _ready():
 
 var file_dict = {}
 func _on_ImportWadFileDialog_file_selected(path):
+	if !path: return
 	patchwad = null
 	file_dict = {}
 	get_parent().show()

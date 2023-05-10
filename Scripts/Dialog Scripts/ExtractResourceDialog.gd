@@ -7,6 +7,7 @@ var r = null
 
 
 func _on_ExtractResourceDialog_file_selected(path):
+	if !path: return
 #	var r = app.selected_asset_data
 	if r is Texture:
 		r.get_data().save_png(path)
