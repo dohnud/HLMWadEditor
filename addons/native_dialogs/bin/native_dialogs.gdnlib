@@ -9,10 +9,12 @@ reloadable=false
 
 OSX.64="res://addons/native_dialogs/bin/osx/libnativedialogs.framework"
 Windows.64="res://addons/native_dialogs/bin/win64/libnativedialogs.dll"
+Windows.32="res://addons/native_dialogs/bin/win64/libnativedialogs.dll"
 X11.64="res://addons/native_dialogs/bin/x11/libnativedialogs.so"
 
 [dependencies]
 
 OSX.64=[  ]
 Windows.64=[  ]
+Windows.32=[  ]
 X11.64=[  ]

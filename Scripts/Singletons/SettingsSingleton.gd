@@ -11,7 +11,9 @@ var settings = {
 
 func _init():
 	var f = File.new()
-	f.open('user://config.txt', File.READ)
+	if f.open('user://config.txt', File.READ):
+		save()
+		f.open('user://config.txt', File.READ)
 	var r = JSON.parse(f.get_as_text())
 	if !r.error:
 		settings = r.result

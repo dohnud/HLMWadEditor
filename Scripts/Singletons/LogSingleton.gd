@@ -14,10 +14,10 @@ func _init():
 		r = f.open(log_directory + 'log.txt', File.READ_WRITE)
 	else:
 		r= f.open(log_directory + 'log.txt', File.WRITE)
-	if r:
+	if !r:
 		var date_dict = OS.get_datetime()
 		f.seek_end()
-		f.store_string('[' + str(date_dict['year']) + '-' + str(date_dict['month']) + '-'+ str(date_dict['day']) + '-' + str(date_dict['dst']) + '-' + str(date_dict['hour']) + '-' + str(date_dict['minute']) + '-' + str(date_dict['second'])  + ']\n')
+		f.store_string('\n\n[' + str(date_dict['year']) + '-' + str(date_dict['month']) + '-'+ str(date_dict['day']) + '-' + str(date_dict['dst']) + '-' + str(date_dict['hour']) + '-' + str(date_dict['minute']) + '-' + str(date_dict['second'])  + ']\n')
 
 
 func log(string, sep='\n'):

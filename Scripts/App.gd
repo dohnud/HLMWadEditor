@@ -593,11 +593,17 @@ var wait_for_threads_to_resolve = false
 var wait_for_threads_to_resolve_path = ''
 func _on_SavePatchDialog_file_selected(path):
 	if !path: return
-	var save_directory :Directory= null
-	if path == current_open_patch_path:
-		save_directory = Directory.new()
-		if !save_directory.open(current_open_patch_path.get_base_dir()):
+	Log.log('"Saving to ' + path + '"...')
+	var save_directory :Directory= Directory.new()
+	var old_path = path
+	if !save_directory.open(path.get_base_dir()):
+		var i = 0
+		while i < 10 and save_directory.file_exists(path):
 			path += '_tmp'
+		if i >= 10:
+			return
+	else:
+		ErrorLog.show_user_error("Could not access folder: " + path.get_base_dir())
 			
 	wait_for_threads_to_resolve = false
 	print(threads.keys())
@@ -617,6 +623,7 @@ func _on_SavePatchDialog_file_selected(path):
 	var f = File.new()
 	if f.open(path, File.WRITE):
 		print('could not open',path,'\nfile in use?')
+		ErrorLog.log_error('could not open "' + path + '"\nfile in use?')
 		return
 	if base_wad.version != Wad.WAD_VERSION.HM1:
 		f.store_buffer(base_wad.identifier)
@@ -667,8 +674,10 @@ func _on_SavePatchDialog_file_selected(path):
 #		if base_wad.open(base_wad.get_file_path(), File.READ):
 #			$ErrorDialog.popup()
 #			return
+	Log.log('Starting to write contents to: "' + path + '"')
 	for file in files.keys():
 		var c = f.get_position()
+		Log.log('Writing (0x%x) "%s"' % [c, file])
 		var fc = files[file]
 		if fc is Texture:
 			f.store_buffer(fc.get_data().save_png_to_buffer())
@@ -722,12 +731,22 @@ func _on_SavePatchDialog_file_selected(path):
 			f.store_64(s)
 			f.store_64(o)
 		f.seek(c+s)
-	if save_directory != null \
-	and !save_directory.remove(current_open_patch_path) \
-	and !save_directory.rename(path, current_open_patch_path):
+	f.close()
+	Log.log('Closing file "%s"' % [path])
+	if path.ends_with('_tmp'):
+		Log.log('removing destination file: "' + old_path + '"')
+		if !save_directory.remove(old_path):
+			if !save_directory.rename(path, old_path):
+				Log.log('renaming temporary file from "%s" to "%s"' % [path, old_path])
+			else:
+				Log.log('Could not rename file: "' + path + '"')
+		else:
+			Log.log('Could not remove file: "' + old_path + '"')
+		Log.log('Successfully overwrote: "' + old_path + '"')
 		print('overwrite success!')
-	if !path.ends_with('tmp'):
+	if !path.ends_with('_tmp'):
 		OS.set_window_title('HLMWadEditor - ' + path)
+	Log.log('Save Successful!')
 
 
 var dirs = {}

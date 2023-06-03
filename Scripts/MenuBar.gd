@@ -195,6 +195,7 @@ func savepatch():
 	NativeDialog.popup_save_dialog(
 		"Save Patchwad",
 		["*.patchwad ; Patchwad Archive"],
+		'mod.patchwad',
 		app, '_on_SavePatchDialog_file_selected'
 	)
 	

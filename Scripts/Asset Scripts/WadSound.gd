@@ -3,7 +3,7 @@ extends Resource
 class_name WadSound
 
 var data = []
-var stream = AudioStream.new()
+var stream = null#AudioStream.new()
 
 func parse(f, size, asset):
 	data = f.get_buffer(size)

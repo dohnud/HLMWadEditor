@@ -235,11 +235,12 @@ window/energy_saving/keep_screen_on=false
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/native_dialogs/plugin.cfg" )
+enabled=PoolStringArray(  )
 
 [gdnative]
 
 singletons=[ "res://addons/native_dialogs/bin/native_dialogs.gdnlib" ]
+singletons_disabled=[  ]
 
 [gui]
 
@@ -282,6 +283,10 @@ ui_mmb={
 [logging]
 
 file_logging/log_path="user://.logs/godot.log"
+
+[memory]
+
+limits/message_queue/max_size_kb=8192
 
 [rendering]
 
