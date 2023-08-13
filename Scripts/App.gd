@@ -19,7 +19,7 @@ export(PackedScene) var compilenotif
 
 export(Font) var tomakebiggerfont
 
-var base_wad  = null
+var base_wad = null
 var base_wad_path = ''
 var recent_patches = []
 var current_open_patch_path = ''
@@ -174,6 +174,9 @@ func open_file_dialog(name, filter, oncomplete):
 	pass
 
 func open_patchwad(file_path):
+	if base_wad == null:
+		ErrorLog.show_user_error("No base wad opened!!!!!!!\nDo that !!!!!!!")
+		return
 	var pwad = Wad.new()
 	if !pwad.opens(file_path, File.READ_WRITE):
 		if !pwad.parse_header():

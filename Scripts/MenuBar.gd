@@ -235,8 +235,8 @@ func extract(resource_data=null):
 	w.current_file = app.selected_asset_name.get_file()
 	var d = NativeDialog.popup_save_dialog(
 		"Save HLM2 Resource to a file",
-		app.selected_asset_name.get_file(),
 		['* ; Any File'],
+		app.selected_asset_name.get_file(),
 		w,'_on_ExtractResourceDialog_file_selected',
 		false
 	)
@@ -250,6 +250,7 @@ func extract(resource_data=null):
 		if w.current_file=='':w.current_file = '.meta'
 	elif resource_data is Texture:
 		d.add_filter('*.png ; Image File')
+		d.initial_path = d.initial_path.replace('.meta', '.png')
 	elif resource_data is WadSound:
 		d.add_filter('*.' + app.selected_asset_name.get_extension() + ' ; Audio File')
 	else:

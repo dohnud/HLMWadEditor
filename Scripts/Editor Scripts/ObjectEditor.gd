@@ -25,7 +25,7 @@ func set_object(object_name):
 
 
 func parse_new_value(key, value, new_text_value):
-	if key == 'sprite_index' or key == 'mask_sprite':
+	if key == 'sprite_index' or key == 'mask_sprite' or key == 'parent':
 		var sprite_index = value
 		if int(new_text_value) == -1 or new_text_value=='Null':
 			return [-1, 'Null']
