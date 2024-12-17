@@ -609,7 +609,11 @@ func get_bin(bintype):
 	return r
 	if !exists(asset):return null
 
+#var original_assets = {}
+
 func parse_original_sprite_sheet(asset, lazy=0):
+#	if asset in original_assets:
+#		return original_assets[asset]
 	if lazy:
 		asset = lazy_find(asset)
 	if !is_open(): open(file_path, READ)
@@ -626,15 +630,16 @@ func parse_original_sprite_sheet(asset, lazy=0):
 	return tex
 
 func parse_orginal_meta(asset, lazy=0, tex=null):
+#	if asset in original_assets:
+#		return original_assets[asset]
 	if !is_open(): open(file_path, READ)
 	if lazy:
 		asset = lazy_find(asset)
 	if tex == null:
 		tex = sprite_sheet(asset.replace(".meta", ".png"))
-
 	var meta = Meta.new()
 	var size = goto(asset)
 	if size == null: return null
 	meta.parse(self, size, tex)
-	loaded_assets[asset] = meta
+#	original_assets[asset] = meta
 	return meta

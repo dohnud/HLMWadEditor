@@ -1,4 +1,4 @@
-[gd_scene load_steps=113 format=2]
+[gd_scene load_steps=115 format=2]
 
 [ext_resource path="res://Scripts/Editor Scripts/TimelineSlider.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/App.gd" type="Script" id=2]
@@ -56,6 +56,8 @@
 [ext_resource path="res://Scripts/MergePatchDialog.gd" type="Script" id=54]
 [ext_resource path="res://Scripts/ErrorDialog.gd" type="Script" id=55]
 [ext_resource path="res://Scripts/ReplaceResourceDialog.gd" type="Script" id=56]
+[ext_resource path="res://Scripts/ResizeSpriteSheetDialog.gd" type="Script" id=57]
+[ext_resource path="res://Scripts/AreYouSureDialog.gd" type="Script" id=58]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.12549, 0.152941, 0.211765, 1 )
@@ -2894,11 +2896,35 @@ rect_min_size = Vector2( 300, 80 )
 popup_exclusive = true
 window_title = "Error!"
 script = ExtResource( 55 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label2" type="Label" parent="ErrorDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = 16.0
+margin_right = -16.0
+margin_bottom = -57.0
+text = "Error occured!
+Check that no other program is utilizing the current base wad or that it has been moved."
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="AreYouSureDialog" type="ConfirmationDialog" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 148.0
+margin_top = 159.0
+margin_right = -167.0
+margin_bottom = -401.0
+rect_min_size = Vector2( 300, 80 )
+popup_exclusive = true
+window_title = "Error!"
+script = ExtResource( 58 )
+
+[node name="Label2" type="Label" parent="AreYouSureDialog"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 16.0
@@ -3213,6 +3239,137 @@ margin_left = 2.0
 margin_top = 2.0
 margin_right = 706.0
 margin_bottom = 346.0
+rect_min_size = Vector2( 1, 1 )
+texture = ExtResource( 33 )
+expand = true
+stretch_mode = 6
+script = ExtResource( 50 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+old_bounds_color = Color( 0.545098, 0.568627, 0.6, 1 )
+new_bounds_color = Color( 0.870588, 0.341176, 0.356863, 1 )
+
+[node name="ResizeSpriteSheetDialog" type="ConfirmationDialog" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 141.0
+margin_top = 67.0
+margin_right = -143.0
+margin_bottom = -76.0
+rect_min_size = Vector2( 400, 140 )
+window_title = "Transform Sprite Sheet"
+resizable = true
+script = ExtResource( 57 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ResizeSpriteSheetDialog"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 16.0
+margin_top = 16.0
+margin_right = -16.0
+margin_bottom = -57.0
+
+[node name="SpriteNameLabel" type="Label" parent="ResizeSpriteSheetDialog/VBoxContainer"]
+margin_right = 708.0
+margin_bottom = 25.0
+custom_colors/font_color_shadow = Color( 0.101961, 0.121569, 0.160784, 0.568627 )
+custom_constants/shadow_offset_x = 1
+custom_constants/shadow_offset_y = 2
+custom_constants/shadow_as_outline = 199
+custom_fonts/font = ExtResource( 37 )
+text = "Fartballs.png"
+align = 1
+
+[node name="GridContainer" type="GridContainer" parent="ResizeSpriteSheetDialog/VBoxContainer"]
+margin_left = 228.0
+margin_top = 29.0
+margin_right = 479.0
+margin_bottom = 127.0
+size_flags_horizontal = 6
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="WidthLabel" type="Label" parent="ResizeSpriteSheetDialog/VBoxContainer/GridContainer"]
+margin_right = 123.0
+margin_bottom = 25.0
+text = "Page Width:"
+align = 2
+
+[node name="WidthSpinBox" type="SpinBox" parent="ResizeSpriteSheetDialog/VBoxContainer/GridContainer"]
+margin_left = 127.0
+margin_right = 251.0
+margin_bottom = 25.0
+min_value = 1.0
+max_value = 4096.0
+value = 1.0
+
+[node name="HeightLabel" type="Label" parent="ResizeSpriteSheetDialog/VBoxContainer/GridContainer"]
+margin_top = 29.0
+margin_right = 123.0
+margin_bottom = 54.0
+text = "Page Height:"
+align = 2
+
+[node name="HeightSpinBox" type="SpinBox" parent="ResizeSpriteSheetDialog/VBoxContainer/GridContainer"]
+margin_left = 127.0
+margin_top = 29.0
+margin_right = 251.0
+margin_bottom = 54.0
+min_value = 1.0
+max_value = 4096.0
+value = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RecalculateSpritesLabel" type="Label" parent="ResizeSpriteSheetDialog/VBoxContainer/GridContainer"]
+margin_top = 65.0
+margin_right = 123.0
+margin_bottom = 90.0
+text = "Recalculate Sprites:"
+align = 2
+
+[node name="RecalculateSpritesLabelButton" type="CheckBox" parent="ResizeSpriteSheetDialog/VBoxContainer/GridContainer"]
+margin_left = 127.0
+margin_top = 58.0
+margin_right = 251.0
+margin_bottom = 98.0
+pressed = true
+
+[node name="TextureRect" type="TextureRect" parent="ResizeSpriteSheetDialog/VBoxContainer"]
+self_modulate = Color( 0.560784, 0.568627, 0.588235, 1 )
+margin_top = 131.0
+margin_right = 708.0
+margin_bottom = 464.0
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 30 )
+expand = true
+stretch_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ResizeSpriteSheetDialog/VBoxContainer/TextureRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 2
+custom_constants/margin_top = 2
+custom_constants/margin_left = 2
+custom_constants/margin_bottom = 2
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="TextureRect" type="TextureRect" parent="ResizeSpriteSheetDialog/VBoxContainer/TextureRect/MarginContainer"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 706.0
+margin_bottom = 331.0
 rect_min_size = Vector2( 1, 1 )
 texture = ExtResource( 33 )
 expand = true
@@ -3905,6 +4062,7 @@ script = ExtResource( 8 )
 margin_top = 29.0
 margin_right = 767.0
 margin_bottom = 436.0
+focus_mode = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/item_margin = 20
@@ -4125,6 +4283,9 @@ script = ExtResource( 17 )
 [connection signal="confirmed" from="ResizeSpriteDialog" to="ResizeSpriteDialog" method="_on_ResizeSpriteDialog_confirmed"]
 [connection signal="value_changed" from="ResizeSpriteDialog/VBoxContainer/GridContainer/WidthSpinBox" to="ResizeSpriteDialog/VBoxContainer/TextureRect/MarginContainer/TextureRect" method="_on_WidthSpinBox_value_changed"]
 [connection signal="value_changed" from="ResizeSpriteDialog/VBoxContainer/GridContainer/HeightSpinBox" to="ResizeSpriteDialog/VBoxContainer/TextureRect/MarginContainer/TextureRect" method="_on_HeightSpinBox_value_changed"]
+[connection signal="confirmed" from="ResizeSpriteSheetDialog" to="ResizeSpriteSheetDialog" method="_on_ResizeSpriteDialog_confirmed"]
+[connection signal="value_changed" from="ResizeSpriteSheetDialog/VBoxContainer/GridContainer/WidthSpinBox" to="ResizeSpriteSheetDialog/VBoxContainer/TextureRect/MarginContainer/TextureRect" method="_on_WidthSpinBox_value_changed"]
+[connection signal="value_changed" from="ResizeSpriteSheetDialog/VBoxContainer/GridContainer/HeightSpinBox" to="ResizeSpriteSheetDialog/VBoxContainer/TextureRect/MarginContainer/TextureRect" method="_on_HeightSpinBox_value_changed"]
 [connection signal="about_to_show" from="ImportantPopups/SaveGIFDialog2" to="ImportantPopups" method="_on_SaveGIFDialog2_about_to_show"]
 [connection signal="pressed" from="ImportantPopups/SaveGIFDialog2/VBoxContainer/Button" to="ImportantPopups/SaveGIFDialog2" method="_on_Button_pressed"]
 [connection signal="popup_hide" from="ImportantPopups/MergePatchDialog" to="ImportantPopups" method="_on_MergePatchDialog_popup_hide"]

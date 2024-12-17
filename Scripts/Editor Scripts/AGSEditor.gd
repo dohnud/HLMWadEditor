@@ -28,6 +28,7 @@ var mode = 0
 
 var thread = null
 var resolve_progress = 0
+var show_collision_mask = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

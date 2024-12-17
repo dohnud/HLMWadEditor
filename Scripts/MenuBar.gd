@@ -38,6 +38,7 @@ var operations = {
 		["Export All Sprites", [], 'export_sprite_strips'],
 		[],
 		["Transform Sprite", [KEY_SHIFT, KEY_T], 'resize_sprite'],
+		["Revert Sprite", [KEY_SHIFT, KEY_R], 'revert_sprite'],
 		["Recalculate Sprite Sheet", [], 'recalcspritesheet'],
 		["Recalculate All Collision Masks", [], 'recalccollisionmasks'],
 		[],
@@ -66,6 +67,7 @@ var operations = {
 	],
 	"18SpriteSheetButton" : [
 		["Import Texture Page", [], 'importspritesheet'],
+#		["Resize Texture Page", [], 'resize_spritesheet'],
 		[],
 		["Export Texture Page", [], 'exportspritesheet'],
 	],
@@ -298,9 +300,35 @@ func revert():
 		app.base_wad.revert(f.replace('.'+f.get_extension(), '_0.png'))
 	app.base_wad.revert(f)
 	app.open_asset(f)
-#
-#func merge():
-#	pass
+
+func revertsprite():
+	var spr : String = app.meta_editor_node.current_sprite
+	var dst_m : Meta = app.selected_asset_data
+	var src_m : Meta = app.base_wad.parse_orginal_meta(app.selected_asset_name)
+	var dst_fc : int = dst_m.sprites.get_frame_count(spr)
+	var src_fc : int = src_m.sprites.get_frame_count(spr)
+	var recalc_needed = src_fc > dst_fc
+	if recalc_needed:
+		var yes = yield(ErrorLog.show_user_confirmation("Original Sprite contains more frames than the current Sprite.\nDo you want to recalculate the sprite sheet or abort this operation?"), "choice_made")
+		if not yes: return
+	# blit original sprite onto current sprite sheet
+	if not recalc_needed:
+		# remove extra sprites from dest sprite if its bigger than original
+		for i in range(dst_fc - src_fc):
+			dst_m.sprites.remove_frame(spr, 0)
+		for i in range(src_fc):
+			var src_f : MetaTexture = src_m.sprites.get_frame(spr, i)
+			var dst_f : MetaTexture = dst_m.sprites.get_frame(spr, i)
+			dst_m.texture_page.get_data().blit_rect(src_f.get_data(), src_f.region, dst_f.region.position)
+	# else recalculate spritesheet
+	else:
+		for i in range(dst_fc):
+			dst_m.sprites.remove_frame(spr, 0)
+		for i in range(src_fc):
+			dst_m.sprites.add_frame(spr, src_m.sprites.get_frame(spr, i))
+		app._on_RecalculateSheetButton_pressed()
+	# change dst_meta sprite's frames to match original
+	# reset sprite entry in sprites bin if sprites bin changed
 
 func toggleassetlist():
 	app.asset_tree_container.visible = !app.asset_tree_container.visible
@@ -401,6 +429,18 @@ func resize_sprite():
 	app.get_node('ResizeSpriteDialog/VBoxContainer/GridContainer/HeightSpinBox').value = f.region.size.y
 	app.get_node('ResizeSpriteDialog/VBoxContainer/GridContainer/FrameCountSpinBox').value = meta.sprites.get_frame_count(app.meta_editor_node.current_sprite)
 	app.get_node('ResizeSpriteDialog/VBoxContainer/TextureRect/MarginContainer/TextureRect').texture = meta.sprites.get_frame(app.meta_editor_node.current_sprite, 0)
+	w.popup()
+
+func resize_spritesheet():
+	var meta :Meta= app.meta_editor_node.meta
+	if meta != app.selected_asset_data:
+		return
+	var w = app.get_node("ResizeSpriteSheetDialog")
+	w.current_tex_dim = meta.texture_page.get_size()
+	app.get_node("ResizeSpriteSheetDialog/VBoxContainer/SpriteNameLabel").text = app.selected_asset_name.replace('.meta', '.png')
+	app.get_node('ResizeSpriteSheetDialog/VBoxContainer/GridContainer/WidthSpinBox').value = w.current_tex_dim.x
+	app.get_node('ResizeSpriteSheetDialog/VBoxContainer/GridContainer/HeightSpinBox').value = w.current_tex_dim.y
+	app.get_node('ResizeSpriteSheetDialog/VBoxContainer/TextureRect/MarginContainer/TextureRect').texture = meta.texture_page
 	w.popup()
 
 func importsound():

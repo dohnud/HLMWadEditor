@@ -4,6 +4,7 @@ class_name ErrorLogger
 
 onready var app = get_tree().get_nodes_in_group("App")[0]
 onready var w :AcceptDialog= app.get_node("ErrorDialog")
+onready var cw :AcceptDialog= app.get_node("AreYouSureDialog")
 onready var label = w.get_node("Label2")
 
 const default_err = "Error occured!\n Check that no other program is utilizing the current base wad or that it has been moved."
@@ -20,7 +21,11 @@ func show_generic_error() -> void:
 func show_user_error(msg:String, todisk=true) -> void:
 	error_queue.append([msg, todisk])
 	_show_user_error(msg, todisk)
-	
+
+func show_user_confirmation(msg:String) -> Node:
+	cw.popup()
+	cw.label.text = msg
+	return cw
 
 func _show_user_error(msg:String, todisk=true) -> void:
 	if len(error_queue) > 0 and !w.visible:

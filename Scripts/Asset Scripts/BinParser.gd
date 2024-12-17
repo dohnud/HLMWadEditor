@@ -27,12 +27,12 @@ func parse_index_list(f):
 	return parse_simple_list(f)
 
 func parse_string_list(f):
-	var size = f.get_32()
-	var start = f.get_position()
+	var _size = f.get_32()
+#	var start = f.get_position()
 	var l = []
 	var p = 0
 	#while f.get_position() < start + size:
-	while p < size:
+	while p < _size:
 		var s = ''
 		var i = f.get_8()#get_buffer(1)[0]
 		p += 1

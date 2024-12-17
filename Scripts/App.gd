@@ -82,6 +82,7 @@ func _ready():
 
 func open_wad(file_path):
 	var wad = Wad.new()
+	if base_wad: print('unref', base_wad.unreference())
 #	file_path = file_path
 	if !wad.opens(file_path, File.READ):
 		if !wad.parse_header():
@@ -864,6 +865,14 @@ func _on_ResizeSpriteDialog_confirmed():
 			if old_size != new_size or fc != nfc:
 				_on_RecalculateSheetButton_pressed()
 
+func _on_ResizeSpriteSheetDialog_confirmed(w,h, recalc=false):
+	var meta : Meta = selected_asset_data
+	var src_tex : ImageTexture = meta.texture_page
+	src_tex.set_size_override(Vector2(w,h))
+#	var img = src_tex.get_data()
+#	img.crop(w,h)
+#	src_tex.set_data(img)
+	if recalc: _on_RecalculateSheetButton_pressed()
 
 func _on_Button_pressed():
 	$Main/PanelContainer/HBoxContainer/TabContainer/Panel/Button.hide()
