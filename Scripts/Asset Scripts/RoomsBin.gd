@@ -64,7 +64,7 @@ func parse(file_pointer):
 	
 	# parse silly header :P
 	name_indices = parse_index_list(f)
-		
+	
 	# parse room order :o
 	room_order = parse_simple_list(f)
 	
@@ -78,8 +78,8 @@ func parse(file_pointer):
 		var r = rooms[room_id]
 		var s = room_names[r['name_pos']]
 		room_data[s] = r
+		names[s] = room_id
 	data = room_data
-	names = room_names.values()
 	file_size = f.get_position() - file_start
 
 func write(file_pointer):
@@ -90,5 +90,8 @@ func write(file_pointer):
 	# write room order :o
 	write_simple_list(f, room_order)
 	
+	# apply any changed rooms from the "changed" variable to the room_data list
+	for k in room_data.keys():
+		if changed.has(k): room_data[k] = changed[k]
 	write_struct_list(f, rm, room_data.values())
 	write_string_list(f, room_names.values())

@@ -49,3 +49,7 @@ func _on_SaveGIFDialog2_about_to_show():
 
 func _on_MergePatchDialog_popup_hide():
 	hide()
+
+
+func _on_ImportPatchWindowDialog_popup_hide() -> void:
+	hide()

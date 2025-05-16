@@ -13,6 +13,9 @@ func get(asset_id) -> Dictionary:
 		return changed[asset_id]
 	return data[asset_id]
 
+func super_get(prop):
+	return .get(prop)
+
 # READ
 func parse_simple_list(f, type='32',n=-1):
 	if n == -1:

@@ -60,7 +60,7 @@ func parse(file_pointer):
 		sprite['name'] = s
 		sprite_data[s] = sprite
 	data = sprite_data
-	names = sprite_names.values()
+	names = sprite_names
 	return err
 
 #var src_sprite_offsets = {}

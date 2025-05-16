@@ -1,4 +1,3 @@
-tool
 extends Tree
 
 onready var app = get_tree().get_nodes_in_group('App')[0]
@@ -75,8 +74,9 @@ func create_dict(dict, path=''):
 					s = app.base_wad.get_bin(SpritesBin).sprites[dict[k]]['name']
 			if dict[k] == -1:
 				s = 'Null'
-			if (k == 'parent' or k == 'id') and dict[k]>=0:
-				s = editor.bin.names[dict[k]]
+			if k == 'parent':
+				if dict[k]>=0: s = editor.bin.names[dict[k]]
+				elif dict[k] == -100: s = "Null"
 			create_path(path+'/'+k).set_text(1, s)
 
 func create_struct(struct, path=''):

@@ -6,6 +6,7 @@ var operations = {
 	"FileButton" : [
 		["Open Patch", [KEY_CONTROL, KEY_O], 'openpatch'],
 		["Save Patch", [KEY_CONTROL,KEY_S,], 'savepatch'],
+		["Export Patch", [KEY_CONTROL, KEY_SHIFT, KEY_E,], 'exportpatch'],
 		["Recent Patches", [PopupMenu.new()], 'openrecentpatch'],
 		[],
 		["Import from Patch", [KEY_CONTROL, KEY_I], 'importpatch'],
@@ -26,7 +27,11 @@ var operations = {
 	"ViewButton" : [
 		["Expand Asset List", [], 'expandassetlist'],
 		["Show Only Modified Files", ['TOGGLE'], 'togglenewfileslist'],
-		["Advanced", [PopupMenu.new()], 'toggleadvanced'],
+		[],
+		["Show Sprites", ['TOGGLE'], 'togglespites'],
+		["Show Objects", ['TOGGLE'], 'toggleobjects'],
+		["Show Rooms", ['TOGGLE'], 'togglerooms'],
+		["Show Backgrounds", ['TOGGLE'], 'togglebackgrounds'],
 		[],
 		["Hide Asset List", [KEY_CONTROL, KEY_H], 'toggleassetlist'],
 	],
@@ -116,10 +121,7 @@ func _ready():
 					var np = item[1][0]
 					np.set_name(s)
 					np.connect('id_pressed', self, item[2], [np])
-					if s == 'Advanced':
-						for f in get_tree().get_nodes_in_group('App')[0].f_prefixes:
-							np.add_check_item('Show ' + f.substr(0,len(f)-1))
-					elif len(item[1]) > 1:
+					if len(item[1]) > 1:
 						np.set_name(s)
 						np.connect('id_pressed', self, item[2], [np])
 #						np.connect('id_pressed', self, "doop", [op, p])
@@ -133,6 +135,9 @@ func _ready():
 				elif item[1][0] is String and item[1][0] == 'TOGGLE':
 					p.add_item(item[0], i)
 					p.set_item_as_checkable(i, true)
+					print(item[0])
+					if item[0].begins_with("Show ") and Config.settings.advanced_preferences.has("GL/hlm2_" + item[0].right(5).to_lower() + ".bin"):
+						p.set_item_checked(i, true)
 				else:
 					p.add_item(item[0], i)
 					p.set_item_shortcut(i, set_shortcut(item[1]))
@@ -190,17 +195,15 @@ func openpatch():
 	NativeDialog.popup_open_dialog("Open A Patchwad", ["*.patchwad ; Patchwad Archive"], app, '_on_OpenPatchDialog_file_selected')
 
 func savepatch():
-#	var w :FileDialog= app.get_node("ImportantPopups/SavePatchDialog")
-#	app.get_node("ImportantPopups").show()
-#	w.popup()
-#	w.invalidate()
-	NativeDialog.popup_save_dialog(
-		"Save Patchwad",
-		["*.patchwad ; Patchwad Archive"],
-		'mod.patchwad',
-		app, '_on_SavePatchDialog_file_selected'
-	)
-	
+	var w :ConfirmationDialog= app.get_node("ImportantPopups/ExportSettingsDialog")
+	w.emit_signal("confirmed")
+
+func exportpatch():
+	var w :ConfirmationDialog= app.get_node("ImportantPopups/ExportSettingsDialog")
+	app.get_node("ImportantPopups").show()
+	w.popup()
+	w.reset()
+
 #func savepatchas():
 #	pass
 #
@@ -345,9 +348,16 @@ func togglenewfileslist():
 	app.show_base_wad = !app.show_base_wad
 	app._on_SearchBar_text_entered('')
 
-func toggleadvanced(id, popup:PopupMenu):
-	app.advanced_stuff_filter[app.advanced_stuff_filter.keys()[id]] = !app.advanced_stuff_filter[app.advanced_stuff_filter.keys()[id]]
-	popup.set_item_checked(id, app.advanced_stuff_filter[app.advanced_stuff_filter.keys()[id]])
+func togglespites(): toggleadvanced(0)
+func toggleobjects(): toggleadvanced(1)
+func togglerooms(): toggleadvanced(2)
+func togglebackgrounds(): toggleadvanced(3)
+
+
+func toggleadvanced(id):
+	var v = !app.advanced_stuff_filter[app.advanced_stuff_filter.keys()[id]]
+	app.advanced_stuff_filter[app.advanced_stuff_filter.keys()[id]] = v
+	Config.settings.advanced_preferences[app.advanced_stuff_filter.keys()[id]] = v
 	app._on_SearchBar_text_entered('')
 
 func togglemetagizmos():
@@ -411,11 +421,14 @@ func recalccollisionmasks():
 
 func exportspritesheet():
 	extract(app.selected_asset_data.texture_page)
+
 func importspritesheet():
-	var w :FileDialog= app.get_node("ImportantPopups/ImportSheetDialog")
-	app.get_node("ImportantPopups").show()
-	w.popup()
-	w.invalidate()
+	NativeDialog.popup_open_dialog(
+		"Select an Image to use as a Texture Page",
+		["*.png ; PNG Image"],
+		app, '_on_ImportSheetDialog_file_selected'
+	)
+	
 
 func resize_sprite():
 	var meta :Meta= app.meta_editor_node.meta

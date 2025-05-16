@@ -1,4 +1,3 @@
-tool
 extends Tree
 
 onready var app = get_tree().get_nodes_in_group('App')[0]
@@ -68,7 +67,10 @@ func create_dict(dict, path=''):
 		elif dict[k] is Array or dict[k] is PoolByteArray:
 			create_array(dict[k], path+'/'+k)
 		else:
-			create_path(path+'/'+k).set_text(1, str(dict[k]))
+			var s = str(dict[k])
+			if (k == 'object_id') and dict[k]>=0:
+				s = app.base_wad.get_bin(ObjectsBin).names[dict[k]]
+			create_path(path+'/'+k).set_text(1, s)
 
 func create_struct(struct, path=''):
 	if struct is Dictionary:

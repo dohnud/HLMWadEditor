@@ -38,6 +38,8 @@ func parse_new_value(key, value, new_text_value):
 		if app.base_wad.get_bin(SpritesBin).sprites.has(sprite_index):
 			return [sprite_index, app.base_wad.get_bin(SpritesBin).sprites[sprite_index]['name']]
 	if key == 'parent':
+		if int(new_text_value) == -100 or new_text_value=='Null':
+			return [-100, 'Null']
 		var object_index = value
 		if bin.data.has(new_text_value):
 			object_index = bin.data[new_text_value]['object_id']

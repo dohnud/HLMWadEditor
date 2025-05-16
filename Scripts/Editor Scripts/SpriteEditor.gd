@@ -1,35 +1,36 @@
-extends VBoxContainer
+extends BinEditor
 
-
-onready var app = get_tree().get_nodes_in_group('App')[0]
 onready var sprite_tree = $TabContainer2/Advanced/SpriteTree
 
-var file = 'GL/hlm2_sprites.bin'
-var bin = null
 var sprites = null
 var sprite = {}
+var sprite_name = ""
+
+
+onready var room_tree = $TabContainer2/Advanced/RoomTree
+
+var rooms = null
+var room_name = ""
+var room = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	filetype = SpritesBin
+	file = SpritesBin
+	tree = sprite_tree
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-func set_sprite(sprite_name):
+func set_sprite(_sprite_name):
+	set_bin_asset(_sprite_name)
+	sprite_name = _sprite_name
 	$Label.text = sprite_name
-	sprite_tree.reset()
-#	sprites = app.base_wad.get_bin(SpritesBin)
-	sprites = app.base_wad.get_bin(SpritesBin)
-	bin = sprites
-	sprite = sprites.sprite_data[sprite_name]
-	sprite_tree.create_dict(sprite)
+	sprites = bin
+	sprite = selected_struct
 	return sprites
 
 
 func _on_SpriteTree_item_edited(deleted=0):
+	_on_Tree_item_edited(deleted)
+	return
 	var ti :TreeItem= sprite_tree.get_selected()
 	var p = []
 	while ti != null:
@@ -72,18 +73,3 @@ func _on_SpriteTree_item_edited(deleted=0):
 	elif deleted == 2:
 		pass
 
-func can_be_int_fuck_you_godot(string:String):
-	string = string.replace(' ', '')
-	if string == '0': return 0
-	if '+' in string:
-		var l = string.split('+')
-		var s = 0
-		for i in l:
-			var p = can_be_int_fuck_you_godot(i)
-			if p != null:
-				s += p
-		return s
-	for c in string:
-		if ord(c) > ord('A')-1 and ord(c) < ord('z')+1 or c == '/':
-			return null
-	return int(string)

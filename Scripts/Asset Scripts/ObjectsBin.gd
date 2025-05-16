@@ -44,7 +44,9 @@ func add_object(object_name, sprite, depth, parent, masksprite, solid, visible, 
 		'name_pos': name_pos
 	}
 	object_data[object_name] = object
+	
 	object_names[name_pos] = object_name
+	changed[object_name] = object_name
 	name_indicies.append(object_index)
 
 # name:object_data dependancy created!
@@ -83,8 +85,6 @@ func write(f):
 	write_simple_list(f, name_indicies)
 	var t = {}
 	for k in object_data.keys():
-		t[k] = object_data[k]
-		if changed.has(k):
-			t[k] = changed[k]
+		t[k] = get_object(k)
 	write_struct_list(f, obj, t.values())
 	write_string_list(f, object_names.values())

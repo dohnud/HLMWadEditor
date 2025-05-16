@@ -77,13 +77,15 @@ func create_room():
 			var offset = Vector2(0,0);
 			var meta_sprite_name = '';
 			if version != Wad.WAD_VERSION.HM1:
-				var atlas_tuple = a.atlas_sprites[o.object_data[o.object_names[obj['object_id']]]['sprite_index']]
-				var meta_name = 'Atlases/' + a.atlas_names.values()[atlas_tuple['id']] + '.meta'
-				var meta_sprite_index = atlas_tuple['atlas_id']
-				var meta = app.base_wad.parse_meta(meta_name)
-				meta_sprite_name = meta.sprite_names_ordered[meta_sprite_index]
-				f = meta.sprites.get_frame(meta_sprite_name, 0)
-				offset = s.sprite_data[meta_sprite_name]['center']
+				# some object ids do not exist
+				if o.object_names.has(obj['object_id']):
+					var atlas_tuple = a.atlas_sprites[o.object_data[o.object_names[obj['object_id']]]['sprite_index']]
+					var meta_name = 'Atlases/' + a.atlas_names.values()[atlas_tuple['id']] + '.meta'
+					var meta_sprite_index = atlas_tuple['atlas_id']
+					var meta = app.base_wad.parse_meta(meta_name)
+					meta_sprite_name = meta.sprite_names_ordered[meta_sprite_index]
+					f = meta.sprites.get_frame(meta_sprite_name, 0)
+					offset = s.sprite_data[meta_sprite_name]['center']
 			else:
 				var default_object_sprite = o.object_data[o.object_names[obj['object_id']]]['sprite_index']
 				if default_object_sprite != -1:

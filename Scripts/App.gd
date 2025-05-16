@@ -36,10 +36,10 @@ var show_advanced = false
 
 const f_prefixes = ['Sprites/', 'Objects/', 'Rooms/', 'Backgrounds/']#, 'Metadata/']
 onready var advanced_stuff_filter = {
-	SpritesBin:0,
-	ObjectsBin:0,
-	RoomsBin:0,
-	BackgroundsBin:0,
+	SpritesBin.get_file_path():0,
+	ObjectsBin.get_file_path():0,
+	RoomsBin.get_file_path():0,
+	BackgroundsBin.get_file_path():0,
 #	SoundsBin.get_file_path():0,
 #	AtlasesBin.get_file_path():0
 }
@@ -50,6 +50,8 @@ func _init():
 	recent_patches = Config.settings.recent_patches
 
 func _ready():
+	for k in Config.settings.advanced_preferences:
+		advanced_stuff_filter[k] = Config.settings.advanced_preferences[k]
 	
 	asset_tree = get_node(asset_tree)
 	var text_scale_multiplier = clamp(OS.get_screen_size().x / 1920,1,2)
@@ -95,6 +97,7 @@ func open_wad(file_path):
 			var b :BackgroundsBin = wad.parse_backgrounds()
 #		wad.get_ bin(CollisionMasksBin.get_file_path())
 		base_wad = wad
+#		yield(get_tree(), "idle_frame")
 		_on_SearchBar_text_entered('')
 		return true
 	return false
@@ -236,15 +239,18 @@ func _on_SearchBar_text_entered(new_text=''):
 				if file.begins_with("Music/"):
 #					if (".wav" == file.substr(len(file)-len('.wav'))):
 					asset_tree.create_path(file, 1)
-		var i = 0
+		var i = -1
 		for f in advanced_stuff_filter.keys():
-			if advanced_stuff_filter[f] and show_base_wad:
-				var b = base_wad.get_bin(f)
-				if b:
-					var bb = base_wad.changed_files.has(f) or base_wad.new_files.has(f)
-					for n in b.data.keys():
-						asset_tree.create_path(f_prefixes[i] + n, bb)
 			i += 1
+			if !advanced_stuff_filter[f]: continue
+			var b = base_wad.get_bin(f)
+			if b == null: continue
+			if not show_base_wad and not(base_wad.patchwad_list[0].file_locations.has(f)): # REALLYYYY Dumb but idc
+				continue
+			var bb = base_wad.changed_files.has(f) or base_wad.new_files.has(f)
+			for n in b.data.keys():
+#				if b.data[n] != base_wad.get_bin(f)
+				asset_tree.create_path(f_prefixes[i] + n, bb)
 		return
 #		op
 	else:
@@ -321,7 +327,7 @@ func _on_SearchBar_text_entered(new_text=''):
 				if b:
 					var bb = base_wad.changed_files.has(f) or base_wad.new_files.has(f)
 					for n in b.data.keys():
-						if new_text in n.to_lower():
+						if new_text in n.to_lower() or new_text in str(b.data[n]['id']):
 							asset_tree.create_path(f_prefixes[i] + n, bb)
 			i += 1
 		
@@ -577,9 +583,9 @@ func _on_OpenPatchDialog_file_selected(path):
 	current_open_patch_path = path
 	if path in Config.settings.recent_patches:
 		return
-	Config.settings.recent_patches.append(path)
+	Config.settings.recent_patches.push_front(path)
 	if len(Config.settings.recent_patches) > 6:
-		Config.settings.recent_patches.pop_front()
+		Config.settings.recent_patches.pop_back()
 	recent_patches = Config.settings.recent_patches
 	Config.save()
 
@@ -595,8 +601,10 @@ func _on_OpenWadDialog_file_selected(path):
 
 var wait_for_threads_to_resolve = false
 var wait_for_threads_to_resolve_path = ''
-func _on_SavePatchDialog_file_selected(path):
+func _on_SavePatchDialog_file_selected(path:String):
 	if !path: return
+	if !path.ends_with(".patchwad"): path += ".patchwad"
+	var encrypt: bool = path.ends_with(".secure.patchwad")
 	Log.log('"Saving to ' + path + '"...')
 	var save_directory :Directory= Directory.new()
 	var old_path = path
@@ -615,6 +623,60 @@ func _on_SavePatchDialog_file_selected(path):
 		$WaitForThreadsDialog.popup()
 		wait_for_threads_to_resolve_path = path
 		return
+	
+	for fix_file in $ImportantPopups/ExportSettingsDialog.selected_fixes.keys():
+		var fix = $ImportantPopups/ExportSettingsDialog.selected_fixes[fix_file]
+		Log.log("Applying fix: " + fix_file)
+		for delta in fix.Deltas:
+			var new_val = fix.Deltas[delta]
+			Log.log(delta +  "=" + str(new_val))
+			var prop_path = Array(delta.split("."))
+			for i in range(len(prop_path)):
+				# detect indicies in prop path
+				var prop = prop_path[i]
+				if prop[0] >= '0' and prop[0] <= '9':
+					prop_path[i] = int(prop)
+			var target_bin: BinParser
+			var asset_name = prop_path[0]
+			var dest_prop = prop_path[prop_path.size() - 1]
+			# parent null = -100
+			# everything else = -1
+#			match dest_prop:
+#				"parent": if new_val.to_lower() == ""
+			prop_path.remove(0)
+			prop_path.remove(prop_path.size() - 1)
+			var token = delta.left(3)
+			var asset
+			if token.begins_with("hlm"):
+				for b in advanced_stuff_filter.keys():
+					"GL/hlm2_sfs.bin".right(3)
+					if b.right(3).begins_with(asset_name):
+						target_bin = base_wad.get_bin(b)
+						asset = target_bin
+			else:
+				if token.begins_with("obj"): target_bin = base_wad.get_bin(ObjectsBin)
+				elif token.begins_with("rm"): target_bin = base_wad.get_bin(RoomsBin)
+				elif token.begins_with("spr"): target_bin = base_wad.get_bin(SpritesBin)
+				elif token.begins_with("tl"): target_bin = base_wad.get_bin(BackgroundsBin)
+				else: continue
+				if not(target_bin.data.has(asset_name)):
+					ErrorLog.show_user_error("%s does not exist?\nDouble check %s in the \"fixes/\" folder located next to the Wad Editor application" % [asset_name, fix_file])
+					continue
+				asset = target_bin.get(asset_name)
+			var current_sub_asset = asset
+			for prop in prop_path:
+				if typeof(prop) == TYPE_INT and prop >= len(current_sub_asset):
+					# TODO: FIX THIS IS TOOO HACKY AND COULD BREAK SHIT
+					# edge case: someone forgets to fill in a field
+					current_sub_asset.append({})
+				if typeof(current_sub_asset) == TYPE_ARRAY or typeof(current_sub_asset) == TYPE_DICTIONARY:
+					current_sub_asset = current_sub_asset[prop]
+				elif typeof(current_sub_asset) == TYPE_OBJECT:
+					current_sub_asset = current_sub_asset.super_get(prop)
+#			prints(dest_prop, new_val)
+			current_sub_asset[dest_prop] = new_val
+			base_wad.changed_files[target_bin.get_file_path()] = target_bin
+	
 #	var result = Wad.new()
 	var files = {}
 	for fp in base_wad.changed_files:
@@ -624,72 +686,92 @@ func _on_SavePatchDialog_file_selected(path):
 		print(fp, ':', base_wad.new_files[fp])
 		files[fp] = base_wad.new_files[fp]
 	
-	var f = File.new()
+	var f = File.new() # output file
+	var fc = File.new() # file contents
+	var header:StreamPeerBuffer = StreamPeerBuffer.new()
 	if f.open(path, File.WRITE):
 		print('could not open',path,'\nfile in use?')
-		ErrorLog.log_error('could not open "' + path + '"\nfile in use?')
+		ErrorLog.show_user_error('could not open "' + path + '"\nfile in use?')
+	if fc.open(path + ".content", File.WRITE_READ):
+		print('could not open',path,'\nfile in use?')
+		ErrorLog.show_user_error('could not open "' + path + '"\nfile in use?')
 		return
 	if base_wad.version != Wad.WAD_VERSION.HM1:
-		f.store_buffer(base_wad.identifier)
+#		f.store_buffer(base_wad.identifier)
+		header.put_data(base_wad.identifier)
 	else:
-		f.store_32(0xFFffFFff)
+#		f.store_32(0xFFffFFff)
+		header.put_32(0xFFffFFff)
+
 
 	var num_files = len(files.keys())
-	f.store_32(num_files)
+#	f.store_32(num_files)
+	header.put_32(num_files)
 	var current_offset = 0
 	var comebackf = {}
 	for k in files.keys():
 		if base_wad.version == Wad.WAD_VERSION.HM1 and k.begins_with('GL/'):
 			k = k.replace('hlm2','hotline')
 		# metadata
-		f.store_32(len(k))
-		f.store_buffer(PoolByteArray(k.to_ascii()))
-		comebackf[k] = f.get_position()
-		if base_wad.version == Wad.WAD_VERSION.HM1:
-			f.store_32(0x7fffffff)
-			f.store_32(0x7fffffff)
-		else:
-			f.store_64(0x7fffffffffffffff) # len
-			f.store_64(0x7fffffffffffffff) # offset
+#		f.store_32(len(k))
+#		header.put_32(len(k))
+#		f.store_buffer(PoolByteArray(k.to_ascii()))
+#		header.put_data(PoolByteArray(k.to_ascii()))
+#		comebackf[k] = f.get_position()
+#		if base_wad.version == Wad.WAD_VERSION.HM1:
+#			f.store_32(0x7fffffff)
+#			f.store_32(0x7fffffff)
+#			header.put_32(0x7fffffff)
+#			header.put_32(0x7fffffff)
+#		else:
+#			f.store_64(0x7fffffffffffffff) # len
+#			f.store_64(0x7fffffffffffffff) # offset
+#			header.put_64(0x7fffffffffffffff)
+#			header.put_64(0x7fffffffffffffff)
 	
-	if base_wad.version != Wad.WAD_VERSION.HM1:
-		asset_tree.reset()
-		for k in files.keys():
-			asset_tree.create_path(k)
-		var dd = asset_tree.directory_dict
-		print_dir(dd)
-		f.store_32(len(dirs.keys()))
-		for d in dirs.keys():
-			f.store_32(len(d))
-			f.store_string(d)
-			f.store_32(len(dirs[d]))
-			for e in dirs[d]:
-				f.store_32(len(e[0]))
-				f.store_string(e[0])
-				f.store_8(e[1])
-	var offset = f.get_position()
+#	if base_wad.version != Wad.WAD_VERSION.HM1:
+#		f.store_32(-1)
+#		header.put_32(-1)
+#		asset_tree.reset()
+		# F this
+#		for k in files.keys():
+#			asset_tree.create_path(k)
+#		var dd = asset_tree.directory_dict
+#		print_dir(dd)
+#		f.store_32(len(dirs.keys()))
+#		for d in dirs.keys():
+#			f.store_32(len(d))
+#			f.store_string(d)
+#			f.store_32(len(dirs[d]))
+#			for e in dirs[d]:
+#				f.store_32(len(e[0]))
+#				f.store_string(e[0])
+#				f.store_8(e[1])
+#	var offset = f.get_position()
 	
-	if base_wad.version == Wad.WAD_VERSION.HM1:
-		f.seek(0x0)
-		f.store_32(offset)
-		f.seek(offset)
+#	if base_wad.version == Wad.WAD_VERSION.HM1:
+#		f.seek(0x0)
+#		f.store_32(offset)
+#		f.seek(offset)
 	
 #	if !base_wad.is_open():
 #		if base_wad.open(base_wad.get_file_path(), File.READ):
 #			$ErrorDialog.popup()
 #			return
-	Log.log('Starting to write contents to: "' + path + '"')
+	Log.log('Writing contents to: "' + path + '.content"')
 	for file in files.keys():
-		var c = f.get_position()
+		var c = fc.get_position()
+		header.put_32(len(file))
+		header.put_data(PoolByteArray(file.to_ascii()))
 		Log.log('Writing (0x%x) "%s"' % [c, file])
-		var fc = files[file]
-		if fc is Texture:
-			f.store_buffer(fc.get_data().save_png_to_buffer())
-		elif fc is PhyreMeta:
-			fc.write(f)
-		elif fc is Meta:
-			fc.write(f)
-		elif fc is SpritesBin:
+		var r = files[file]
+		if r is Texture:
+			fc.store_buffer(r.get_data().save_png_to_buffer())
+		elif r is PhyreMeta:
+			r.write(fc)
+		elif r is Meta:
+			r.write(fc)
+		elif r is SpritesBin:
 			if base_wad.goto(file) == null: 
 				ErrorLog.log_error("base wad: \"" + base_wad_path + "\"" + "does not contain: \"" + file + "\"")
 			else:
@@ -702,8 +784,8 @@ func _on_SavePatchDialog_file_selected(path):
 #					ErrorLog.show_user_error("no replacement for \"" + file + "\" found!")
 #					return null
 				bw.goto(file)
-				fc.write(bw, f)
-		elif fc is CollisionMasksBin:
+				r.write(bw, fc)
+		elif r is CollisionMasksBin:
 			if base_wad.goto(file) == null:
 				ErrorLog.show_generic_error()
 			else:
@@ -713,30 +795,49 @@ func _on_SavePatchDialog_file_selected(path):
 						bw = p
 						break
 				bw.goto(file)
-				fc.write(bw, f)
-		elif fc is BinParser:
-			fc.write(f)
-		elif fc is WadSound:
-			fc.write(f)
-		elif fc is WadFont:
-			fc.write(f)
+				r.write(bw, fc)
+		elif r is BinParser:
+			r.write(fc)
+		elif r is WadSound:
+			r.write(fc)
+		elif r is WadFont:
+			r.write(fc)
 		else:
-			ErrorLog.log_error('Uncaught resource: ' + str(fc) + '(' + str(typeof(fc)) + ')')
-		var s = f.get_position() - c
+			ErrorLog.log_error('Uncaught resource: ' + str(r) + '(' + str(typeof(r)) + ')')
+		var s = fc.get_position() - c
 		if s <= 2 or s >= 0x7fffffffffffffff - 1:
 			ErrorLog.show_generic_error()
 			return
-		var o = c - offset
-		f.seek(comebackf[file])
+		var o = c# - offset
+#		f.seek(comebackf[file])
 		if base_wad.version == Wad.WAD_VERSION.HM1:
-			f.store_32(s)
-			f.store_32(o)
+#			f.store_32(s)
+#			f.store_32(o)
+			header.put_32(s)
+			header.put_32(o)
 		else:
-			f.store_64(s)
-			f.store_64(o)
-		f.seek(c+s)
+#			f.store_64(s)
+#			f.store_64(o)
+			header.put_64(s)
+			header.put_64(o)
+#		f.seek(c+s)
+	header.put_32(0)
+	# TODO!!
+#	if encrypt: header = PatchWadEncrypter.encrypt(header)
+	fc.flush()
+	var content_size = fc.get_position()
+	fc.seek(0)
+	Log.log('Combining Header and Content...\n Content:%s.content\n Output: "%s"' % [path, path])
+	f.store_buffer(header.data_array)
+	f.store_buffer(fc.get_buffer(content_size))
 	f.close()
-	Log.log('Closing file "%s"' % [path])
+	fc.close()
+	Log.log('Finished writing to "%s!"' % [path])
+	Log.log('Removing .content file: %s...' %[path + '.content'])
+	if !save_directory.remove(path + '.content'):
+		Log.log("Removed .content file!")
+	else:
+		Log.log("Error removing .content file: %s" % [path + '.content'])
 	if path.ends_with('_tmp'):
 		Log.log('removing destination file: "' + old_path + '"')
 		if !save_directory.remove(old_path):
@@ -908,3 +1009,12 @@ func _on_ImportSoundDialog_file_selected(path : String):
 	sound_editor_node._on_PausePlayButton_toggled(false)
 	sound_editor_node.set_sound(selected_asset_name)
 #	sound_editor_node.update()
+
+
+func _on_ExportSettingsDialog_confirmed() -> void:
+	NativeDialog.popup_save_dialog(
+		"Save Patchwad",
+		["*.patchwad ; Patchwad Archive"],
+		'mod.patchwad',
+		self, '_on_SavePatchDialog_file_selected'
+	)

@@ -6,7 +6,8 @@ class_name Settings
 var settings = {
 	'base_wad_path':'',
 	'recent_patches':[],
-	'multithreading':false
+	'multithreading':false,
+	'advanced_preferences':{}
 }
 
 func _init():
@@ -16,6 +17,9 @@ func _init():
 		f.open('user://config.txt', File.READ)
 	var r = JSON.parse(f.get_as_text())
 	if !r.error:
+		for setting in settings.keys():
+			if not(r.result.has(setting)):
+				r.result[setting] = settings[setting]
 		settings = r.result
 	f.close()
 

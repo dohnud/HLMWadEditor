@@ -34,35 +34,48 @@ func set_bin_asset(asset):
 
 
 func parse_new_value(k,v,ntv):
-	return [v,ntv]
+	return [v, ntv]
 
 func _on_Tree_item_edited(deleted=0):
+	# using the treeitem, backtrack up the treeitems parents
+	# determining which aspect of the room data was just modified
+	# the tree is a 1:1 representation of the data
 	var ti :TreeItem= tree.get_selected()
 	var p = []
 	while ti != null:
 		var s = ti.get_text(0)
-		if int(s) or s == '0':
+		if can_be_int_fuck_you_godot(s) != null or s == '0':
 			s = int(s)
 		p.push_front(s)
 		ti = ti.get_parent()
+	# remove the root as its redundant (first element)
 	p.pop_front()
+	# d and last_k represent the exact field we are modifying
+	# changed_d 
 	var last_k = p.pop_back()
 	var d = bin.data[selected_struct_id]
-	var changed_d = bin.get(selected_struct_id).duplicate(true)
+	var new_d = bin.get(selected_struct_id).duplicate(true)
+	var changed_d = new_d
+	# build delta string for diff tweaks
+#	var delta_string = file.right(3) + "." + selected_struct_id + "."
+	var delta_string = selected_struct_id + "."
 	for k in p:
+		delta_string += str(k) + "."
 		d = d[k]
 		changed_d = changed_d[k]
+	delta_string += str(last_k) + " = "
 	if deleted == 0:
 		var value = tree.get_selected().get_text(1)
+		delta_string += value
 		var v = d[last_k]
 		var vs = null
 		if d[last_k] is Vector2:
 			value = value.replace('(','')
 			value = value.replace(')','')
 			value = value.split(',')
-			if int(value[0]) and int(value[1]):
+			if len(value) > 1 and int(value[0]) and int(value[1]):
 				v = Vector2(int(value[0]), int(value[1]))
-				vs = str(v)
+			vs = str(v)
 #		elif d[last_k] is int: # value is String implied
 		else:
 			var l = parse_new_value(last_k, d[last_k], value)
@@ -71,11 +84,13 @@ func _on_Tree_item_edited(deleted=0):
 		if d[last_k] is int and (vs == '0' or can_be_int_fuck_you_godot(vs)): # ex: depth
 #			print(vs,' ',int(vs))
 			v = int(vs)
+		# CHANGE DETECTED !!!!!
 		if v != d[last_k]:
 #			d[last_k] = v
 			changed_d[last_k] = v
-			bin.changed[selected_struct_id] = changed_d
+			bin.changed[selected_struct_id] = new_d
 			app.base_wad.changed_files[file] = bin
+			print(delta_string)
 		tree.get_selected().set_text(1, vs)
 	elif deleted == 1:
 		d.remove(last_k)
@@ -97,7 +112,8 @@ func can_be_int_fuck_you_godot(string:String):
 				s += r
 		return s
 	for c in string:
-		if ord(c) > ord('A')-1 and ord(c) < ord('z')+1 or c == '/':
+#		if ord(c) > ord('A')-1 and ord(c) < ord('z')+1 or c == '/':
+		if ord(c) < ord('0') or ord(c) > ord('9'):
 			return null
 	return int(string)
 #func change_order(_room, new_next, new_previous):
