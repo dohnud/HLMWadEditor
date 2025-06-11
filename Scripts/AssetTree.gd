@@ -1,11 +1,12 @@
-# BUG in VERSION>3.3 https://www.reddit.com/r/godot/comments/wtb975/tree_control_hiding_items_when_focused_after/
-# "Fixed! For anyone else with this f'ed up issue, it is all about that focus mode. If it's anything but 'none' the Tree control displays the above behavior."
+class_name AssetTree
 extends Tree
 
 
 onready var app = get_tree().get_nodes_in_group('App')[0]
 
 export(Texture) var folder_icon
+export(Texture) var favorite_icon
+export(Color) var favorite_mod
 export(Color) var folder_mod
 export(Color) var subfolder_mod
 export(Font) var bold_font
@@ -14,6 +15,12 @@ onready var root = create_item()
 onready var directory_dict = {'contents':{},'parent':root}
 
 var bolds = {}
+
+enum Styles {
+	None     = 0b0000,
+	Bold     = 0b0001,
+	Favorite = 0b0010,
+}
 #func _init():
 #	var f = ImageTexture.new()
 #	f.create_from_image(folder_icon)
@@ -59,7 +66,7 @@ func reset():
 	set_hide_root(true)
 
 
-func create_path(path:String, bold=false, current_dir=directory_dict):
+func create_path(path:String, style=Styles.None, current_dir=directory_dict):
 	var slice = path.find('/')
 	if slice != -1:
 		var folder = path.substr(0,slice)
@@ -76,7 +83,7 @@ func create_path(path:String, bold=false, current_dir=directory_dict):
 				treeitem.set_icon_max_width(0, 14)
 			treeitem.set_text(0, folder)
 			current_dir['contents'][folder] = {'parent':treeitem, 'contents':{}}
-		return create_path(path.substr(slice+1), bold, current_dir['contents'][folder])
+		return create_path(path.substr(slice+1), style, current_dir['contents'][folder])
 	else:
 		var text = path
 		var treeitem : TreeItem = null
@@ -87,14 +94,21 @@ func create_path(path:String, bold=false, current_dir=directory_dict):
 			treeitem = current_dir['contents'][path]
 		else:
 			treeitem = create_item(current_dir['parent'])
-		if bold:
+		if style & Styles.Bold:
 			treeitem.set_cell_mode(0,TreeItem.CELL_MODE_CUSTOM)
 #			treeitem.set_text(0, text)
 			treeitem.set_custom_draw(0, self, "bold_treeitem_draw")
 			bolds[treeitem] = text
 #			treeitem.set_custom_font(0, bold_font)
-		else:
+		if style & Styles.Favorite:
+			treeitem.set_icon(0, favorite_icon)
+			treeitem.set_icon_modulate(0, favorite_mod)
+			treeitem.set_icon_max_width(0, 16)
 			treeitem.set_text(0, text)
+		if style == Styles.None:
+			treeitem.set_text(0, text)
+			treeitem.set_icon(0, null)
+			treeitem.set_icon_max_width(0, 0)
 		treeitem.set_editable(0, false)
 		current_dir['contents'][path] = treeitem
 		return treeitem
@@ -132,3 +146,25 @@ func _on_Tree_item_selected():
 	app.open_asset(asset)
 	app.selected_asset_treeitem = treeitem
 
+
+
+func _on_AssetTree_item_rmb_selected(position: Vector2) -> void:
+	var treeitem = get_selected()
+	var asset = ''
+	while treeitem and (treeitem.get_text(0) != '' or bolds.has(treeitem)):
+		if treeitem == root: break
+		if bolds.has(treeitem):
+			asset = '/' + bolds[treeitem] + asset
+		else:
+			asset = '/' + treeitem.get_text(0) + asset
+		treeitem = treeitem.get_parent()
+	asset = asset.substr(1)
+	print("favoriting: ", asset)
+	var favorited = Config.settings.favorite_files.has(asset)
+	var style = Styles.Favorite
+	if favorited:
+		style = Styles.None
+		Config.settings.favorite_files.erase(asset)
+	else:
+		Config.settings.favorite_files[asset] = true
+	create_path(asset, style)

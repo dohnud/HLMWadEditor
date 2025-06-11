@@ -19,7 +19,7 @@ func create_room():
 		a = app.base_wad.get_bin(AtlasesBin)
 		o = app.base_wad.get_bin(ObjectsBin)
 		s = app.base_wad.get_bin(SpritesBin)
-#		if!b: b = app.base_wad.get_bin(BackgroundsBin.file_path)
+		b = app.base_wad.get_bin(BackgroundsBin)
 		draw_set_transform(rect_position,0,Vector2.ONE)
 		var i = 0
 		var tile_meta = null
@@ -55,20 +55,21 @@ func create_room():
 				var id = tl.id * 1000000 + tl.tilesheet_pos.x * 1000 + tl.tilesheet_pos.y
 				if !(tiles.has(id)) and f:
 					var nf = AtlasTexture.new()
-					nf.region = Rect2(f.region.position + tl.tilesheet_pos, tl.tilesheet_size)
+					nf.region = Rect2(tl.tilesheet_pos, tl.tilesheet_size)
 					nf.atlas = f
 					tiles[id] = nf
+#					ResourceSaver.save("res://test.res", nf)
 				var s = TextureRect.new()
 				if tiles.has(id):
 					s.texture = tiles[id]
 				s.rect_position = (tl.world_pos)
-				s.set('z', 98 + tl.depth)
+#				s.set('z', 98 + tl.depth)
 				s.focus_mode = Control.FOCUS_NONE
 				s.mouse_filter = Control.MOUSE_FILTER_IGNORE
 				add_child(s)
 #			tilemap.set_cellv(tilemap.world_to_map(tl.world_pos), id)
 		var fallback_img = Image.new()
-		fallback_img.create(512,512,0,Image.FORMAT_RGB8)
+		fallback_img.create(32,32,0,Image.FORMAT_RGB8)
 		fallback_img.fill(Color.cornflower)
 		var fallback_tex = ImageTexture.new()
 		fallback_tex.create_from_image(fallback_img,0)
@@ -104,8 +105,9 @@ func create_room():
 			s.texture = f
 			s.rect_position = (obj['position'] - offset)
 			s.focus_mode = Control.FOCUS_NONE
-			s.mouse_filter = Control.MOUSE_FILTER_IGNORE
+#			s.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			s.mouse_filter = Control.MOUSE_FILTER_PASS
+			s.hint_tooltip = "%d\n%s\n%s\n" % [i, obj, meta_sprite_name]
 			s.connect("gui_input", self, 'room_item_clicked', [i, obj, meta_sprite_name])
 			add_child(s)
 			i += 1
@@ -115,7 +117,7 @@ func create_room():
 func room_item_clicked(e:InputEvent, i, obj, meta_sprite_name):
 	if e.is_action_pressed("ui_lmb"):
 		print(i,':', obj,' ',meta_sprite_name)
-	_on_TextureRect_gui_input(e, false)
+#	_on_TextureRect_gui_input(e, false)
 	
 #var rect_scale = 1
 func _on_TextureRect_gui_input(e:InputEvent,happy=true):

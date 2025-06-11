@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Scripts/App.gd"
 }, {
+"base": "Tree",
+"class": "AssetTree",
+"language": "GDScript",
+"path": "res://Scripts/AssetTree.gd"
+}, {
 "base": "BinParser",
 "class": "AtlasesBin",
 "language": "GDScript",
@@ -171,6 +176,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "App": "",
+"AssetTree": "",
 "AtlasesBin": "",
 "BackgroundsBin": "",
 "BinEditor": "",

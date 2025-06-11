@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=2]
+[gd_scene load_steps=123 format=2]
 
 [ext_resource path="res://Scripts/Editor Scripts/TimelineSlider.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/App.gd" type="Script" id=2]
@@ -62,6 +62,7 @@
 [ext_resource path="res://Icons/loopicon.png" type="Texture" id=60]
 [ext_resource path="res://Icons/collapse_arrow.tres" type="Texture" id=61]
 [ext_resource path="res://Icons/collapsed_arrow.tres" type="Texture" id=62]
+[ext_resource path="res://Icons/Favorite.png" type="Texture" id=63]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.12549, 0.152941, 0.211765, 1 )
@@ -825,12 +826,15 @@ margin_bottom = 645.0
 size_flags_vertical = 3
 custom_styles/bg_focus = SubResource( 59 )
 custom_styles/bg = SubResource( 6 )
+allow_rmb_select = true
 hide_root = true
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": true
 }
 folder_icon = SubResource( 8 )
+favorite_icon = ExtResource( 63 )
+favorite_mod = Color( 1, 0.820231, 0.417457, 1 )
 folder_mod = Color( 1, 0.906667, 0.84, 1 )
 subfolder_mod = Color( 0.909804, 0.94902, 1, 1 )
 bold_font = ExtResource( 37 )
@@ -1482,7 +1486,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor"]
-margin_right = 788.0
+margin_right = 785.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 37 )
@@ -1491,7 +1495,7 @@ clip_text = true
 
 [node name="TabContainer2" type="TabContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor"]
 margin_top = 29.0
-margin_right = 788.0
+margin_right = 785.0
 margin_bottom = 629.0
 size_flags_vertical = 3
 custom_styles/tab_fg = SubResource( 30 )
@@ -1515,17 +1519,12 @@ rect_clip_content = true
 mouse_filter = 0
 texture = ExtResource( 30 )
 stretch_mode = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor/TabContainer2/Room View/TextureRect"]
 margin_right = 40.0
 margin_bottom = 40.0
+rect_scale = Vector2( 2, 2 )
 script = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Advanced" type="Tabs" parent="Main/PanelContainer/HBoxContainer/TabContainer/Room/RoomEditor/TabContainer2"]
 visible = false
@@ -4441,6 +4440,7 @@ script = ExtResource( 17 )
 
 [connection signal="text_changed" from="Main/PanelContainer/HBoxContainer/VBoxContainer/SearchBar" to="Main/PanelContainer/HBoxContainer/VBoxContainer/SearchBar" method="_on_SearchBar_text_changed"]
 [connection signal="text_entered" from="Main/PanelContainer/HBoxContainer/VBoxContainer/SearchBar" to="." method="_on_SearchBar_text_entered"]
+[connection signal="item_rmb_selected" from="Main/PanelContainer/HBoxContainer/VBoxContainer/AssetTree" to="Main/PanelContainer/HBoxContainer/VBoxContainer/AssetTree" method="_on_AssetTree_item_rmb_selected"]
 [connection signal="item_selected" from="Main/PanelContainer/HBoxContainer/VBoxContainer/AssetTree" to="Main/PanelContainer/HBoxContainer/VBoxContainer/AssetTree" method="_on_Tree_item_selected"]
 [connection signal="tab_changed" from="Main/PanelContainer/HBoxContainer/TabContainer" to="Main/TopMenu/MenuItems" method="_on_TabContainer_tab_changed"]
 [connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/Panel/Button" to="." method="_on_Button_pressed"]

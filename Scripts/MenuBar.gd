@@ -27,6 +27,7 @@ var operations = {
 	"ViewButton" : [
 		["Expand Asset List", [], 'expandassetlist'],
 		["Show Only Modified Files", ['TOGGLE'], 'togglenewfileslist'],
+		["Show Only Favorite Files", ['TOGGLE'], 'togglefavfileslist'],
 		[],
 		["Show Sprites", ['TOGGLE'], 'togglespites'],
 		["Show Objects", ['TOGGLE'], 'toggleobjects'],
@@ -335,18 +336,41 @@ func revertsprite():
 
 func toggleassetlist():
 	app.asset_tree_container.visible = !app.asset_tree_container.visible
-func expandassetlist(t:TreeItem=null):
+func expandassetlist(t:TreeItem=null, collapsed=null):
 	if t == null:
 		t = app.asset_tree.root
-	t.collapsed = false
+	else:
+		if collapsed == null: collapsed = not t.collapsed
+		t.collapsed = collapsed
 	var tc = t.get_children()
 	while tc != null:
-		expandassetlist(tc)
+		expandassetlist(tc, collapsed)
 		tc = tc.get_next()
 
 func togglenewfileslist():
 	app.show_base_wad = !app.show_base_wad
 	app._on_SearchBar_text_entered('')
+
+func togglefavfileslist():
+	app.show_only_favorites = !app.show_only_favorites
+	app._on_SearchBar_text_entered('')
+#	var tc = app.asset_tree.root.get_children()
+#	while tc != null:
+#		recursefavfileslist(tc)
+#		tc = tc.get_next()
+
+#func recursefavfileslist(t:TreeItem, asset=""):
+#	asset += t.get_text(0)
+#	if Config.settings.favorite_files.has(asset):
+#		print(asset)
+#		var tt = t
+#		while tt != null:
+#			tt.collapsed = false
+#			tt = tt.get_parent()
+#	var tc = t.get_children()
+#	while tc != null:
+#		recursefavfileslist(tc, asset + "/")
+#		tc = tc.get_next()
 
 func togglespites(): toggleadvanced(0)
 func toggleobjects(): toggleadvanced(1)
@@ -386,7 +410,7 @@ func convertmeta():
 	app.base_wad.loaded_assets[nfn] = nm
 	app.meta_editor_node.meta = app.base_wad.parse_orginal_meta(app.selected_asset_name)
 #	app._on_SearchBar_text_entered('')
-	app.asset_tree.create_path(nfn,1).select(0)
+	app.asset_tree.create_path(nfn ,AssetTree.Styles.Bold).select(0)
 	app.asset_tree.update()
 
 func export_sprite_gif():

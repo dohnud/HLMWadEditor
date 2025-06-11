@@ -31,6 +31,7 @@ var selected_asset_treeitem = null
 var thread = null
 
 var show_base_wad = true
+var show_only_favorites = false
 var show_advanced = false
 
 
@@ -195,144 +196,72 @@ func open_patchwad(file_path):
 
 func _on_SearchBar_text_entered(new_text=''):
 	new_text = new_text.to_lower()
-	asset_tree.reset()
-	if new_text == '':
-		if show_base_wad:
-			for file in base_wad.file_locations.keys():
-				if file.begins_with('Atlases/') and (file.ends_with('.meta') or file.ends_with('.gmeta')):
-					asset_tree.create_path(file)
-				if file.begins_with('GL/') and file.ends_with('.phyre'):
-					asset_tree.create_path(file)#).substr(3,99999))
-				if file.begins_with('Fonts/') and file.ends_with('.fnt'):
-					asset_tree.create_path(file)
-#				if "Sounds/" == file.substr(0,len('Sounds/')):
-				if file.begins_with('Sounds/'):
-#					if (".wav" == file.substr(len(file)-len('.wav'))):
-					asset_tree.create_path(file)
-#				if "Music/" == file.substr(0,len('Music/')):
-				if file.begins_with('Music/'):
-#					if (".wav" == file.substr(len(file)-len('.wav'))):
-					asset_tree.create_path(file)
+	asset_tree.reset() 
+	for file in base_wad.file_locations.keys():
+		var style = AssetTree.Styles.None
+#		if file.begins_with("Fonts"):
+#			print("WAIT")
+		if base_wad.new_files.has(file) or base_wad.changed_files.has(file):
+			style |= AssetTree.Styles.Bold
 		for p in base_wad.patchwad_list:
-			for file in p.file_locations.keys() + base_wad.new_files.keys() + base_wad.changed_files.keys():
-				# if .meta is different or if texture page is different, mark as bold
-				if file.begins_with('Atlases/'):
-					if file.ends_with('.meta') or file.ends_with('.gmeta'):
-						asset_tree.create_path(file, 1)
-					if file.ends_with('.png'):
-						asset_tree.create_path(file.replace('.png','.meta'), 1)
-				# hotline 1 :3
-				print(file)
-				if file.begins_with('GL/') and file.ends_with('.phyre'):
-					asset_tree.create_path(file, 1)#).substr(3,99999))
-#				if file.begins_with('')
-				# again for Fonts
-				if file.ends_with('Fonts/'):
-					if file.ends_with('.fnt'):
-						asset_tree.create_path(file, 1)
-					elif file.end_with("_0.png"):
-						asset_tree.create_path(file.replace('_0.png','.fnt'), 1)
-				# Sounds!
-				if file.begins_with('Sounds/'):
-#					if (".wav" == file.substr(len(file)-len('.wav'))):
-					asset_tree.create_path(file, 1)
-				if file.begins_with("Music/"):
-#					if (".wav" == file.substr(len(file)-len('.wav'))):
-					asset_tree.create_path(file, 1)
-		var i = -1
-		for f in advanced_stuff_filter.keys():
-			i += 1
-			if !advanced_stuff_filter[f]: continue
+			if p.file_locations.has(file):
+				style |= AssetTree.Styles.Bold
+				break
+		if Config.settings.favorite_files.has(file):
+			style |= AssetTree.Styles.Favorite
+		if not show_base_wad and style & AssetTree.Styles.Bold:
+			continue
+		if show_only_favorites and style == AssetTree.Styles.None:
+			continue
+		var file_lower = file.to_lower()
+		if new_text.length() == 0 or new_text in file_lower:
+			add_asset_to_tree(file, style)
+	var i = -1
+	for f in advanced_stuff_filter.keys():
+		i += 1
+		if advanced_stuff_filter[f]:
 			var b = base_wad.get_bin(f)
 			if b == null: continue
-			if not show_base_wad and not(base_wad.patchwad_list[0].file_locations.has(f)): # REALLYYYY Dumb but idc
-				continue
-			var bb = base_wad.changed_files.has(f) or base_wad.new_files.has(f)
-			for n in b.data.keys():
-#				if b.data[n] != base_wad.get_bin(f)
-				asset_tree.create_path(f_prefixes[i] + n, bb)
-		return
-#		op
-	else:
-		if show_base_wad:
-			for file in base_wad.file_locations.keys():
-				var file_lower = file.to_lower()
-#				if "Atlases/" == file.substr(0,len('Atlases/')):
-				if file.begins_with("Atlases/"):
-#					if (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
-					if file.ends_with(".meta"):
-						if new_text in file_lower:
-							asset_tree.create_path(file)
-#					if ".png" == file.substr(len(file)-len('.png')):
-					if file.ends_with(".png"):
-						if new_text in file_lower:
-							asset_tree.create_path(file.replace('.png','.meta'))
-				if file.begins_with("GL/"):
-#					if (".meta" == file.substr(len(file)-len('.meta')) or ".gmeta" == file.substr(len(file)-len('.gmeta'))):
-					if file.ends_with(".phyre"):
-						if new_text in file_lower:
-							asset_tree.create_path(file)
-#				if "Fonts/" == file.substr(0,len('Fonts/')):
-				if file.begins_with("Fonts/"):
-#					if (".fnt" == file.substr(len(file)-len('.fnt'))):
-					if file.ends_with(".fnt"):
-						if new_text in file_lower:
-							asset_tree.create_path(file)
-#					elif "_0.png" == file.substr(len(file)-len('_0.png')):
-					if file.ends_with("_0.png"):
-						if new_text in file_lower:
-							asset_tree.create_path(file.replace('_0.png','.fnt'))
-				if file.begins_with('Sounds/'):
-#					if (".wav" == file.substr(len(file)-len('.wav'))):
-					if new_text in file_lower:
-						asset_tree.create_path(file)
-				if file.begins_with("Music/"):
-#					if (".wav" == file.substr(len(file)-len('.wav'))):
-					if new_text in file_lower:
-						asset_tree.create_path(file)
-		for p in base_wad.patchwad_list:
-			for file in p.file_locations.keys() + base_wad.new_files.keys() + base_wad.changed_files.keys():
-#			for file in base_wad.new_files.keys() + base_wad.changed_files.keys():
-				var file_lower = file.to_lower()
-				if file.begins_with('Atlases/'):
-					if file.ends_with('.meta') or file.ends_with('.gmeta'):
-						if new_text in file_lower:
-							asset_tree.create_path(file, 1)
-				if file.begins_with('GL/'):
-					if file.ends_with('.phyre'):
-						if new_text in file_lower:
-							asset_tree.create_path(file, 1)
-					if file.ends_with('.png'):
-						if new_text in file_lower:
-							asset_tree.create_path(file.replace('.png','.meta'), 1)
-				if file.ends_with('Fonts/'):
-					if file.ends_with('.fnt'):
-						if new_text in file_lower:
-							asset_tree.create_path(file, 1)
-					elif file.end_with("_0.png"):
-						if new_text in file_lower:
-							asset_tree.create_path(file.replace('_0.png','.fnt'), 1)
-				if file.begins_with('Sounds/'):
-	#				if (".wav" == file.substr(len(file)-len('.wav'))):
-					if new_text in file_lower:
-						asset_tree.create_path(file, 1)
-				if file.begins_with("Music/"):
-	#				if (".wav" == file.substr(len(file)-len('.wav'))):
-					if new_text in file_lower:
-						asset_tree.create_path(file, 1)
-		var i = 0
-		for f in advanced_stuff_filter.keys():
-			if advanced_stuff_filter[f]:
-				var b = base_wad.get_bin(f)
-				if b:
-					var bb = base_wad.changed_files.has(f) or base_wad.new_files.has(f)
-					for n in b.data.keys():
-						if new_text in n.to_lower() or new_text in str(b.data[n]['id']):
-							asset_tree.create_path(f_prefixes[i] + n, bb)
-			i += 1
+			if not show_base_wad:
+				var dumb = true
+				for p in base_wad.patchwad_list:
+					dumb = false
+					if not(p.file_locations.has(f)):
+						dumb = true
+						break
+				if dumb: continue
+			if b:
+				var bb = AssetTree.Styles.None
+				if base_wad.changed_files.has(f) or base_wad.new_files.has(f):
+					bb = AssetTree.Styes.Bold
+				for n in b.data.keys():
+					if new_text in n.to_lower() or new_text in str(b.data[n]['id']):
+						asset_tree.create_path(f_prefixes[i] + n, bb)
 		
 	asset_tree.update()
 	$Main/TopMenu/MenuItems.expandassetlist()
+
+func add_asset_to_tree(file, style):
+	# if .meta is different or if texture page is different, mark as bold
+	if file.begins_with('Atlases/'):
+		if file.ends_with('.meta') or file.ends_with('.gmeta'):
+			asset_tree.create_path(file, style)
+#		if file.ends_with('.png'):
+#			asset_tree.create_path(file.replace('.png','.meta'), style)
+	# hotline 1 :3
+#				print(file)
+	if file.begins_with('GL/') and file.ends_with('.phyre'):
+		asset_tree.create_path(file, style)
+	if file.begins_with('Fonts/'):
+		if file.ends_with('.fnt'):
+			asset_tree.create_path(file, style)
+		elif file.ends_with("_0.png"):
+			asset_tree.create_path(file.replace('_0.png','.fnt'), style)
+	if file.begins_with('Sounds/'):
+		asset_tree.create_path(file, style)
+	if file.begins_with("Music/"):
+		asset_tree.create_path(file, style)
+
 var threads = {}
 #func _on_RecalculateSheetButton_pressed():
 #	var meta = selected_asset_data

@@ -7,7 +7,8 @@ var settings = {
 	'base_wad_path':'',
 	'recent_patches':[],
 	'multithreading':false,
-	'advanced_preferences':{}
+	'advanced_preferences':{},
+	'favorite_files':{}
 }
 
 func _init():
