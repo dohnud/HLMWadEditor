@@ -194,9 +194,11 @@ func open_patchwad(file_path):
 			open_asset(selected_asset_list_path)
 			OS.set_window_title('HLMWadEditor - ' + file_path)
 
-func _on_SearchBar_text_entered(new_text=''):
+func _on_SearchBar_text_entered(new_text='', expand=false):
+	var searched = new_text.length() > 0 
+	if searched: expand = true
 	new_text = new_text.to_lower()
-	asset_tree.reset() 
+	asset_tree.reset()
 	for file in base_wad.file_locations.keys():
 		var style = AssetTree.Styles.None
 #		if file.begins_with("Fonts"):
@@ -207,14 +209,14 @@ func _on_SearchBar_text_entered(new_text=''):
 			if p.file_locations.has(file):
 				style |= AssetTree.Styles.Bold
 				break
+		if not show_base_wad and style == AssetTree.Styles.None:
+			continue
 		if Config.settings.favorite_files.has(file):
 			style |= AssetTree.Styles.Favorite
-		if not show_base_wad and style & AssetTree.Styles.Bold:
-			continue
 		if show_only_favorites and style == AssetTree.Styles.None:
 			continue
 		var file_lower = file.to_lower()
-		if new_text.length() == 0 or new_text in file_lower:
+		if not searched or new_text in file_lower:
 			add_asset_to_tree(file, style)
 	var i = -1
 	for f in advanced_stuff_filter.keys():
@@ -231,15 +233,20 @@ func _on_SearchBar_text_entered(new_text=''):
 						break
 				if dumb: continue
 			if b:
-				var bb = AssetTree.Styles.None
-				if base_wad.changed_files.has(f) or base_wad.new_files.has(f):
-					bb = AssetTree.Styes.Bold
 				for n in b.data.keys():
-					if new_text in n.to_lower() or new_text in str(b.data[n]['id']):
-						asset_tree.create_path(f_prefixes[i] + n, bb)
+					var style = AssetTree.Styles.None
+					if base_wad.changed_files.has(f) or base_wad.new_files.has(f):
+						style = AssetTree.Styes.Bold
+					var file = f_prefixes[i] + n
+					if Config.settings.favorite_files.has(file):
+						style |= AssetTree.Styles.Favorite
+					if show_only_favorites and style == AssetTree.Styles.None:
+						continue
+					if not searched or new_text in n.to_lower() or new_text in str(b.data[n]['id']):
+						asset_tree.create_path(file, style)
 		
 	asset_tree.update()
-	$Main/TopMenu/MenuItems.expandassetlist()
+	if expand: $Main/TopMenu/MenuItems.expandassetlist()
 
 func add_asset_to_tree(file, style):
 	# if .meta is different or if texture page is different, mark as bold

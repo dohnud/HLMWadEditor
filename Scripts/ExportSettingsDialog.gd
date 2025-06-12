@@ -25,7 +25,7 @@ func reset():
 func parse_fix_dir(fix_path):
 	var fix_dir = Directory.new()
 	if fix_dir.open(fix_path):
-		ErrorLog.show_user_error("No path \"fixes/\" found in the Wad Editor's installed directory.\nPlease make sure this folder exists if you want to add community fixes to your mod")
+		ErrorLog.show_user_error("No path \"fixes/\" found in: " + fix_path + ".\nPlease make sure this folder exists if you want to add community fixes to your mod")
 		emit_signal("confirmed")
 		hide()
 	

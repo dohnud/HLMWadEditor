@@ -7,8 +7,10 @@ var f = File.new()
 var log_directory = OS.get_executable_path().get_base_dir() # OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS) + 'My Games/'
 
 func _init():
-	if OS.has_feature("editor"): log_directory = 'res://';
-	elif OS.get_name() == 'OSX': log_directory = log_directory.split('.app')[0].get_base_dir() + '/';
+	if OS.has_feature("editor"):
+		log_directory = 'res://';
+	elif OS.get_name() == 'OSX' or OS.get_name() == 'iOS':
+		log_directory = log_directory.split('.app')[0].get_base_dir() + '/';
 	var r = false
 	if f.file_exists(log_directory + 'log.txt'):
 		r = f.open(log_directory + 'log.txt', File.READ_WRITE)

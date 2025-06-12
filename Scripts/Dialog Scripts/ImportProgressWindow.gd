@@ -107,8 +107,8 @@ func merge_sprite(dst_meta:Meta, src_meta:Meta, sprite:String, rsc_file_path:Str
 			app._on_RecalculateSheetButton_pressed() # recalc sprite sheet in background
 		else:
 			var tilesheet = sprite.substr(sprite.find_last('/')+1)
-			app.base_wad.backgroundbin.background_data[tilesheet]['size'] = Vector2(w,h)
-			app.base_wad.changed_files[BackgroundsBin.get_file_path()] = app.base_wad.backgroundbin
+			app.base_wad.get_bin(BackgroundsBin).background_data[tilesheet]['size'] = Vector2(w,h)
+			app.base_wad.changed_files[BackgroundsBin.get_file_path()] = app.base_wad.get_bin(BackgroundsBin)
 #			app.base_wad.backgroundbin.background_data[tilesheet]['tile_size'] = Vector2(w/frame_count, w/frame_count)
 	else:
 #		var dest_image = Image.new()
@@ -163,9 +163,9 @@ func merge_sprite(dst_meta:Meta, src_meta:Meta, sprite:String, rsc_file_path:Str
 							app.base_wad.changed_files[SpritesBin.get_file_path()] = base_spritebin
 			elif patchwad.exists(BackgroundsBin.get_file_path()):
 				var tilesheet = sprite.substr(sprite.find_last('/')+1)
-				var b = app.base_wad.backgroundbin
-				app.base_wad.backgroundbin.background_data[tilesheet]['size'] = Vector2(w,h)
-				app.base_wad.changed_files[BackgroundsBin.get_file_path()] = app.base_wad.backgroundbin
+				var b = app.base_wad.get_bin(BackgroundsBin)
+				app.base_wad.get_bin(BackgroundsBin).background_data[tilesheet]['size'] = Vector2(w,h)
+				app.base_wad.changed_files[BackgroundsBin.get_file_path()] = app.base_wad.get_bin(BackgroundsBin)
 		dst_meta.texture_page.set_data(img)
 	app.base_wad.changed_files[app.selected_asset_name.replace('.meta','.png')] = dst_meta.texture_page
 	app.selected_asset_name = old_n

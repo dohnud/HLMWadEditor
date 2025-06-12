@@ -136,8 +136,8 @@ func _ready():
 				elif item[1][0] is String and item[1][0] == 'TOGGLE':
 					p.add_item(item[0], i)
 					p.set_item_as_checkable(i, true)
-					print(item[0])
-					if item[0].begins_with("Show ") and Config.settings.advanced_preferences.has("GL/hlm2_" + item[0].right(5).to_lower() + ".bin"):
+					var bin_asset = "GL/hlm2_" + item[0].right(5).to_lower() + ".bin"
+					if item[0].begins_with("Show ") and Config.settings.advanced_preferences.has(bin_asset) and Config.settings.advanced_preferences[bin_asset]:
 						p.set_item_checked(i, true)
 				else:
 					p.add_item(item[0], i)
@@ -349,11 +349,11 @@ func expandassetlist(t:TreeItem=null, collapsed=null):
 
 func togglenewfileslist():
 	app.show_base_wad = !app.show_base_wad
-	app._on_SearchBar_text_entered('')
+	app._on_SearchBar_text_entered('', !app.show_base_wad)
 
 func togglefavfileslist():
 	app.show_only_favorites = !app.show_only_favorites
-	app._on_SearchBar_text_entered('')
+	app._on_SearchBar_text_entered('', app.show_only_favorites)
 #	var tc = app.asset_tree.root.get_children()
 #	while tc != null:
 #		recursefavfileslist(tc)
