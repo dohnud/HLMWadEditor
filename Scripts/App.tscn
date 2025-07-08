@@ -613,25 +613,9 @@ rect_min_size = Vector2( 4, 15 )
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 3 )
 
-[node name="ResourceButton" type="MenuButton" parent="Main/TopMenu/MenuItems"]
-margin_left = 58.0
-margin_right = 125.0
-margin_bottom = 25.0
-rect_min_size = Vector2( 50, 0 )
-text = "Resource"
-switch_on_hover = true
-
-[node name="Divider3" type="Panel" parent="Main/TopMenu/MenuItems"]
-margin_left = 125.0
-margin_right = 129.0
-margin_bottom = 25.0
-rect_min_size = Vector2( 4, 15 )
-size_flags_vertical = 3
-custom_styles/panel = SubResource( 3 )
-
 [node name="ViewButton" type="MenuButton" parent="Main/TopMenu/MenuItems"]
-margin_left = 129.0
-margin_right = 179.0
+margin_left = 58.0
+margin_right = 108.0
 margin_bottom = 25.0
 rect_min_size = Vector2( 50, 0 )
 text = "List"
@@ -639,6 +623,22 @@ switch_on_hover = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Divider3" type="Panel" parent="Main/TopMenu/MenuItems"]
+margin_left = 108.0
+margin_right = 112.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 4, 15 )
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 3 )
+
+[node name="ResourceButton" type="MenuButton" parent="Main/TopMenu/MenuItems"]
+margin_left = 112.0
+margin_right = 179.0
+margin_bottom = 25.0
+rect_min_size = Vector2( 50, 0 )
+text = "Resource"
+switch_on_hover = true
 
 [node name="Divider4" type="Panel" parent="Main/TopMenu/MenuItems"]
 margin_left = 179.0
@@ -1573,7 +1573,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sprite/SpriteEditor"]
-margin_right = 788.0
+margin_right = 785.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 37 )
@@ -1582,7 +1582,7 @@ clip_text = true
 
 [node name="TabContainer2" type="TabContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sprite/SpriteEditor"]
 margin_top = 29.0
-margin_right = 788.0
+margin_right = 785.0
 margin_bottom = 629.0
 size_flags_vertical = 3
 custom_styles/tab_fg = SubResource( 30 )
@@ -2121,7 +2121,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor"]
-margin_right = 788.0
+margin_right = 785.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 37 )
@@ -2130,7 +2130,7 @@ clip_text = true
 
 [node name="FontPreviewPanel" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor"]
 margin_top = 29.0
-margin_right = 788.0
+margin_right = 785.0
 margin_bottom = 629.0
 rect_min_size = Vector2( 0, 300 )
 rect_clip_content = true
@@ -2140,7 +2140,7 @@ custom_styles/panel = SubResource( 53 )
 [node name="MarginContainer" type="MarginContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel"]
 margin_left = 1.0
 margin_top = 1.0
-margin_right = 787.0
+margin_right = 784.0
 margin_bottom = 599.0
 custom_constants/margin_right = 4
 custom_constants/margin_top = 4
@@ -2153,7 +2153,7 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer"]
 margin_left = 4.0
 margin_top = 4.0
-margin_right = 782.0
+margin_right = 779.0
 margin_bottom = 594.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -2162,12 +2162,12 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer"]
-margin_right = 778.0
+margin_right = 775.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 
 [node name="LineEdit" type="LineEdit" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_right = 494.0
+margin_right = 479.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -2177,29 +2177,29 @@ text = "The quick brown fox jumped over the lazy yellow dog"
 placeholder_text = "The quick brown fox jumped over the lazy yellow dog"
 
 [node name="uppercasetogglebutton" type="CheckBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 498.0
-margin_right = 588.0
+margin_left = 483.0
+margin_right = 585.0
 margin_bottom = 40.0
 focus_mode = 0
 enabled_focus_mode = 0
 text = "uppercase"
 
 [node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 592.0
-margin_right = 595.0
+margin_left = 589.0
+margin_right = 592.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 3, 0 )
 
 [node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 599.0
+margin_left = 596.0
 margin_top = 7.0
-margin_right = 694.0
+margin_right = 691.0
 margin_bottom = 32.0
 text = "preview scale: "
 
 [node name="HSlider" type="HSlider" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 698.0
-margin_right = 778.0
+margin_left = 695.0
+margin_right = 775.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 80, 0 )
 size_flags_vertical = 5
@@ -2212,7 +2212,7 @@ ticks_on_borders = true
 [node name="TextureRect" type="TextureRect" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer"]
 self_modulate = Color( 0.560784, 0.568627, 0.588235, 1 )
 margin_top = 44.0
-margin_right = 778.0
+margin_right = 775.0
 margin_bottom = 590.0
 rect_clip_content = true
 size_flags_horizontal = 3
@@ -2235,7 +2235,7 @@ __meta__ = {
 [node name="LineEdit" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer/TextureRect/MarginContainer"]
 material = SubResource( 55 )
 margin_left = 4.0
-margin_right = 774.0
+margin_right = 771.0
 margin_bottom = 546.0
 size_flags_vertical = 3
 custom_styles/normal = SubResource( 56 )

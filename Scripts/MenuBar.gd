@@ -15,15 +15,6 @@ var operations = {
 		["Switch Base WAD", [KEY_CONTROL, KEY_SHIFT, KEY_O], 'openwad'],
 		["Quit", [KEY_CONTROL, KEY_Q], 'quit'],
 	],
-	"ResourceButton" : [
-		["Extract", [KEY_CONTROL, KEY_E], 'extract'],
-		[],
-		["Replace", [KEY_CONTROL, KEY_R,], 'replace'],
-		["Revert", [KEY_CONTROL, KEY_SHIFT, KEY_R], 'revert'],
-#		[],
-#		["Add", [KEY_CONTROL, KEY_SHIFT, KEY_A], 'add'],
-#		["Merge", [KEY_CONTROL, KEY_M], 'merge'],
-	],
 	"ViewButton" : [
 		["Expand Asset List", [], 'expandassetlist'],
 		["Show Only Modified Files", ['TOGGLE'], 'togglenewfileslist'],
@@ -35,6 +26,15 @@ var operations = {
 		["Show Backgrounds", ['TOGGLE'], 'togglebackgrounds'],
 		[],
 		["Hide Asset List", [KEY_CONTROL, KEY_H], 'toggleassetlist'],
+	],
+	"ResourceButton" : [
+		["Extract", [KEY_CONTROL, KEY_E], 'extract'],
+		[],
+		["Replace", [KEY_CONTROL, KEY_R,], 'replace'],
+		["Revert", [KEY_CONTROL, KEY_SHIFT, KEY_R], 'revert'],
+#		[],
+#		["Add", [KEY_CONTROL, KEY_SHIFT, KEY_A], 'add'],
+#		["Merge", [KEY_CONTROL, KEY_M], 'merge'],
 	],
 	"1MetaButton" : [
 		["Import Sprite from Strip", [KEY_SHIFT, KEY_I], 'import_sprite_strip'],
