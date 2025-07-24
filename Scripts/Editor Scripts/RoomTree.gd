@@ -53,7 +53,12 @@ func create_array(array, path=''):
 	var index = 0
 	for i in array:
 		if i is Dictionary:
-			create_dict(i, path+'/'+str(index))
+			if path.ends_with("objects"):
+				var id = i["object_id"]
+				var n = app.base_wad.get_bin(ObjectsBin).names[id]
+				create_dict(i, "%s/(%d) %s" % [path, index, n])
+			else:
+				create_dict(i, path+'/'+str(index))
 		elif i is Array or i is PoolByteArray:
 			create_array(i, path+'/'+str(index))
 		else:

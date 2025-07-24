@@ -44,6 +44,10 @@ func _on_Tree_item_edited(deleted=0):
 	var p = []
 	while ti != null:
 		var s = ti.get_text(0)
+		if s and s[0] == '(':
+			var parts = s.split(") ")
+			var index = parts[0].substr(1)
+			s = index
 		if can_be_int_fuck_you_godot(s) != null or s == '0':
 			s = int(s)
 		p.push_front(s)
