@@ -236,7 +236,7 @@ func _on_SearchBar_text_entered(new_text='', expand=false):
 				for n in b.data.keys():
 					var style = AssetTree.Styles.None
 					if base_wad.changed_files.has(f) or base_wad.new_files.has(f):
-						style = AssetTree.Styes.Bold
+						style = AssetTree.Styles.Bold
 					var file = f_prefixes[i] + n
 					if Config.settings.favorite_files.has(file):
 						style |= AssetTree.Styles.Favorite
