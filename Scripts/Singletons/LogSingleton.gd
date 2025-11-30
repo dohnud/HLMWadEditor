@@ -4,7 +4,7 @@ class_name Logger
 
 var f = File.new()
 
-var log_directory = OS.get_executable_path().get_base_dir() # OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS) + 'My Games/'
+var log_directory = OS.get_executable_path().get_base_dir() + "/" # OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS) + 'My Games/'
 
 func _init():
 	if OS.has_feature("editor"):
