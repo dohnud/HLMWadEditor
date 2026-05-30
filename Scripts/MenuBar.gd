@@ -83,7 +83,7 @@ var operations = {
 		["Export Selected Glyph", [KEY_SHIFT, KEY_E], '_importfontglyph'],
 	],
 	"7SoundButton" : [
-		["Import Sound", [KEY_SHIFT, KEY_I], 'importsound'],
+		["Import Audio File", [KEY_SHIFT, KEY_I], 'importsound'],
 	],
 	"2RoomButton" : [
 		["Add Generic Object to Room", [], 'room_add_object'],
