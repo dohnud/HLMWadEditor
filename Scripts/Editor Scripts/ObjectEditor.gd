@@ -25,7 +25,7 @@ func set_object(object_name):
 
 
 func parse_new_value(key, value, new_text_value):
-	if key == 'sprite_index' or key == 'mask_sprite' or key == 'parent':
+	if key == 'sprite_index' or key == 'mask_sprite':
 		var sprite_index = value
 		if int(new_text_value) == -1 or new_text_value=='Null':
 			return [-1, 'Null']
@@ -42,7 +42,7 @@ func parse_new_value(key, value, new_text_value):
 			return [-100, 'Null']
 		var object_index = value
 		if bin.data.has(new_text_value):
-			object_index = bin.data[new_text_value]['object_id']
+			object_index = bin.data[new_text_value]['id']
 		if can_be_int_fuck_you_godot(new_text_value) != null and bin.names.has(can_be_int_fuck_you_godot(new_text_value)):
 			object_index = can_be_int_fuck_you_godot(new_text_value)
 		return [object_index, bin.names[object_index]]

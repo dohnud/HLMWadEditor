@@ -1,4 +1,4 @@
-[gd_scene load_steps=123 format=2]
+[gd_scene load_steps=124 format=2]
 
 [ext_resource path="res://Scripts/Editor Scripts/TimelineSlider.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/App.gd" type="Script" id=2]
@@ -121,7 +121,7 @@ corner_radius_bottom_left = 4
 shadow_size = -37
 anti_aliasing = false
 
-[sub_resource type="Image" id=62]
+[sub_resource type="Image" id=64]
 data = {
 "data": PoolByteArray( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 223, 223, 0, 223, 223, 223, 180, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 222, 222, 222, 70, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 0, 223, 223, 223, 0, 223, 223, 223, 180, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 224, 224, 224, 255, 223, 223, 223, 180, 223, 223, 223, 0, 0, 0, 0, 0, 223, 223, 223, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 224, 224, 224, 0, 223, 223, 223, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ),
 "format": "RGBA8",
@@ -133,7 +133,7 @@ data = {
 [sub_resource type="ImageTexture" id=8]
 storage = 1
 lossy_quality = 0.98
-image = SubResource( 62 )
+image = SubResource( 64 )
 size = Vector2( 16, 16 )
 
 [sub_resource type="StyleBoxEmpty" id=9]
@@ -513,6 +513,8 @@ void fragment() {
 shader = SubResource( 54 )
 
 [sub_resource type="StyleBoxEmpty" id=56]
+
+[sub_resource type="StyleBoxEmpty" id=63]
 
 [sub_resource type="StyleBoxEmpty" id=61]
 
@@ -1693,7 +1695,7 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor"]
-margin_right = 788.0
+margin_right = 785.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 37 )
@@ -1702,7 +1704,7 @@ clip_text = true
 
 [node name="TabContainer2" type="TabContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Object/ObjectEditor"]
 margin_top = 29.0
-margin_right = 788.0
+margin_right = 785.0
 margin_bottom = 629.0
 size_flags_vertical = 3
 custom_styles/tab_fg = SubResource( 30 )
@@ -1816,7 +1818,7 @@ __meta__ = {
 stream = SubResource( 38 )
 
 [node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor"]
-margin_right = 788.0
+margin_right = 785.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 37 )
@@ -1860,7 +1862,7 @@ __meta__ = {
 
 [node name="Container" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor"]
 margin_top = 29.0
-margin_right = 788.0
+margin_right = 785.0
 margin_bottom = 629.0
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 39 )
@@ -1868,7 +1870,7 @@ custom_styles/panel = SubResource( 39 )
 [node name="VBoxContainer" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container"]
 margin_left = 1.0
 margin_top = 1.0
-margin_right = 787.0
+margin_right = 784.0
 margin_bottom = 599.0
 custom_constants/separation = 0
 __meta__ = {
@@ -1876,11 +1878,11 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer"]
-margin_right = 786.0
+margin_right = 783.0
 
 [node name="TimelineControls" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer"]
-margin_right = 786.0
-margin_bottom = 31.0
+margin_right = 783.0
+margin_bottom = 38.0
 custom_styles/panel = SubResource( 40 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1889,27 +1891,28 @@ __meta__ = {
 [node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls"]
 margin_left = 3.0
 margin_top = 3.0
-margin_right = 783.0
-margin_bottom = 28.0
+margin_right = 780.0
+margin_bottom = 35.0
 
 [node name="Left" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer"]
-margin_right = 257.0
-margin_bottom = 25.0
+margin_right = 256.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 
 [node name="PanelContainer" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Left"]
 margin_right = 177.0
-margin_bottom = 25.0
+margin_bottom = 32.0
 custom_styles/panel = SubResource( 17 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer"]
 margin_right = 177.0
-margin_bottom = 25.0
+margin_bottom = 32.0
 custom_constants/separation = 0
 
 [node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer/HBoxContainer"]
+margin_top = 3.0
 margin_right = 57.0
-margin_bottom = 25.0
+margin_bottom = 28.0
 text = "volume "
 
 [node name="HSlider" type="HSlider" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer/HBoxContainer"]
@@ -1922,9 +1925,9 @@ step = 0.01
 value = 0.28
 
 [node name="Middle" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer"]
-margin_left = 261.0
-margin_right = 518.0
-margin_bottom = 25.0
+margin_left = 260.0
+margin_right = 516.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 alignment = 1
 
@@ -1943,7 +1946,7 @@ icon = ExtResource( 31 )
 [node name="PausePlayButton" type="Button" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle"]
 margin_left = 116.0
 margin_right = 140.0
-margin_bottom = 25.0
+margin_bottom = 32.0
 focus_neighbour_left = NodePath("../../../../../../../../../VBoxContainer/AssetTree")
 focus_neighbour_top = NodePath("../../../../../../../../../VBoxContainer/AssetTree")
 focus_neighbour_bottom = NodePath("../../../../../../../../../VBoxContainer/AssetTree")
@@ -1973,16 +1976,16 @@ custom_styles/normal = SubResource( 18 )
 icon = ExtResource( 26 )
 
 [node name="Right" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer"]
-margin_left = 522.0
-margin_right = 780.0
-margin_bottom = 25.0
+margin_left = 520.0
+margin_right = 777.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 alignment = 2
 
 [node name="Button" type="CheckBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Right"]
-margin_left = 87.0
-margin_right = 134.0
-margin_bottom = 25.0
+margin_left = 74.0
+margin_right = 133.0
+margin_bottom = 32.0
 focus_mode = 0
 custom_styles/hover = SubResource( 21 )
 custom_styles/pressed = SubResource( 22 )
@@ -1993,16 +1996,16 @@ text = "loop"
 align = 1
 
 [node name="TimecodeLabel" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Right"]
-margin_left = 138.0
-margin_top = 2.0
-margin_right = 258.0
-margin_bottom = 23.0
+margin_left = 137.0
+margin_top = 5.0
+margin_right = 257.0
+margin_bottom = 26.0
 rect_min_size = Vector2( 120, 0 )
 custom_styles/normal = ExtResource( 15 )
 
 [node name="Timeline" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer"]
-margin_top = 31.0
-margin_right = 786.0
+margin_top = 38.0
+margin_right = 783.0
 margin_bottom = 598.0
 rect_min_size = Vector2( 0, 70 )
 rect_clip_content = true
@@ -2021,10 +2024,10 @@ __meta__ = {
 }
 
 [node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/Timeline/Control"]
-margin_left = 393.0
-margin_top = 283.0
-margin_right = 393.0
-margin_bottom = 283.0
+margin_left = 391.0
+margin_top = 280.0
+margin_right = 391.0
+margin_bottom = 280.0
 mouse_filter = 2
 __meta__ = {
 "_edit_use_anchors_": false
@@ -2103,7 +2106,6 @@ __meta__ = {
 }
 
 [node name="Font" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = ExtResource( 10 )
@@ -2128,20 +2130,27 @@ custom_fonts/font = ExtResource( 37 )
 text = "Player_Zebra.meta"
 clip_text = true
 
-[node name="FontPreviewPanel" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor"]
+[node name="VSplitContainer" type="VSplitContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor"]
 margin_top = 29.0
 margin_right = 785.0
 margin_bottom = 629.0
-rect_min_size = Vector2( 0, 300 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+split_offset = -152
+
+[node name="FontPreviewPanel" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer"]
+margin_right = 785.0
+margin_bottom = 144.0
+rect_min_size = Vector2( 1.36422e-12, 100 )
 rect_clip_content = true
 size_flags_vertical = 7
 custom_styles/panel = SubResource( 53 )
 
-[node name="MarginContainer" type="MarginContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/FontPreviewPanel"]
 margin_left = 1.0
 margin_top = 1.0
 margin_right = 784.0
-margin_bottom = 599.0
+margin_bottom = 143.0
 custom_constants/margin_right = 4
 custom_constants/margin_top = 4
 custom_constants/margin_left = 4
@@ -2150,23 +2159,23 @@ __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/FontPreviewPanel/MarginContainer"]
 margin_left = 4.0
 margin_top = 4.0
 margin_right = 779.0
-margin_bottom = 594.0
+margin_bottom = 138.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 __meta__ = {
 "_edit_use_anchors_": true
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/FontPreviewPanel/MarginContainer/VBoxContainer"]
 margin_right = 775.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 
-[node name="LineEdit" type="LineEdit" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="LineEdit" type="LineEdit" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer"]
 margin_right = 479.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
@@ -2176,7 +2185,7 @@ custom_styles/normal = ExtResource( 15 )
 text = "The quick brown fox jumped over the lazy yellow dog"
 placeholder_text = "The quick brown fox jumped over the lazy yellow dog"
 
-[node name="uppercasetogglebutton" type="CheckBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="uppercasetogglebutton" type="CheckBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer"]
 margin_left = 483.0
 margin_right = 585.0
 margin_bottom = 40.0
@@ -2184,20 +2193,20 @@ focus_mode = 0
 enabled_focus_mode = 0
 text = "uppercase"
 
-[node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer"]
 margin_left = 589.0
 margin_right = 592.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 3, 0 )
 
-[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer"]
 margin_left = 596.0
 margin_top = 7.0
 margin_right = 691.0
 margin_bottom = 32.0
 text = "preview scale: "
 
-[node name="HSlider" type="HSlider" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="HSlider" type="HSlider" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer"]
 margin_left = 695.0
 margin_right = 775.0
 margin_bottom = 40.0
@@ -2209,18 +2218,18 @@ step = 0.01
 value = 1.0
 ticks_on_borders = true
 
-[node name="TextureRect" type="TextureRect" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/FontPreviewPanel/MarginContainer/VBoxContainer"]
 self_modulate = Color( 0.560784, 0.568627, 0.588235, 1 )
 margin_top = 44.0
 margin_right = 775.0
-margin_bottom = 590.0
+margin_bottom = 134.0
 rect_clip_content = true
 size_flags_horizontal = 3
 size_flags_vertical = 7
 texture = ExtResource( 30 )
 stretch_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer/TextureRect"]
+[node name="MarginContainer" type="MarginContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/FontPreviewPanel/MarginContainer/VBoxContainer/TextureRect"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
@@ -2232,22 +2241,294 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LineEdit" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer/TextureRect/MarginContainer"]
+[node name="LineEdit" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/FontPreviewPanel/MarginContainer/VBoxContainer/TextureRect/MarginContainer"]
 material = SubResource( 55 )
 margin_left = 4.0
 margin_right = 771.0
-margin_bottom = 546.0
+margin_bottom = 90.0
 size_flags_vertical = 3
 custom_styles/normal = SubResource( 56 )
 text = "The quick brown fox jumped over the lazy yellow dog"
 
-[node name="CharListPanel" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor"]
-visible = false
-margin_top = 531.0
-margin_right = 1624.0
-margin_bottom = 1029.0
+[node name="GlyphListPanel" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer"]
+margin_top = 152.0
+margin_right = 785.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 53 )
+custom_styles/panel = SubResource( 63 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel"]
+margin_right = 785.0
+margin_bottom = 448.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer"]
+margin_right = 150.0
+margin_bottom = 448.0
+rect_min_size = Vector2( 150, 1.36422e-12 )
+
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/VBoxContainer"]
+margin_right = 150.0
+margin_bottom = 27.0
+custom_fonts/font = ExtResource( 37 )
+custom_styles/normal = SubResource( 11 )
+text = "Glyphs"
+clip_text = true
+
+[node name="GlyphList" type="ItemList" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/VBoxContainer"]
+margin_top = 31.0
+margin_right = 150.0
+margin_bottom = 448.0
+focus_neighbour_top = NodePath(".")
+focus_neighbour_right = NodePath(".")
+size_flags_vertical = 3
+custom_constants/vseparation = 0
+custom_styles/bg_focus = SubResource( 12 )
+custom_styles/bg = SubResource( 12 )
+items = [ "A", null, false, "B", null, false, "C", null, false ]
+
+[node name="PanelContainer" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer"]
+margin_left = 154.0
+margin_right = 785.0
+margin_bottom = 448.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 14 )
+
+[node name="BG" type="TextureRect" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer"]
+self_modulate = Color( 0.560784, 0.568627, 0.588235, 1 )
+margin_right = 631.0
+margin_bottom = 448.0
+rect_clip_content = true
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource( 30 )
+stretch_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 4
+custom_constants/margin_top = 4
+custom_constants/margin_left = 4
+custom_constants/margin_bottom = 4
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="SpriteTextureRect" type="TextureRect" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 627.0
+margin_bottom = 444.0
+texture = ExtResource( 33 )
+expand = true
+stretch_mode = 6
+script = ExtResource( 24 )
+origin_icon = ExtResource( 34 )
+icon_modulate = Color( 1, 1, 1, 1 )
+color = Color( 0.705882, 0.705882, 0.705882, 0.74902 )
+metaeditor_path = NodePath("../../../../../../..")
+
+[node name="Gizmos" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos"]
+margin_right = 57.0
+margin_bottom = 484.0
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer"]
+margin_right = 57.0
+margin_bottom = 25.0
+custom_constants/separation = 0
+
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer/HBoxContainer"]
+margin_right = 34.0
+margin_bottom = 25.0
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
+custom_fonts/font = ExtResource( 51 )
+text = "Size:"
+
+[node name="FrameNumber" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer/HBoxContainer"]
+margin_left = 34.0
+margin_right = 42.0
+margin_bottom = 25.0
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
+custom_fonts/font = ExtResource( 51 )
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer"]
+margin_top = 25.0
+margin_right = 57.0
+margin_bottom = 50.0
+custom_constants/separation = 0
+
+[node name="Label2" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer/HBoxContainer2"]
+margin_right = 49.0
+margin_bottom = 25.0
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
+custom_fonts/font = ExtResource( 51 )
+text = "Frame:"
+
+[node name="FrameNumber2" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer/HBoxContainer2"]
+margin_left = 49.0
+margin_right = 57.0
+margin_bottom = 25.0
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
+custom_fonts/font = ExtResource( 51 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos"]
+margin_left = 57.0
+margin_right = 291.0
+margin_bottom = 484.0
+mouse_filter = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos"]
+margin_left = 291.0
+margin_right = 623.0
+margin_bottom = 484.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2"]
+margin_right = 332.0
+margin_bottom = 31.0
+size_flags_horizontal = 10
+size_flags_vertical = 0
+custom_styles/panel = SubResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 329.0
+margin_bottom = 28.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer"]
+margin_right = 60.0
+margin_bottom = 25.0
+text = "origin:  x"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="XOriginInput" type="SpinBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer"]
+margin_left = 60.0
+margin_right = 184.0
+margin_bottom = 25.0
+focus_next = NodePath("../YOriginInput")
+focus_previous = NodePath("../../../../../../../../../../../VBoxContainer/SpriteList")
+rounded = true
+
+[node name="Label2" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer"]
+margin_left = 184.0
+margin_right = 202.0
+margin_bottom = 25.0
+text = "y:"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="YOriginInput" type="SpinBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer"]
+margin_left = 202.0
+margin_right = 326.0
+margin_bottom = 25.0
+focus_next = NodePath("../../../../../../../../../../../VBoxContainer/SpriteList")
+focus_previous = NodePath("../XOriginInput")
+
+[node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2"]
+margin_top = 35.0
+margin_right = 332.0
+margin_bottom = 455.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2"]
+margin_top = 459.0
+margin_right = 332.0
+margin_bottom = 484.0
+
+[node name="Control" type="Control" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
+margin_right = 79.0
+margin_bottom = 25.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
+margin_left = 83.0
+margin_right = 131.0
+margin_bottom = 25.0
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
+custom_fonts/font = ExtResource( 51 )
+text = "Offset:"
+
+[node name="OffsetLabel" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
+margin_left = 135.0
+margin_right = 214.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
+custom_fonts/font = ExtResource( 51 )
+
+[node name="Label2" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
+margin_left = 218.0
+margin_right = 248.0
+margin_bottom = 25.0
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
+custom_fonts/font = ExtResource( 51 )
+text = "UV:"
+
+[node name="UVLabel" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/HBoxContainer3"]
+margin_left = 252.0
+margin_right = 332.0
+margin_bottom = 25.0
+size_flags_horizontal = 3
+size_flags_vertical = 0
+custom_colors/font_color = Color( 1, 1, 1, 0.615686 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
+custom_fonts/font = ExtResource( 51 )
 
 [node name="AGS" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer"]
 visible = false
@@ -2269,11 +2550,11 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor"]
-margin_right = 788.0
+margin_right = 785.0
 margin_bottom = 25.0
 
 [node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HBoxContainer"]
-margin_right = 788.0
+margin_right = 785.0
 margin_bottom = 25.0
 size_flags_horizontal = 3
 custom_fonts/font = ExtResource( 37 )
@@ -2315,7 +2596,7 @@ text = "Import sprite strip"
 
 [node name="HSplitContainer" type="HSplitContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor"]
 margin_top = 29.0
-margin_right = 788.0
+margin_right = 785.0
 margin_bottom = 629.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -2425,7 +2706,7 @@ size_flags_vertical = 3
 
 [node name="Preview" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer"]
 margin_left = 118.0
-margin_right = 788.0
+margin_right = 785.0
 margin_bottom = 600.0
 rect_clip_content = true
 size_flags_horizontal = 3
@@ -2435,7 +2716,7 @@ custom_styles/panel = SubResource( 13 )
 [node name="VBoxContainer" type="VBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer/Preview"]
 margin_left = 3.0
 margin_top = 3.0
-margin_right = 614.0
+margin_right = 611.0
 margin_bottom = 597.0
 custom_constants/separation = 0
 __meta__ = {
@@ -2443,15 +2724,15 @@ __meta__ = {
 }
 
 [node name="PanelContainer" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer/Preview/VBoxContainer"]
-margin_right = 611.0
-margin_bottom = 493.0
+margin_right = 608.0
+margin_bottom = 486.0
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 14 )
 
 [node name="BG" type="TextureRect" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer"]
 self_modulate = Color( 0.560784, 0.568627, 0.588235, 1 )
-margin_right = 611.0
-margin_bottom = 493.0
+margin_right = 608.0
+margin_bottom = 486.0
 rect_clip_content = true
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -2472,8 +2753,8 @@ __meta__ = {
 [node name="SpriteTextureRect" type="TextureRect" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer/Preview/VBoxContainer/PanelContainer/BG/MarginContainer"]
 margin_left = 4.0
 margin_top = 4.0
-margin_right = 607.0
-margin_bottom = 489.0
+margin_right = 604.0
+margin_bottom = 482.0
 texture = ExtResource( 33 )
 expand = true
 stretch_mode = 6
@@ -2681,35 +2962,36 @@ custom_colors/font_outline_modulate = Color( 0, 0, 0, 0.32549 )
 custom_fonts/font = ExtResource( 51 )
 
 [node name="TimelineControls" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer/Preview/VBoxContainer"]
-margin_top = 493.0
-margin_right = 611.0
+margin_top = 486.0
+margin_right = 608.0
 margin_bottom = 524.0
 custom_styles/panel = SubResource( 16 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls"]
 margin_left = 3.0
 margin_top = 3.0
-margin_right = 608.0
-margin_bottom = 28.0
+margin_right = 605.0
+margin_bottom = 35.0
 
 [node name="Left" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer"]
-margin_right = 199.0
-margin_bottom = 25.0
+margin_right = 198.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 
 [node name="PanelContainer" type="PanelContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left"]
 margin_right = 150.0
-margin_bottom = 25.0
+margin_bottom = 32.0
 custom_styles/panel = SubResource( 17 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer"]
 margin_right = 150.0
-margin_bottom = 25.0
+margin_bottom = 32.0
 custom_constants/separation = 0
 
 [node name="Label" type="Label" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer/HBoxContainer"]
+margin_top = 3.0
 margin_right = 26.0
-margin_bottom = 25.0
+margin_bottom = 28.0
 text = "fps"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -2718,21 +3000,21 @@ __meta__ = {
 [node name="FpsSpinBox" type="SpinBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Left/PanelContainer/HBoxContainer"]
 margin_left = 26.0
 margin_right = 150.0
-margin_bottom = 25.0
+margin_bottom = 32.0
 max_value = 60.0
 value = 15.0
 
 [node name="Middle" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer"]
-margin_left = 203.0
-margin_right = 402.0
-margin_bottom = 25.0
+margin_left = 202.0
+margin_right = 400.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 alignment = 1
 
 [node name="FrameBackTrackButton" type="Button" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle"]
 margin_left = 59.0
 margin_right = 83.0
-margin_bottom = 25.0
+margin_bottom = 32.0
 custom_styles/hover = SubResource( 18 )
 custom_styles/pressed = SubResource( 18 )
 custom_styles/focus = SubResource( 18 )
@@ -2743,7 +3025,7 @@ icon = ExtResource( 31 )
 [node name="PausePlayButton" type="Button" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle"]
 margin_left = 87.0
 margin_right = 111.0
-margin_bottom = 25.0
+margin_bottom = 32.0
 custom_styles/hover = SubResource( 18 )
 custom_styles/pressed = SubResource( 18 )
 custom_styles/focus = SubResource( 18 )
@@ -2759,7 +3041,7 @@ play = ExtResource( 22 )
 [node name="FrameAdvanceButton" type="Button" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Middle"]
 margin_left = 115.0
 margin_right = 139.0
-margin_bottom = 25.0
+margin_bottom = 32.0
 custom_styles/hover = SubResource( 18 )
 custom_styles/pressed = SubResource( 18 )
 custom_styles/focus = SubResource( 18 )
@@ -2768,16 +3050,16 @@ custom_styles/normal = SubResource( 18 )
 icon = ExtResource( 26 )
 
 [node name="Right" type="HBoxContainer" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer"]
-margin_left = 406.0
-margin_right = 605.0
-margin_bottom = 25.0
+margin_left = 404.0
+margin_right = 602.0
+margin_bottom = 32.0
 size_flags_horizontal = 3
 alignment = 2
 
 [node name="Button" type="CheckBox" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer/Preview/VBoxContainer/TimelineControls/HBoxContainer/Right"]
-margin_left = 152.0
-margin_right = 199.0
-margin_bottom = 25.0
+margin_left = 139.0
+margin_right = 198.0
+margin_bottom = 32.0
 custom_styles/hover = SubResource( 21 )
 custom_styles/pressed = SubResource( 22 )
 custom_styles/focus = SubResource( 23 )
@@ -2787,7 +3069,7 @@ align = 1
 
 [node name="Timeline" type="Panel" parent="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HSplitContainer/Preview/VBoxContainer"]
 margin_top = 524.0
-margin_right = 611.0
+margin_right = 608.0
 margin_bottom = 594.0
 rect_min_size = Vector2( 0, 70 )
 rect_clip_content = true
@@ -3501,7 +3783,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 min_value = 1.0
 max_value = 5.0
-value = 2.0
+value = 1.0
 align = 1
 
 [node name="Control" type="Control" parent="ImportantPopups/SaveGIFDialog2/VBoxContainer"]
@@ -4487,9 +4769,14 @@ script = ExtResource( 17 )
 [connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/Timeline/TimelineSlider" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/Timeline/TimelineSlider" method="_on_TimelineSlider_gui_input"]
 [connection signal="resized" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/Timeline/TimelineSlider" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/Timeline/TimelineSlider" method="_on_TimelineSlider_resized"]
 [connection signal="tween_all_completed" from="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/Timeline/TimelineSlider/Tween" to="Main/PanelContainer/HBoxContainer/TabContainer/Sound/SoundEditor/Container/VBoxContainer/TimelineControls/HBoxContainer/Middle/PausePlayButton" method="_on_Tween_tween_all_completed"]
-[connection signal="text_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer/LineEdit" to="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor" method="_on_LineEdit_text_changed"]
-[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer/uppercasetogglebutton" to="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor" method="_on_uppercasetogglebutton_toggled"]
-[connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer/HSlider" to="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor" method="_on_HSlider_value_changed"]
+[connection signal="text_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer/LineEdit" to="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor" method="_on_LineEdit_text_changed"]
+[connection signal="toggled" from="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer/uppercasetogglebutton" to="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor" method="_on_uppercasetogglebutton_toggled"]
+[connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/FontPreviewPanel/MarginContainer/VBoxContainer/HBoxContainer/HSlider" to="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor" method="_on_HSlider_value_changed"]
+[connection signal="item_selected" from="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/VBoxContainer/GlyphList" to="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor" method="_on_GlyphList_item_selected"]
+[connection signal="gui_input" from="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" to="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_SpriteTextureRect_gui_input"]
+[connection signal="mouse_exited" from="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" to="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_SpriteTextureRect_mouse_exited"]
+[connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer/XOriginInput" to="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_XOriginInput_value_changed"]
+[connection signal="value_changed" from="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect/Gizmos/VBoxContainer2/Panel/HBoxContainer/YOriginInput" to="Main/PanelContainer/HBoxContainer/TabContainer/Font/FontEditor/VSplitContainer/GlyphListPanel/HBoxContainer/PanelContainer/BG/MarginContainer/SpriteTextureRect" method="_on_YOriginInput_value_changed"]
 [connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HBoxContainer/RecalculateSheetButton" to="." method="_on_RecalculateSheetButton_pressed"]
 [connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HBoxContainer/ExportSpriteStripButton" to="." method="_on_ExportSpriteStripButton_pressed"]
 [connection signal="pressed" from="Main/PanelContainer/HBoxContainer/TabContainer/AGS/AGSEditor/HBoxContainer/importSpriteStripButton" to="." method="_on_importSpriteStripButton_pressed"]
@@ -4524,6 +4811,7 @@ script = ExtResource( 17 )
 [connection signal="value_changed" from="ResizeSpriteSheetDialog/VBoxContainer/GridContainer/WidthSpinBox" to="ResizeSpriteSheetDialog/VBoxContainer/TextureRect/MarginContainer/TextureRect" method="_on_WidthSpinBox_value_changed"]
 [connection signal="value_changed" from="ResizeSpriteSheetDialog/VBoxContainer/GridContainer/HeightSpinBox" to="ResizeSpriteSheetDialog/VBoxContainer/TextureRect/MarginContainer/TextureRect" method="_on_HeightSpinBox_value_changed"]
 [connection signal="about_to_show" from="ImportantPopups/SaveGIFDialog2" to="ImportantPopups" method="_on_SaveGIFDialog2_about_to_show"]
+[connection signal="popup_hide" from="ImportantPopups/SaveGIFDialog2" to="ImportantPopups/SaveGIFDialog2" method="_on_X_Button_pressed"]
 [connection signal="pressed" from="ImportantPopups/SaveGIFDialog2/VBoxContainer/Button" to="ImportantPopups/SaveGIFDialog2" method="_on_Button_pressed"]
 [connection signal="popup_hide" from="ImportantPopups/MergePatchDialog" to="ImportantPopups" method="_on_MergePatchDialog_popup_hide"]
 [connection signal="item_selected" from="ImportantPopups/MergePatchDialog/VBoxContainer/GridContainer/Label2" to="ImportantPopups/MergePatchDialog" method="_on_Label2_item_selected"]

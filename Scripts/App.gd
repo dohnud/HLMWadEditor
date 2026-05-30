@@ -134,11 +134,16 @@ func open_asset(asset_path):
 		selected_asset_data.is_hm1 = true
 		ags_editor_node.spritelist_node.grab_focus()
 	if asset_path.ends_with('.fnt'):
-		editor_tabs.current_tab = 8
+		editor_tabs.current_tab = 8 # font editor
+#		editor_tabs.current_tab = 1 # meta editor
 		selected_asset_name = asset_path
 		selected_asset_data = font_editor_node.set_asset(asset_path)
 #		meta_editor_node.spritelist_node.grab_focus()
 		base_wad.parse_fnt(asset_path)
+#		meta_editor_node = get_node(meta_editor_node_path)
+#		selected_asset_data = meta_editor_node.set_asset(asset_path)
+		# TODO: Hack meta editor to work with fonts. they already make Metas from xml thx past me
+#		meta_editor_node.spritelist_node.grab_focus()
 #	if 'Rooms/' == asset_path.substr(0,len('Rooms/')):
 	if asset_path.begins_with('Rooms/'):
 		editor_tabs.current_tab = 2
@@ -358,13 +363,7 @@ func _on_RecalculateSheetButton_pressed():
 #	meta.terminate_resolve = false
 	print('Starting texture page resolve!')
 	var nnotif = compilenotif.instance()
-##	threads[selected_asset_name] = [t, meta, nnotif]
-#	threads[meta] = [t, meta, nnotif, selected_asset_name, selected_asset_data]
 	threads[selected_asset_name] = [meta, nnotif, selected_asset_name, selected_asset_data]
-#	meta.connect('resolve_complete', nnotif, 'resolve_complete')
-#	meta.connect('resolve_complete', self, 'resolve_complete')
-#	meta.connect('resolve_complete', self, '_resolve_complete')
-#	meta.connect('resolve_progress', nnotif, 'update_resolve_progress')
 	nnotif.asset_name = selected_asset_name
 	nnotif.asset = meta
 #	print(t.start(meta, "resolve", [meta.sprites, meta.texture_page, mutex], Thread.PRIORITY_NORMAL))

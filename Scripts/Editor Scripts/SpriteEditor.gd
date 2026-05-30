@@ -6,13 +6,6 @@ var sprites = null
 var sprite = {}
 var sprite_name = ""
 
-
-onready var room_tree = $TabContainer2/Advanced/RoomTree
-
-var rooms = null
-var room_name = ""
-var room = {}
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	filetype = SpritesBin

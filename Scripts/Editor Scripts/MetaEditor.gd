@@ -68,8 +68,10 @@ func _on_SpriteList_item_selected(index):
 	if sprite_name == 'default': return
 	current_sprite = sprite_name
 	current_sprite_list_index = index
-	var f :MetaTexture= meta.sprites.get_frame(current_sprite, 0)
+	var f: MetaTexture = meta.sprites.get_frame(current_sprite, 0)
+	# Update visual
 	frametexturerect.texture = f
+	# Update Gizmo information
 	tex_dimensions_node.text = str(f.get_width()) + ' x ' + str(f.get_height())
 	frame_tex_offset_node.text = str(f.region.position.x) + ' , ' + str(f.region.position.y)
 	if f is MetaTexture:
@@ -77,8 +79,9 @@ func _on_SpriteList_item_selected(index):
 	mode = 0
 	if !meta.is_gmeta and !app.base_wad.get_bin(SpritesBin).sprite_data.has(sprite_name):
 		mode = 1
+	# Reset Playback timeline
 	timeline.tween.playback_speed = (fps_node.value) / meta.sprites.get_frame_count(current_sprite)
-	#timeline.tween.stop_all()
+	#timeline.tween.stop_all() # Uncomment to disable continuos animation when browsing thru sprites
 	timeline.set_tween()
 	if mode == 0:
 		origin_node.visible = true
@@ -99,8 +102,6 @@ func _on_SpriteList_item_selected(index):
 	timeline.current_mask = null
 	timeline.update_pos(timeline.current_time)
 	_on_FpsSpinBox_value_changed(fps_node.value)
-#	animatedsprite_node.play(sprite_name)
-#	animatedsprite_node.stop()
 
 
 func _on_FpsSpinBox_value_changed(value):

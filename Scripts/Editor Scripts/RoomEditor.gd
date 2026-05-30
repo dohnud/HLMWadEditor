@@ -57,8 +57,22 @@ func add_generic_object():
 #		if k == "object_id":
 #			fieldtreeitem.set_tooltip(1, )
 	room['objects'].append(new_obj)
-	
+	app.base_wad.changed_files[file] = bin
+	set_room(room_name)
 
+func clear_all():
+	clear_objects()
+	clear_tiles()
+	
+func clear_objects():
+	room['objects'].clear()
+	app.base_wad.changed_files[file] = bin
+	set_room(room_name)
+
+func clear_tiles():
+	room['tiles'].clear()
+	app.base_wad.changed_files[file] = bin
+	set_room(room_name)
 
 func parse_new_value(key, value, new_text_value):
 	if key == 'object_id':

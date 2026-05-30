@@ -104,7 +104,8 @@ func create_path(path:String, style=Styles.None, current_dir=directory_dict):
 			treeitem.set_icon(0, favorite_icon)
 			treeitem.set_icon_modulate(0, favorite_mod)
 			treeitem.set_icon_max_width(0, 16)
-			treeitem.set_text(0, text)
+			if not (style & Styles.Bold):
+				treeitem.set_text(0, text)
 		if style == Styles.None:
 			treeitem.set_text(0, text)
 			treeitem.set_icon(0, null)
@@ -114,6 +115,7 @@ func create_path(path:String, style=Styles.None, current_dir=directory_dict):
 		return treeitem
 
 func bold_treeitem_draw(treeitem:TreeItem, rect:Rect2):
+	if treeitem.get_icon(0) != null: rect.position += Vector2(18,0)
 	draw_string(bold_font,rect.position + Vector2(0,rect.size.y+bold_font.size/2)/2, bolds[treeitem])
 #	draw_string(bold_font,rect.position+Vector2(0,rect.size.y), treeitem.get_text(0))
 

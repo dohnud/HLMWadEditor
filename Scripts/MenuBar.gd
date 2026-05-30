@@ -78,15 +78,19 @@ var operations = {
 		["Export Texture Page", [], 'exportspritesheet'],
 	],
 	"8FontButton" : [
-		["Import Character", [], 'na'],
+		["Import Glyph", [KEY_SHIFT, KEY_I], '_importfontglyph'],
 		[],
-		["Export Character", [], 'na'],
+		["Export Selected Glyph", [KEY_SHIFT, KEY_E], '_importfontglyph'],
 	],
 	"7SoundButton" : [
 		["Import Sound", [KEY_SHIFT, KEY_I], 'importsound'],
 	],
 	"2RoomButton" : [
 		["Add Generic Object to Room", [], 'room_add_object'],
+		[],
+		["Clear Room", [], 'room_clear_all'],
+		["Clear Objects", [], 'room_clear_objects'],
+		["Clear Tiles", [], 'room_clear_tiles'],
 	],
 }
 
@@ -266,6 +270,16 @@ func extract(resource_data=null):
 func room_add_object():
 	app.room_editor_node.add_generic_object()
 
+func room_clear_all():
+	app.room_editor_node.clear_all()
+	
+func room_clear_objects():
+	app.room_editor_node.clear_objects()
+	
+func room_clear_tiles():
+	app.room_editor_node.clear_tiles()
+	
+
 func add():
 	# TODO: DEPRECATED
 	var w :FileDialog= app.get_node("ImportantPopups/AddResourceDialog")
@@ -414,19 +428,14 @@ func convertmeta():
 	app.asset_tree.update()
 
 func export_sprite_gif():
-	var w :FileDialog= app.get_node("ImportantPopups/SaveGIFDialog")
-	var nw = app.get_node("ImportantPopups/SaveGIFDialog2")
+	var nw :FileDialog= app.get_node("ImportantPopups/SaveGIFDialog")
+	var w = app.get_node("ImportantPopups/SaveGIFDialog2")
 	var meta = app.meta_editor_node.meta
-	nw.meta = meta
-	nw.sprite = app.meta_editor_node.current_sprite
+	w.meta = meta
+	w.sprite = app.meta_editor_node.current_sprite
 	
-#	w.get_line_edit().text = app.meta_editor_node.current_sprite+'.gif'
-	NativeDialog.popup_save_dialog(
-		"Save Sprite to GIF",
-		['*.gif ; GIF Animation'],
-		app.meta_editor_node.current_sprite+'.gif',
-		nw, '_on_SaveGIFDialog_file_selected'
-	)
+	app.get_node("ImportantPopups").show()
+	w.show()
 
 func export_sprite_strip():
 	app._on_ExportSpriteStripButton_pressed()
@@ -445,6 +454,16 @@ func recalccollisionmasks():
 
 func exportspritesheet():
 	extract(app.selected_asset_data.texture_page)
+
+func importfontglyph():
+	NativeDialog.popup_open_dialog(
+		"Select an Bitmap Image to use as a Glyph",
+		["*.bmp ; Bitmap Image"],
+		app, '_on_ImportGlyphDialog_file_selected'
+	)
+	
+func exportfontglyph():
+	pass
 
 func importspritesheet():
 	NativeDialog.popup_open_dialog(
@@ -488,12 +507,11 @@ func importsound():
 		mode = "*.mp3 ; MP3 Audio files"
 	elif app.sound_editor_node.sound.stream is AudioStreamOGGVorbis:
 		mode = "*.ogg ; OGG Audio files"
-	var w :FileDialog= app.get_node("ImportantPopups/ImportSoundDialog")
-	w.clear_filters()
-	w.add_filter(mode)
-	app.get_node("ImportantPopups").show()
-	w.popup()
-	w.invalidate()
+	NativeDialog.popup_open_dialog(
+		"Select an Audio File",
+		[mode],
+		app, '_on_ImportSoundDialog_file_selected'
+	)
 
 func _on_TabContainer_tab_changed(tab):
 	var i = 2
