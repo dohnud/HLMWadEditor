@@ -193,10 +193,6 @@ func openrecentpatch(id, popup):
 
 
 func openpatch():
-#	var w :FileDialog= app.get_node("ImportantPopups/OpenPatchDialog")
-#	app.get_node("ImportantPopups").show()
-#	w.popup()
-#	w.invalidate()
 	NativeDialog.popup_open_dialog("Open A Patchwad", ["*.patchwad ; Patchwad Archive"], app, '_on_OpenPatchDialog_file_selected')
 
 func savepatch():
@@ -209,11 +205,7 @@ func exportpatch():
 	w.popup()
 	w.reset()
 
-#func savepatchas():
-#	pass
-#
 func importpatch():
-	#app.get_node("ImportWadFileDialog").popup()
 	var w = app.get_node("ImportantPopups/ImportPatchWindowDialog")
 	NativeDialog.popup_open_dialog(
 		"Open Patchwad to Import from",
@@ -231,9 +223,6 @@ func mergepatch():
 	nw.popup()
 
 func openwad():
-#	var w = app.get_node("OpenWadDialog")
-#	w.popup()
-#	w.invalidate()
 	NativeDialog.popup_open_dialog(
 		"Select a Base WAD to reference",
 		["*.wad ; WAD Archive"],
@@ -279,13 +268,6 @@ func room_clear_objects():
 func room_clear_tiles():
 	app.room_editor_node.clear_tiles()
 	
-
-func add():
-	# TODO: DEPRECATED
-	var w :FileDialog= app.get_node("ImportantPopups/AddResourceDialog")
-	app.get_node("ImportantPopups").show()
-	w.popup()
-	w.invalidate()
 
 func replace():
 	var w :FileDialog= app.get_node("ImportantPopups/ReplaceResourceDialog")
@@ -428,7 +410,6 @@ func convertmeta():
 	app.asset_tree.update()
 
 func export_sprite_gif():
-	var nw :FileDialog= app.get_node("ImportantPopups/SaveGIFDialog")
 	var w = app.get_node("ImportantPopups/SaveGIFDialog2")
 	var meta = app.meta_editor_node.meta
 	w.meta = meta

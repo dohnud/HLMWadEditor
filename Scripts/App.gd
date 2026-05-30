@@ -206,8 +206,6 @@ func _on_SearchBar_text_entered(new_text='', expand=false):
 	asset_tree.reset()
 	for file in base_wad.file_locations.keys():
 		var style = AssetTree.Styles.None
-#		if file.begins_with("Fonts"):
-#			print("WAIT")
 		if base_wad.new_files.has(file) or base_wad.changed_files.has(file):
 			style |= AssetTree.Styles.Bold
 		for p in base_wad.patchwad_list:
@@ -218,7 +216,7 @@ func _on_SearchBar_text_entered(new_text='', expand=false):
 			continue
 		if Config.settings.favorite_files.has(file):
 			style |= AssetTree.Styles.Favorite
-		if show_only_favorites and style == AssetTree.Styles.None:
+		if show_only_favorites and not(style & AssetTree.Styles.Favorite):
 			continue
 		var file_lower = file.to_lower()
 		if not searched or new_text in file_lower:
@@ -245,7 +243,7 @@ func _on_SearchBar_text_entered(new_text='', expand=false):
 					var file = f_prefixes[i] + n
 					if Config.settings.favorite_files.has(file):
 						style |= AssetTree.Styles.Favorite
-					if show_only_favorites and style == AssetTree.Styles.None:
+					if show_only_favorites and not(style & AssetTree.Styles.Favorite):
 						continue
 					if not searched or new_text in n.to_lower() or new_text in str(b.data[n]['id']):
 						asset_tree.create_path(file, style)
@@ -443,18 +441,6 @@ func _on_ExportSpriteStripButton_pressed():
 	w.meta = meta_editor_node.meta
 	w.sprite = meta_editor_node.current_sprite
 	w.export_mode = 0
-	#w.mode = FileDialog.MODE_SAVE_FILE
-#	get_node("ImportantPopups").show()
-#	w.popup()
-#	w.invalidate()
-#	w.deselect_items()
-#	w.window_title = 'Export Sprite Strip to PNG'
-#	w.filters = ['*.png']
-#	w.current_file = ''
-#	w.get_line_edit().text = ''
-#	w.get_line_edit().text = meta_editor_node.current_sprite+'_strip.png'
-#	w.current_file = meta_editor_node.current_sprite+'_strip.png'
-#	w.get_line_edit().text = meta_editor_node.current_sprite+'_strip.png'
 	
 	var d = NativeDialog.popup_save_dialog(
 		'Export Sprite Strip to PNG',
@@ -473,27 +459,14 @@ func export_sprite_strips():
 		"Select a Destination Folder to Save Sprites to",
 		w, '_on_ExportSpriteStripDialog_dir_selected'
 	)
-#	w.mode = FileDialog.MODE_OPEN_DIR
-#	w.window_title = 'Select a destination Folder'
-#	w.filters = []
-#	w.current_file = ''
-#	w.get_line_edit().text = ''
-#	get_node("ImportantPopups").show()
-#	w.popup()
-#	w.invalidate()
-
-#func change_sprite_attr(sprite_name, attr, new_value):
-#	pass
 
 func _on_importSpriteStripButton_pressed():
-	var w :FileDialog= get_node("ImportantPopups/ImportSpriteStripDialog")
-	w.show_hidden_files = false
 	var nw :WindowDialog= get_node("ImportantPopups/ImportSpriteStripSliceDialog")
 	nw.meta = meta_editor_node.meta
 	nw.sprite = meta_editor_node.current_sprite
 	
 	var dialog = NativeDialog.popup_open_dialog(
-		w.window_title,
+		"Open a PNG Image",
 		['*.png ; PNG Images'],
 		self, "_on_importSpriteStripFileSelected"
 	)
@@ -503,12 +476,6 @@ func _on_importSpriteStripFileSelected(file):
 	var nw :WindowDialog= get_node("ImportantPopups/ImportSpriteStripSliceDialog")
 	get_node("ImportantPopups").hide()
 	nw._on_ImportSpriteStripDialog_file_selected(file)
-
-
-# DEPRECATED
-func _on_AddResourceDialog_file_selected(path):
-	base_wad.add_file(path)
-	_on_SearchBar_text_entered('')
 
 
 func _on_OpenPatchDialog_file_selected(path):

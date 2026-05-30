@@ -39,10 +39,6 @@ func _on_SavePatchDialog_popup_hide():
 	hide()
 
 
-func _on_SaveGIFDialog_popup_hide():
-	hide()
-
-
 func _on_SaveGIFDialog2_about_to_show():
 	show()
 
