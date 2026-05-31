@@ -72,7 +72,7 @@ func parse_header():
 			file_len = get_32()
 			file_offset = get_32()
 		if file_len >= 0xffffffffffffff or file_offset >= 0xffffffffffffff:
-			ErrorLog.show_user_error("File: \"" + file_name + "\" is corrupted or missing, please contact a developer")
+			ErrorLog.show_user_error("File: \"" + file_name + "\" is corrupted or missing, please contact developer")
 			print("File: \"" + file_name + "\" is corrupted or missing")
 			printerr("File: \"" + file_name + "\" is corrupted or missing")
 		else:
@@ -258,8 +258,8 @@ func sprite_sheet(asset, lazy=0):
 		return data
 	var err = img.load_png_from_buffer(data)
 	if err:
-		Log.log("Failed to load texture page: " + asset)
-		ErrorLog.show_user_error("Failed to load texture page: " + asset)
+		Log.log("[%s] Failed to load texture page: %s" % [err, asset])
+		ErrorLog.show_user_error("[%s] Failed to load texture page: %s" % [err, asset])
 #	img.convert(fmt)
 	var tex = ImageTexture.new()
 	tex.create_from_image(img, 0)
